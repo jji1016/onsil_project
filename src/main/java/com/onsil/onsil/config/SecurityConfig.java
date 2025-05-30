@@ -1,4 +1,3 @@
-/*
 package com.onsil.onsil.config;
 
 import lombok.RequiredArgsConstructor;
@@ -19,15 +18,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(
                         (auth) ->auth.requestMatchers(
-                                            "/",
-                                            "/index/index",
-                                            "/member/login",
-                                            "/member/signup",
-                                            "/.well-known/**",
-                                            "/api/**",
-                                            "/css/**",
-                                            "/images/**",
-                                            "/js/**")
+//                                            "/",
+//                                            "/index/index",
+//                                            "/member/login",
+//                                            "/member/signup",
+//                                            "/api/**",
+//                                            "/css/**",
+//                                            "/images/**",
+//                                            "/js/**"),
+//                                            "/html/**"
+                                "/**") //작업 편하게 하기 위해 임시로 모든 경로 보안 허용
                         .permitAll()
                         //.requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
@@ -50,8 +50,8 @@ public class SecurityConfig {
                                     .deleteCookies("JSESSIONID")
                                     .permitAll()
                 )
-                .csrf((csrf)->csrf.disable());
+                .csrf((csrf)->csrf.disable()); //끝나고 찾아보기
         return httpSecurity.build();
     }
 }
-*/
+
