@@ -1,6 +1,6 @@
-package com.onsil.onsil.cummnal.dto;
+package com.onsil.onsil.communal.dto;
 
-import com.jjang051.instagram.entity.Member;
+import com.onsil.onsil.entity.Member;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +18,8 @@ public class CustomUserDetails implements UserDetails {
     private final Member loggedMember;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        log.info("loggedMember.getRole().name()==={}",loggedMember.getRole().name());
-        return List.of(new SimpleGrantedAuthority(loggedMember.getRole().name()));
+        log.info("loggedMember.getRole().name()==={}",loggedMember.getRole());
+        return List.of(new SimpleGrantedAuthority(loggedMember.getRole()));
     }
 
     @Override
