@@ -1,6 +1,6 @@
 package com.onsil.onsil.admin.dao;
 
-import com.onsil.onsil.admin.repository.AdminRepository;
+import com.onsil.onsil.admin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class AdminDao {
 
-    private final AdminRepository adminRepository;
+    private final MemberRepository memberRepository;
 }
