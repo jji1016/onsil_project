@@ -42,7 +42,12 @@ public class Member {
     private String tel;
 
     @Column(nullable = false)
-    private String address;
+    private String address01;
+
+    private String address02;
+
+    @Column(nullable = false)
+    private int zipcode;
 
     @CreatedDate
     @Column(updatable = false)
