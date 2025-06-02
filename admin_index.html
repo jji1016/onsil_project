@@ -19,31 +19,31 @@
                 <span>ADMIN</span>
             </div>
             <ul class="gnb">
-                <li>
+                <li onclick="openTab('home',this);" class="active">
                     <a href="#">
                         <span class="icon_area ico1"></span>
                         홈화면
                     </a>
                 </li>
-                <li>
+                <li onclick="openTab('member',this);">
                     <a href="#">
                         <span class="icon_area ico2"></span>
                         회원관리
                     </a>
                 </li>
-                <li>
+                <li onclick="openTab('stock',this);">
                     <a href="#">
                         <span class="icon_area ico3"></span>
                         입출고 및 재고현황
                     </a>
                 </li>
-                <li>
+                <li onclick="openTab('sales',this);">
                     <a href="#">
                         <span class="icon_area ico4"></span>
                         매출관리
                     </a>
                 </li>
-                <li>
+                <li onclick="openTab('order',this);">
                     <a href="#">
                         <span class="icon_area"></span>
                         주문내역관리
@@ -54,7 +54,7 @@
 
     </div>
     <div id="section">
-        <div class="home">
+        <div id="home" class="tab">
             <div class="home_top">
                 <ul class="overview">
                     <li>
@@ -66,28 +66,28 @@
                     </li>
                     <li>
                         <a href="#">
-                            <img src="images/icon_over_member.png" alt="회원아이콘">
+                            <img src="images/icon_over_member.png" alt="전체회원아이콘">
                             <h3>전체 가입자</h3>
                             <p>345<span>명</span></p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="images/icon_over_deli.png" alt="회원아이콘">
+                            <img src="images/icon_over_deli.png" alt="배송아이콘">
                             <h3>신규 주문</h3>
                             <p>57<span>건</span></p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="images/icon_over_qna.png" alt="회원아이콘">
+                            <img src="images/icon_over_qna.png" alt="문의아이콘">
                             <h3>신규 문의</h3>
                             <p>17<span>건</span></p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <img src="images/icon_over_review.png" alt="회원아이콘">
+                            <img src="images/icon_over_review.png" alt="리뷰아이콘">
                             <h3>신규 리뷰</h3>
                             <p>24<span>건</span></p>
                         </a>
@@ -111,8 +111,8 @@
             </div>
             <div class="sale_chart">
                 <h2 class="title_txt">월별 매출 요약</h2>
-                <div class="chart_area">
-                    <canvas id="sales" width="620" height="110"></canvas>
+                <div class="h_chart_area">
+                    <canvas id="homeSales" width="620" height="110"></canvas>
                 </div>
             </div>
             <ul class="home_bt">
@@ -193,13 +193,208 @@
                 </li>
             </ul>
         </div>
-        <div class="member"></div>
-        <div class="stock"></div>
-        <div class="sales"></div>
-        <div class="order"></div>
+
+
+        <div id="member" class="tab">
+            <div class="search">
+                <h2>회원관리</h2>
+                <table>
+                    <tr>
+                        <td>회원검색</td>
+                        <td>
+                            <select name="type">
+                                <option value="아이디">아이디</option>
+                                <option value="이름">이름</option>
+                            </select>
+                            <input type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>기간검색</td>
+                        <td>
+                            <select name="day">
+                                <option value="가입일">가입일</option>
+                                <option value="주문일">주문일</option>
+                            </select>
+                            <input type="text">~<input type="text">
+                            <button>오늘</button>
+                            <button>일주일</button>
+                            <button>1개월</button>
+                            <button>3개월</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>회원등급</td>
+                        <td>
+                            <input type="checkbox" value="전체"> 전체
+                            <input type="checkbox" value="일반회원"> 일반회원
+                            <input type="checkbox" value="구독회원"> 구독회원
+                        </td>
+                    </tr>
+                </table>
+                <div class="btn">
+                    <button class="btn1">검색</button>
+                    <button class="btn2">초기화</button>
+                </div>
+            </div>
+            <div class="wrap_list">
+                <ul class="btn_count">
+                    <li>
+                        <button>문자발송</button>
+                        <button>엑셀저장</button>
+                    </li>
+                    <li>
+                        <p>총 회원수 : <span>345</span>명</p>
+                    </li>
+                </ul>
+                <table class="mem_list">
+                    <tr>
+                        <th>번호</th>
+                        <th>회원명</th>
+                        <th>아이디</th>
+                        <th>회원등급</th>
+                        <th>연락처</th>
+                        <th>가입일시</th>
+                        <th>구매이력</th>
+                        <th>포인트</th>
+                        <th>로그인</th>
+                        <th>　</th>
+                    </tr>
+                    <tr>
+                        <td>345</td>
+                        <td>한지민</td>
+                        <td>jiminpro</td>
+                        <td>구독회원</td>
+                        <td>010-1234-5678</td>
+                        <td>2025-04-27 16:34</td>
+                        <td>3</td>
+                        <td>2,000</td>
+                        <td>5</td>
+                        <td>
+                            <button>관리</button>
+                            <button>삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>345</td>
+                        <td>한지민</td>
+                        <td>jiminpro</td>
+                        <td>구독회원</td>
+                        <td>010-1234-5678</td>
+                        <td>2025-04-27 16:34</td>
+                        <td>3</td>
+                        <td>2,000</td>
+                        <td>5</td>
+                        <td>
+                            <button>관리</button>
+                            <button>삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>345</td>
+                        <td>한지민</td>
+                        <td>jiminpro</td>
+                        <td>구독회원</td>
+                        <td>010-1234-5678</td>
+                        <td>2025-04-27 16:34</td>
+                        <td>3</td>
+                        <td>2,000</td>
+                        <td>5</td>
+                        <td>
+                            <button>관리</button>
+                            <button>삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>345</td>
+                        <td>한지민</td>
+                        <td>jiminpro</td>
+                        <td>구독회원</td>
+                        <td>010-1234-5678</td>
+                        <td>2025-04-27 16:34</td>
+                        <td>3</td>
+                        <td>2,000</td>
+                        <td>5</td>
+                        <td>
+                            <button>관리</button>
+                            <button>삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>345</td>
+                        <td>한지민</td>
+                        <td>jiminpro</td>
+                        <td>구독회원</td>
+                        <td>010-1234-5678</td>
+                        <td>2025-04-27 16:34</td>
+                        <td>3</td>
+                        <td>2,000</td>
+                        <td>5</td>
+                        <td>
+                            <button>관리</button>
+                            <button>삭제</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div id="stock" class="tab"></div>
+
+
+
+        <div id="sales" class="tab">
+            <ul class="sales_info">
+                <li>
+                    <img src="images/icon_sales_big.png" alt="매출아이콘">
+                    <h3>오늘의 매출</h3>
+                    <p>2,867,500<span>원</span></p>
+                </li>
+                <li>
+                    <img src="images/icon_sales_big.png" alt="매출아이콘">
+                    <h3>이번달 매출</h3>
+                    <p>18,524,700<span>원</span></p>
+                </li>
+                <li>
+                    <img src="images/icon_over_deli.png" alt="매출아이콘">
+                    <h3>이번달 주문수</h3>
+                    <p>146<span>건</span></p>
+                </li>
+                <li>
+                    <img src="images/icon_average.png" alt="평균아이콘">
+                    <h3>평균 객단가</h3>
+                    <p>126,880<span>원</span></p>
+                </li>
+            </ul>
+            
+            <div class="sale_chart">
+                <div class="sale_title">
+                    <h2>기간별 매출</h2>
+                    <button onclick="openChart('day_sales',this);" class="day">일별</button>
+                    <button onclick="openChart('week_sales',this);" class="week">주별</button>
+                    <button onclick="openChart('month_sales',this);" class="month">월별</button>
+                </div>
+                <div class="chart_area">
+                    <canvas id="day_sales" class="charts" width="780" height="110"></canvas>
+                    <canvas id="week_sales" class="charts" width="780" height="110"></canvas>
+                    <canvas id="month_sales" class="charts" width="780" height="110"></canvas>
+                </div>
+            </div>
+            <div class="category_chart">
+                <h2>카테고리별 매출 비중</h2>
+                <div class="c_chart_area">
+                    <canvas id="c_day_sales" class="c_charts" width="780" height="110"></canvas>
+                    <canvas id="c_week_sales" class="c_charts" width="780" height="110"></canvas>
+                    <canvas id="c_month_sales" class="c_charts" width="780" height="110"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="order" class="tab"></div>
     </div>
 
 
-    <script src="./js/admin.js"></script>
+<script src="./js/admin.js"></script>
 </body>
 </html>

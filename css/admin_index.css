@@ -43,9 +43,6 @@ body{
     padding: 35px 0;
     box-sizing: border-box;
 }
-#header .wrap_hd .gnb>li{
-    
-}
 #header .wrap_hd .gnb a{
     width: 100%;
     height: 50px;
@@ -58,7 +55,7 @@ body{
     font-weight: 600;
     /* border: 1px solid blue; */
 }
-#header .wrap_hd .gnb a:hover{
+#header .wrap_hd .gnb li.active a{
     background-color: #8B9773;
     color: white;
 }
@@ -90,19 +87,19 @@ body{
 }
 
 /* 클릭시 아이콘 변경 */
-#header .wrap_hd .gnb li:nth-child(1) a:hover .icon_area{
+#header .wrap_hd .gnb li:nth-child(1).active a .icon_area{
     background-image: url(../images/icon_home_c.png);
 }
-#header .wrap_hd .gnb li:nth-child(2) a:hover .icon_area{
+#header .wrap_hd .gnb li:nth-child(2).active a .icon_area{
     background-image: url(../images/icon_member_c.png);
 }
-#header .wrap_hd .gnb li:nth-child(3) a:hover .icon_area{
+#header .wrap_hd .gnb li:nth-child(3).active a .icon_area{
     background-image: url(../images/icon_deliver_c.png);
 }
-#header .wrap_hd .gnb li:nth-child(4) a:hover .icon_area{
+#header .wrap_hd .gnb li:nth-child(4).active a .icon_area{
     background-image: url(../images/icon_sales_c.png);
 }
-#header .wrap_hd .gnb li:nth-child(5) a:hover .icon_area{
+#header .wrap_hd .gnb li:nth-child(5).active a .icon_area{
     background-image: url(../images/icon_order_c.png);
 }
 
@@ -116,7 +113,14 @@ body{
     position: absolute;
     top: 0; left: 18%;
 }
+
+#section > .tab{
+    display: none;
+}
 /* overview / admin info 영역------------------------------------------- */
+
+#section #home{
+}
 #section .home_top{
     width: 98%;
     height: 18%;
@@ -190,22 +194,23 @@ body{
     cursor: pointer;
     color: #4B4A45;
     font-size: 14px;
+    transition: all 0.2s;
 }
 
 /* 매출 요약 부분----------------------------------------- */
-#section .home .sale_chart{
+#section #home .sale_chart{
     width: 98%;
     position: absolute;
     top: 24%; left: 0;
 }
 /* 타이틀 글씨색 스타일 전체 적용 */
-#section .home h2{
+#section .tab h2{
     font-size: 20px;
     color: #4B4A45;
     font-weight: 600;
     margin-left: 16px;
 }
-#section .home .sale_chart .chart_area{
+#section #home .sale_chart .h_chart_area{
     width: 100%;
     height: 300px;
     margin-top: 15px;
@@ -216,7 +221,7 @@ body{
 }
 
 /* 인기상품 오늘의 주문 배송현황 부분-------------------------------------------- */
-#section .home .home_bt{
+#section #home .home_bt{
     width: 98%;
     height: 32.5%;
     position: absolute;
@@ -224,10 +229,10 @@ body{
     display: flex;
     justify-content: space-between;
 }
-#section .home .home_bt>li{
+#section #home .home_bt>li{
     width: 32%;
 }
-#section .home .home_bt .cont_area{
+#section #home .home_bt .cont_area{
     width: 100%;
     height: 87%;
     margin-top: 15px;
@@ -239,43 +244,43 @@ body{
 
 
 /* 인기상품-------------------------------------------------- */
-#section .home .home_bt .best_item .cont_area table{
+#section #home .home_bt .best_item .cont_area table{
     width: 100%;
     height: 100%;
     border-collapse: collapse;
 }
-#section .home .home_bt .best_item .cont_area table tr td{
+#section #home .home_bt .best_item .cont_area table tr td{
     padding: 0 30px;
     cursor: pointer;
 }
-#section .home .home_bt .best_item .cont_area table  tr:nth-child(even) td{
+#section #home .home_bt .best_item .cont_area table  tr:nth-child(even) td{
     background-color: #F5F5ED;
 }
 
 
-#section .home .home_bt .best_item .cont_area table tr td span:hover,
-#section .home .home_bt .today_order .cont_area table td span:hover,
-#section .home .home_bt .ship .cont_area table td span:hover{
+#section #home .home_bt .best_item .cont_area table tr td span:hover,
+#section #home .home_bt .today_order .cont_area table td span:hover,
+#section #home .home_bt .ship .cont_area table td span:hover{
     text-decoration: underline;
 }
 
 
 
 /* 오늘의 주문------------------------------------------------ */
-#section .home .home_bt .today_order .cont_area table{
+#section #home .home_bt .today_order .cont_area table{
     width: 100%;
     height: 48%;
     text-align: center;
 }
-#section .home .home_bt .today_order .cont_area table:first-child{
+#section #home .home_bt .today_order .cont_area table:first-child{
     margin-bottom: 10px;
 }
-#section .home .home_bt .today_order .cont_area table th{
+#section #home .home_bt .today_order .cont_area table th{
     background-color: #CFCFCF;
     color: white;
     width: 50%;
 }
-#section .home .home_bt .today_order .cont_area table td{
+#section #home .home_bt .today_order .cont_area table td{
     background-color: #FBFBFB;
     font-size: 18px;
     font-weight: 600;
@@ -285,22 +290,236 @@ body{
 
 
 /* 배송현황------------------------------------------------ */
-#section .home .home_bt .ship .cont_area table{
+#section #home .home_bt .ship .cont_area table{
     width: 100%;
     height: 48%;
     text-align: center;
 }
-#section .home .home_bt .ship .cont_area table:first-child{
+#section #home .home_bt .ship .cont_area table:first-child{
     margin-bottom: 10px;
 }
-#section .home .home_bt .ship .cont_area table th{
+#section #home .home_bt .ship .cont_area table th{
     background-color: #CFCFCF;
     color: white;
     width: 50%;
 }
-#section .home .home_bt .ship .cont_area table td{
+#section #home .home_bt .ship .cont_area table td{
     background-color: #FBFBFB;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
 }
+
+
+
+
+/* 회원관리--------------------------------------------------------------- */
+
+#section #member{
+    width: 98%;
+    height: 94%;
+    position: absolute;
+    top: 3%;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 25px 35px;
+    box-sizing: border-box;
+}
+#section #member .search table{
+    width: 98%;
+    margin: 0 auto;
+    margin-top: 18px;
+    border-collapse: collapse;
+}
+#section #member .search table td select{
+    width: 6%;
+}
+#section #member .search table tr:first-child td{
+    border-top: 1px solid #D2D2D2;
+}
+#section #member .search table tr:nth-child(2) td input{
+    width: 8%;
+}
+#section #member .search table tr:nth-child(2) td button{
+    width: 4%;
+}
+#section #member .search table td{
+    border-bottom: 1px solid #D2D2D2;
+    padding: 0 20px;
+    height: 45px;
+}
+#section #member .search table td:first-child{
+    background-color: #F8F8F8;
+    width: 10%;
+    color: #4B4A45;
+    font-weight: 500;
+}
+
+#section #member .search .btn{
+    margin-top: 30px;
+    text-align: center;
+}
+#section #member .search .btn button{
+    border: none;
+    width: 100px;
+    height: 40px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#section #member .search .btn .btn1{
+    background-color: #8B9773;
+}
+#section #member .search .btn .btn2{
+    background-color: #888888;
+}
+
+
+/* 회원리스트 */
+#section #member .wrap_list{
+    margin-top: 50px;
+}
+#section #member .wrap_list .btn_count{
+    display: flex;
+    justify-content: space-between;
+}
+#section #member .wrap_list .btn_count > li > button{
+    width: 80px;
+    height: 30px;
+    background-color: #F1F1F1;
+    font-size: 14px;
+    color: #4B4A45;
+    border: none;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#section #member .wrap_list .btn_count > li > p{
+    line-height: 30px;
+}
+#section #member .wrap_list .btn_count > li > p span{
+    color: #51753D;
+    font-weight: 600;
+}
+
+#section #member .wrap_list .mem_list{
+    width: 100%;
+    border: 1px solid #D2D2D2;
+    border-radius: 20px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+/* 매출관리---------------------------------------------------------------- */
+#section #sales{
+    width: 98%;
+    height: 94%;
+    position: absolute;
+    top: 3%;
+}
+#section #sales .sales_info{
+    display: flex;
+    justify-content: space-between;
+    height: 19%;
+}
+#section #sales .sales_info>li{
+    width: 24%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 25px 45px;
+    box-sizing: border-box;
+}
+#section #sales .sales_info>li span{
+    font-size: 1.3em;
+}
+#section #sales .sales_info>li h3{
+    font-size: 16px;
+    color: #9C9C9C;
+    font-weight: 600;
+    margin: 5px 0;
+}
+#section #sales .sales_info>li p{
+    font-size: 34px;
+    font-weight: 700;
+    color: #8B9773;
+    cursor: pointer;
+}
+#section #sales .sales_info>li p span{
+    font-size: 16px;
+    color: #4B4A45;
+    margin-left: 4px;
+}
+
+
+/* 기간별 매출 영역 ----------------------------------- */
+#section #sales .sale_chart{
+    width: 100%;
+    height: 40.5%;
+}
+#section #sales .sale_chart .sale_title{
+    display: flex;
+    margin-top: 28px;
+}
+#section #sales .sale_chart .sale_title h2{
+    line-height: 40px;
+    margin-right: 10px;
+}
+#section #sales .sale_chart .sale_title button{
+    background-color: #fff;
+    color: #4B4A45;
+    border: none;
+    width: 100px;
+    height: 40px;
+    margin-left:12px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+#section #sales .sale_chart .sale_title button.on,
+#section #sales .sale_chart .sale_title button:hover{
+    background-color: #8B9773;
+    color: #fff;
+}
+#section #sales .sale_chart .chart_area{
+    width: 100%;
+    height: 75%;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+#section #sales .sale_chart .chart_area .charts{
+    display: none;
+}
+
+
+
+/* 카테고리별 매출비중--------- */
+#section #sales .category_chart{
+    width: 100%;
+    height: 37%;
+    box-sizing: border-box;
+}
+#section #sales .category_chart .c_chart_area{
+    width: 100%;
+    height: 87%;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 35px 20px;
+    box-sizing: border-box;
+} 
+
+
+
