@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Member {
 
@@ -47,14 +48,12 @@ public class Member {
     private String address02;
 
     @Column(nullable = false)
-    private int zipcode;
+    private String zipcode;
 
     @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime regdate;
 
-    @Column(nullable = false)
-    private String role = "ROLE_MEMBER";
+    private String role = "ROLE_USER";
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Cart> cartList;
