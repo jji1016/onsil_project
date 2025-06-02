@@ -43,10 +43,10 @@
 
 <div class="product-list">
     <div class="product" th:each="flower : ${flowers}">
-        <a th:href="@{'/product/' + ${flower.id}}">
+        <a th:href="@{'/product/detail/' + ${flower.id}}">
         <img th:src="@{'/images/products/' + ${flower.image}}" th:alt="${flower.flowerName}">
         </a>
-        <a th:href="@{'/product/' + ${flower.id}}">
+        <a th:href="@{'/product/detail/' + ${flower.id}}">
         <div class="product-name" th:text="${flower.flowerName}"></div>
         </a>
         <div class="price" th:text="|₩${flower.price}|"></div>

@@ -13,6 +13,10 @@ import java.util.List;
 public class ProductService {
     private final ProductDao productDao;
 
+    public ProductDto getProductById(int id) {
+        return productDao.findByDtoId(id);
+    }
+
     public List<ProductDto> findAll() {
         return productDao.findAll();
     }

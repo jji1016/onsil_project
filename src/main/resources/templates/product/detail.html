@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${flower.flowerName} + ' - 상세페이지'">꽃 상세페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .product-detail {
+            display: flex;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .product-detail img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .details {
+            flex: 1;
+        }
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .price {
+            color: green;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .description {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🌸 꽃 상세 페이지</h1>
+
+<div class="product-detail">
+    <img th:src="@{'/images/products/' + ${flower.image}}" th:alt="${flower.flowerName}">
+    <div class="details">
+        <div class="product-name" th:text="${flower.flowerName}">꽃 이름</div>
+        <div class="price" th:text="|₩${flower.price}|">₩0</div>
+        <div class="description" th:text="${flower.flowerInfo}">여기에 꽃 설명이 들어갑니다.</div>
+        <a class="back-link" th:href="@{/products}">← 상품 목록으로 돌아가기</a>
+    </div>
+</div>
+
+</body>
+</html>
