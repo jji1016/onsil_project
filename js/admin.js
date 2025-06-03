@@ -57,6 +57,65 @@
 
 
 
+//회원관리 페이지
+const members = [
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 346,
+        name: "박보영",
+        id: "bboyoung",
+        grade: "일반회원",
+        phone: "010-5678-1234",
+        joined: "2025-05-01 10:12",
+        history: 2,
+        point: "1,500",
+        login: 8
+    }
+    ];
+
+    const tbody = document.getElementById("member-body");
+
+    members.forEach(member => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td>${member.no}</td>
+        <td>${member.name}</td>
+        <td>${member.id}</td>
+        <td>${member.grade}</td>
+        <td>${member.phone}</td>
+        <td>${member.joined}</td>
+        <td>${member.history}</td>
+        <td>${member.point}</td>
+        <td>${member.login}</td>
+        <td>
+        <button>관리</button>
+        <button>삭제</button>
+        </td>
+    `;
+
+    tbody.appendChild(tr);
+    });
+
+
+
+
+
+
+
+
+
+
 
 //매출관리 매출요약 차트
 //day chart
@@ -212,6 +271,8 @@
         }
     }
 });
+
+
 
 
 
