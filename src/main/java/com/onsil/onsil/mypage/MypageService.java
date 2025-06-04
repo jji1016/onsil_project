@@ -1,7 +1,7 @@
 package com.onsil.onsil.mypage;
 
 import com.onsil.onsil.entity.Member;
-import com.onsil.onsil.member.MemberDto;
+import com.onsil.onsil.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
