@@ -1,6 +1,6 @@
 package com.onsil.onsil.entity;
 
-import com.onsil.onsil.member.MemberDto;
+import com.onsil.onsil.member.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
