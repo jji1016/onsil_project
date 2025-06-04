@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class MemberDto {
+    private Integer id;
+
     @NotBlank(message="아이디는 필수입력사항입니다.")
     private String userID;
 
