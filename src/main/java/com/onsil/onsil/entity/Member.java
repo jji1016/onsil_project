@@ -73,6 +73,7 @@ public class Member {
 
     public MemberDto toMemberDto() {
         return MemberDto.builder()
+                .id(this.getId())
                 .userID(this.getUserID())
                 .userName(this.getUserName())
                 .userEmail(this.getUserEmail())
