@@ -6,6 +6,7 @@ import com.onsil.onsil.admin.repository.AdminOrderListRepository;
 import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.OrderList;
+import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -32,7 +33,7 @@ public class AdminDao {
         return memberRepository.findByUserID(userID);
     }
 
-    public List<OrderList> findByMemberID(int id) {
-        return subscribeRepository.findByMember_MemberId(id);
+    public List<Subscribe> findByMemberID(int id) {
+        return subscribeRepository.findByMember_id(id);
     }
 }

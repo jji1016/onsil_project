@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface AdminSubscribeRepository extends JpaRepository<Subscribe, Integer> {
 
-    List<OrderList> findByMember_id(int id);
+    List<Subscribe> findByMember_id(int id);
 }

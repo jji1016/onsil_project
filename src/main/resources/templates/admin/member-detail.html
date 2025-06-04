@@ -12,15 +12,15 @@
     <table border="1">
         <tr>
             <td th:text="${memberDetail.userID}" th:name="userID">userID</td>
-            <td th:text="${memberDetail.userName}">userName</td>
             <td th:text="${memberDetail.nickName}">nickName</td>
+            <td th:text="${memberDetail.userName}">userName</td>
             <td th:text="${memberDetail.userEmail}">userEmail</td>
             <td th:text="${memberDetail.zipcode}">zipcode</td>
             <td th:text="${memberDetail.address01}">address01</td>
             <td th:text="${memberDetail.address02}">address02</td>
             <td th:text="${memberDetail.tel}">tel</td>
             <td>
-                <a href="" th:href="@{/admin/order-list/{userID}(userID=${memberDetail.userID})}"><button>주문 내역</button></a>
+                <a href="" th:href="@{/admin/order-list/{id}(id=${memberDetail.id})}"><button>주문 내역</button></a>
             </td>
             <td>
                 <button th:attr="data-user-id=${memberDetail.userID}" class="btn-delete">탈퇴</button>

@@ -14,9 +14,8 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EntityListeners(AuditingEntityListener.class)
-public class Subscribe {
+public class  Subscribe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
