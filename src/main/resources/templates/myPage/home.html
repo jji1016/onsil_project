@@ -6,13 +6,23 @@
 </head>
 <body>
 <h1>mypage/home</h1>
-    <div th:text="${loggedMemberDto.userID}"></div>
-    <div th:text="${loggedMemberDto.userName}"></div>
-    <div th:text="${loggedMemberDto.userEmail}"></div>
-    <div th:text="${loggedMemberDto.nickName}"></div>
-    <div th:text="${loggedMemberDto.tel}"></div>
-    <div th:text="${loggedMemberDto.address01}"></div>
-    <div th:text="${loggedMemberDto.address02}"></div>
-    <div th:text="${loggedMemberDto.zipcode}"></div>
+
+<div th:text="${loggedMemberDto.userID}"></div>
+<div th:text="${loggedMemberDto.userName}"></div>
+<div th:text="${loggedMemberDto.userEmail}"></div>
+<div th:text="${loggedMemberDto.nickName}"></div>
+<div th:text="${loggedMemberDto.tel}"></div>
+<div th:text="${loggedMemberDto.address01}"></div>
+<div th:text="${loggedMemberDto.address02}"></div>
+<div th:text="${loggedMemberDto.zipcode}"></div>
+<hr>
+<th:block th:each="orderlist : ${mypageOrderListDto}">
+    <div th:text="${orderlist.quantity}"></div>
+    <div th:text="${orderlist.status}"></div>
+    <div th:text="${orderlist.orderTime}"></div>
+    <div th:text="${orderlist.flowerName}"></div>
+    <div th:text="${orderlist.price}"></div>
+</th:block>
+
 </body>
 </html>

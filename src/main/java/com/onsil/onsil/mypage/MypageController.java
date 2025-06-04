@@ -22,10 +22,14 @@ public class MypageController {
     @GetMapping("/home")
     public String home(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
-        log.info("mypage userID==={}", userID);
+
         MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-        log.info("loggedMemberDto==={}", loggedMemberDto);
         model.addAttribute("loggedMemberDto", loggedMemberDto);
+
+        Integer loggedMemberID = loggedMemberDto.getId(); //Member 테이블의 기본키
+        List<MypageOrderListDto> mypageOrderListDto = mypageService.findOrderList(loggedMemberID); //로그인한 사람의 주문내역
+        log.info("mypageOrderListDto: {}", mypageOrderListDto);
+        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
 
         return "mypage/home";
     }
