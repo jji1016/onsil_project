@@ -75,7 +75,6 @@ public class Member {
     public MemberDto toMemberDto() {
         return MemberDto.builder()
                 .userID(this.getUserID())
-                .userPW(this.getUserPW())
                 .userName(this.getUserName())
                 .userEmail(this.getUserEmail())
                 .nickName(this.getNickName())
