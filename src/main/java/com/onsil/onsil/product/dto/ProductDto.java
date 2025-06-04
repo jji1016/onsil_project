@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,4 +16,6 @@ public class ProductDto {
     private String flowerInfo;
     private int price;
     private String image;
+
+    private List<ReviewDto> reviews;
 }

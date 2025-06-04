@@ -67,5 +67,17 @@
     </div>
 </div>
 
+<div class="reviews">
+    <h3>📝 리뷰</h3>
+    <div th:if="${#lists.isEmpty(flower.reviews)}">
+        <p>등록된 리뷰가 없습니다.</p>
+    </div>
+    <div th:each="review : ${flower.reviews}" class="review">
+        <div class="author" th:text="${review.memberId}">작성자</div>
+        <div class="rating">⭐ <span th:text="${review.rating}">5</span>/5</div>
+        <div class="content" th:text="${review.content}">리뷰 내용</div>
+    </div>
+</div>
+
 </body>
 </html>
