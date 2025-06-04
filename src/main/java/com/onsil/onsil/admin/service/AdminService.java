@@ -58,6 +58,7 @@ public class AdminService {
     public List<SubscribeDto> findByMemberID(int id) {
 
         List<Subscribe> membersSubscribe = adminDao.findByMemberID(id);
+
         return membersSubscribe.stream()
                 .map(subscribe -> SubscribeDto.builder()
                         .id(subscribe.getId())
@@ -68,6 +69,26 @@ public class AdminService {
                         .endDate(subscribe.getEndDate())
                         .productPrice(subscribe.getProduct().getPrice())
                         .period(subscribe.getPeriod())
+                        .build())
+                .toList();
+    }
+
+    public List<MemberDto> findByUserName(String keyword) {
+
+        List<Member> foundFromUserName = adminDao.findByUserName(keyword);
+
+        return foundFromUserName.stream()
+                .map(member -> MemberDto.builder()
+                        .zipcode(member.getZipcode())
+                        .address01(member.getAddress01())
+                        .address02(member.getAddress02())
+                        .nickName(member.getNickName())
+                        .tel(member.getTel())
+                        .userID(member.getUserID())
+                        .userName(member.getUserName())
+                        .userEmail(member.getUserEmail())
+                        .regDate(member.getRegdate())
+                        .role(member.getRole())
                         .build())
                 .toList();
     }

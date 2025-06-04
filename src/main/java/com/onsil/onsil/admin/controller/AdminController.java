@@ -70,4 +70,10 @@ public class AdminController {
 
         return "admin/order-list";
     }
+
+    @GetMapping("/member-search")
+    @ResponseBody
+    public List<MemberDto> searchMembers(@RequestParam String keyword) {
+        return adminService.findByUserName(keyword);
+    }
 }

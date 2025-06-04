@@ -36,4 +36,8 @@ public class AdminDao {
     public List<Subscribe> findByMemberID(int id) {
         return subscribeRepository.findByMember_id(id);
     }
+
+    public List<Member> findByUserName(String keyword) {
+        return memberRepository.findByUserNameContaining(keyword);
+    }
 }
