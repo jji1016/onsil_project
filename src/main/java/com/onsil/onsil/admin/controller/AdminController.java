@@ -1,10 +1,16 @@
 package com.onsil.onsil.admin.controller;
 
+import com.onsil.onsil.admin.dto.MemberDto;
 import com.onsil.onsil.admin.service.AdminService;
+import com.onsil.onsil.entity.OrderList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/admin")
 @Controller
@@ -16,6 +22,49 @@ public class AdminController {
     @GetMapping("/dashboard")
     public String index() {
 
+        List<MemberDto> memberList = adminService.getAllMembers();
+//        List<OrderListDto> orderLists = adminService.getAllOrders();
+
         return "admin/dashboard";
+    }
+
+    @GetMapping("/member-list")
+    public String memberList(Model model) {
+        List<MemberDto> memberList = adminService.getAllMembers();
+        model.addAttribute("memberList", memberList);
+
+        return "admin/member-list";
+    }
+
+    @DeleteMapping("/member-list")
+    @ResponseBody
+    public Map<String, Object> delete(@PathVariable String userID) {
+
+        int result = adminService.deleteByUserID(userID);
+        Map<String, Object> resultMap = new HashMap<>();
+
+        if (result > 0) {
+            resultMap.put("isDelete", true);
+        } else {
+            resultMap.put("isDelete", false);
+        }
+        return resultMap;
+    }
+
+    @GetMapping("/member-list/{userID}")
+    public String memberDetail(@PathVariable String userID, Model model) {
+
+        MemberDto memberDetail = adminService.findByUserID(userID);
+        model.addAttribute("memberDetail", memberDetail);
+
+        return "admin/member-detail";
+    }
+
+    @GetMapping("/order-list/{userID}")
+    public String orderList(@PathVariable int id, Model model) {
+
+        List<OrderList> orderLists = adminService.findByMemberID(id);
+        model.addAttribute("orderLists", orderLists);
+        return "admin/order-list";
     }
 }

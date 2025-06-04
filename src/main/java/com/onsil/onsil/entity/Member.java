@@ -1,5 +1,6 @@
 package com.onsil.onsil.entity;
 
+import com.onsil.onsil.admin.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -47,7 +48,7 @@ public class Member {
     private String address02;
 
     @Column(nullable = false)
-    private int zipcode;
+    private String zipcode;
 
     @CreatedDate
     @Column(updatable = false)
@@ -71,4 +72,16 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Output> outputList;
 
+    public Member(String userID, String userName, String nickName, String userEmail,
+                           String zipcode, String address01, String address02, String tel, LocalDateTime regdate) {
+        this.regdate = regdate;
+        this.userID = userID;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.userEmail = userEmail;
+        this.zipcode = zipcode;
+        this.address01 = address01;
+        this.address02 = address02;
+        this.tel = tel;
+    }
 }
