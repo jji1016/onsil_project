@@ -2,13 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>회원가입</title>
 </head>
 <body>
-<form action="/member/signup" method="post" th:object="${memberDto}">
+<form id="signupForm" action="/member/signup" method="post" th:object="${memberDto}">
     <div>
         <label for="userID">userID</label>
         <input id="userID" type="text" name="userID" th:field="*{userID}">
+        <button type="button" id="checkUserIDBtn">중복 체크</button>
         <div th:if="${#fields.hasErrors('userID')}" th:errors="*{userID}"></div>
     </div>
     <div>
@@ -19,32 +20,29 @@
     <div>
         <label for="userEmail">userEmail</label>
         <input id="userEmail" type="text" name="userEmail" th:field="*{userEmail}">
+        <button type="button" id="checkEmailBtn">중복 체크</button>
         <div th:errors="*{userEmail}"></div>
-
     </div>
     <div>
         <label for="userName">userName</label>
         <input id="userName" type="text" name="userName" th:field="*{userName}">
         <div th:errors="*{userName}"></div>
-
     </div>
     <div>
         <label for="nickName">nickName</label>
         <input id="nickName" type="text" name="nickName" th:field="*{nickName}">
+        <button type="button" id="checkNickNameBtn">중복 체크</button>
         <div th:errors="*{nickName}"></div>
-
     </div>
     <div>
         <label for="tel">tel</label>
         <input id="tel" type="text" name="tel" th:field="*{tel}">
         <div th:errors="*{tel}"></div>
-
     </div>
     <div>
         <label for="address01">address01</label>
-        <input id="address01" type="text" name="address01" th:field="*{address01}">
+        <input id="address01" type="text" name="address01" th:field="*{address01}" readonly>
         <div th:errors="*{address01}"></div>
-
     </div>
     <div>
         <label for="address02">address02</label>
@@ -52,13 +50,112 @@
     </div>
     <div>
         <label for="zipcode">zipcode</label>
-        <input id="zipcode" type="text" name="zipcode" th:field="*{zipcode}">
+        <input id="zipcode" type="text" name="zipcode" th:field="*{zipcode}" readonly>
+        <button type="button" onclick="execDaumPostcode()">주소 검색</button>
         <div th:errors="*{zipcode}"></div>
-
     </div>
     <div>
-        <button>SIGN UP</button>
+        <button type="submit">SIGN UP</button>
     </div>
 </form>
+
+<!-- 주소 API -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                document.getElementById('zipcode').value = data.zonecode;
+                document.getElementById('address01').value = data.address;
+                document.getElementById('address02').focus();
+            }
+        }).open();
+    }
+</script>
+
+<!-- 유효성 검사 + 중복 체크 스크립트 -->
+<script>
+    // form 유효성 검사
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        const requiredFields = ['userID', 'userPW', 'userEmail', 'userName', 'nickName', 'tel', 'address01', 'zipcode'];
+        let hasEmptyField = false;
+
+        requiredFields.forEach(id => {
+            const input = document.getElementById(id);
+            if (!input.value.trim()) {
+                hasEmptyField = true;
+            }
+        });
+
+        if (hasEmptyField) {
+            alert("모든 필수 항목을 입력해주세요.");
+            event.preventDefault(); // 폼 제출 막기
+        }
+    });
+
+    // userID 중복 체크
+    document.getElementById('checkUserIDBtn').addEventListener('click', function () {
+        const userID = document.getElementById('userID').value;
+        if (!userID.trim()) return alert("아이디를 먼저 입력하세요.");
+        fetch(`/member/checkUserID?userID=${encodeURIComponent(userID)}`)
+            .then(response => response.json())
+            .then(isDuplicate => {
+                alert(isDuplicate ? "이미 사용 중인 아이디입니다." : "사용 가능한 아이디입니다.");
+            })
+            .catch(() => alert('중복 체크 중 오류가 발생했습니다.'));
+    });
+
+    // nickName 중복 체크
+    document.getElementById('checkNickNameBtn').addEventListener('click', function () {
+        const nickName = document.getElementById('nickName').value;
+        if (!nickName.trim()) return alert("닉네임을 먼저 입력하세요.");
+        fetch(`/member/checkNickName?nickname=${encodeURIComponent(nickName)}`)
+            .then(response => response.json())
+            .then(isDuplicate => {
+                alert(isDuplicate ? "이미 사용 중인 닉네임입니다." : "사용 가능한 닉네임입니다.");
+            })
+            .catch(() => alert('중복 체크 중 오류가 발생했습니다.'));
+    });
+
+    // userEmail 중복 체크
+    document.getElementById('checkEmailBtn').addEventListener('click', function () {
+        const userEmail = document.getElementById('userEmail').value;
+        if (!userEmail.trim()) return alert("이메일을 먼저 입력하세요.");
+        fetch(`/member/checkUserEmail?email=${encodeURIComponent(userEmail)}`)
+            .then(response => response.json())
+            .then(isDuplicate => {
+                alert(isDuplicate ? "이미 사용 중인 이메일입니다." : "사용 가능한 이메일입니다.");
+            })
+            .catch(() => alert('중복 체크 중 오류가 발생했습니다.'));
+    });
+</script>
+<script>
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        const fields = [
+            { id: 'userID', label: '아이디' },
+            { id: 'userPW', label: '비밀번호' },
+            { id: 'userEmail', label: '이메일' },
+            { id: 'userName', label: '이름' },
+            { id: 'nickName', label: '닉네임' },
+            { id: 'tel', label: '전화번호' },
+            { id: 'address01', label: '주소' },
+            { id: 'zipcode', label: '우편번호' }
+        ];
+
+        let missing = [];
+
+        fields.forEach(field => {
+            const input = document.getElementById(field.id);
+            if (!input.value.trim()) {
+                missing.push(field.label);
+            }
+        });
+
+        if (missing.length > 0) {
+            alert("다음 항목을 입력해주세요: " + missing.join(', '));
+            event.preventDefault(); // 제출 막기
+        }
+    });
+</script>
 </body>
 </html>
