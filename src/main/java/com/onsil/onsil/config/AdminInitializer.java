@@ -1,8 +1,7 @@
 package com.onsil.onsil.config;
 
-import com.onsil.onsil.constant.Role;
 import com.onsil.onsil.entity.Member;
-import com.onsil.onsil.member.MemberDao;
+import com.onsil.onsil.member.dao.MemberDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
