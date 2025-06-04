@@ -1,4 +1,4 @@
-package com.onsil.onsil.admin.dao;
+package com.onsil.onsil.cart.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

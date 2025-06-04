@@ -1,4 +1,4 @@
-package com.onsil.onsil.admin.dto;
+package com.onsil.onsil.cart.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
