@@ -20,6 +20,7 @@ public interface MypageMemberRepository extends JpaRepository<Member,Integer> {
             "FROM ORDERLIST o " +
             "JOIN MEMBER m ON o.MEMBERID = m.MEMBERID " +
             "JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID " +
-            "WHERE m.MEMBERID = :loggedMemberID",nativeQuery = true)
+            "WHERE m.MEMBERID = :loggedMemberID " +
+            "ORDER BY o.ORDERTIME DESC ",nativeQuery = true)
     List<Object[]> findOrderList(@Param("loggedMemberID") Integer loggedMemberID);
 }
