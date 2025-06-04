@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+
+<h1>MEMBER LIST</h1>
+<div class="container">
+    <table border="1">
+        <th:block th:each="member: ${memberList}">
+            <tr>
+                <td th:text="${memberStat.count}">num</td>
+                <td th:text="${member.userID}" th:name="userID">userID</td>
+                <td th:text="${member.userName}">userName</td>
+                <td th:text="${member.nickName}">nickName</td>
+                <td th:text="${member.userEmail}">userEmail</td>
+                <td th:text="${member.zipcode}">zipcode</td>
+                <td th:text="${member.address01}">address01</td>
+                <td th:text="${member.address02}">address02</td>
+                <td th:text="${member.tel}">tel</td>
+                <td>
+                    <a href="" th:href="@{/admin/member-list/{userID}(userID=${member.userID})}"><button>관리</button></a>
+                </td>
+                <td>
+                    <button th:attr="data-user-id=${member.userID}" class="btn-delete">탈퇴</button>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<script>
+
+    document.querySelectorAll(".btn-delete")
+        .forEach(btn => {
+            btn.addEventListener("click", () => {
+
+                const userID = btn.dataset.userId;
+                fetch(`/admin/member/delete/${userID}`, {
+                    method: "delete"
+                })
+                    .then(res => res.json())
+                    .then(json => {
+                        console.log(json);
+                        if (json.isDelete) {
+                            btn.closest("tr").remove();
+                        }
+                    })
+            })
+        })
+
+</script>
+</body>
+</html>
