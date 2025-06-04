@@ -1,8 +1,10 @@
 package com.onsil.onsil.admin.controller;
 
 import com.onsil.onsil.admin.dto.MemberDto;
+import com.onsil.onsil.admin.dto.SubscribeDto;
 import com.onsil.onsil.admin.service.AdminService;
 import com.onsil.onsil.entity.OrderList;
+import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +38,7 @@ public class AdminController {
         return "admin/member-list";
     }
 
-    @DeleteMapping("/member-list")
+    @DeleteMapping("/member-list/{userID}")
     @ResponseBody
     public Map<String, Object> delete(@PathVariable String userID) {
 
@@ -60,11 +62,12 @@ public class AdminController {
         return "admin/member-detail";
     }
 
-    @GetMapping("/order-list/{userID}")
+    @GetMapping("/order-list/{id}")
     public String orderList(@PathVariable int id, Model model) {
 
-        List<OrderList> orderLists = adminService.findByMemberID(id);
+        List<SubscribeDto> orderLists = adminService.findByMemberID(id);
         model.addAttribute("orderLists", orderLists);
+
         return "admin/order-list";
     }
 }

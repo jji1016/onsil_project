@@ -3,6 +3,7 @@ package com.onsil.onsil.entity;
 import com.onsil.onsil.admin.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,7 +16,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Member {
 
