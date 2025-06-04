@@ -1,4 +1,4 @@
-package com.onsil.onsil.member;
+package com.onsil.onsil.member.dto;
 
 import com.onsil.onsil.constant.Role;
 import com.onsil.onsil.entity.Member;
