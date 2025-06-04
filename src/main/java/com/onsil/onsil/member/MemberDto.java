@@ -45,7 +45,7 @@ public class MemberDto {
     private String zipcode;
 
     @Enumerated(EnumType.STRING)
-    private Role role; //Role 상수 처리할 예정 enum
+    private String role; //Role 상수 처리할 예정 enum
 
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
@@ -53,7 +53,6 @@ public class MemberDto {
     public Member toMember() {
         return Member.builder()
                 .userID(this.userID)
-                .userPW(this.userPW)
                 .userName(this.userName)
                 .userEmail(this.userEmail)
                 .nickName(this.nickName)
@@ -61,7 +60,7 @@ public class MemberDto {
                 .address01(this.address01)
                 .address02(this.address02)
                 .zipcode(this.zipcode)
-                .role(String.valueOf(this.role))
+                .role(this.role)
                 .build();
     }
 

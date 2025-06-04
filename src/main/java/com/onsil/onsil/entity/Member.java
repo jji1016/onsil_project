@@ -1,5 +1,6 @@
 package com.onsil.onsil.entity;
 
+import com.onsil.onsil.member.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -53,6 +54,7 @@ public class Member {
     @CreatedDate
     private LocalDateTime regdate;
 
+    @Builder.Default
     private String role = "ROLE_USER";
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -70,4 +72,19 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Output> outputList;
 
+    public MemberDto toMemberDto() {
+        return MemberDto.builder()
+                .userID(this.getUserID())
+                .userName(this.getUserName())
+                .userEmail(this.getUserEmail())
+                .nickName(this.getNickName())
+                .tel(this.getTel())
+                .address01(this.getAddress01())
+                .address02(this.getAddress02())
+                .zipcode(this.getZipcode())
+                .regDate(this.getRegdate())
+                .modifyDate(this.getRegdate())
+                .role(this.getRole())
+                .build();
+    }
 }
