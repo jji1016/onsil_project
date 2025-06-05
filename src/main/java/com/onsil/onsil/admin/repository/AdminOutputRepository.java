@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface AdminOutputRepository extends JpaRepository<Output, Integer> {
 
-    @Query(value = "SELECT o.AMOUNT, o.REGDATE, p.FLOWERNAME FROM OUTPUT o JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID ", nativeQuery = true)
+    @Query(value = "SELECT o.AMOUNT, o.REGDATE, p.FLOWERNAME, m.USERNAME " +
+            "FROM OUTPUT o " +
+            "JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID " +
+            "JOIN MEMBER m ON o.PRODUCTID = m.PRODUCTID ", nativeQuery = true)
     List<Object[]> getOutputs();
 }

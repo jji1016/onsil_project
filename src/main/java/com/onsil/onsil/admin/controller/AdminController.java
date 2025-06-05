@@ -25,9 +25,7 @@ public class AdminController {
 
 
     @GetMapping("/outputlist")
-    public String list(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
-                       Model model) {
+    public String list(Model model) {
 
         List<AdminOutputDto> list = adminOutputService.getOutputs();
         log.info("list={}", list);
