@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AdminMemberRepository extends JpaRepository <Member, Integer>{
+public interface AdminMemberRepository extends JpaRepository<Member, Integer> {
 
 
     int deleteByUserID(String userID);
@@ -22,12 +22,12 @@ public interface AdminMemberRepository extends JpaRepository <Member, Integer>{
 
     List<Member> findByUserNameContaining(String keyword);
 
-    @Query ("SELECT m FROM Member m WHERE " +
-            "(:keyword IS NULL OR LOWER(m.userName) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND " +
-            "(:startDate IS NULL OR m.regdate >= :startDate) AND " +
-            "(:endDate IS NULL OR m.regdate <= :endDate)")
-    List<Member> searchMembers(@Param("keyword") String keyword,
-                               @Param("startDate") LocalDateTime startDate,
-                               @Param("endDate") LocalDateTime endDate);
-
+//    @Query("SELECT m FROM Member m WHERE " +
+//            "(:keyword IS NULL OR LOWER(m.userName) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND " +
+//            "(:startDate IS NULL OR m.regdate >= :startDate) AND " +
+//            "(:endDate IS NULL OR m.regdate <= :endDate)")
+//    List<Member> searchMembers(@Param("keyword") String keyword,
+//                               @Param("category") String category,
+//                               @Param("startDate") LocalDateTime startDate,
+//                               @Param("endDate") LocalDateTime endDate);
 }

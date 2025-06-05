@@ -57,7 +57,7 @@ public class AdminController {
         return resultMap;
     }
 
-    @GetMapping("/member-list/{userID}")
+    @GetMapping("/member-detail/{userID}")
     public String memberDetail(@PathVariable String userID, Model model) {
 
         MemberDto memberDetail = adminService.findByUserID(userID);
@@ -65,6 +65,22 @@ public class AdminController {
 
         return "admin/member-detail";
     }
+
+    @GetMapping("/member-modify/{userID}")
+    public String memberModify(@PathVariable String userID, Model model) {
+
+        MemberDto memberModify = adminService.findByUserID(userID);
+        model.addAttribute("memberModify", memberModify);
+
+        return "admin/member-modify";
+    }
+
+    @PostMapping("/member-modify/{id}")
+    public String modifyMember(@PathVariable Long id, @ModelAttribute MemberDto dto) {
+        adminService.modifyMember(id, dto);
+        return "redirect:/admin/member-list";
+    }
+
 
     @GetMapping("/order-list/{id}")
     public String orderList(@PathVariable int id, Model model) {
@@ -79,14 +95,13 @@ public class AdminController {
     @ResponseBody
     public List<MemberDto> searchMembers(
             @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String category,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
-        LocalDateTime endDateTime = endDate != null ? endDate.atTime(LocalTime.MAX) : null;
+        LocalDateTime start = (startDate != null) ? startDate.atStartOfDay() : null;
+        LocalDateTime end = (endDate != null) ? endDate.atTime(LocalTime.MAX) : null;
 
-        return adminService.search(keyword, startDateTime, endDateTime);
+        return adminService.search(keyword, category, start, end);
     }
-
-
 }

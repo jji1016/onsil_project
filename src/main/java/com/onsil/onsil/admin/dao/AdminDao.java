@@ -43,7 +43,10 @@ public class AdminDao {
         return memberRepository.findByUserNameContaining(keyword);
     }
 
-    public List<Member> searchMembers(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
-        return memberRepository.searchMembers(keyword,startDate,endDate);
-    }
+//    public List<Member> searchMembers(String keyword, String category, LocalDateTime startDate, LocalDateTime endDate) {
+//        return memberRepository.searchMembers(keyword, category, startDate,endDate);
+//    }
+public List<Member> searchMembers() {
+    return memberRepository.findAll();
+}
 }
