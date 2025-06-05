@@ -1,6 +1,7 @@
 package com.onsil.onsil.flower.service;
 
 import com.onsil.onsil.flower.dto.FlowerDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
@@ -15,7 +16,10 @@ import java.util.Scanner;
 
 @Service
 public class FlowerService {
-    public FlowerDto getFlowerDetailFromApi(Integer dataNo, String serviceKey) throws Exception {
+    @Value("${api.flower.service-key}")
+    private String serviceKey;
+
+    public FlowerDto getFlowerDetailFromApi(Integer dataNo) throws Exception {
         String urlStr = "https://apis.data.go.kr/1390804/NihhsTodayFlowerInfo01/selectTodayFlowerView01"
                 + "?ServiceKey=" + URLEncoder.encode(serviceKey, "UTF-8")
                 + "&dataNo=" + dataNo;
