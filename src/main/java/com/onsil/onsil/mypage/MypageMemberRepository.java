@@ -23,4 +23,8 @@ public interface MypageMemberRepository extends JpaRepository<Member,Integer> {
             "WHERE m.MEMBERID = :loggedMemberID " +
             "ORDER BY o.ORDERTIME DESC ",nativeQuery = true)
     List<Object[]> findOrderList(@Param("loggedMemberID") Integer loggedMemberID);
+
+    @Modifying
+    @Query(value = "DELETE FROM MEMBER WHERE MEMBERID = :id",nativeQuery = true)
+    int deleteAccount(@Param("id") Integer id);
 }

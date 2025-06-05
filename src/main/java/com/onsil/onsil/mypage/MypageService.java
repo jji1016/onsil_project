@@ -5,6 +5,7 @@ import com.onsil.onsil.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class MypageService {
     private final MypageDao mypageDao;
 
@@ -41,5 +43,14 @@ public class MypageService {
                 ))
                 .collect(Collectors.toList());
         return MypageOrderListDto;
+    }
+
+    public void updateInfo(MemberDto memberDto) {
+        Member member = memberDto.toMember();
+        mypageDao.save(member);
+    }
+
+    public int deleteAccount(Integer id) {
+        return mypageDao.deleteAccount(id);
     }
 }
