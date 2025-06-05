@@ -129,4 +129,13 @@ public class AdminService {
                 dto.getAddress02()
         );
     }
+
+    public int countAllMembers() {
+        return adminDao.countAllMembers();
+    }
+
+    public int countOneMonth() {
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        return adminDao.countOneMonth(oneMonthAgo);
+    }
 }

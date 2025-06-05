@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
 </head>
 <body>
-    <p>신규 가입자 수</p>
-    <p>총 가입자 수</p>
+    <p th:text="${inOneMonthSubscribeMember}">신규 가입자 수 (한달 이내에 구독을 새로 한사람)</p>
+    <p th:text="${allSubscribeMember}">총 가입자 수(현재 구독 중인 사람 수)</p>
 
     <div class="container">
         <div>

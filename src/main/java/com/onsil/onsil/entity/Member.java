@@ -61,16 +61,16 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Cart> cartList;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<Review> reviewList;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Subscribe> subscribeList;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<OrderList> orderLists;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<Output> outputList;
 
     public void updateInfo(String nickName, String userEmail, String zipcode, String address01, String address02) {

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ public class AdminDao {
         return memberRepository.findAll();
     }
 
+    @Transactional
     public int deleteByUserID(String userID) {
         return memberRepository.deleteByUserID(userID);
     }
@@ -45,5 +47,13 @@ public class AdminDao {
 //    }
     public List<Member> searchMembers() {
         return memberRepository.findAll();
+    }
+
+    public int countAllMembers() {
+        return subscribeRepository.countDistinctNumber();
+    }
+
+    public int countOneMonth(LocalDateTime todayDate) {
+        return subscribeRepository.countOneMonthMember(todayDate);
     }
 }
