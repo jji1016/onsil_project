@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, Integer> {
-    @Query("SELECT new com.onsil.onsil.admin.dto.CartItemDto(" +
+    @Query("SELECT new com.onsil.onsil.cart.dto.CartItemDto(" +
             "c.id, p.id, p.flowerName, p.price, c.quantity, p.image, m.nickName) " +
             "FROM Cart c " +
             "JOIN c.product p " +
