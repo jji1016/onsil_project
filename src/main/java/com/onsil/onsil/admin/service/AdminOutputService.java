@@ -30,7 +30,8 @@ public class AdminOutputService {
                 .map(index -> new AdminOutputDto(
                         ((Number) index[0]).intValue(),
                         ((Timestamp) index[1]).toLocalDateTime(),
-                        ((String) index[2])
+                        ((String) index[2]),
+                        ((String) index[3])
                 ))
                 .collect(Collectors.toList());
         return adminOutputDtos;
