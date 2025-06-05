@@ -71,36 +71,36 @@ body{
     /* border: 1px solid lime; */
 }
 #header .wrap_hd .gnb li:nth-child(1) a .icon_area{
-    background-image: url(../images/icon_home.png);
+    background-image: url(../images/admin/icon_home.png);
 }
 #header .wrap_hd .gnb li:nth-child(2) a .icon_area{
-    background-image: url(../images/icon_member.png);
+    background-image: url(../images/admin/icon_member.png);
 }
 #header .wrap_hd .gnb li:nth-child(3) a .icon_area{
-    background-image: url(../images/icon_deliver.png);
+    background-image: url(../images/admin/icon_deliver.png);
 }
 #header .wrap_hd .gnb li:nth-child(4) a .icon_area{
-    background-image: url(../images/icon_sales.png);
+    background-image: url(../images/admin/icon_sales.png);
 }
 #header .wrap_hd .gnb li:nth-child(5) a .icon_area{
-    background-image: url(../images/icon_order.png);
+    background-image: url(../images/admin/icon_order.png);
 }
 
 /* 클릭시 아이콘 변경 */
 #header .wrap_hd .gnb li:nth-child(1).active a .icon_area{
-    background-image: url(../images/icon_home_c.png);
+    background-image: url(../images/admin/icon_home_c.png);
 }
 #header .wrap_hd .gnb li:nth-child(2).active a .icon_area{
-    background-image: url(../images/icon_member_c.png);
+    background-image: url(../images/admin/icon_member_c.png);
 }
 #header .wrap_hd .gnb li:nth-child(3).active a .icon_area{
-    background-image: url(../images/icon_deliver_c.png);
+    background-image: url(../images/admin/icon_deliver_c.png);
 }
 #header .wrap_hd .gnb li:nth-child(4).active a .icon_area{
-    background-image: url(../images/icon_sales_c.png);
+    background-image: url(../images/admin/icon_sales_c.png);
 }
 #header .wrap_hd .gnb li:nth-child(5).active a .icon_area{
-    background-image: url(../images/icon_order_c.png);
+    background-image: url(../images/admin/icon_order_c.png);
 }
 
 
@@ -325,41 +325,57 @@ body{
     padding: 25px 35px;
     box-sizing: border-box;
 }
-#section #member .search table{
+
+
+
+/* 모든페이지 검색 테이블 부분 공통적용 -------------- */
+#section .search table{
     width: 98%;
     margin: 0 auto;
     margin-top: 18px;
     border-collapse: collapse;
 }
-#section #member .search table td select{
-    width: 6%;
+#section .search table td select{
+    width: 100px;
 }
-#section #member .search table tr:first-child td{
-    border-top: 1px solid #D2D2D2;
-}
-#section #member .search table tr:nth-child(2) td input{
-    width: 8%;
-}
-#section #member .search table tr:nth-child(2) td button{
-    width: 4%;
-}
-#section #member .search table td{
+#section  .search table td{
     border-bottom: 1px solid #D2D2D2;
     padding: 0 20px;
     height: 45px;
 }
-#section #member .search table td:first-child{
+#section .search table tr input[type="text"]{
+    width: 20%;
+}
+#section .search table tr:first-child td{
+    border-top: 1px solid #D2D2D2;
+}
+#section .search table td:nth-child(3),
+#section .search table td:first-child{
     background-color: #F8F8F8;
     width: 10%;
     color: #4B4A45;
     font-weight: 500;
 }
 
-#section #member .search .btn{
+/* 모든페이지 검색 테이블 부분 공통적용 -------------- */
+
+
+#section #member .search table tr:nth-child(2) td input{
+    width: 7%;
+}
+#section .search table tr:nth-child(2) td button{
+    width: 4%;
+}
+
+
+
+
+/* 검색 초기화 버튼 공통적용-------------------------------------- */
+#section .search .btn{
     margin-top: 30px;
     text-align: center;
 }
-#section #member .search .btn button{
+#section .search .btn button{
     border: none;
     width: 100px;
     height: 40px;
@@ -367,12 +383,17 @@ body{
     border-radius: 10px;
     cursor: pointer;
 }
-#section #member .search .btn .btn1{
+#section .search .btn .btn1{
     background-color: #8B9773;
 }
-#section #member .search .btn .btn2{
+#section .search .btn .btn2{
     background-color: #888888;
 }
+/* 검색 초기화 버튼 공통적용-------------------------------------- */
+
+
+
+
 
 
 /* 회원리스트 */
@@ -405,10 +426,134 @@ body{
 #section #member .wrap_list .mem_list{
     width: 100%;
     border: 1px solid #D2D2D2;
-    border-radius: 20px;
+    border-radius: 15px;
     margin-top: 10px;
     text-align: center;
+    border-spacing: 0;
+    overflow: hidden;
 }
+#section #member .wrap_list .mem_list thead th{
+    line-height: 60px;
+    border-bottom: 1px solid #D2D2D2;
+}
+#section #member .wrap_list .mem_list td{
+    line-height: 40px;
+}
+#section #member .wrap_list .mem_list td > button{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+#section #member .wrap_list .mem_list td > .admin_btn{
+    background-color: #8B9773;
+    color: white;
+}
+#section #member .wrap_list .mem_list td > .del_btn{
+    background-color: #E8E8E8;
+    color: #4B4A45;
+}
+#section #member .wrap_list .mem_list tr:nth-child(even){
+    background-color: #F5F5ED;
+}
+
+
+
+/* 입출고 및 재고현황-------------------------------------------------------------------------- */
+
+#section #stock{
+    width: 93%;
+    height: 88.5%;
+    position: absolute;
+    top: 3%;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+#section #stock .stock_btn{
+    width: 100%;
+    height: 6%;
+}
+#section #stock .stock_btn > button{
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #4B4A45;
+    background-color: #fff;
+}
+#section #stock .stock_btn > button.btn_on,
+#section #stock .stock_btn > button:hover{
+    background-color: #8B9773;
+    color: white;
+}
+#section #stock .stock_cont{
+    width: 100%;
+    height: 94%;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 25px 35px;
+}
+
+/* 입출고등록버튼 --- */
+#section .add_btn{
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    background-color: #8B9773;
+    cursor: pointer;
+}
+
+/* 테이블 디자인 */
+#section #stock .wrap_list{
+    margin-top: 50px;
+}
+#section #stock .wrap_list .stock_list{
+    width: 100%;
+    border: 1px solid #D2D2D2;
+    border-radius: 15px;
+    margin-top: 10px;
+    text-align: center;
+    border-spacing: 0;
+    overflow: hidden;
+}
+#section #stock .wrap_list .stock_list thead th{
+    line-height: 60px;
+    border-bottom: 1px solid #D2D2D2;
+}
+#section #stock .wrap_list .stock_list td{
+    line-height: 40px;
+}
+#section #stock .wrap_list .stock_list td > button{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+#section #stock .wrap_list .stock_list td > .admin_btn{
+    background-color: #8B9773;
+    color: white;
+}
+#section #stock .wrap_list .stock_list td > .del_btn{
+    background-color: #E8E8E8;
+    color: #4B4A45;
+}
+#section #stock .wrap_list .stock_list tr:nth-child(even){
+    background-color: #F5F5ED;
+}
+
+
 
 
 
