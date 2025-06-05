@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>꽃 상세 정보 조회</title>
+    <style>
+        body { font-family: '맑은 고딕', sans-serif; margin: 40px; }
+        .input-row { margin-bottom: 20px; }
+        .flower-info { margin-top: 30px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; max-width: 600px; }
+        .flower-img { max-width: 250px; margin-bottom: 15px; }
+        .label { font-weight: bold; color: #2a7; }
+    </style>
+</head>
+<body>
+<h1>꽃 상세 정보 조회 (공공데이터 API 연동)</h1>
+<div class="input-row">
+    <label for="dataNo" class="label">꽃 번호(dataNo):</label>
+    <input type="number" id="dataNo" placeholder="예: 1" style="width:80px;">
+    <label for="serviceKey" class="label" style="margin-left:20px;">ServiceKey:</label>
+    <input type="text" id="serviceKey" placeholder="공공데이터포털 발급키" style="width:350px;">
+    <button onclick="fetchFlower()">조회</button>
+</div>
+<div id="result"></div>
+
+<script>
+    async function fetchFlower() {
+        const dataNo = document.getElementById('dataNo').value.trim();
+        const serviceKey = document.getElementById('serviceKey').value.trim();
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '';
+
+        if (!dataNo || !serviceKey) {
+            resultDiv.innerHTML = "<span style='color:red;'>꽃 번호와 서비스키를 모두 입력하세요.</span>";
+            return;
+        }
+
+        try {
+            resultDiv.innerHTML = "조회 중...";
+            const response = await fetch(`/api/flowers/${dataNo}?serviceKey=${encodeURIComponent(serviceKey)}`);
+            if (!response.ok) throw new Error("API 호출 실패 (" + response.status + ")");
+            const data = await response.json();
+
+            if (!data || !data.flowNm) {
+                resultDiv.innerHTML = "<span style='color:red;'>꽃 정보를 찾을 수 없습니다.</span>";
+                return;
+            }
+
+            resultDiv.innerHTML = `
+                    <div class="flower-info">
+                        <img src="${data.imgUrl1 || ''}" alt="꽃 이미지" class="flower-img" onerror="this.style.display='none';">
+                        <h2>${data.flowNm || ''}</h2>
+                        <p><span class="label">학명:</span> ${data.fSctNm || '-'}</p>
+                        <p><span class="label">영문명:</span> ${data.fEngNm || '-'}</p>
+                        <p><span class="label">월/일:</span> ${data.fMonth || '-'}월 ${data.fDay || '-'}일</p>
+                        <p><span class="label">꽃말:</span> ${data.flowLang || '-'}</p>
+                        <p><span class="label">설명:</span> ${data.fContent || '-'}</p>
+                        <p><span class="label">활용:</span> ${data.fUse || '-'}</p>
+                        <p><span class="label">생육:</span> ${data.fGrow || '-'}</p>
+                        <p><span class="label">유형:</span> ${data.fType || '-'}</p>
+                        <p><span class="label">출처:</span> ${data.publishOrg || '-'}</p>
+                    </div>
+                `;
+        } catch (err) {
+            resultDiv.innerHTML = `<span style='color:red;'>오류: ${err.message}</span>`;
+        }
+    }
+</script>
+</body>
+</html>
