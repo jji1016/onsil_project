@@ -71,6 +71,8 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Output> outputList;
 
+    private boolean deleteStatus = false; //탈퇴 할 경우 true로 변경
+
     public MemberDto toMemberDto() {
         return MemberDto.builder()
                 .id(this.getId())
