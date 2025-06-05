@@ -8,7 +8,7 @@
 
 <h1>회원 정보 수정</h1>
 
-<form th:action="@{/admin/member-modify/{id}(id=${memberModify.id})}" method="post">
+<form th:action="@{/admin/member-modify/{userID}(userID=${memberModify.userID})}" method="post">
     <input type="hidden" th:value="${memberModify.id}" name="id"/>
 
     <label>ID:</label>
@@ -28,6 +28,9 @@
 
     <label>주소2:</label>
     <input type="text" name="address02" th:value="${memberModify.address02}" /><br/>
+
+    <label>전화번호</label>
+    <input type="text" name="tel" th:value="${memberModify.tel}" /><br/>
 
     <button type="submit">수정 완료</button>
     <a th:href="@{/admin/member-list}"><button type="button">취소</button></a>

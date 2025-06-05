@@ -6,14 +6,19 @@ import com.onsil.onsil.admin.dto.SubscribeDto;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AdminService {
 
     private final AdminDao adminDao;
@@ -42,8 +47,11 @@ public class AdminService {
     }
 
     public MemberDto findByUserID(String userID) {
+
         Member member = adminDao.findByUserID(userID);
+        log.info("member={}", member.toString());
         MemberDto dto = new MemberDto();
+
         dto.setId(member.getId());
         dto.setUserID(member.getUserID());
         dto.setUserName(member.getUserName());
@@ -54,6 +62,7 @@ public class AdminService {
         dto.setAddress02(member.getAddress02());
         dto.setZipcode(member.getZipcode());
         dto.setRegDate(member.getRegdate());
+
         return dto;
     }
 
@@ -108,8 +117,16 @@ public class AdminService {
                 .toList();
     }
 
+    @Transactional
+    public void modifyMember(String userID, MemberDto dto) {
+        Member member = adminDao.findByUserID(userID);
 
-    public void modifyMember(Long id, MemberDto dto) {
-        return;
+        member.updateInfo(
+                dto.getNickName(),
+                dto.getUserEmail(),
+                dto.getZipcode(),
+                dto.getAddress01(),
+                dto.getAddress02()
+        );
     }
 }
