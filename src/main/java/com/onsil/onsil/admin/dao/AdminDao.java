@@ -10,6 +10,8 @@ import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,5 +41,9 @@ public class AdminDao {
 
     public List<Member> findByUserName(String keyword) {
         return memberRepository.findByUserNameContaining(keyword);
+    }
+
+    public List<Member> searchMembers(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        return memberRepository.searchMembers(keyword,startDate,endDate);
     }
 }

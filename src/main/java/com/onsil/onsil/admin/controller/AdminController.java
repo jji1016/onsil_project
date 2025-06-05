@@ -6,10 +6,14 @@ import com.onsil.onsil.admin.service.AdminService;
 import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +77,16 @@ public class AdminController {
 
     @GetMapping("/member-search")
     @ResponseBody
-    public List<MemberDto> searchMembers(@RequestParam String keyword) {
-        return adminService.findByUserName(keyword);
+    public List<MemberDto> searchMembers(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) {
+        LocalDateTime startDateTime = startDate != null ? startDate.atStartOfDay() : null;
+        LocalDateTime endDateTime = endDate != null ? endDate.atTime(LocalTime.MAX) : null;
+
+        return adminService.search(keyword, startDateTime, endDateTime);
     }
+
+
 }

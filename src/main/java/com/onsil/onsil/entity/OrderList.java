@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class OrderList {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "orderListID")

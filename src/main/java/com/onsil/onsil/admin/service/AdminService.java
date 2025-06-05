@@ -8,6 +8,8 @@ import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -73,11 +75,11 @@ public class AdminService {
                 .toList();
     }
 
-    public List<MemberDto> findByUserName(String keyword) {
+    public List<MemberDto> search(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        List<Member> members = adminDao.searchMembers(keyword, startDate, endDate);
 
-        List<Member> foundFromUserName = adminDao.findByUserName(keyword);
-
-        return foundFromUserName.stream()
+        return members.stream()
+                .filter(member -> !member.getRole().equals("admin"))
                 .map(member -> MemberDto.builder()
                         .zipcode(member.getZipcode())
                         .address01(member.getAddress01())
@@ -92,4 +94,5 @@ public class AdminService {
                         .build())
                 .toList();
     }
+
 }

@@ -9,6 +9,10 @@
 
 <h1>MEMBER LIST</h1>
 <input type="text" id="search-input" placeholder="아이디 검색">
+<input type="date" id="start-date" placeholder="시작일">
+<input type="date" id="end-date" placeholder="종료일">
+
+
 <button id="search-btn">검색</button>
 <button id="reset-btn">초기화</button>
 <table border="1">
@@ -19,7 +23,7 @@
         <td th:text="${member.nickName}">nickName</td>
         <td th:text="${member.userName}">userName</td>
         <td th:text="${member.userEmail}">userEmail</td>
-        <td th:text="${member.zipcode}">zipcode</td>
+        <td th:text="${member.regDate}">regDate</td>
         <td th:text="${member.address01}">address01</td>
         <td th:text="${member.address02}">address02</td>
         <td th:text="${member.tel}">tel</td>
@@ -34,7 +38,8 @@
     </tr>
     </tbody>
 </table>
-<script>
+<script th:inline="javascript">
+    const searchUrl = /*[[@{/admin/member-search}]]*/ "";
 
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -45,17 +50,21 @@
 
         searchBtn.addEventListener('click', function () {
             const keyword = input.value.trim();
-            if (!keyword) return;
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
 
-            fetch(`/admin/member-search?keyword=${encodeURIComponent(keyword)}`)
+            const params = new URLSearchParams();
+            if (keyword) params.append('keyword', keyword);
+            if (startDate) params.append('startDate', startDate);
+            if (endDate) params.append('endDate', endDate);
+
+            fetch(`/admin/member-search?${params}`)
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error("서버 응답 오류");
-                    }
+                    if (!response.ok) throw new Error("서버 응답 오류");
                     return response.json();
                 })
                 .then(data => {
-                    tableBody.innerHTML = ""; // 기존 행 제거
+                    tableBody.innerHTML = "";
 
                     if (data.length === 0) {
                         tableBody.innerHTML = '<tr><td colspan="11">검색 결과 없음</td></tr>';
@@ -65,24 +74,24 @@
                     data.forEach((member, index) => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${member.userID}</td>
-            <td>${member.nickName}</td>
-            <td>${member.userName}</td>
-            <td>${member.userEmail}</td>
-            <td>${member.zipcode}</td>
-            <td>${member.address01}</td>
-            <td>${member.address02 ?? ''}</td>
-            <td>${member.tel}</td>
-            <td>
-              <a href="/admin/member-list/${member.userID}">
-                <button>관리</button>
-              </a>
-            </td>
-            <td>
-              <button class="btn-delete" data-user-id="${member.userID}">탈퇴</button>
-            </td>
-          `;
+                    <td>${index + 1}</td>
+                    <td>${member.userID}</td>
+                    <td>${member.nickName}</td>
+                    <td>${member.userName}</td>
+                    <td>${member.userEmail}</td>
+                    <td>${member.zipcode}</td>
+                    <td>${member.address01}</td>
+                    <td>${member.address02 ?? ''}</td>
+                    <td>${member.tel}</td>
+                    <td>
+                      <a href="/admin/member-list/${member.userID}">
+                        <button>관리</button>
+                      </a>
+                    </td>
+                    <td>
+                      <button class="btn-delete" data-user-id="${member.userID}">탈퇴</button>
+                    </td>
+                `;
                         tableBody.appendChild(row);
                     });
                 })
@@ -97,6 +106,7 @@
         });
     });
 </script>
+
 <script>
 
     document.querySelectorAll(".btn-delete")
