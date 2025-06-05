@@ -2,13 +2,12 @@ package com.onsil.onsil.admin.repository;
 
 import com.onsil.onsil.entity.Output;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
-import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
 
-@Repository
 public interface AdminOutputRepository extends JpaRepository<Output, Integer> {
 
-    Collection<Object> findByOutDateBetween(LocalDate start, LocalDate end);
+    @Query(value = "SELECT o.AMOUNT, o.REGDATE, p.FLOWERNAME FROM OUTPUT o JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID ", nativeQuery = true)
+    List<Object[]> getOutputs();
 }
