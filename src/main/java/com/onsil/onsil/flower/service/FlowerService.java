@@ -7,6 +7,7 @@ import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -29,7 +30,9 @@ public class FlowerService {
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        Scanner sc = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8);
+        int status = conn.getResponseCode();
+        InputStream is = (status == 200) ? conn.getInputStream() : conn.getErrorStream();
+        Scanner sc = new Scanner(is, StandardCharsets.UTF_8);
         StringBuilder xml = new StringBuilder();
         while (sc.hasNext()) xml.append(sc.nextLine());
         sc.close();
@@ -38,6 +41,13 @@ public class FlowerService {
                 .newDocumentBuilder()
                 .parse(new InputSource(new StringReader(xml.toString())));
         doc.getDocumentElement().normalize();
+
+        // resultCode/resultMsg 체크
+        String resultCode = getTagValue("resultCode", doc.getDocumentElement());
+        String resultMsg = getTagValue("resultMsg", doc.getDocumentElement());
+        if (!"00".equals(resultCode) && !"1".equals(resultCode)) {
+            throw new RuntimeException("공공데이터포털 API 오류: " + resultMsg + " (코드:" + resultCode + ")");
+        }
 
         NodeList items = doc.getElementsByTagName("item");
         List<FlowerDto> list = new ArrayList<>();
@@ -85,7 +95,9 @@ public class FlowerService {
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        Scanner sc = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8);
+        int status = conn.getResponseCode();
+        InputStream is = (status == 200) ? conn.getInputStream() : conn.getErrorStream();
+        Scanner sc = new Scanner(is, StandardCharsets.UTF_8);
         StringBuilder xml = new StringBuilder();
         while (sc.hasNext()) xml.append(sc.nextLine());
         sc.close();
@@ -94,6 +106,12 @@ public class FlowerService {
                 .newDocumentBuilder()
                 .parse(new InputSource(new StringReader(xml.toString())));
         doc.getDocumentElement().normalize();
+
+        String resultCode = getTagValue("resultCode", doc.getDocumentElement());
+        String resultMsg = getTagValue("resultMsg", doc.getDocumentElement());
+        if (!"00".equals(resultCode) && !"1".equals(resultCode)) {
+            throw new RuntimeException("공공데이터포털 API 오류: " + resultMsg + " (코드:" + resultCode + ")");
+        }
 
         NodeList items = doc.getElementsByTagName("item");
         if (items.getLength() == 0) return null;
