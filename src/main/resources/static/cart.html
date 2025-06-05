@@ -22,14 +22,14 @@
 <table id="cart-table">
     <thead>
     <tr>
-        <th>상품ID</th><th>상품명</th><th>가격</th><th>수량</th><th>이미지</th><th>닉네임</th><th>수정/삭제</th>
+        <th>상품명</th><th>가격</th><th>수량</th><th>이미지</th><th>닉네임</th><th>수정/삭제</th>
     </tr>
     </thead>
     <tbody></tbody>
 </table>
 <div>
     <h3>상품 추가</h3>
-    <label>상품ID: <input type="number" id="productId" style="width:60px;"></label>
+    <label>상품명: <input type="text" id="flowerName" style="width:120px;"></label>
     <label>수량: <input type="number" id="quantity" value="1" style="width:40px;"></label>
     <button onclick="addToCart()">추가</button>
 </div>
@@ -43,7 +43,6 @@
         items.forEach(item => {
             tbody.innerHTML += `
                     <tr>
-                        <td>${item.productId}</td>
                         <td>${item.flowerName}</td>
                         <td>${item.price}</td>
                         <td>
@@ -68,9 +67,9 @@
 
     async function addToCart() {
         const memberId = document.getElementById('memberId').value;
-        const productId = document.getElementById('productId').value;
+        const flowerName = document.getElementById('flowerName').value;
         const quantity = document.getElementById('quantity').value;
-        await fetch(`/api/cart?memberId=${memberId}&productId=${productId}&quantity=${quantity}`, {
+        await fetch(`/api/cart?memberId=${memberId}&flowerName=${encodeURIComponent(flowerName)}&quantity=${quantity}`, {
             method: 'POST'
         });
         loadCart();
