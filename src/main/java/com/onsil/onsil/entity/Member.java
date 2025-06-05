@@ -1,6 +1,6 @@
 package com.onsil.onsil.entity;
 
-import com.onsil.onsil.member.MemberDto;
+import com.onsil.onsil.member.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Member {
@@ -72,8 +71,11 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Output> outputList;
 
+    private boolean deleteStatus = false; //탈퇴 할 경우 true로 변경
+
     public MemberDto toMemberDto() {
         return MemberDto.builder()
+                .id(this.getId())
                 .userID(this.getUserID())
                 .userName(this.getUserName())
                 .userEmail(this.getUserEmail())
