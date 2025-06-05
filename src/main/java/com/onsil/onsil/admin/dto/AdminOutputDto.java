@@ -1,18 +1,19 @@
 package com.onsil.onsil.admin.dto;
 
-import lombok.Data;
+import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AdminOutputDto {
 
-    private LocalDate outDate;
-    private String productCode;
-    private String productName;
-    private String productType;
-    private String productUnit;
-    private int quantity;
-    private String storage;
-    private String manager;
+    private int amount;
+    private LocalDateTime regDate;
+    private String flowerName;
+
 }
