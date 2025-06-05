@@ -75,24 +75,41 @@ public class AdminService {
                 .toList();
     }
 
-    public List<MemberDto> search(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
-        List<Member> members = adminDao.searchMembers(keyword, startDate, endDate);
+    public List<MemberDto> search(String keyword, String category, LocalDateTime startDate, LocalDateTime endDate) {
+        List<Member> members = adminDao.searchMembers(); // 전체 가져옴
 
         return members.stream()
-                .filter(member -> !member.getRole().equals("admin"))
-                .map(member -> MemberDto.builder()
-                        .zipcode(member.getZipcode())
-                        .address01(member.getAddress01())
-                        .address02(member.getAddress02())
-                        .nickName(member.getNickName())
-                        .tel(member.getTel())
-                        .userID(member.getUserID())
-                        .userName(member.getUserName())
-                        .userEmail(member.getUserEmail())
-                        .regDate(member.getRegdate())
-                        .role(member.getRole())
+                .filter(m -> {
+                    if (keyword != null && !keyword.isBlank()) {
+                        return switch (category) {
+                            case "userID" -> m.getUserID().contains(keyword);
+                            case "userName" -> m.getUserName().contains(keyword);
+                            case "nickName" -> m.getNickName().contains(keyword);
+                            default -> true;
+                        };
+                    }
+                    return true;
+                })
+                .filter(m -> startDate == null || !m.getRegdate().isBefore(startDate))
+                .filter(m -> endDate == null || !m.getRegdate().isAfter(endDate))
+                .filter(m -> !m.getRole().equals("admin")) // 또는 m.getRole().equals("member")
+                .map(m -> MemberDto.builder()
+                        .zipcode(m.getZipcode())
+                        .address01(m.getAddress01())
+                        .address02(m.getAddress02())
+                        .nickName(m.getNickName())
+                        .tel(m.getTel())
+                        .userID(m.getUserID())
+                        .userName(m.getUserName())
+                        .userEmail(m.getUserEmail())
+                        .regDate(m.getRegdate())
+                        .role(m.getRole())
                         .build())
                 .toList();
     }
 
+
+    public void modifyMember(Long id, MemberDto dto) {
+        return;
+    }
 }

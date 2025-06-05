@@ -8,13 +8,18 @@
 <body>
 
 <h1>MEMBER LIST</h1>
-<input type="text" id="search-input" placeholder="아이디 검색">
+<input type="text" id="search-input" placeholder="검색어 입력">
+<select id="search-category">
+    <option value="userID">아이디</option>
+    <option value="nickName">닉네임</option>
+    <option value="userName">이름</option>
+</select>
 <input type="date" id="start-date" placeholder="시작일">
 <input type="date" id="end-date" placeholder="종료일">
 
-
 <button id="search-btn">검색</button>
 <button id="reset-btn">초기화</button>
+
 <table border="1">
     <tbody id="member-table-body">
     <tr th:each="member, memberStat : ${memberList}">
@@ -28,7 +33,7 @@
         <td th:text="${member.address02}">address02</td>
         <td th:text="${member.tel}">tel</td>
         <td>
-            <a th:href="@{/admin/member-list/{userID}(userID=${member.userID})}">
+            <a th:href="@{/admin/member-detail/{userID}(userID=${member.userID})}">
                 <button>관리</button>
             </a>
         </td>
@@ -38,27 +43,34 @@
     </tr>
     </tbody>
 </table>
+
 <script th:inline="javascript">
-    const searchUrl = /*[[@{/admin/member-search}]]*/ "";
 
     document.addEventListener('DOMContentLoaded', function () {
-
         const searchBtn = document.getElementById('search-btn');
         const resetBtn = document.getElementById('reset-btn');
         const input = document.getElementById('search-input');
+        const categorySelect = document.getElementById('search-category');
+        const startDateInput = document.getElementById('start-date');
+        const endDateInput = document.getElementById('end-date');
         const tableBody = document.getElementById('member-table-body');
 
         searchBtn.addEventListener('click', function () {
             const keyword = input.value.trim();
-            const startDate = document.getElementById('start-date').value;
-            const endDate = document.getElementById('end-date').value;
+            const category = categorySelect.value;
+            const startDate = startDateInput.value;
+            const endDate = endDateInput.value;
 
             const params = new URLSearchParams();
-            if (keyword) params.append('keyword', keyword);
+
+            if (keyword) {
+                params.append('keyword', keyword);
+                params.append('category', category);
+            }
             if (startDate) params.append('startDate', startDate);
             if (endDate) params.append('endDate', endDate);
 
-            fetch(`/admin/member-search?${params}`)
+            fetch(`/admin/member-search?${params.toString()}`)
                 .then(response => {
                     if (!response.ok) throw new Error("서버 응답 오류");
                     return response.json();
@@ -74,24 +86,24 @@
                     data.forEach((member, index) => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${member.userID}</td>
-                    <td>${member.nickName}</td>
-                    <td>${member.userName}</td>
-                    <td>${member.userEmail}</td>
-                    <td>${member.zipcode}</td>
-                    <td>${member.address01}</td>
-                    <td>${member.address02 ?? ''}</td>
-                    <td>${member.tel}</td>
-                    <td>
-                      <a href="/admin/member-list/${member.userID}">
-                        <button>관리</button>
-                      </a>
-                    </td>
-                    <td>
-                      <button class="btn-delete" data-user-id="${member.userID}">탈퇴</button>
-                    </td>
-                `;
+                            <td>${index + 1}</td>
+                            <td>${member.userID}</td>
+                            <td>${member.nickName}</td>
+                            <td>${member.userName}</td>
+                            <td>${member.userEmail}</td>
+                            <td>${member.regDate}</td>
+                            <td>${member.address01}</td>
+                            <td>${member.address02 ?? ''}</td>
+                            <td>${member.tel}</td>
+                            <td>
+                              <a href="/admin/member-list/${member.userID}">
+                                <button>관리</button>
+                              </a>
+                            </td>
+                            <td>
+                              <button class="btn-delete" data-user-id="${member.userID}">탈퇴</button>
+                            </td>
+                        `;
                         tableBody.appendChild(row);
                     });
                 })
@@ -100,12 +112,12 @@
                 });
         });
 
-        // 초기화 버튼
         resetBtn.addEventListener('click', function () {
-            location.reload(); // 페이지 새로고침
+            location.reload();
         });
     });
 </script>
+
 
 <script>
 
