@@ -23,7 +23,7 @@
                 <a href="" th:href="@{/admin/order-list/{id}(id=${memberDetail.id})}"><button>주문 내역</button></a>
             </td>
             <td>
-                <a href="" th:href="@{/admin/member-modify/{id}(id=${memberDetail.id})}"><button>정보 수정</button></a>
+                <a href="" th:href="@{/admin/member-modify/{userID}(userID=${memberDetail.userID})}"><button>정보 수정</button></a>
             </td>
             <td>
                 <button th:attr="data-user-id=${memberDetail.userID}" class="btn-delete">탈퇴</button>

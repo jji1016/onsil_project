@@ -67,7 +67,7 @@ public class AdminController {
     }
 
     @GetMapping("/member-modify/{userID}")
-    public String memberModify(@PathVariable String userID, Model model) {
+    public String modifyMember(@PathVariable String userID, Model model) {
 
         MemberDto memberModify = adminService.findByUserID(userID);
         model.addAttribute("memberModify", memberModify);
@@ -75,9 +75,9 @@ public class AdminController {
         return "admin/member-modify";
     }
 
-    @PostMapping("/member-modify/{id}")
-    public String modifyMember(@PathVariable Long id, @ModelAttribute MemberDto dto) {
-        adminService.modifyMember(id, dto);
+    @PostMapping("/member-modify/{userID}")
+    public String modifyMember(@PathVariable String userID, @ModelAttribute MemberDto dto) {
+        adminService.modifyMember(userID, dto);
         return "redirect:/admin/member-list";
     }
 

@@ -1,17 +1,14 @@
 package com.onsil.onsil.admin.dao;
 
-import com.onsil.onsil.admin.dto.MemberDto;
 import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.admin.repository.AdminOrderListRepository;
 import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
 import com.onsil.onsil.entity.Member;
-import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,10 +40,10 @@ public class AdminDao {
         return memberRepository.findByUserNameContaining(keyword);
     }
 
-//    public List<Member> searchMembers(String keyword, String category, LocalDateTime startDate, LocalDateTime endDate) {
+    //    public List<Member> searchMembers(String keyword, String category, LocalDateTime startDate, LocalDateTime endDate) {
 //        return memberRepository.searchMembers(keyword, category, startDate,endDate);
 //    }
-public List<Member> searchMembers() {
-    return memberRepository.findAll();
-}
+    public List<Member> searchMembers() {
+        return memberRepository.findAll();
+    }
 }
