@@ -25,6 +25,6 @@ public interface MypageMemberRepository extends JpaRepository<Member,Integer> {
     List<Object[]> findOrderList(@Param("loggedMemberID") Integer loggedMemberID);
 
     @Modifying
-    @Query(value = "DELETE FROM MEMBER WHERE MEMBERID = :id",nativeQuery = true)
+    @Query(value = "UPDATE MEMBER SET deleteStatus = 1 WHERE MEMBERID = :id",nativeQuery = true)
     int deleteAccount(@Param("id") Integer id);
 }
