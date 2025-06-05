@@ -2,66 +2,172 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>꽃 상세 정보 조회</title>
+    <title>월별 꽃 추천/탄생화/설명/상세</title>
     <style>
         body { font-family: '맑은 고딕', sans-serif; margin: 40px; }
-        .input-row { margin-bottom: 20px; }
-        .flower-info { margin-top: 30px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; max-width: 600px; }
-        .flower-img { max-width: 250px; margin-bottom: 15px; }
+        .month-select { margin-bottom: 20px; }
+        .section-title { font-size: 1.2em; margin-top: 30px; margin-bottom: 10px; color: #2a7; }
+        .flower-list, .birth-list, .recommend-list { display: flex; flex-wrap: wrap; gap: 18px; }
+        .flower-card {
+            border: 1px solid #ddd; border-radius: 8px; padding: 12px; width: 200px; background: #fafafa;
+            cursor: pointer; transition: box-shadow .2s;
+        }
+        .flower-card:hover { box-shadow: 0 2px 8px #bbb; background: #fff; }
+        .flower-img { max-width: 160px; max-height: 100px; margin-bottom: 6px; }
         .label { font-weight: bold; color: #2a7; }
+        #flower-detail { margin-top: 36px; border: 1px solid #ccc; border-radius: 8px; padding: 20px; max-width: 600px; }
     </style>
 </head>
 <body>
-<h1>꽃 상세 정보 조회 (공공데이터 API 연동)</h1>
-<div class="input-row">
-    <label for="dataNo" class="label">꽃 번호(dataNo):</label>
-    <input type="number" id="dataNo" placeholder="예: 1" style="width:80px;">
-    <label for="serviceKey" class="label" style="margin-left:20px;">ServiceKey:</label>
-    <input type="text" id="serviceKey" placeholder="공공데이터포털 발급키" style="width:350px;">
-    <button onclick="fetchFlower()">조회</button>
+<h1>월별 꽃 추천 & 탄생화</h1>
+<div class="month-select">
+    <label class="label">월 선택: </label>
+    <select id="monthSelect" onchange="loadAll()">
+        <option value="1">1월</option>
+        <option value="2">2월</option>
+        <option value="3">3월</option>
+        <option value="4">4월</option>
+        <option value="5">5월</option>
+        <option value="6">6월</option>
+        <option value="7">7월</option>
+        <option value="8">8월</option>
+        <option value="9">9월</option>
+        <option value="10">10월</option>
+        <option value="11">11월</option>
+        <option value="12">12월</option>
+    </select>
 </div>
-<div id="result"></div>
+
+<div class="section-title">이 달의 탄생화</div>
+<div id="birth-list" class="birth-list"></div>
+
+<div class="section-title">이 달의 꽃 추천</div>
+<div id="recommend-list" class="recommend-list"></div>
+
+<div class="section-title">꽃 설명 리스트</div>
+<div id="flower-list" class="flower-list"></div>
+
+<div class="section-title">꽃 상세 설명</div>
+<div id="flower-detail"></div>
 
 <script>
-    async function fetchFlower() {
-        const dataNo = document.getElementById('dataNo').value.trim();
-        const serviceKey = document.getElementById('serviceKey').value.trim();
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = '';
+    window.onload = () => {
+        const nowMonth = new Date().getMonth() + 1;
+        document.getElementById('monthSelect').value = nowMonth;
+        loadAll();
+    };
 
-        if (!dataNo || !serviceKey) {
-            resultDiv.innerHTML = "<span style='color:red;'>꽃 번호와 서비스키를 모두 입력하세요.</span>";
-            return;
-        }
+    async function loadAll() {
+        const month = document.getElementById('monthSelect').value;
+        loadBirthFlowers(month);
+        loadRecommendedFlowers(month);
+        loadFlowerList(month);
+        document.getElementById('flower-detail').innerHTML = '';
+    }
 
+    async function loadBirthFlowers(month) {
+        const div = document.getElementById('birth-list');
+        div.innerHTML = '불러오는 중...';
         try {
-            resultDiv.innerHTML = "조회 중...";
-            const response = await fetch(`/api/flowers/${dataNo}?serviceKey=${encodeURIComponent(serviceKey)}`);
-            if (!response.ok) throw new Error("API 호출 실패 (" + response.status + ")");
-            const data = await response.json();
-
-            if (!data || !data.flowNm) {
-                resultDiv.innerHTML = "<span style='color:red;'>꽃 정보를 찾을 수 없습니다.</span>";
+            const res = await fetch(`/api/flowers/month/${month}/birth`);
+            const list = await res.json();
+            if (!Array.isArray(list) || list.length === 0) {
+                div.innerHTML = "<span style='color:red;'>탄생화 정보가 없습니다.</span>";
                 return;
             }
-
-            resultDiv.innerHTML = `
-                    <div class="flower-info">
-                        <img src="${data.imgUrl1 || ''}" alt="꽃 이미지" class="flower-img" onerror="this.style.display='none';">
-                        <h2>${data.flowNm || ''}</h2>
-                        <p><span class="label">학명:</span> ${data.fSctNm || '-'}</p>
-                        <p><span class="label">영문명:</span> ${data.fEngNm || '-'}</p>
-                        <p><span class="label">월/일:</span> ${data.fMonth || '-'}월 ${data.fDay || '-'}일</p>
-                        <p><span class="label">꽃말:</span> ${data.flowLang || '-'}</p>
-                        <p><span class="label">설명:</span> ${data.fContent || '-'}</p>
-                        <p><span class="label">활용:</span> ${data.fUse || '-'}</p>
-                        <p><span class="label">생육:</span> ${data.fGrow || '-'}</p>
-                        <p><span class="label">유형:</span> ${data.fType || '-'}</p>
-                        <p><span class="label">출처:</span> ${data.publishOrg || '-'}</p>
+            div.innerHTML = '';
+            list.forEach(flower => {
+                div.innerHTML += `
+                    <div class="flower-card" onclick="showDetail(${flower.dataNo})">
+                        <img src="${flower.imgUrl1 || ''}" alt="꽃 이미지" class="flower-img" onerror="this.style.display='none';">
+                        <div><span class="label">${flower.flowNm || ''}</span></div>
+                        <div style="font-size:13px; color:#888;">${flower.flowLang || ''}</div>
                     </div>
                 `;
+            });
         } catch (err) {
-            resultDiv.innerHTML = `<span style='color:red;'>오류: ${err.message}</span>`;
+            div.innerHTML = `<span style='color:red;'>오류: ${err.message}</span>`;
+        }
+    }
+
+    async function loadRecommendedFlowers(month) {
+        const div = document.getElementById('recommend-list');
+        div.innerHTML = '불러오는 중...';
+        try {
+            const res = await fetch(`/api/flowers/month/${month}/recommend`);
+            const list = await res.json();
+            if (!Array.isArray(list) || list.length === 0) {
+                div.innerHTML = "<span style='color:red;'>추천 꽃 정보가 없습니다.</span>";
+                return;
+            }
+            div.innerHTML = '';
+            list.forEach(flower => {
+                div.innerHTML += `
+                    <div class="flower-card" onclick="showDetail(${flower.dataNo})">
+                        <img src="${flower.imgUrl1 || ''}" alt="꽃 이미지" class="flower-img" onerror="this.style.display='none';">
+                        <div><span class="label">${flower.flowNm || ''}</span></div>
+                        <div style="font-size:13px; color:#888;">${flower.flowLang || ''}</div>
+                    </div>
+                `;
+            });
+        } catch (err) {
+            div.innerHTML = `<span style='color:red;'>오류: ${err.message}</span>`;
+        }
+    }
+
+    async function loadFlowerList(month) {
+        const div = document.getElementById('flower-list');
+        div.innerHTML = '불러오는 중...';
+        try {
+            const res = await fetch(`/api/flowers/month/${month}/list`);
+            const list = await res.json();
+            if (!Array.isArray(list) || list.length === 0) {
+                div.innerHTML = "<span style='color:red;'>꽃 설명 리스트가 없습니다.</span>";
+                return;
+            }
+            div.innerHTML = '';
+            list.forEach(flower => {
+                div.innerHTML += `
+                    <div class="flower-card" onclick="showDetail(${flower.dataNo})">
+                        <img src="${flower.imgUrl1 || ''}" alt="꽃 이미지" class="flower-img" onerror="this.style.display='none';">
+                        <div><span class="label">${flower.flowNm || ''}</span></div>
+                        <div style="font-size:13px; color:#888;">${flower.flowLang || ''}</div>
+                        <div style="font-size:12px; color:#555;">${flower.fContent ? flower.fContent.substring(0, 40) + '...' : ''}</div>
+                    </div>
+                `;
+            });
+        } catch (err) {
+            div.innerHTML = `<span style='color:red;'>오류: ${err.message}</span>`;
+        }
+    }
+
+    async function showDetail(dataNo) {
+        const detailDiv = document.getElementById('flower-detail');
+        detailDiv.innerHTML = '상세정보 불러오는 중...';
+        try {
+            const res = await fetch(`/api/flowers/${dataNo}`);
+            const data = await res.json();
+            if (!data || !data.flowNm) {
+                detailDiv.innerHTML = data.error
+                    ? `<span style='color:red;'>${data.error}</span>`
+                    : "<span style='color:red;'>꽃 정보를 찾을 수 없습니다.</span>";
+                return;
+            }
+            detailDiv.innerHTML = `
+                <h2>${data.flowNm || ''}</h2>
+                <img src="${data.imgUrl1 || ''}" alt="꽃 이미지" style="max-width:200px;" onerror="this.style.display='none';"><br>
+                <p><span class="label">학명:</span> ${data.fSctNm || '-'}</p>
+                <p><span class="label">영문명:</span> ${data.fEngNm || '-'}</p>
+                <p><span class="label">월/일:</span> ${data.fMonth || '-'}월 ${data.fDay || '-'}일</p>
+                <p><span class="label">꽃말:</span> ${data.flowLang || '-'}</p>
+                <p><span class="label">설명:</span> ${data.fContent || '-'}</p>
+                <p><span class="label">활용:</span> ${data.fUse || '-'}</p>
+                <p><span class="label">생육:</span> ${data.fGrow || '-'}</p>
+                <p><span class="label">유형:</span> ${data.fType || '-'}</p>
+                <p><span class="label">출처:</span> ${data.publishOrg || '-'}</p>
+            `;
+        } catch (err) {
+            detailDiv.innerHTML = `<span style='color:red;'>상세정보 오류: ${err.message}</span>`;
         }
     }
 </script>
