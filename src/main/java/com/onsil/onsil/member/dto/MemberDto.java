@@ -55,6 +55,7 @@ public class MemberDto {
     public Member toMember() {
         return Member.builder()
                 .userID(this.userID)
+                .userPW(this.userPW)
                 .userName(this.userName)
                 .userEmail(this.userEmail)
                 .nickName(this.nickName)
