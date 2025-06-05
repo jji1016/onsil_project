@@ -21,4 +21,12 @@ public class MypageDao {
     public List<Object[]> findOrderList(Integer loggedMemberID) {
         return mypageMemberRepository.findOrderList(loggedMemberID);
     }
+
+    public void save(Member member) {
+        mypageMemberRepository.save(member);
+    }
+
+    public int deleteAccount(Integer id) {
+        return mypageMemberRepository.deleteAccount(id);
+    }
 }
