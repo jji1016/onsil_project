@@ -1,4 +1,4 @@
-package com.onsil.onsil.member;
+package com.onsil.onsil.member.dto;
 
 import com.onsil.onsil.constant.Role;
 import com.onsil.onsil.entity.Member;
@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class MemberDto {
+    private Integer id;
+
     @NotBlank(message="아이디는 필수입력사항입니다.")
     private String userID;
 
@@ -45,7 +47,7 @@ public class MemberDto {
     private String zipcode;
 
     @Enumerated(EnumType.STRING)
-    private Role role; //Role 상수 처리할 예정 enum
+    private String role; //Role 상수 처리할 예정 enum
 
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
@@ -53,7 +55,6 @@ public class MemberDto {
     public Member toMember() {
         return Member.builder()
                 .userID(this.userID)
-                .userPW(this.userPW)
                 .userName(this.userName)
                 .userEmail(this.userEmail)
                 .nickName(this.nickName)
@@ -61,7 +62,7 @@ public class MemberDto {
                 .address01(this.address01)
                 .address02(this.address02)
                 .zipcode(this.zipcode)
-                .role(String.valueOf(this.role))
+                .role(this.role)
                 .build();
     }
 

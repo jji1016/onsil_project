@@ -2,7 +2,7 @@ package com.onsil.onsil.communal.service;
 
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.entity.Member;
-import com.onsil.onsil.member.MemberDao;
+import com.onsil.onsil.member.dao.MemberDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
