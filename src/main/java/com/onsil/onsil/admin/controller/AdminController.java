@@ -26,23 +26,27 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping("/dashboard")
-    public String index() {
+    public String index(Model model) {
 
-        List<MemberDto> memberList = adminService.getAllMembers();
-//        List<OrderListDto> orderLists = adminService.getAllOrders();
+        int countedMember = adminService.countAllMembers();
+        int inOneMonthSubscribeMember = adminService.countOneMonth();
+
+        model.addAttribute("allSubscribeMember", countedMember);
+        model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
 
         return "admin/dashboard";
     }
 
     @GetMapping("/member-list")
     public String memberList(Model model) {
+
         List<MemberDto> memberList = adminService.getAllMembers();
         model.addAttribute("memberList", memberList);
 
         return "admin/member-list";
     }
 
-    @DeleteMapping("/member-list/{userID}")
+    @DeleteMapping("/member-list/delete/{userID}")
     @ResponseBody
     public Map<String, Object> delete(@PathVariable String userID) {
 
@@ -93,9 +97,8 @@ public class AdminController {
 
     @GetMapping("/member-search")
     @ResponseBody
-    public List<MemberDto> searchMembers(
-            @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) String category,
+    public List<MemberDto> searchMembers(@RequestParam(required = false) String keyword,
+                                         @RequestParam(required = false) String category,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {

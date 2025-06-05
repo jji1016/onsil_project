@@ -119,26 +119,26 @@
 </script>
 
 
-<script>
+    <script>
 
-    document.querySelectorAll(".btn-delete")
-        .forEach(btn => {
-            btn.addEventListener("click", () => {
+        document.querySelectorAll(".btn-delete")
+            .forEach(btn => {
+                btn.addEventListener("click", () => {
 
-                const userID = btn.dataset.userId;
-                fetch(`/admin/member/delete/${userID}`, {
-                    method: "delete"
-                })
-                    .then(res => res.json())
-                    .then(json => {
-                        console.log(json);
-                        if (json.isDelete) {
-                            btn.closest("tr").remove();
-                        }
+                    const userID = btn.dataset.userId;
+                    fetch(`/admin/member-list/delete/${userID}`, {
+                        method: "delete"
                     })
+                        .then(res => res.json())
+                        .then(json => {
+                            console.log(json);
+                            if (json.isDelete) {
+                                btn.closest("tr").remove();
+                            }
+                        })
+                })
             })
-        })
 
-</script>
+    </script>
 </body>
 </html>
