@@ -8,4 +8,6 @@ public interface AdminInventoryService {
     List<ProductDto> searchProducts(String keyword, String category, boolean isActive);
     void updateProduct(ProductDto productDto);
     void deleteProduct(ProductDto productDto);
+
+    void deleteProduct(String productCode);
 }

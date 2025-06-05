@@ -35,6 +35,13 @@ public class AdminInventoryServiceImpl implements AdminInventoryService{
     @Override
     public void updateProduct(ProductDto productDto) {
         Product product = productRepository.findById(dto.getProductCode()).orElseThrow();
+        product.setStock(dto.getStock());
+        product.setStorage(dto.getStorage());
+        productRepository.save(product);
+    }
 
+    @Override
+    public void deleteProduct(String productCode) {
+        productRepository.deleteById(productCode);
     }
 }
