@@ -1,7 +1,6 @@
 package com.onsil.onsil.flower.service;
 
 import com.onsil.onsil.flower.dto.FlowerDto;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
@@ -18,8 +17,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class FlowerService {
-    @Value("${api.flower.service-key}")
-    private String serviceKey;
+    // 서비스키를 직접 코드에 하드코딩 (반드시 디코딩 키 사용)
+    private final String serviceKey = "HjWN57F2fgCJmRiid1d76b2X6HS6Jn9E0tTy0VXnq0R7t5u6TeGOR2aQKNsHuy4G4Jhwmbmds67XG1wY2KQHlg==";
 
     // 월별 전체 꽃 리스트 (공공데이터포털 API)
     public List<FlowerDto> getFlowersByMonth(int month) throws Exception {
