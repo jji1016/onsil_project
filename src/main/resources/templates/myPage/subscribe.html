@@ -6,5 +6,15 @@
 </head>
 <body>
 <h1>mypage/subscribe</h1>
+
+<th:block th:each="subscribeList : ${mypageSubscribeDtoList}">
+    <div th:text="${subscribeList.period}"></div>
+    <div th:text="${subscribeList.startDate}"></div>
+    <div th:text="${subscribeList.endDate}"></div>
+    <div th:text="${subscribeList.flowerName}"></div>
+    <div th:text="${subscribeList.price}"></div>
+    <div th:src="@{'/upload/' + ${subscribeList.image}}"></div>
+    <hr>
+</th:block>
 </body>
 </html>
