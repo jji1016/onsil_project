@@ -104,7 +104,6 @@
     <h3>✍️ 리뷰 작성</h3>
 
     <div th:if="${#authorization.expression('isAuthenticated()')}">
-        <!-- enctype="multipart/form-data" 추가 -->
         <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="productId" th:value="${flower.id}">
             <div>
@@ -116,7 +115,7 @@
                 <textarea id="content" name="content" rows="4" cols="50" required></textarea>
             </div>
             <div>
-                <label for="image">리뷰 이미지 (선택):</label><br>
+                <label for="image">리뷰 이미지:</label><br>
                 <input type="file" id="image" name="imageFile" accept="image/*">
             </div>
             <button type="submit">리뷰 작성</button>
