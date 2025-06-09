@@ -44,10 +44,15 @@ public interface MypageMemberRepository extends JpaRepository<Member,Integer> {
             @Param("endDate") LocalDate endDate
     );
 
-
-
-
     @Modifying
     @Query(value = "UPDATE MEMBER SET deleteStatus = 1 WHERE MEMBERID = :id",nativeQuery = true)
     int deleteAccount(@Param("id") Integer id);
+
+    @Query(value = "SELECT s.PERIOD, s.STARTDATE, s.ENDDATE, p.FLOWERNAME, p.IMAGE, p.PRICE " +
+            "FROM SUBSCRIBE s " +
+            "JOIN PRODUCT p ON s.PRODUCTID = p.PRODUCTID " +
+            "JOIN MEMBER m ON s.MEMBERID = m.MEMBERID " +
+            "WHERE m.MEMBERID = :loggedMemberID " +
+            "ORDER BY s.ENDDATE", nativeQuery = true)
+    List<Object[]> findSubscribe(@Param("loggedMemberID") Integer loggedMemberID);
 }
