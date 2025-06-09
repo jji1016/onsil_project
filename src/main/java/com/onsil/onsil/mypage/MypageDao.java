@@ -38,4 +38,8 @@ public class MypageDao {
     public List<Object[]> findSearchOrderList(Integer loggedMemberID, String category, String keyword, LocalDate startDate, LocalDate endDate) {
         return mypageMemberRepository.findSearchOrderList(loggedMemberID,category,keyword,startDate,endDate);
     }
+
+    public List<Object[]> findSubscribe(Integer loggedMemberID) {
+        return mypageMemberRepository.findSubscribe(loggedMemberID);
+    }
 }
