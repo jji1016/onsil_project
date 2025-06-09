@@ -51,6 +51,16 @@
         .back-link:hover {
             text-decoration: underline;
         }
+        .review {
+            border-top: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .review img {
+            max-width: 200px;
+            margin-top: 10px;
+            border-radius: 6px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -76,14 +86,19 @@
         <div class="author" th:text="${review.memberName}">작성자</div>
         <div class="rating">⭐ <span th:text="${review.rating}">5</span>/5</div>
         <div class="content" th:text="${review.content}">리뷰 내용</div>
+        <!-- 리뷰 이미지가 있으면 출력 -->
+        <div th:if="${review.image != null}">
+            <img th:src="@{'/review-images/' + ${review.image}}" alt="리뷰 이미지">
+        </div>
     </div>
 </div>
+
 <div class="review-form" style="margin-top: 40px;">
     <h3>✍️ 리뷰 작성</h3>
 
-
     <div th:if="${#authorization.expression('isAuthenticated()')}">
-        <form th:action="@{/review/write}" method="post">
+        <!-- enctype="multipart/form-data" 추가 -->
+        <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="productId" th:value="${flower.id}">
             <div>
                 <label for="rating">평점 (1~5): </label>
@@ -92,6 +107,10 @@
             <div>
                 <label for="content">리뷰 내용:</label><br>
                 <textarea id="content" name="content" rows="4" cols="50" required></textarea>
+            </div>
+            <div>
+                <label for="image">리뷰 이미지 (선택):</label><br>
+                <input type="file" id="image" name="image" accept="image/*">
             </div>
             <button type="submit">리뷰 작성</button>
         </form>
@@ -111,5 +130,3 @@
 
 </body>
 </html>
-
-

@@ -1,6 +1,6 @@
 package com.onsil.onsil.product.service;
 
-import com.onsil.onsil.communal.dto.CustomUserDetails;  // CustomUserDetails 임포트 추가
+import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Product;
 import com.onsil.onsil.entity.Review;
@@ -8,8 +8,17 @@ import com.onsil.onsil.member.repository.MemberRepository;
 import com.onsil.onsil.product.repository.ProductRepository;
 import com.onsil.onsil.product.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+
+//import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +28,10 @@ public class ReviewService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
 
-    public void writeReview(int productId, int rating, String content) {
+    @Value("${file.path}")
+    private String upload;
+
+    public void writeReview(int productId, int rating, String content, MultipartFile imageFile) throws IOException {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -28,7 +40,7 @@ public class ReviewService {
         }
 
         CustomUserDetails customUserDetails = (CustomUserDetails) principal;
-        String loginId = customUserDetails.getUsername();  // getUserID(), getId() 등 필요에 맞게 변경 가능
+        String loginId = customUserDetails.getUsername();
 
         Member member = memberRepository.findByUserID(loginId)
                 .orElseThrow(() -> new RuntimeException("로그인한 회원 정보를 찾을 수 없습니다."));
@@ -36,11 +48,35 @@ public class ReviewService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
 
+        boolean exists = reviewRepository.existsByMemberAndProduct(member, product);
+        if (exists) {
+            throw new RuntimeException("이미 작성한 리뷰가 있습니다.");
+        }
+
         Review review = new Review();
         review.setProduct(product);
         review.setMember(member);
         review.setRating(rating);
         review.setContent(content);
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String originalFilename = imageFile.getOriginalFilename();
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
+            String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String storedFileName = baseName + "_" + timestamp + extension;
+
+            String savePath = upload + "reviews/" + storedFileName;
+
+            File saveDir = new File(upload + "reviews/");
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
+
+            imageFile.transferTo(new File(savePath));
+            review.setImage(storedFileName);
+        }
+
         reviewRepository.save(review);
     }
 }

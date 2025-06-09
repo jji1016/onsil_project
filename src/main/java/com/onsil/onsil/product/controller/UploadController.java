@@ -27,40 +27,40 @@ public class UploadController {
     private final ProductService productService;
     private final ProductRepository productRepository;
     @Value("${file.path}")
-    private String upload;  // 여기서 주입
-    @GetMapping("/products")
-    public String uploadForm() {
-        return "upload/products";
-    }
+private String upload;  // 여기서 주입
+@GetMapping("/products")
+public String uploadForm() {
+    return "upload/products";
+}
 
-    @PostMapping("/save")
-    public String saveProduct(
-            @RequestParam("flowerName") String flowerName,
-            @RequestParam("price") int price,
-            @RequestParam("flowerInfo") String flowerInfo,
-            @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+@PostMapping("/save")
+public String saveProduct(
+        @RequestParam("flowerName") String flowerName,
+        @RequestParam("price") int price,
+        @RequestParam("flowerInfo") String flowerInfo,
+        @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
 
-        String originalFilename = imageFile.getOriginalFilename(); // abc.jpg
-        String extension = originalFilename.substring(originalFilename.lastIndexOf(".")); // .jpg
-        String baseName = originalFilename.substring(0, originalFilename.lastIndexOf(".")); // abc
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String storedFileName = baseName + "_" + timestamp + extension; // abc_20250605123045.jpg
-
-
-
-        String savePath = upload+ "products/"+ storedFileName;
+    String originalFilename = imageFile.getOriginalFilename(); // abc.jpg
+    String extension = originalFilename.substring(originalFilename.lastIndexOf(".")); // .jpg
+    String baseName = originalFilename.substring(0, originalFilename.lastIndexOf(".")); // abc
+    String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    String storedFileName = baseName + "_" + timestamp + extension; // abc_20250605123045.jpg
 
 
-        imageFile.transferTo(new File(savePath));
+
+    String savePath = upload+ "products/"+ storedFileName;
 
 
-        Product product = new Product();
-        product.setFlowerName(flowerName);
-        product.setPrice(price);
-        product.setFlowerInfo(flowerInfo);
-        product.setImage(storedFileName);
-        productRepository.save(product);
-        return "redirect:/product/list";
-    }
+    imageFile.transferTo(new File(savePath));
+
+
+    Product product = new Product();
+    product.setFlowerName(flowerName);
+    product.setPrice(price);
+    product.setFlowerInfo(flowerInfo);
+    product.setImage(storedFileName);
+    productRepository.save(product);
+    return "redirect:/product/list";
+}
 
 }
