@@ -9,6 +9,8 @@
         th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
         th { background: #f5f5f5; }
         .btn { padding: 4px 12px; margin: 2px; }
+        #pay-btn { margin-top: 30px; padding: 10px 30px; font-size: 18px; background: #2a7; color: #fff; border: none; border-radius: 6px; cursor: pointer;}
+        #pay-btn:active { background: #185; }
     </style>
 </head>
 <body>
@@ -32,6 +34,10 @@
     <label>상품명: <input type="text" id="flowerName" style="width:120px;"></label>
     <label>수량: <input type="number" id="quantity" value="1" style="width:40px;"></label>
     <button onclick="addToCart()">추가</button>
+</div>
+<!-- 결제하기 버튼 추가 -->
+<div style="text-align:center;">
+    <button id="pay-btn" onclick="goToPayment()">결제하기</button>
 </div>
 <script>
     async function loadCart() {
@@ -63,6 +69,10 @@
         const summary = await summaryRes.json();
         document.getElementById('cart-summary').innerHTML =
             `<b>총액:</b> ${summary.totalPrice}원, <b>배송비:</b> ${summary.deliveryFee}원, <b>결제예정:</b> ${summary.finalPrice}원`;
+
+        // 결제하기 버튼에 memberId, finalPrice 저장
+        document.getElementById('pay-btn').dataset.memberId = memberId;
+        document.getElementById('pay-btn').dataset.finalPrice = summary.finalPrice;
     }
 
     async function addToCart() {
@@ -91,6 +101,15 @@
         const memberId = document.getElementById('memberId').value;
         await fetch(`/api/cart/clear/${memberId}`, { method: 'DELETE' });
         loadCart();
+    }
+
+    // 결제하기 버튼 클릭 시 결제창으로 이동 (memberId, finalPrice 전달)
+    function goToPayment() {
+        const btn = document.getElementById('pay-btn');
+        const memberId = btn.dataset.memberId;
+        const finalPrice = btn.dataset.finalPrice;
+        // 쿼리스트링으로 전달 (실제 서비스라면 세션/localStorage 등도 가능)
+        window.location.href = `payment.html?memberId=${memberId}&finalPrice=${finalPrice}`;
     }
 
     // 페이지 로딩 시 자동 조회
