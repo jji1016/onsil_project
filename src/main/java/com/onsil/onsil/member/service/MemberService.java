@@ -40,5 +40,8 @@ public class MemberService {
     public boolean isEmailDuplicate(String email) {
         return memberDao.existsByUserEmail(email);
     }
-
+    public Member findByUserID(String userID) {
+        return memberDao.findByUserID(userID)
+                .orElseThrow(() -> new RuntimeException("해당 userID의 회원을 찾을 수 없습니다: " + userID));
+    }
 }
