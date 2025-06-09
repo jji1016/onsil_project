@@ -3,6 +3,7 @@ package com.onsil.onsil.mypage;
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.member.dto.MemberDto;
 import com.onsil.onsil.mypage.dto.MypageOrderListDto;
+import com.onsil.onsil.mypage.dto.MypageSubscribeDto;
 import com.onsil.onsil.mypage.dto.SearchDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +72,7 @@ public class MypageController {
         return "redirect:/member/logout";
     }
 
-    @GetMapping("/orderList")
+    @GetMapping("/orderList") //주문내역 조회
     public String orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                             @ModelAttribute SearchDto searchDto,
                             Model model) {
@@ -84,6 +85,16 @@ public class MypageController {
         model.addAttribute("mypageOrderListDto", mypageOrderListDto);
 
         return "mypage/orderList";
+    }
+
+    @GetMapping("/subscribe") //정기배송 신청내역 조회
+    public String subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
+        List<MypageSubscribeDto> mypageSubscribeDtoList = mypageService.findSubscribe(loggedMemberID);
+        log.info("mypageSubscribeDtoList: {}", mypageSubscribeDtoList);
+        model.addAttribute("mypageSubscribeDtoList", mypageSubscribeDtoList);
+
+        return "mypage/subscribe";
     }
 
 }
