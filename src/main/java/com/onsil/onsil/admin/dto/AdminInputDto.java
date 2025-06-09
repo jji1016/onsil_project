@@ -15,5 +15,5 @@ public class AdminInputDto {
     private LocalDateTime regDate;
     private String flowerName;
     private String userName;
-    private String companyName;
+    private String supplyName;
 }

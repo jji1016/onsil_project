@@ -20,6 +20,6 @@ public class AdminInputDao {
                                        LocalDateTime endDate) {
         List<Object[]> list = adminInputRepository.searchInputs(flowerName, startDate, endDate);
         log.info("DaoList={}",list.toString());
-        return null;
+        return list;
     }
 }

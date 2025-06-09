@@ -22,7 +22,5 @@ public interface AdminInputRepository extends JpaRepository<Input, Integer> {
     List<Object[]> searchInputs(@Param("flowerName") String flowerName,
                                 @Param("startDate") LocalDateTime startDate,
                                 @Param("endDate") LocalDateTime endDate);
-
-
 }
 

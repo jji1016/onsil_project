@@ -15,7 +15,6 @@ public class AdminOutputDto {
     private int amount;
     private String flowerName;
     private String userName;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDateTime regDate;
 
 }

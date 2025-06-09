@@ -6,12 +6,12 @@
 </head>
 <body>
 <h1>output.html</h1>
-<th:block th:each="outputList : ${inputList}">
+<th:block th:each="inputList : ${inputList}">
     <div th:text="${inputList.amount}"></div>
     <div th:text="${inputList.regDate}"></div>
     <div th:text="${inputList.flowerName}"></div>
     <div th:text="${inputList.userName}"></div>
-    <div th:text="${inputList.companyName}"></div>
+    <div th:text="${inputList.supplyName}"></div>
     <hr>
 </th:block>
 </body>

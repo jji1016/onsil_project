@@ -36,8 +36,7 @@ public class AdminOutputService {
                         ((Number) index[0]).intValue(),
                         ((String) index[1]),
                         ((String) index[2]),
-                        ((Timestamp) index[3]).toLocalDateTime(),
-                        ((Timestamp) index[4]).toLocalDateTime()
+                        ((Timestamp) index[3]).toLocalDateTime()
                 ))
                 .collect(Collectors.toList());
         return adminOutputDtos;
