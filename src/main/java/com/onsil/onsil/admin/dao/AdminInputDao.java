@@ -1,6 +1,6 @@
 package com.onsil.onsil.admin.dao;
 
-import com.onsil.onsil.admin.repository.AdminOutputRepository;
+import com.onsil.onsil.admin.repository.AdminInputRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -10,12 +10,12 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class AdminOutputDao {
+public class AdminInputDao {
 
-    private final AdminOutputRepository adminOutputRepository;
+    private final AdminInputRepository adminInputRepository;
 
-    public List<Object[]> searchOutputs() {
-        List<Object[]> list = adminOutputRepository.searchOutputs();
+    public List<Object[]> searchInputs() {
+        List<Object[]> list = adminInputRepository.searchInputs();
         log.info("DaoList={}",list.toString());
         return list;
     }

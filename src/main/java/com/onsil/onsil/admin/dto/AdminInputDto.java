@@ -2,7 +2,6 @@ package com.onsil.onsil.admin.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,9 +10,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AdminOutputDto {
+public class AdminInputDto {
     private int amount;
     private LocalDateTime regDate;
     private String flowerName;
     private String userName;
+    private String companyName;
 }

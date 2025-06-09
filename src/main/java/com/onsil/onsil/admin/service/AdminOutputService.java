@@ -20,10 +20,11 @@ import java.util.stream.Collectors;
 public class AdminOutputService {
 
     private final AdminOutputDao adminOutputDao;
+    private final AdminOutputRepository adminOutputRepository;
 
-    public List<AdminOutputDto> getOutputs() {
+    public List<AdminOutputDto> searchOutputs() {
 
-        List<Object[]> objects = adminOutputDao.getOutputs();
+        List<Object[]> objects = adminOutputDao.searchOutputs();
 
         log.info("objects: {}", objects);
         List<AdminOutputDto> adminOutputDtos = objects.stream()
@@ -37,5 +38,9 @@ public class AdminOutputService {
         return adminOutputDtos;
     }
 
+    //출고 검색 기능
+    public List<AdminOutputDto> searchOutputs(String keyword, LocalDate startDate, LocalDate endDate) {
+        return adminOutputRepository.searchByConditions(keyword, startDate, endDate);
     }
+}
 

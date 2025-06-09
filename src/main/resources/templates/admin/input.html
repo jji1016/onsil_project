@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>output.html</h1>
+<th:block th:each="outputList : ${inputList}">
+    <div th:text="${inputList.amount}"></div>
+    <div th:text="${inputList.regDate}"></div>
+    <div th:text="${inputList.flowerName}"></div>
+    <div th:text="${inputList.userName}"></div>
+    <div th:text="${inputList.companyName}"></div>
+    <hr>
+</th:block>
+</body>
+</html>
