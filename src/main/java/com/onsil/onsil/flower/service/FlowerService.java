@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 
+import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -17,107 +18,75 @@ import java.util.stream.Collectors;
 
 @Service
 public class FlowerService {
-    // 서비스키를 직접 코드에 하드코딩 (반드시 디코딩 키 사용)
-    private final String serviceKey = "HjWN57F2fgCJmRiid1d76b2X6HS6Jn9E0tTy0VXnq0R7t5u6TeGOR2aQKNsHuy4G4Jhwmbmds67XG1wY2KQHlg==";
+    private final String serviceKey = "8N3SDxEYbYGIkUP0giZCVk4OubROuxfvWO0ryBU9kWnF/pakQ1rkEUZ5+ZAGM0ui56IxZKiu9pmdg1KRowKxkg==";
 
-    // 월별 전체 꽃 리스트 (공공데이터포털 API)
-    public List<FlowerDto> getFlowersByMonth(int month) throws Exception {
-        String urlStr = "https://apis.data.go.kr/1390804/NihhsTodayFlowerInfo01/selectTodayFlowerList01"
-                + "?ServiceKey=" + URLEncoder.encode(serviceKey, "UTF-8")
-                + "&fMonth=" + month
-                + "&numOfRows=30";
-        URL url = new URL(urlStr);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        int status = conn.getResponseCode();
-        InputStream is = (status == 200) ? conn.getInputStream() : conn.getErrorStream();
-        Scanner sc = new Scanner(is, StandardCharsets.UTF_8);
-        StringBuilder xml = new StringBuilder();
-        while (sc.hasNext()) xml.append(sc.nextLine());
-        sc.close();
+    private final Map<Integer, FlowerDto> flowerCache = new HashMap<>();
 
-        Document doc = DocumentBuilderFactory.newInstance()
-                .newDocumentBuilder()
-                .parse(new InputSource(new StringReader(xml.toString())));
-        doc.getDocumentElement().normalize();
-
-        // resultCode/resultMsg 체크
-        String resultCode = getTagValue("resultCode", doc.getDocumentElement());
-        String resultMsg = getTagValue("resultMsg", doc.getDocumentElement());
-        if (!"00".equals(resultCode) && !"1".equals(resultCode)) {
-            throw new RuntimeException("공공데이터포털 API 오류: " + resultMsg + " (코드:" + resultCode + ")");
+    @PostConstruct
+    public void initCache() {
+        for (int dataNo = 1; dataNo <= 50; dataNo++) {
+            try {
+                FlowerDto dto = getFlowerDetailFromApi(dataNo, true);
+                if (dto != null) {
+                    flowerCache.put(dto.getDataNo(), dto);
+                }
+            } catch (Exception e) {
+                // 필요 시 에러만 간단히 출력
+                System.out.println("dataNo=" + dataNo + " 캐싱 실패: " + e.getMessage());
+            }
         }
-
-        NodeList items = doc.getElementsByTagName("item");
-        List<FlowerDto> list = new ArrayList<>();
-        for (int i = 0; i < items.getLength(); i++) {
-            Element e = (Element) items.item(i);
-            list.add(FlowerDto.builder()
-                    .dataNo(parseInt(getTagValue("dataNo", e)))
-                    .fMonth(parseInt(getTagValue("fMonth", e)))
-                    .fDay(parseInt(getTagValue("fDay", e)))
-                    .flowNm(getTagValue("flowNm", e))
-                    .fSctNm(getTagValue("fSctNm", e))
-                    .fEngNm(getTagValue("fEngNm", e))
-                    .flowLang(getTagValue("flowLang", e))
-                    .fContent(getTagValue("fContent", e))
-                    .fUse(getTagValue("fUse", e))
-                    .fGrow(getTagValue("fGrow", e))
-                    .fType(getTagValue("fType", e))
-                    .fileName1(getTagValue("fileName1", e))
-                    .imgUrl1(getTagValue("imgUrl1", e))
-                    .publishOrg(getTagValue("publishOrg", e))
-                    .build());
-        }
-        return list;
     }
 
-    // 이 달의 탄생화 (fType에 '탄생화' 포함)
-    public List<FlowerDto> getBirthFlowersByMonth(int month) throws Exception {
-        return getFlowersByMonth(month).stream()
-                .filter(f -> f.getFType() != null && f.getFType().contains("탄생화"))
+    public List<FlowerDto> getFlowersByMonth(int month) {
+        return flowerCache.values().stream()
+                .filter(dto -> dto.getFMonth() != null && dto.getFMonth() == month)
                 .collect(Collectors.toList());
     }
 
-    // 이 달의 꽃 추천 (탄생화 제외)
-    public List<FlowerDto> getRecommendedFlowersByMonth(int month) throws Exception {
-        return getFlowersByMonth(month).stream()
-                .filter(f -> f.getFType() == null || !f.getFType().contains("탄생화"))
-                .collect(Collectors.toList());
+    public List<FlowerDto> getRecommendedFlowersByMonth(int month) {
+        List<FlowerDto> all = getFlowersByMonth(month);
+        int n = Math.min(5, all.size());
+        Collections.shuffle(all);
+        return all.subList(0, n);
     }
 
-    // 꽃 상세정보 (dataNo)
+    public List<FlowerDto> getBirthFlowersByMonth(int month) {
+        return getFlowersByMonth(month);
+    }
+
     public FlowerDto getFlowerDetailFromApi(Integer dataNo) throws Exception {
+        return getFlowerDetailFromApi(dataNo, false);
+    }
+
+    private FlowerDto getFlowerDetailFromApi(Integer dataNo, boolean isCache) throws Exception {
+        if (!isCache && flowerCache.containsKey(dataNo)) {
+            return flowerCache.get(dataNo);
+        }
+
         String urlStr = "https://apis.data.go.kr/1390804/NihhsTodayFlowerInfo01/selectTodayFlowerView01"
-                + "?ServiceKey=" + URLEncoder.encode(serviceKey, "UTF-8")
+                + "?serviceKey=" + URLEncoder.encode(serviceKey, "UTF-8")
                 + "&dataNo=" + dataNo;
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         int status = conn.getResponseCode();
         InputStream is = (status == 200) ? conn.getInputStream() : conn.getErrorStream();
-        Scanner sc = new Scanner(is, StandardCharsets.UTF_8);
-        StringBuilder xml = new StringBuilder();
-        while (sc.hasNext()) xml.append(sc.nextLine());
-        sc.close();
+        String xml = new String(is.readAllBytes(), StandardCharsets.UTF_8);
 
         Document doc = DocumentBuilderFactory.newInstance()
                 .newDocumentBuilder()
-                .parse(new InputSource(new StringReader(xml.toString())));
+                .parse(new InputSource(new StringReader(xml)));
         doc.getDocumentElement().normalize();
 
-        String resultCode = getTagValue("resultCode", doc.getDocumentElement());
-        String resultMsg = getTagValue("resultMsg", doc.getDocumentElement());
-        if (!"00".equals(resultCode) && !"1".equals(resultCode)) {
-            throw new RuntimeException("공공데이터포털 API 오류: " + resultMsg + " (코드:" + resultCode + ")");
-        }
+        NodeList codeList = doc.getElementsByTagName("resultCode");
+        if (codeList.getLength() == 0 || !"1".equals(codeList.item(0).getTextContent().trim())) return null;
 
-        NodeList items = doc.getElementsByTagName("item");
+        NodeList items = doc.getElementsByTagName("result");
         if (items.getLength() == 0) return null;
 
         Element e = (Element) items.item(0);
 
-        return FlowerDto.builder()
+        FlowerDto dto = FlowerDto.builder()
                 .dataNo(parseInt(getTagValue("dataNo", e)))
                 .fMonth(parseInt(getTagValue("fMonth", e)))
                 .fDay(parseInt(getTagValue("fDay", e)))
@@ -130,19 +99,26 @@ public class FlowerService {
                 .fGrow(getTagValue("fGrow", e))
                 .fType(getTagValue("fType", e))
                 .fileName1(getTagValue("fileName1", e))
+                .fileName2(getTagValue("fileName2", e))
+                .fileName3(getTagValue("fileName3", e))
                 .imgUrl1(getTagValue("imgUrl1", e))
+                .imgUrl2(getTagValue("imgUrl2", e))
+                .imgUrl3(getTagValue("imgUrl3", e))
                 .publishOrg(getTagValue("publishOrg", e))
                 .build();
+
+        return dto;
     }
 
     private String getTagValue(String tag, Element e) {
         NodeList nl = e.getElementsByTagName(tag);
         if (nl.getLength() == 0) return null;
         Node n = nl.item(0).getFirstChild();
-        return n != null ? n.getNodeValue() : null;
+        return n != null ? n.getNodeValue().trim() : null;
     }
+
     private Integer parseInt(String s) {
-        try { return s == null ? null : Integer.parseInt(s); }
+        try { return s == null ? null : Integer.parseInt(s.trim()); }
         catch (Exception ex) { return null; }
     }
 }
