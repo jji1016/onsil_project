@@ -16,9 +16,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Cart {
+
     @Id
     @Column(name = "cartID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)

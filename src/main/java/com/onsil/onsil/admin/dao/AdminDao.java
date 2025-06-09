@@ -1,17 +1,18 @@
 package com.onsil.onsil.admin.dao;
 
+import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.admin.repository.AdminOrderListRepository;
 import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,21 +26,12 @@ public class AdminDao {
         return memberRepository.findAll();
     }
 
-    @Transactional
-    public int deleteByUserID(String userID) {
-        return memberRepository.deleteByUserID(userID);
-    }
-
     public Member findByUserID(String userID) {
         return memberRepository.findByUserID(userID);
     }
 
     public List<Subscribe> findByMemberID(int id) {
         return subscribeRepository.findByMember_id(id);
-    }
-
-    public List<Member> findByUserName(String keyword) {
-        return memberRepository.findByUserNameContaining(keyword);
     }
 
     //    public List<Member> searchMembers(String keyword, String category, LocalDateTime startDate, LocalDateTime endDate) {
@@ -55,5 +47,13 @@ public class AdminDao {
 
     public int countOneMonth(LocalDateTime todayDate) {
         return subscribeRepository.countOneMonthMember(todayDate);
+    }
+
+    public List<PopularCountDto> popularSubscribe() {
+        return subscribeRepository.popularSubscribe(PageRequest.of(0, 5));
+    }
+
+    public List<Subscribe> findRecentInMonth(LocalDateTime oneMonthAgo, Pageable topFive) {
+        return  subscribeRepository.findRecentInMonth(oneMonthAgo, topFive);
     }
 }

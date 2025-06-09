@@ -37,9 +37,6 @@
                 <button>관리</button>
             </a>
         </td>
-        <td>
-            <button class="btn-delete" th:attr="data-user-id=${member.userID}">탈퇴</button>
-        </td>
     </tr>
     </tbody>
 </table>
@@ -100,9 +97,6 @@
                                 <button>관리</button>
                               </a>
                             </td>
-                            <td>
-                              <button class="btn-delete" data-user-id="${member.userID}">탈퇴</button>
-                            </td>
                         `;
                         tableBody.appendChild(row);
                     });
@@ -117,28 +111,5 @@
         });
     });
 </script>
-
-
-    <script>
-
-        document.querySelectorAll(".btn-delete")
-            .forEach(btn => {
-                btn.addEventListener("click", () => {
-
-                    const userID = btn.dataset.userId;
-                    fetch(`/admin/member-list/delete/${userID}`, {
-                        method: "delete"
-                    })
-                        .then(res => res.json())
-                        .then(json => {
-                            console.log(json);
-                            if (json.isDelete) {
-                                btn.closest("tr").remove();
-                            }
-                        })
-                })
-            })
-
-    </script>
 </body>
 </html>

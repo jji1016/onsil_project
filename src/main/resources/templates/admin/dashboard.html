@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    <p th:text="${inOneMonthSubscribeMember}">신규 가입자 수 (한달 이내에 구독을 새로 한사람)</p>
-    <p th:text="${allSubscribeMember}">총 가입자 수(현재 구독 중인 사람 수)</p>
+    <p th:text="'한달 이내 신규 구독자 : '+${inOneMonthSubscribeMember}">신규 가입자 수 (한달 이내에 구독을 새로 한사람)</p>
+    <p th:text="'현재 총 구독자 : '+${allSubscribeMember}">총 가입자 수(현재 구독 중인 사람 수)</p>
 
     <div class="container">
         <div>
@@ -15,12 +15,26 @@
         </div>
         <div>
             <p>인기 상품</p>
+            <ul>
+                <li th:each="subscribe, stat : ${popularSubscribe}">
+                    <span th:text="${stat.index + 1} + '등 인기 - ' + ${subscribe.flowerName}"></span>
+                </li>
+            </ul>
         </div>
+
         <div>
-            <p>오늘의 주문</p>
+            <p>최근 한 달 주문</p>
+            <ul>
+                <li th:each="sub : ${recentSubscribes}">
+                    <span th:text="${sub.productName} + ' - ' + ${sub.userID} + ' - ' + ${#temporals.format(sub.startDate, 'yyyy-MM-dd')}" />
+                </li>
+            </ul>
         </div>
         <div>
             <p>배송 현황</p>
+            <ul>
+                <li></li>
+            </ul>
         </div>
 
     </div>

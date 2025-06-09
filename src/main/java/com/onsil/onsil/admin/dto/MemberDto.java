@@ -25,5 +25,5 @@ public class MemberDto {
     private String tel;
     private String role;
     private LocalDateTime regDate;
-
+    private boolean deleteStatus;
 }
