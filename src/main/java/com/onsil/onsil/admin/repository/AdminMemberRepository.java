@@ -10,8 +10,6 @@ import java.util.List;
 public interface AdminMemberRepository extends JpaRepository<Member, Integer> {
 
 
-    int deleteByUserID(String userID);
-
     Member findByUserID(String userID);
 
     List<Member> findByUserNameContaining(String keyword);

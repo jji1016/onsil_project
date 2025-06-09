@@ -2,19 +2,20 @@ package com.onsil.onsil.admin.service;
 
 import com.onsil.onsil.admin.dao.AdminDao;
 import com.onsil.onsil.admin.dto.MemberDto;
+import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.dto.SubscribeDto;
+import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +23,11 @@ import java.util.Optional;
 public class AdminService {
 
     private final AdminDao adminDao;
+    private final AdminMemberRepository memberRepository;
 
     public List<MemberDto> getAllMembers() {
         return adminDao.getAllMembers().stream()
-                .filter(member -> member.getRole().equals("member"))
+                .filter(member -> member.getRole().equals("member") && !member.isDeleteStatus())
                 .map(member ->
                         MemberDto.builder()
                                 .zipcode(member.getZipcode())
@@ -42,8 +44,14 @@ public class AdminService {
                 .toList();
     }
 
-    public int deleteByUserID(String userID) {
-        return adminDao.deleteByUserID(userID);
+    public MemberDto deleteByUserID(String userID) {
+        Member deleteUser = adminDao.findByUserID(userID);
+        deleteUser.markAsDeleted(); // 삭제 상태로 변경
+        memberRepository.save(deleteUser); // 상태 업데이트
+
+        MemberDto memberDto = new MemberDto();
+        memberDto.setDeleteStatus(true);
+        return memberDto;
     }
 
     public MemberDto findByUserID(String userID) {
@@ -138,4 +146,28 @@ public class AdminService {
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
         return adminDao.countOneMonth(oneMonthAgo);
     }
+
+    public List<PopularCountDto> popularSubscribe() {
+        return adminDao.popularSubscribe();
+    }
+
+    public List<SubscribeDto> findRecentSubscribeInOneMonth() {
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        Pageable topFive = PageRequest.of(0, 5);
+
+        List<Subscribe> subscribes = adminDao.findRecentInMonth(oneMonthAgo, topFive);
+
+        return subscribes.stream().map(s -> SubscribeDto.builder()
+                .id(s.getId())
+                .userID(s.getMember().getUserID())
+                .startDate(s.getStartDate())
+                .endDate(s.getEndDate())
+                .orderNumber("ORD-" + s.getId()) // 주문번호는 예시 (규칙에 따라 수정)
+                .productName(s.getProduct().getFlowerName())
+                .productPrice(s.getProduct().getPrice())
+                .period(s.getPeriod())
+                .build()
+        ).toList();
+    }
+
 }

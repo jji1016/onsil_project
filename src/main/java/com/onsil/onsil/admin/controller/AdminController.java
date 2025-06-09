@@ -1,10 +1,9 @@
 package com.onsil.onsil.admin.controller;
 
 import com.onsil.onsil.admin.dto.MemberDto;
+import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.dto.SubscribeDto;
 import com.onsil.onsil.admin.service.AdminService;
-import com.onsil.onsil.entity.OrderList;
-import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -14,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/admin")
 @Controller
@@ -30,9 +27,14 @@ public class AdminController {
 
         int countedMember = adminService.countAllMembers();
         int inOneMonthSubscribeMember = adminService.countOneMonth();
+        List<PopularCountDto> popularSubscribe = adminService.popularSubscribe();
+        List<SubscribeDto> recentSubscribes = adminService.findRecentSubscribeInOneMonth();
 
         model.addAttribute("allSubscribeMember", countedMember);
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
+        model.addAttribute("popularSubscribe", popularSubscribe);
+        model.addAttribute("recentSubscribes", recentSubscribes);
+
 
         return "admin/dashboard";
     }
@@ -46,19 +48,10 @@ public class AdminController {
         return "admin/member-list";
     }
 
-    @DeleteMapping("/member-list/delete/{userID}")
+    @PostMapping("/member-list/delete/{userID}")
     @ResponseBody
-    public Map<String, Object> delete(@PathVariable String userID) {
-
-        int result = adminService.deleteByUserID(userID);
-        Map<String, Object> resultMap = new HashMap<>();
-
-        if (result > 0) {
-            resultMap.put("isDelete", true);
-        } else {
-            resultMap.put("isDelete", false);
-        }
-        return resultMap;
+    public MemberDto delete(@PathVariable String userID) {
+        return adminService.deleteByUserID(userID);
     }
 
     @GetMapping("/member-detail/{userID}")
@@ -97,8 +90,9 @@ public class AdminController {
 
     @GetMapping("/member-search")
     @ResponseBody
-    public List<MemberDto> searchMembers(@RequestParam(required = false) String keyword,
-                                         @RequestParam(required = false) String category,
+    public List<MemberDto> searchMembers(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String category,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {

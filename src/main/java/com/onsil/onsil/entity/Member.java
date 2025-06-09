@@ -51,6 +51,9 @@ public class Member {
     @Column(nullable = false)
     private String zipcode;
 
+    @Column(nullable = false)
+    private boolean deleteStatus;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime regdate;
@@ -79,6 +82,10 @@ public class Member {
         this.zipcode = zipcode;
         this.address01 = address01;
         this.address02 = address02;
+    }
+
+    public void markAsDeleted() {
+        this.deleteStatus = true;
     }
 
 }
