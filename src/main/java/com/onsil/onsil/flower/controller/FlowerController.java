@@ -14,7 +14,6 @@ import java.util.Map;
 public class FlowerController {
     private final FlowerService flowerService;
 
-    // 이 달의 탄생화
     @GetMapping("/month/{month}/birth")
     public ResponseEntity<?> getBirthFlowers(@PathVariable int month) {
         try {
@@ -24,7 +23,6 @@ public class FlowerController {
         }
     }
 
-    // 이 달의 꽃 추천(탄생화 제외)
     @GetMapping("/month/{month}/recommend")
     public ResponseEntity<?> getRecommendedFlowers(@PathVariable int month) {
         try {
@@ -34,7 +32,6 @@ public class FlowerController {
         }
     }
 
-    // 월별 전체 꽃 리스트(간략 설명용)
     @GetMapping("/month/{month}/list")
     public ResponseEntity<?> getFlowerList(@PathVariable int month) {
         try {
@@ -44,7 +41,6 @@ public class FlowerController {
         }
     }
 
-    // 꽃 상세정보
     @GetMapping("/{dataNo}")
     public ResponseEntity<?> getFlowerDetail(@PathVariable Integer dataNo) {
         try {
