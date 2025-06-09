@@ -7,9 +7,10 @@ import com.onsil.onsil.entity.Review;
 import com.onsil.onsil.member.repository.MemberRepository;
 import com.onsil.onsil.product.repository.ProductRepository;
 import com.onsil.onsil.product.repository.ReviewRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-//import lombok.Value;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -78,5 +79,12 @@ public class ReviewService {
         }
 
         reviewRepository.save(review);
+    }
+
+    @Transactional
+    public void delete(int reviewId) throws IllegalAccessException {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+        reviewRepository.delete(review);
     }
 }

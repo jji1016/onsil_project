@@ -86,10 +86,17 @@
         <div class="author" th:text="${review.memberName}">작성자</div>
         <div class="rating">⭐ <span th:text="${review.rating}">5</span>/5</div>
         <div class="content" th:text="${review.content}">리뷰 내용</div>
-        <!-- 리뷰 이미지가 있으면 출력 -->
+
         <div th:if="${review.image != null}">
-            <img th:src="@{'/review-images/' + ${review.image}}" alt="리뷰 이미지">
+            <img th:src="@{'/upload/reviews/' + ${review.image}}" alt="리뷰 이미지">
         </div>
+
+        <form th:if="${#authentication.name == review.userId}"
+              th:action="@{/review/delete}" method="post" style="margin-top: 10px;">
+            <input type="hidden" name="reviewId" th:value="${review.id}" />
+            <input type="hidden" name="productId" th:value="${flower.id}" />
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">🗑️ 삭제</button>
+        </form>
     </div>
 </div>
 
@@ -110,7 +117,7 @@
             </div>
             <div>
                 <label for="image">리뷰 이미지 (선택):</label><br>
-                <input type="file" id="image" name="image" accept="image/*">
+                <input type="file" id="image" name="imageFile" accept="image/*">
             </div>
             <button type="submit">리뷰 작성</button>
         </form>
@@ -127,6 +134,7 @@
         window.location.href = "/member/login";
     }
 </script>
+
 
 </body>
 </html>
