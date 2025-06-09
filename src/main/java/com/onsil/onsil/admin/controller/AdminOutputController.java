@@ -8,41 +8,46 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 @Slf4j
+@RequiredArgsConstructor
 public class AdminOutputController {
 
     private final AdminOutputService adminOutputService;
 
-    public AdminOutputController(AdminOutputService adminOutputService) {
-        this.adminOutputService = adminOutputService;
-    }
+//    public AdminOutputController(AdminOutputService adminOutputService) {
+//        this.adminOutputService = adminOutputService;
+//    }
 
     //출고 목록 조히
-    @GetMapping("/outputlist")
-    public String outputList(Model model) {
-
-        List<AdminOutputDto> outputList = adminOutputService.searchOutputs();
-        log.info("outputlist={}", outputList);
-        model.addAttribute("outputList", outputList);
-        return "admin/output";
-    }
+//    @GetMapping("/outputlist")
+//    public String outputList(Model model, @ModelAttribute AdminOutputDto adminOutputDto) {
+//
+//        List<AdminOutputDto> outputList = adminOutputService.searchOutputs(adminOutputDto.getFlowerName(),
+//                adminOutputDto.getRegDate(),
+//                adminOutputDto.getRegDate());
+//        log.info("outputlist={}", outputList);
+//        model.addAttribute("outputList", outputList);
+//        return "admin/output";
+//    }
 
     //출고 검색 기능
     @GetMapping("/outputlist")
-    public String outputList(@RequestParam(required = false) String keyword,
-                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+    public String outputList(@RequestParam(required = false) String flowerName,
+                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDate,
+                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime endDate,
                              Model model) {
-        List<AdminOutputDto> outputList = adminOutputService.searchOutputs(keyword, startDate, endDate);
-        model.addAttribute("outputList", outputList);
+        List<AdminOutputDto> outputList = adminOutputService.searchOutputs(flowerName, startDate, endDate);
+//        model.addAttribute("outputList", outputList);
         return "admin/output";
     }
 }

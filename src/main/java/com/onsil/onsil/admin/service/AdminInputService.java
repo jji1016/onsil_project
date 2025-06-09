@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,11 +20,11 @@ import java.util.stream.Collectors;
 public class AdminInputService {
 
     private final AdminInputDao adminInputDao;
-    private final AdminInputRepository adminInputRepository;
+    //private final AdminInputRepository adminInputRepository;
 
-    public List<AdminInputDto> searchInputs() {
+    public List<AdminInputDto> searchInputs(String flowerName, LocalDateTime startDate, LocalDateTime endDate) {
 
-        List<Object[]> objects = adminInputDao.searchInputs();
+        List<Object[]> objects = adminInputDao.searchInputs(flowerName,startDate,endDate);
 
         log.info("objects: {}", objects);
         List<AdminInputDto> adminInputDtos = objects.stream()
@@ -39,7 +40,7 @@ public class AdminInputService {
     }
 
     //입고 목록 검색
-    public List<AdminInputDto> searchInputs(String keyword, LocalDate startDate, LocalDate endDate) {
-        return adminInputRepository.searchByConditions(keyword, startDate, endDate);
-    }
+//    public List<AdminInputDto> searchInputs(String keyword, LocalDate startDate, LocalDate endDate) {
+//        return adminInputRepository.searchByConditions(keyword, startDate, endDate);
+//    }
 }

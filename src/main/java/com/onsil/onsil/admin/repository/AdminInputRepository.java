@@ -15,7 +15,7 @@ public interface AdminInputRepository extends JpaRepository<Input, Integer> {
     @Query(value = "SELECT i.AMOUNT, i.REGDATE, i.COMPANY, p.FLOWERNAME, m.USERNAME " +
             "FROM INPUT i " +
             "JOIN PRODUCT p ON i.PRODUCTID = p.PRODUCTID " +
-            "JOIN MEMBER m ON i.PRODUCTID = m.PRODUCTID " +
+            "JOIN MEMBER m ON i.PRODUCTID = m.MEMBERID " +
             "WHERE (:flowerName IS NULL OR p.FLOWERNAME LIKE %:flowerName%) " +
             "AND (:startDate IS NULL OR i.REGDATE >= :startDate) " +
             "AND (:endDate IS NULL OR i.REGDATE <= :endDate)", nativeQuery = true)
@@ -23,8 +23,6 @@ public interface AdminInputRepository extends JpaRepository<Input, Integer> {
                                 @Param("startDate") LocalDateTime startDate,
                                 @Param("endDate") LocalDateTime endDate);
 
-    List<AdminInputDto> searchByConditions(String keyword, LocalDate startDate, LocalDate endDate);
 
-    List<Object[]> searchInputs();
 }
 
