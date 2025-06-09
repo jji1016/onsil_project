@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${flower.flowerName} + ' - 상세페이지'">꽃 상세페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .product-detail {
+            display: flex;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .product-detail img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .details {
+            flex: 1;
+        }
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .price {
+            color: green;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .description {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .review {
+            border-top: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .review img {
+            max-width: 200px;
+            margin-top: 10px;
+            border-radius: 6px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🌸 꽃 상세 페이지</h1>
+
+<div class="product-detail">
+    <img th:src="@{'/images/products/' + ${flower.image}}" th:alt="${flower.flowerName}">
+    <div class="details">
+        <div class="product-name" th:text="${flower.flowerName}">꽃 이름</div>
+        <div class="price" th:text="|₩${flower.price}|">₩0</div>
+        <div class="description" th:text="${flower.flowerInfo}">여기에 꽃 설명이 들어갑니다.</div>
+        <a class="back-link" th:href="@{/product/list}">← 상품 목록으로 돌아가기</a>
+    </div>
+</div>
+
+<div class="reviews">
+    <h3>📝 리뷰</h3>
+    <div th:if="${#lists.isEmpty(flower.reviews)}">
+        <p>등록된 리뷰가 없습니다.</p>
+    </div>
+    <div th:each="review : ${flower.reviews}" class="review">
+        <div class="author" th:text="${review.memberNickName}">작성자닉네임</div>
+        <div class="rating">⭐ <span th:text="${review.rating}">5</span>/5</div>
+        <div class="content" th:text="${review.content}">리뷰 내용</div>
+
+        <div th:if="${review.image != null}">
+            <img th:src="@{'/upload/reviews/' + ${review.image}}" alt="리뷰 이미지">
+        </div>
+
+        <form th:if="${#authentication.name == review.userId}"
+              th:action="@{/review/delete}" method="post" style="margin-top: 10px;">
+            <input type="hidden" name="reviewId" th:value="${review.id}" />
+            <input type="hidden" name="productId" th:value="${flower.id}" />
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">🗑️ 삭제</button>
+        </form>
+    </div>
+</div>
+
+<div class="review-form" style="margin-top: 40px;">
+    <h3>✍️ 리뷰 작성</h3>
+
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="productId" th:value="${flower.id}">
+            <div>
+                <label for="rating">평점 (1~5): </label>
+                <input type="number" id="rating" name="rating" min="1" max="5" required>
+            </div>
+            <div>
+                <label for="content">리뷰 내용:</label><br>
+                <textarea id="content" name="content" rows="4" cols="50" required></textarea>
+            </div>
+            <div>
+                <label for="image">리뷰 이미지:</label><br>
+                <input type="file" id="image" name="imageFile" accept="image/*">
+            </div>
+            <button type="submit">리뷰 작성</button>
+        </form>
+    </div>
+
+    <div th:unless="${#authorization.expression('isAuthenticated()')}">
+        <button onclick="promptLogin()">리뷰 작성하려면 로그인하세요</button>
+    </div>
+</div>
+
+<script>
+    function promptLogin() {
+        alert("리뷰를 작성하려면 로그인해야 합니다.");
+        window.location.href = "/member/login";
+    }
+</script>
+
+
+</body>
+</html>
