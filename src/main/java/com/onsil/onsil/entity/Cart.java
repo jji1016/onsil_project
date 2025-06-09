@@ -4,17 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @ToString
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "CART")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq_gen")
@@ -36,4 +35,8 @@ public class Cart {
     @CreatedDate
     @Column(name = "ORDERDATE", updatable = false)
     private LocalDateTime orderDate;
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }
