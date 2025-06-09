@@ -2,13 +2,16 @@ package com.onsil.onsil.mypage;
 
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.member.dto.MemberDto;
+import com.onsil.onsil.mypage.dto.MypageOrderListDto;
+import com.onsil.onsil.mypage.dto.SearchDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -18,6 +21,7 @@ import java.util.List;
 @RequestMapping("/mypage")
 public class MypageController {
     private final MypageService mypageService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/home")
     public String home(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
@@ -33,4 +37,53 @@ public class MypageController {
 
         return "mypage/home";
     }
+
+    @GetMapping("/info") //회원 상세 정보 페이지
+    public String info(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
+        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
+        log.info("loggedMemberDto: {}", loggedMemberDto);
+        model.addAttribute("loggedMemberDto", loggedMemberDto);
+        return "mypage/info";
+    }
+
+    @PostMapping("/modify") //회원 정보 수정
+    public String modify(@ModelAttribute MemberDto memberDto, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if (memberDto.getUserPW() == null || memberDto.getUserPW().isEmpty()) { //비밀번호 수정 안할시
+            memberDto.setUserPW(customUserDetails.getPassword());
+        }else{ //비밀번호 수정시 받아서 암호화
+            String userPW = memberDto.getUserPW();
+            String encodeUserPW = bCryptPasswordEncoder.encode(userPW);
+            log.info("encodeUserPW: {}", encodeUserPW);
+            memberDto.setUserPW(encodeUserPW);
+        }
+        mypageService.updateInfo(memberDto);
+        return "redirect:/mypage/info";
+    }
+
+    @PostMapping("/delete") //회원 탈퇴
+    public String deleteAccount(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
+        int isDelete = mypageService.deleteAccount(id);
+
+        if (isDelete == 1) {
+            redirectAttributes.addFlashAttribute("message", "삭제가 완료되었습니다.");
+        }
+        return "redirect:/member/logout";
+    }
+
+    @GetMapping("/orderList")
+    public String orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                            @ModelAttribute SearchDto searchDto,
+                            Model model) {
+        log.info("searchDto: {}", searchDto);
+        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
+        log.info("orderlist-loggedMemberID: {}", loggedMemberID);
+
+        List<MypageOrderListDto> mypageOrderListDto = mypageService.findSearchOrderList(loggedMemberID,searchDto); //로그인한 사람의 주문내역
+        log.info("orderlist-mypageOrderListDto: {}", mypageOrderListDto);
+        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
+
+        return "mypage/orderList";
+    }
+
 }

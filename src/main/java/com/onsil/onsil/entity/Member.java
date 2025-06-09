@@ -56,6 +56,8 @@ public class Member {
     @Builder.Default
     private String role = "ROLE_USER";
 
+    private boolean deleteStatus = false; //탈퇴 할 경우 true로 변경
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Cart> cartList;
 
@@ -70,6 +72,8 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Output> outputList;
+
+
 
     public MemberDto toMemberDto() {
         return MemberDto.builder()

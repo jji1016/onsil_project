@@ -22,6 +22,7 @@
     <div th:text="${#temporals.format(orderlist.orderTime,'yyyy-MM-dd')}"></div>
     <div th:text="${orderlist.flowerName}"></div>
     <div th:text="${orderlist.price}"></div>
+    <div th:src="@{'/upload/' + ${orderlist.image}}"></div>
 </th:block>
 
 </body>
