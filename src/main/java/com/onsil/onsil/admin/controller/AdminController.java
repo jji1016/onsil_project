@@ -1,10 +1,13 @@
 package com.onsil.onsil.admin.controller;
 
+import com.onsil.onsil.admin.dto.AdminOutputDto;
 import com.onsil.onsil.admin.dto.MemberDto;
 import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.dto.SubscribeDto;
+import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,7 @@ import java.util.List;
 @RequestMapping("/admin")
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class AdminController {
 
     private final AdminService adminService;
@@ -100,5 +104,19 @@ public class AdminController {
         LocalDateTime end = (endDate != null) ? endDate.atTime(LocalTime.MAX) : null;
 
         return adminService.search(keyword, category, start, end);
+    }
+
+    private final AdminOutputService adminOutputService;
+
+
+
+    @GetMapping("/outputlist")
+    public String list(Model model) {
+
+        List<AdminOutputDto> list = adminOutputService.getOutputs();
+        log.info("list={}", list);
+
+        model.addAttribute("outputList", list);
+        return "admin/output";
     }
 }

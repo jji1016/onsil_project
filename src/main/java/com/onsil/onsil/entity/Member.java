@@ -1,9 +1,8 @@
 package com.onsil.onsil.entity;
 
-import com.onsil.onsil.admin.dto.MemberDto;
+import com.onsil.onsil.member.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -16,8 +15,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @EntityListeners(AuditingEntityListener.class)
-//@ToString
 public class Member {
 
     @Id
@@ -58,22 +57,22 @@ public class Member {
     @Column(updatable = false)
     private LocalDateTime regdate;
 
-    @Column(nullable = false)
-    private String role = "ROLE_MEMBER";
+    @Builder.Default
+    private String role = "ROLE_USER";
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Cart> cartList;
 
-    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Review> reviewList;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Subscribe> subscribeList;
 
-    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<OrderList> orderLists;
 
-    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Output> outputList;
 
     public void updateInfo(String nickName, String userEmail, String zipcode, String address01, String address02) {
@@ -88,4 +87,20 @@ public class Member {
         this.deleteStatus = true;
     }
 
+    public MemberDto toMemberDto() {
+        return MemberDto.builder()
+                .id(this.getId())
+                .userID(this.getUserID())
+                .userName(this.getUserName())
+                .userEmail(this.getUserEmail())
+                .nickName(this.getNickName())
+                .tel(this.getTel())
+                .address01(this.getAddress01())
+                .address02(this.getAddress02())
+                .zipcode(this.getZipcode())
+                .regDate(this.getRegdate())
+                .modifyDate(this.getRegdate())
+                .role(this.getRole())
+                .build();
+    }
 }
