@@ -3,6 +3,7 @@ package com.onsil.onsil.mypage;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.member.dto.MemberDto;
 import com.onsil.onsil.mypage.dto.MypageOrderListDto;
+import com.onsil.onsil.mypage.dto.MypageSubscribeDto;
 import com.onsil.onsil.mypage.dto.SearchDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -87,5 +88,21 @@ public class MypageService {
 
     public int deleteAccount(Integer id) {
         return mypageDao.deleteAccount(id);
+    }
+
+    public List<MypageSubscribeDto> findSubscribe(Integer loggedMemberID) {
+        List<Object[]> ObjectMypageSubscribe = mypageDao.findSubscribe(loggedMemberID);
+
+        List<MypageSubscribeDto> mypageSubscribeDtoList = ObjectMypageSubscribe.stream()
+                .map(index -> new MypageSubscribeDto(
+                        (String) index[0],
+                        ((Timestamp) index[1]).toLocalDateTime().toLocalDate(),
+                        ((Timestamp) index[2]).toLocalDateTime().toLocalDate(),
+                        (String) index[3],
+                        (String) index[4],
+                        ((Number) index[5]).intValue()
+                ))
+                .collect(Collectors.toList());
+        return mypageSubscribeDtoList;
     }
 }
