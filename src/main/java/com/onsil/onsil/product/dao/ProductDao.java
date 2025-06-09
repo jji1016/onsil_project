@@ -28,6 +28,7 @@ public class ProductDao {
                             review.getMember().getId(),
                             review.getMember().getUserID(),
                             review.getMember().getUserName(),
+                            review.getMember().getNickName(),
                             review.getContent(),
                             review.getRating(),
                             review.getRegDate(),
