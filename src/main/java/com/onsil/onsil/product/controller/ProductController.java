@@ -40,7 +40,9 @@ public class ProductController {
         if (flower == null) {
             return "error/404";
         }
+
         model.addAttribute("flower", flower);
+
         return "product/detail";
     }
 

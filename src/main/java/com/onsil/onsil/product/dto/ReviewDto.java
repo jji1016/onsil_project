@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 public class ReviewDto {
     private Integer id;
     private Integer productId;
-    private Integer memberId;
+    private Integer memberId; //member테이블 memberiD값
+    private String userId; //member테이블 useriD값
     private String memberName;
     private String content;
     private int rating;
