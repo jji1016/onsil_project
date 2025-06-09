@@ -2,12 +2,16 @@ package com.onsil.onsil.mypage;
 
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.member.dto.MemberDto;
+import com.onsil.onsil.mypage.dto.MypageOrderListDto;
+import com.onsil.onsil.mypage.dto.SearchDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,17 +37,48 @@ public class MypageService {
         List<Object[]> ObjectOrderList = mypageDao.findOrderList(loggedMemberID);
 
         //Object타입을 MypageOrderListDto타입으로 변환시켜 리스트화
-        List<MypageOrderListDto> MypageOrderListDto = ObjectOrderList.stream()
+        List<MypageOrderListDto> mypageOrderListDto = ObjectOrderList.stream()
                 .map(index -> new MypageOrderListDto(
                         ((Number) index[0]).intValue(),
                         (String) index[1],
                         ((Timestamp) index[2]).toLocalDateTime(),
                         (String) index[3],
-                        ((Number) index[4]).intValue()
+                        ((Number) index[4]).intValue(),
+                        (String) index[5]
                 ))
                 .collect(Collectors.toList());
-        return MypageOrderListDto;
+        return mypageOrderListDto;
     }
+
+    //검색 및 기간을 기준으로 조회
+    public List<MypageOrderListDto> findSearchOrderList(Integer loggedMemberID, SearchDto searchDto) {
+        String category = searchDto.getCategory();
+        String keyword = searchDto.getKeyword();
+        LocalDate startDate = searchDto.getStartDate();
+        LocalDate endDate = searchDto.getEndDate();
+
+        List<Object[]> ObjectSearchOrderList = mypageDao.findSearchOrderList(
+                loggedMemberID,
+                category,
+                keyword,
+                startDate,
+                endDate);
+
+        //Object타입을 MypageOrderListDto타입으로 변환시켜 리스트화
+        List<MypageOrderListDto> mypageSearchOrderListDtos = ObjectSearchOrderList.stream()
+                .map(index -> new MypageOrderListDto(
+                        ((Number) index[0]).intValue(),
+                        (String) index[1],
+                        ((Timestamp) index[2]).toLocalDateTime(),
+                        (String) index[3],
+                        ((Number) index[4]).intValue(),
+                        (String) index[5]
+                ))
+                .collect(Collectors.toList());
+
+        return mypageSearchOrderListDtos;
+    }
+
 
     public void updateInfo(MemberDto memberDto) {
         Member member = memberDto.toMember();

@@ -2,6 +2,8 @@ package com.onsil.onsil.mypage;
 
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.member.dto.MemberDto;
+import com.onsil.onsil.mypage.dto.MypageOrderListDto;
+import com.onsil.onsil.mypage.dto.SearchDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,7 +38,7 @@ public class MypageController {
         return "mypage/home";
     }
 
-    @GetMapping("/info")
+    @GetMapping("/info") //회원 상세 정보 페이지
     public String info(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
         MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
@@ -45,7 +47,7 @@ public class MypageController {
         return "mypage/info";
     }
 
-    @PostMapping("/modify")
+    @PostMapping("/modify") //회원 정보 수정
     public String modify(@ModelAttribute MemberDto memberDto, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         if (memberDto.getUserPW() == null || memberDto.getUserPW().isEmpty()) { //비밀번호 수정 안할시
             memberDto.setUserPW(customUserDetails.getPassword());
@@ -59,7 +61,7 @@ public class MypageController {
         return "redirect:/mypage/info";
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/delete") //회원 탈퇴
     public String deleteAccount(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
         int isDelete = mypageService.deleteAccount(id);
 
@@ -69,5 +71,19 @@ public class MypageController {
         return "redirect:/member/logout";
     }
 
+    @GetMapping("/orderList")
+    public String orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                            @ModelAttribute SearchDto searchDto,
+                            Model model) {
+        log.info("searchDto: {}", searchDto);
+        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
+        log.info("orderlist-loggedMemberID: {}", loggedMemberID);
+
+        List<MypageOrderListDto> mypageOrderListDto = mypageService.findSearchOrderList(loggedMemberID,searchDto); //로그인한 사람의 주문내역
+        log.info("orderlist-mypageOrderListDto: {}", mypageOrderListDto);
+        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
+
+        return "mypage/orderList";
+    }
 
 }
