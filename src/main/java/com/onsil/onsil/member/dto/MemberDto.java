@@ -47,7 +47,7 @@ public class MemberDto {
     private String zipcode;
 
     @Enumerated(EnumType.STRING)
-    private String role; //Role 상수 처리할 예정 enum
+    private Role role;
 
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;

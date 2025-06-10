@@ -39,7 +39,7 @@ public class AdminService {
                                 .userName(member.getUserName())
                                 .userEmail(member.getUserEmail())
                                 .regDate(member.getRegdate())
-                                .role(member.getRole())
+                                .role(member.getRole().name())
                                 .build())
                 .toList();
     }
@@ -87,7 +87,7 @@ public class AdminService {
                         .startDate(subscribe.getStartDate())
                         .endDate(subscribe.getEndDate())
                         .productPrice(subscribe.getProduct().getPrice())
-                        .period(subscribe.getPeriod())
+                        .period(subscribe.getPeriod().name())
                         .build())
                 .toList();
     }
@@ -120,7 +120,7 @@ public class AdminService {
                         .userName(m.getUserName())
                         .userEmail(m.getUserEmail())
                         .regDate(m.getRegdate())
-                        .role(m.getRole())
+                        .role(m.getRole().name())
                         .build())
                 .toList();
     }
@@ -165,7 +165,7 @@ public class AdminService {
                 .orderNumber("ORD-" + s.getId()) // 주문번호는 예시 (규칙에 따라 수정)
                 .productName(s.getProduct().getFlowerName())
                 .productPrice(s.getProduct().getPrice())
-                .period(s.getPeriod())
+                .period(s.getPeriod().name())
                 .build()
         ).toList();
     }
