@@ -22,7 +22,7 @@ public class MemberService {
     public void save(MemberDto memberDto) {
         String encodedPassword = bCryptPasswordEncoder.encode(memberDto.getUserPW());
         memberDto.setUserPW(encodedPassword);
-        memberDto.setRole("ROLE_USER");
+        memberDto.setRole(Role.ROLE_USER);
         Member savedMember = memberDto.toMember();
         memberDao.save(savedMember);
     }

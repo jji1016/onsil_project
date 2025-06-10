@@ -1,5 +1,6 @@
 package com.onsil.onsil.entity;
 
+import com.onsil.onsil.constant.Period;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Subscribe {
+public class  Subscribe {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "subscribeID")
@@ -32,8 +34,9 @@ public class Subscribe {
     @Column(nullable = false)
     private LocalDateTime endDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String period;
+    private Period period;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID", nullable = false)

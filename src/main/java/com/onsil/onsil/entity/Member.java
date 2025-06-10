@@ -104,3 +104,4 @@ public class Member {
                 .modifyDate(this.getRegdate())
                 .build();
     }
+}
