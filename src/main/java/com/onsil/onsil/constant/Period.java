@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum Role {
-    ROLE_USER("일반회원"),
-    ROLE_ADMIN("관리자");
+public enum Period {
+    WEEKLY("주간"),
+    MONTHLY("월간");
     private final String label;
 }
