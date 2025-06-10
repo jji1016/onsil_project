@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class FlowerService {
-    private final String serviceKey = "8N3SDxEYbYGIkUP0giZCVk4OubROuxfvWO0ryBU9kWnF/pakQ1rkEUZ5+ZAGM0ui56IxZKiu9pmdg1KRowKxkg==";
+    private final String serviceKey = "HjWN57F2fgCJmRiid1d76b2X6HS6Jn9E0tTy0VXnq0R7t5u6TeGOR2aQKNsHuy4G4Jhwmbmds67XG1wY2KQHlg==";
 
     private final Map<Integer, FlowerDto> flowerCache = new HashMap<>();
 
     @PostConstruct
     public void initCache() {
-        for (int dataNo = 1; dataNo <= 50; dataNo++) {
+        for (int dataNo = 1; dataNo <= 400; dataNo++) {
             try {
                 FlowerDto dto = getFlowerDetailFromApi(dataNo, true);
                 if (dto != null) {
