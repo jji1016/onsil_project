@@ -20,5 +20,4 @@ public class AdminOrderListDto {
     private String orderStatus;
     private String orderName;
     private String receiveName;
-    //private String paymentMethod;
 }
