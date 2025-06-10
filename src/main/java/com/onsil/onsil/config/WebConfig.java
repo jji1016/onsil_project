@@ -8,10 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${file.path}products")
+    @Value("${file.path}products/")
     String productsPath;
 
-    @Value("${file.path}reviews")
+    @Value("${file.path}reviews/")
     String reviewsPath;
 
     @Override
@@ -21,6 +21,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/upload/reviews/**")
                 .addResourceLocations("file:///" + reviewsPath);
     }
-
-
 }
