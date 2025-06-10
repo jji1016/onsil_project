@@ -1,4 +1,4 @@
-package com.onsil.onsil.mypage;
+package com.onsil.onsil.mypage.repository;
 
 import com.onsil.onsil.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -48,7 +48,7 @@ public interface MypageMemberRepository extends JpaRepository<Member,Integer> {
     @Query(value = "UPDATE MEMBER SET deleteStatus = 1 WHERE MEMBERID = :id",nativeQuery = true)
     int deleteAccount(@Param("id") Integer id);
 
-    @Query(value = "SELECT s.PERIOD, s.STARTDATE, s.ENDDATE, p.FLOWERNAME, p.IMAGE, p.PRICE " +
+    @Query(value = "SELECT s.SUBSCRIBEID, s.PERIOD, s.STARTDATE, s.ENDDATE, p.FLOWERNAME, p.IMAGE, p.PRICE " +
             "FROM SUBSCRIBE s " +
             "JOIN PRODUCT p ON s.PRODUCTID = p.PRODUCTID " +
             "JOIN MEMBER m ON s.MEMBERID = m.MEMBERID " +
