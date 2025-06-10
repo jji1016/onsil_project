@@ -29,8 +29,8 @@ public class ReviewService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
 
-    @Value("${file.path}")
-    private String upload;
+    @Value("${file.path}reviews/")
+    String reviewsPath;
 
     public void writeReview(int productId, int rating, String content, MultipartFile imageFile) throws IOException {
 
@@ -67,9 +67,9 @@ public class ReviewService {
             String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             String storedFileName = baseName + "_" + timestamp + extension;
 
-            String savePath = upload + "reviews/" + storedFileName;
+            String savePath = reviewsPath + storedFileName;
 
-            File saveDir = new File(upload + "reviews/");
+            File saveDir = new File(reviewsPath);
             if (!saveDir.exists()) {
                 saveDir.mkdirs();
             }

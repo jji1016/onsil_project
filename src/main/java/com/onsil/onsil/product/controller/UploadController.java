@@ -1,13 +1,10 @@
 package com.onsil.onsil.product.controller;
 
 import com.onsil.onsil.entity.Product;
-import com.onsil.onsil.product.dto.ProductDto;
 import com.onsil.onsil.product.repository.ProductRepository;
-import com.onsil.onsil.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("/upload")
@@ -26,8 +22,8 @@ import java.util.List;
 public class UploadController {
     private final ProductService productService;
     private final ProductRepository productRepository;
-    @Value("${file.path}")
-private String upload;  // 여기서 주입
+    @Value("${file.path}products/")
+    String productsPath;// 여기서 주입
 @GetMapping("/products")
 public String uploadForm() {
     return "upload/products";
@@ -40,6 +36,11 @@ public String saveProduct(
         @RequestParam("flowerInfo") String flowerInfo,
         @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
 
+    File dir = new File(productsPath);
+    if (!dir.exists()) {
+        dir.mkdirs();
+    }
+
     String originalFilename = imageFile.getOriginalFilename(); // abc.jpg
     String extension = originalFilename.substring(originalFilename.lastIndexOf(".")); // .jpg
     String baseName = originalFilename.substring(0, originalFilename.lastIndexOf(".")); // abc
@@ -48,7 +49,7 @@ public String saveProduct(
 
 
 
-    String savePath = upload+ "products/"+ storedFileName;
+    String savePath = productsPath+ storedFileName;
 
 
     imageFile.transferTo(new File(savePath));

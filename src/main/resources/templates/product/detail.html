@@ -96,6 +96,7 @@
             <input type="hidden" name="reviewId" th:value="${review.id}" />
             <input type="hidden" name="productId" th:value="${flower.id}" />
             <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">🗑️ 삭제</button>
+
         </form>
     </div>
 </div>
@@ -104,6 +105,14 @@
     <h3>✍️ 리뷰 작성</h3>
 
     <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <div th:if="${myReview != null}">
+            <p>이미 리뷰를 작성하셨습니다.</p>
+            <form th:action="@{/review/edit}" method="get">
+                <input type="hidden" name="reviewId" th:value="${myReview.id}" />
+                <button type="submit">✏️ 리뷰 수정하기</button>
+            </form>
+        </div>
+        <div th:if="${myReview == null}">
         <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="productId" th:value="${flower.id}">
             <div>
@@ -120,6 +129,7 @@
             </div>
             <button type="submit">리뷰 작성</button>
         </form>
+        </div>
     </div>
 
     <div th:unless="${#authorization.expression('isAuthenticated()')}">
