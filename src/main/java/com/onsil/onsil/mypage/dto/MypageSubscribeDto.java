@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class MypageSubscribeDto {
+    private Integer subscribeID;
     private String period;
     private LocalDate startDate;
     private LocalDate endDate;

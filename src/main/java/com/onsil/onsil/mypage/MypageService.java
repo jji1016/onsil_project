@@ -95,14 +95,19 @@ public class MypageService {
 
         List<MypageSubscribeDto> mypageSubscribeDtoList = ObjectMypageSubscribe.stream()
                 .map(index -> new MypageSubscribeDto(
-                        (String) index[0],
-                        ((Timestamp) index[1]).toLocalDateTime().toLocalDate(),
+                        ((Number) index[0]).intValue(),
+                        (String) index[1],
                         ((Timestamp) index[2]).toLocalDateTime().toLocalDate(),
-                        (String) index[3],
+                        ((Timestamp) index[3]).toLocalDateTime().toLocalDate(),
                         (String) index[4],
-                        ((Number) index[5]).intValue()
+                        (String) index[5],
+                        ((Number) index[6]).intValue()
                 ))
                 .collect(Collectors.toList());
         return mypageSubscribeDtoList;
+    }
+
+    public void deleteById(Integer id) {
+        mypageDao.deleteById(id);
     }
 }
