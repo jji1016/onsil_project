@@ -71,7 +71,7 @@
     <img th:src="@{'/images/products/' + ${flower.image}}" th:alt="${flower.flowerName}">
     <div class="details">
         <div class="product-name" th:text="${flower.flowerName}">꽃 이름</div>
-        <div class="price" th:text="|₩${flower.price}|">₩0</div>
+        <div class="price" th:text="|\u20A9${flower.price}|">₩0</div>
         <div class="description" th:text="${flower.flowerInfo}">여기에 꽃 설명이 들어갑니다.</div>
         <a class="back-link" th:href="@{/product/list}">← 상품 목록으로 돌아가기</a>
     </div>
@@ -82,84 +82,48 @@
     <div th:if="${#lists.isEmpty(flower.reviews)}">
         <p>등록된 리뷰가 없습니다.</p>
     </div>
-    <div th:each="review : ${flower.reviews}" class="review">
+    <div th:each="review : ${flower.reviews}" class="review" th:id="${'review-' + review.id}">
         <div class="author" th:text="${review.memberNickName}">작성자닉네임</div>
         <div class="rating">⭐ <span th:text="${review.rating}">5</span>/5</div>
         <div class="content" th:text="${review.content}">리뷰 내용</div>
-
         <div th:if="${review.image != null}">
             <img th:src="@{'/upload/reviews/' + ${review.image}}" alt="리뷰 이미지">
         </div>
-
-        <form th:if="${#authentication.name == review.userId}"
-              th:action="@{/review/delete}" method="post" style="margin-top: 10px;">
-            <input type="hidden" name="reviewId" th:value="${review.id}" />
-            <input type="hidden" name="productId" th:value="${flower.id}" />
-            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">🗑️ 삭제</button>
-        </form>
+        <button th:if="${#authentication.name == review.userId}"
+                th:onclick="'deleteReview(' + ${review.id} + ')'" >
+            🗑️ 삭제
+        </button>
     </div>
 </div>
 
 <div class="review-form" style="margin-top: 40px;">
-    <h3>✍️ 리뷰 작성</h3>
+    <h3 th:text="${myReview != null} ? '✏️ 리뷰 수정' : '✍️ 리뷰 작성'"></h3>
 
     <div th:if="${#authorization.expression('isAuthenticated()')}">
-        <div th:if="${myReview != null}">
-            <p>이미 리뷰를 작성하셨습니다.</p>
+        <form id="reviewForm" enctype="multipart/form-data" style="margin-top: 20px;">
+            <input type="hidden" id="reviewId" name="reviewId" th:value="${myReview != null} ? ${myReview.id} : ''" />
+            <input type="hidden" id="productId" name="productId" th:value="${flower.id}" />
 
-            <!-- 기존 리뷰 간단 표시 -->
             <div>
-                <strong th:text="'작성자: ' + ${myReview.memberNickName}"></strong><br>
-                <span th:text="'평점: ' + ${myReview.rating} + '/5'"></span><br>
-                <span th:text="${myReview.content}"></span><br>
-                <div th:if="${myReview.image != null}">
-                    <img th:src="@{'/upload/reviews/' + ${myReview.image}}" width="200"/>
-                </div>
+                <label for="rating">평점 (1~5): </label>
+                <input type="number" id="rating" name="rating" min="1" max="5"
+                       th:value="${myReview != null} ? ${myReview.rating} : ''" required />
             </div>
-
-            <!-- 수정 폼 토글 버튼 -->
-            <button type="button" onclick="toggleEditForm()">✏️ 리뷰 수정</button>
-
-            <!-- 리뷰 수정 폼 -->
-            <form id="editForm" th:action="@{/review/edit}" method="post" enctype="multipart/form-data"
-                  style="display: none; margin-top: 20px;">
-                <input type="hidden" name="id" th:value="${myReview.id}" />
-                <input type="hidden" name="productId" th:value="${flower.id}" />
-
-                <div>
-                    <label for="rating">평점 (1~5): </label>
-                    <input type="number" id="rating" name="rating" min="1" max="5" th:value="${myReview.rating}" required>
-                </div>
-                <div>
-                    <label for="content">리뷰 내용:</label><br>
-                    <textarea id="content" name="content" rows="4" cols="50" th:text="${myReview.content}"></textarea>
-                </div>
-                <div>
-                    <label for="imageFile">리뷰 이미지 변경:</label><br>
-                    <input type="file" id="imageFile" name="imageFile" accept="image/*">
-                </div>
-                <button type="submit">수정 완료</button>
-            </form>
-        </div>
-
-        <div th:if="${myReview == null}">
-            <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="productId" th:value="${flower.id}">
-                <div>
-                    <label for="rating">평점 (1~5): </label>
-                    <input type="number" id="rating" name="rating" min="1" max="5" required>
-                </div>
-                <div>
-                    <label for="content">리뷰 내용:</label><br>
-                    <textarea id="content" name="content" rows="4" cols="50" required></textarea>
-                </div>
-                <div>
-                    <label for="image">리뷰 이미지:</label><br>
-                    <input type="file" id="image" name="imageFile" accept="image/*">
-                </div>
-                <button type="submit">리뷰 작성</button>
-            </form>
-        </div>
+            <div>
+                <label for="content">리뷰 내용:</label><br />
+                <textarea id="content" name="content" rows="4" cols="50" required>
+                    [[${myReview != null} ? ${myReview.content} : '']]
+                </textarea>
+            </div>
+            <div>
+                <label for="imageFile">리뷰 이미지:</label><br />
+                <input type="file" id="imageFile" name="imageFile" accept="image/*" />
+            </div>
+            <button type="button" id="submitButton" onclick="submitReview()"
+                    th:text="${myReview != null} ? '리뷰 수정' : '리뷰 작성'">
+                리뷰 작성
+            </button>
+        </form>
     </div>
 
     <div th:unless="${#authorization.expression('isAuthenticated()')}">
@@ -173,9 +137,36 @@
         window.location.href = "/member/login";
     }
 
-    function toggleEditForm() {
-        const form = document.getElementById('editForm');
-        form.style.display = (form.style.display === 'none') ? 'block' : 'none';
+    function submitReview() {
+        const form = document.getElementById('reviewForm');
+        const formData = new FormData(form);
+        const isEdit = !!formData.get("reviewId");
+
+        fetch(isEdit ? '/review/edit' : '/review/write', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("리뷰 전송 실패");
+                return response.text();
+            })
+            .then(() => window.location.reload())
+            .catch(error => alert(error.message));
+    }
+
+    function deleteReview(reviewId) {
+        if (!confirm("정말 삭제하시겠습니까?")) return;
+
+        fetch('/review/delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `reviewId=${reviewId}`
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("삭제 실패");
+                window.location.reload();
+            })
+            .catch(error => alert(error.message));
     }
 </script>
 

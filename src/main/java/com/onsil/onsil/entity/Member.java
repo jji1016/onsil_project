@@ -102,6 +102,7 @@ public class Member {
                 .zipcode(this.getZipcode())
                 .regDate(this.getRegdate())
                 .modifyDate(this.getRegdate())
+                .role(this.role)
                 .build();
     }
 }
