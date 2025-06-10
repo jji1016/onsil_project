@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -95,6 +97,16 @@ public class MypageController {
         model.addAttribute("mypageSubscribeDtoList", mypageSubscribeDtoList);
 
         return "mypage/subscribe";
+    }
+
+    @GetMapping("/cancelSubscribe/{id}") //정기배송 구독 취소
+    @ResponseBody
+    public Map<String,String> cancelSubscribe(@PathVariable Integer id) {
+        mypageService.deleteById(id);
+
+        Map<String,String> map = new HashMap<>();
+        map.put("isdelete", "true");
+        return map;
     }
 
 }
