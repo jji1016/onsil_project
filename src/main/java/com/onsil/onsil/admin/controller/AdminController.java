@@ -55,6 +55,11 @@ public class AdminController {
         return "admin/onsil-html";
     }
 
+    @GetMapping("/api/sales/monthly")
+    @ResponseBody
+    public List<SalesByMonthDto> getSalesData() {
+        return adminService.getMonthlySales();
+    }
 
     @PostMapping("/member-list/delete/{userID}")
     @ResponseBody

@@ -5,6 +5,6 @@ import lombok.Getter;
 public interface DeliveryStatusDto {
     int getOrdered();
     int getShipped();
-    int getDelivered();
+    int getDelivering();
     int getCanceled();
 }

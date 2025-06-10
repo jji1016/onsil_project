@@ -1,8 +1,8 @@
 //gnb tab 메뉴---------------------------------------------------
-function openTab(tabName, btn){
+function openTab(tabName, btn) {
 
     let tabs = document.getElementsByClassName('tab');
-    for(let i = 0; i < tabs.length; i++){
+    for (let i = 0; i < tabs.length; i++) {
         tabs[i].style.display = "none";
     }
 
@@ -10,24 +10,20 @@ function openTab(tabName, btn){
     menus.forEach(list => list.classList.remove("active"));
 
     document.getElementById(tabName).style.display = "block";
-    if(btn){
+    if (btn) {
         btn.classList.add("active");
     }
 }
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     let firstBtn = document.querySelector(".gnb>li");
     openTab("home", firstBtn);
 });
 
 
-
-
-
-
 //홈화면 매출요약 차트
-const ctx = document.getElementById('homeSales').getContext('2d');
-const sales = new Chart(ctx, {
+// const ctx = document.getElementById('homeSales').getContext('2d');
+/*const sales = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: [
@@ -74,10 +70,57 @@ const sales = new Chart(ctx, {
         }
     }
 });
+ */
 
+fetch('/admin/api/sales/monthly')
+    .then(response => response.json())
+    .then(data => {
+        const labels = data.map(item => item.month);
+        const values = data.map(item => item.amount);
 
-
-
+        const ctx = document.getElementById('homeSales').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '월별 매출',
+                    data: values,
+                    backgroundColor: '#A6BFA4',
+                    borderRadius: 4,
+                    barThickness: 30
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {display: false},
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return `${context.parsed.y}백만원`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '매출 (백만원)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            maxRotation: 0,
+                            minRotation: 0
+                        }
+                    }
+                }
+            }
+        });
+    });
 
 
 //회원관리 페이지
@@ -108,6 +151,7 @@ const members = [
 
 const tbody = document.getElementById("member-body");
 
+/*
 members.forEach(member => {
     const tr = document.createElement("tr");
 
@@ -129,22 +173,19 @@ members.forEach(member => {
 
     tbody.appendChild(tr);
 });
+ */
 
 //회원 숫자 세기
 document.querySelector(".mem_count").textContent = members.length;
 
 
-
-
-
-
 //재고관리 페이지
 
 //재고관리 탭메뉴
-function changeTab(tabName, btn){
+function changeTab(tabName, btn) {
 
     let stocks = document.getElementsByClassName('st_tab');
-    for(let i = 0; i < stocks.length; i++){
+    for (let i = 0; i < stocks.length; i++) {
         stocks[i].style.display = "none";
     }
 
@@ -152,12 +193,12 @@ function changeTab(tabName, btn){
     cont.forEach(list => list.classList.remove("btn_on"));
 
     document.getElementsByClassName(tabName)[0].style.display = "block";
-    if(btn){
+    if (btn) {
         btn.classList.add("btn_on");
     }
 }
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     let firstBtn = document.querySelector(".stock_btn>button");
     changeTab("desc_stock", firstBtn);
 });
@@ -292,13 +333,9 @@ stocksOut.forEach(stockOut => {
 });
 
 
-
-
-
-
 //매출관리 매출요약 차트
 
-function openChart(chartName, btn){
+function openChart(chartName, btn) {
     // 모든 차트 숨기기
     let allCharts = document.querySelectorAll(".charts, .c_charts");
     allCharts.forEach(chart => chart.style.display = "none");
@@ -317,12 +354,12 @@ function openChart(chartName, btn){
     }
 
     // 버튼 on 표시
-    if(btn){
+    if (btn) {
         btn.classList.add("on");
     }
 }
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     let firstBtn = document.querySelector(".sale_title button");
     openChart("day_sales", firstBtn);
 });
@@ -334,7 +371,7 @@ const daySales = new Chart(ddd, {
     data: {
         labels: [
             '2025-05-12', '2025-05-13', '2025-05-14', '2025-05-15', '2025-05-16',
-            '2025-05-17', '2025-05-18', '2025-05-19', '2025-05-20', '2025-05-21','2025-05-22', '2025-05-23', '2025-05-24', '2025-05-25', '2025-05-26',
+            '2025-05-17', '2025-05-18', '2025-05-19', '2025-05-20', '2025-05-21', '2025-05-22', '2025-05-23', '2025-05-24', '2025-05-25', '2025-05-26',
             '2025-05-27', '2025-05-28', '2025-05-29', '2025-05-30', '2025-05-31'
         ],
         datasets: [{
@@ -353,7 +390,7 @@ const daySales = new Chart(ddd, {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         return `${context.parsed.y}만원`;
                     }
                 }
@@ -384,9 +421,9 @@ const weekSales = new Chart(www, {
     type: 'bar',
     data: {
         labels: [
-            '2월3주','2월4주', '2월5주', '3월1주', '3월2주', '3월3주', '3월4주',
+            '2월3주', '2월4주', '2월5주', '3월1주', '3월2주', '3월3주', '3월4주',
             '3월5주', '4월1주', '4월2주', '4월3주', '4월4주',
-            '4월5주', '5월1주', '5월2주', '5월3주', '5월4주', '5월5주','6월1주'
+            '4월5주', '5월1주', '5월2주', '5월3주', '5월4주', '5월5주', '6월1주'
         ],
         datasets: [{
             label: '주별 매출',
@@ -404,7 +441,7 @@ const weekSales = new Chart(www, {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         return `${context.parsed.y}백만원`;
                     }
                 }
@@ -434,8 +471,8 @@ const monthSales = new Chart(mmm, {
     type: 'bar',
     data: {
         labels: [
-            '2024-01','2024-02', '2024-03', '2024-04', '2024-05', '2024-06',
-            '2024-07','2024-08', '2024-09', '2024-10', '2024-11', '2024-12',
+            '2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06',
+            '2024-07', '2024-08', '2024-09', '2024-10', '2024-11', '2024-12',
             '2025-01', '2025-02', '2025-03', '2025-04', '2025-05'
         ],
         datasets: [{
@@ -454,7 +491,7 @@ const monthSales = new Chart(mmm, {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         return `${context.parsed.y}백만원`;
                     }
                 }
@@ -479,10 +516,6 @@ const monthSales = new Chart(mmm, {
 });
 
 
-
-
-
-
 //카테고리별 매출비중 차트
 //day chart
 const cddd = document.getElementById('c_day_sales').getContext('2d');
@@ -495,7 +528,7 @@ const cDaySales = new Chart(cddd, {
         ],
         datasets: [{
             label: '카테고리별 매출비중',
-            data: [11, 11, 8, 5, 7, 6, 10, 4, 8 ,6, 9, 7, 5, 3 ],
+            data: [11, 11, 8, 5, 7, 6, 10, 4, 8, 6, 9, 7, 5, 3],
             backgroundColor: '#95A294',
             borderRadius: 4,
             barThickness: 30
@@ -509,7 +542,7 @@ const cDaySales = new Chart(cddd, {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         return `${context.parsed.y}%`;
                     }
                 }
@@ -545,7 +578,7 @@ const cWeekSales = new Chart(wddd, {
         ],
         datasets: [{
             label: '카테고리별 매출비중',
-            data: [ 4, 8 ,6, 9, 7, 5, 3, 11, 11, 8, 5, 7, 6, 10 ],
+            data: [4, 8, 6, 9, 7, 5, 3, 11, 11, 8, 5, 7, 6, 10],
             backgroundColor: '#95A294',
             borderRadius: 4,
             barThickness: 30
@@ -559,7 +592,7 @@ const cWeekSales = new Chart(wddd, {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         return `${context.parsed.y}%`;
                     }
                 }
@@ -595,7 +628,7 @@ const cMonthSales = new Chart(mddd, {
         ],
         datasets: [{
             label: '카테고리별 매출비중',
-            data: [ 7, 5, 3, 11, 11, 8, 4, 8, 5, 7, 6, 10, 6, 9 ],
+            data: [7, 5, 3, 11, 11, 8, 4, 8, 5, 7, 6, 10, 6, 9],
             backgroundColor: '#95A294',
             borderRadius: 4,
             barThickness: 30
@@ -609,7 +642,7 @@ const cMonthSales = new Chart(mddd, {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         return `${context.parsed.y}%`;
                     }
                 }

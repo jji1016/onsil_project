@@ -15,7 +15,7 @@ public interface AdminOrderListRepository extends JpaRepository<OrderList, Integ
     SELECT 
         SUM(CASE WHEN s.status = 'ORDERED' THEN 1 ELSE 0 END) AS ordered,
         SUM(CASE WHEN s.status = 'SHIPPED' THEN 1 ELSE 0 END) AS shipped,
-        SUM(CASE WHEN s.status = 'DELIVERED' THEN 1 ELSE 0 END) AS delivered,
+        SUM(CASE WHEN s.status = 'DELIVERING' THEN 1 ELSE 0 END) AS delivering,
         SUM(CASE WHEN s.status = 'CANCELED' THEN 1 ELSE 0 END) AS canceled
     FROM orderList s
 """, nativeQuery = true)

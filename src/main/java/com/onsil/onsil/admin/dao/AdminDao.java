@@ -2,6 +2,7 @@ package com.onsil.onsil.admin.dao;
 
 import com.onsil.onsil.admin.dto.DeliveryStatusDto;
 import com.onsil.onsil.admin.dto.PopularCountDto;
+import com.onsil.onsil.admin.dto.SalesByMonthDto;
 import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.admin.repository.AdminOrderListRepository;
 import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
@@ -66,5 +67,9 @@ public class AdminDao {
 
     public DeliveryStatusDto countDeliveryStatuses() {
         return orderListRepository.countDeliveryStatuses();
+    }
+
+    public List<SalesByMonthDto> findMonthlySales() {
+        return subscribeRepository.findMonthlySales();
     }
 }

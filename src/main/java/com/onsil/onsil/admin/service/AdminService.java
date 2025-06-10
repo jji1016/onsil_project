@@ -25,7 +25,7 @@ public class AdminService {
 
     public List<MemberDto> getAllMembers() {
         return adminDao.getAllMembers().stream()
-                .filter(member -> member.getRole().equals("member") && !member.isDeleteStatus())
+                .filter(member -> member.getRole().equals("ROLE_USER") && !member.isDeleteStatus())
                 .map(member ->
                         MemberDto.builder()
                                 .zipcode(member.getZipcode())
@@ -182,5 +182,9 @@ public class AdminService {
 
     public DeliveryStatusDto getDeliveryStatusSummary() {
         return adminDao.countDeliveryStatuses();
+    }
+
+    public List<SalesByMonthDto> getMonthlySales() {
+        return adminDao.findMonthlySales();
     }
 }
