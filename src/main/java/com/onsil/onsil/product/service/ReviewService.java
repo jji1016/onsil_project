@@ -86,7 +86,20 @@ public class ReviewService {
     public void delete(int reviewId) throws IllegalAccessException {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+
+        String imageFileName = review.getImage();
+        if (imageFileName != null && !imageFileName.isEmpty()) {
+            File file = new File(reviewsPath + imageFileName);
+            if (file.exists()) {
+                boolean deleted = file.delete();
+                if (!deleted) {
+                    System.err.println("리뷰 이미지 파일 삭제 실패: " + file.getAbsolutePath());
+                }
+            }
+        }
+
         reviewRepository.delete(review);
+
     }
 
 
