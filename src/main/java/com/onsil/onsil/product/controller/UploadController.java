@@ -26,8 +26,9 @@ import java.util.List;
 public class UploadController {
     private final ProductService productService;
     private final ProductRepository productRepository;
-    @Value("${file.path}")
-private String upload;  // 여기서 주입
+    @Value("${file.path}products/")
+    String productsPath;  // 여기서 주입
+
 @GetMapping("/products")
 public String uploadForm() {
     return "upload/products";
@@ -40,6 +41,12 @@ public String saveProduct(
         @RequestParam("flowerInfo") String flowerInfo,
         @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
 
+    File saveDir = new File(productsPath);
+    if (!saveDir.exists()) {
+        saveDir.mkdirs();
+    }
+
+
     String originalFilename = imageFile.getOriginalFilename(); // abc.jpg
     String extension = originalFilename.substring(originalFilename.lastIndexOf(".")); // .jpg
     String baseName = originalFilename.substring(0, originalFilename.lastIndexOf(".")); // abc
@@ -48,7 +55,7 @@ public String saveProduct(
 
 
 
-    String savePath = upload+ "products/"+ storedFileName;
+    String savePath = productsPath+ storedFileName;
 
 
     imageFile.transferTo(new File(savePath));
