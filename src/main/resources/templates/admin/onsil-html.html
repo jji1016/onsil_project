@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>onsil flower studio admin system</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"/>
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="header">
+    <div class="wrap_hd">
+        <div class="wrap_logo">
+            <h1 class="logo"><a href="#"><img src="images/admin/logo.png" alt="logo"></a></h1>
+            <span>ADMIN</span>
+        </div>
+        <ul class="gnb">
+            <li onclick="openTab('home',this);">
+                <a href="#">
+                    <span class="icon_area ico1"></span>
+                    홈화면
+                </a>
+            </li>
+            <li onclick="openTab('member',this);">
+                <a href="#">
+                    <span class="icon_area ico2"></span>
+                    회원관리
+                </a>
+            </li>
+            <li onclick="openTab('stock',this);">
+                <a href="#">
+                    <span class="icon_area ico3"></span>
+                    입출고 및 재고현황
+                </a>
+            </li>
+            <li onclick="openTab('sales',this);">
+                <a href="#">
+                    <span class="icon_area ico4"></span>
+                    매출관리
+                </a>
+            </li>
+            <li onclick="openTab('order',this);">
+                <a href="#">
+                    <span class="icon_area"></span>
+                    주문내역관리
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div id="section">
+    <div id="home" class="tab">
+        <div class="home_top">
+            <ul class="overview">
+                <li>
+                    <a href="#">
+                        <img src="images/admin/icon_over_member.png" alt="회원아이콘">
+                        <h3>신규 가입자</h3>
+                        <p th:text="${inOneMonthSubscribeMember}">32<span>명</span></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="images/admin/icon_over_member.png" alt="전체회원아이콘">
+                        <h3>전체 가입자</h3>
+                        <p th:text="${allSubscribeMember}">345<span>명</span></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="images/admin/icon_over_deli.png" alt="배송아이콘">
+                        <h3>신규 주문</h3>
+                        <p th:text="${recentSubscribes.size()}">57<span>건</span></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="images/admin/icon_over_qna.png" alt="문의아이콘">
+                        <h3>신규 문의</h3>
+                        <p>17<span>건</span></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="images/admin/icon_over_review.png" alt="리뷰아이콘">
+                        <h3>신규 리뷰</h3>
+                        <p th:text="${inOneWeekReview}">24<span>건</span></p>
+                    </a>
+                </li>
+            </ul>
+            <div class="admin">
+                <div class="ad_info">
+                    <img src="images/admin/admin.png" alt="관리자이미지">
+                    <h3>사용자 이름</h3>
+                    <p>전체 관리자</p>
+                </div>
+                <ul class="setting">
+                    <li>
+                        <img src="images/admin/icon_setting.png" alt="수정">수정
+                    </li>
+                    <li>
+                        <img src="images/admin/icon_logout.png" alt="로그아웃">로그아웃
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="sale_chart">
+            <h2 class="title_txt">월별 매출 요약</h2>
+            <div class="h_chart_area">
+                <canvas id="homeSales" width="620" height="110"></canvas>
+            </div>
+        </div>
+        <ul class="home_bt">
+            <!--            <li class="best_item">-->
+            <!--                <h2>인기상품</h2>-->
+            <!--                <div class="cont_area">-->
+            <!--                    <table>-->
+            <!--                        <tr>-->
+            <!--                            <td>1.</td>-->
+            <!--                            <td><span>5월 카네이션 패키지</span></td>-->
+            <!--                        </tr>-->
+            <!--                        <tr>-->
+            <!--                            <td>2.</td>-->
+            <!--                            <td><span>2만원대로 유럽피언 꽃 구독(S)</span></td>-->
+            <!--                        </tr>-->
+            <!--                        <tr>-->
+            <!--                            <td>3.</td>-->
+            <!--                            <td><span>4만원대로 유럽피언 꽃 구독(M)</span></td>-->
+            <!--                        </tr>-->
+            <!--                        <tr>-->
+            <!--                            <td>4.</td>-->
+            <!--                            <td><span>마법같은 행복, 페어리 가든 꽃다발(M)</span></td>-->
+            <!--                        </tr>-->
+            <!--                        <tr>-->
+            <!--                            <td>5.</td>-->
+            <!--                            <td><span>[6월의 탄생화] 사랑을 담은 수국 패키지</span></td>-->
+            <!--                        </tr>-->
+            <!--                    </table>-->
+            <!--                </div>-->
+            <!--            </li>-->
+            <li class="best_item">
+                <h2>인기상품</h2>
+                <div class="cont_area">
+                    <table>
+                        <tr th:each="subscribe, stat : ${popularSubscribe}">
+                            <td th:text="${stat.index + 1} + '.'"></td>
+                            <td><span th:text="${subscribe.flowerName}"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li class="today_order">
+                <h2>최근 한 달 주문</h2>
+                <div class="cont_area">
+                    <!-- 총 주문 건수 및 금액 -->
+                    <table>
+                        <tr>
+                            <th>총 주문 건수</th>
+                            <th>총 주문 금액</th>
+                        </tr>
+                        <tr>
+                            <td><span th:text="${recentSubscribes.size()}">0</span></td>
+                            <td><span th:text="${totalPrice}">0</span></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>입금 대기</th>
+                            <th>결제 완료</th>
+                        </tr>
+                        <tr>
+                            <td><span>0</span></td>
+                            <td><span>0</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <!--            배송 현황-->
+            <li class="ship">
+                <h2>배송현황</h2>
+                <div class="cont_area">
+                    <table>
+                        <tr>
+                            <th>배송준비중</th>
+                            <th>배송중</th>
+                        </tr>
+                        <tr>
+                            <td><span th:text="${statusSummary.getOrdered()}">28</span></td>
+                            <td><span th:text="${statusSummary.getDelivered()}">14</span></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>배송완료</th>
+                        </tr>
+                        <tr>
+                            <td><span th:text="${statusSummary.getShipped()}">32</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div id="member" class="tab">
+        <div class="search">
+            <h2>회원 관리</h2>
+            <table>
+                <tr>
+                    <td>회원 검색</td>
+                    <td>
+                        <select name="type" id="search-category">
+                            <option value="userID">아이디</option>
+                            <option value="nickName">닉네임</option>
+                            <option value="userName">이름</option>
+                        </select>
+                        <input type="text" id="search-input" placeholder="검색어 입력">
+                    </td>
+                </tr>
+                <tr>
+                    <td>기간검색</td>
+                    <td>
+                        <!--                        <select name="day">-->
+                        <!--                            <option value="가입일">가입일</option>-->
+                        <!--                            <option value="주문일">주문일</option>-->
+                        <!--                        </select>-->
+                        <!--                        <input type="text">~<input type="text">-->
+                        <input type="date" id="start-date" placeholder="시작일">
+                        <input type="date" id="end-date" placeholder="종료일">
+
+
+                        <button>오늘</button>
+                        <button>일주일</button>
+                        <button>1개월</button>
+                        <button>3개월</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>회원등급</td>
+                    <td>
+                        <input type="checkbox" value="구독회원"> 구독 회원
+                        <input type="checkbox" value="구독회원"> 미 구독 회원
+                    </td>
+                </tr>
+            </table>
+            <div class="btn">
+                <button class="btn1" id="search-btn">검색</button>
+                <button class="btn2" id="reset-btn">초기화</button>
+            </div>
+        </div>
+        <div class="wrap_list">
+            <ul class="btn_count">
+                <!--                <li>-->
+                <!--                    <button>엑셀저장</button>-->
+                <!--                </li>-->
+                <li>
+                    <p>총 회원수 : <span class="mem_count" th:text="${memberList.size()}">345</span>명</p>
+                </li>
+            </ul>
+            <table class="mem_list">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>아이디</th>
+                    <th>닉네임</th>
+                    <th>회원명</th>
+<!--                    <th>회원등급</th>-->
+                    <th>이메일</th>
+                    <th>가입일</th>
+                    <th>주소1</th>
+                    <th>주소2</th>
+                    <th>연락처</th>
+<!--                    <th>구매이력</th>-->
+<!--                    <th>포인트</th>-->
+<!--                    <th>로그인</th>-->
+                    <th>　</th>
+                </tr>
+
+                </thead>
+<!--                <tbody id="member-body">-->
+                <tbody id="member-table-body">
+                <tr th:each="member, memberStat : ${memberList}">
+                    <td th:text="${memberStat.count}">num</td>
+                    <td th:text="${member.userID}">userID</td>
+                    <td th:text="${member.nickName}">nickName</td>
+                    <td th:text="${member.userName}">userName</td>
+                    <td th:text="${member.userEmail}">userEmail</td>
+                    <td th:text="${member.regDate}">regDate</td>
+                    <td th:text="${member.address01}">address01</td>
+                    <td th:text="${member.address02}">address02</td>
+                    <td th:text="${member.tel}">tel</td>
+                    <td>
+                        <a th:href="@{/admin/member-detail/{userID}(userID=${member.userID})}">
+                            <button>관리</button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--STOCK-->
+    <div id="stock" class="tab">
+        <div class="stock_btn">
+            <button onclick="changeTab('desc_stock',this)">재고현황</button>
+            <button onclick="changeTab('desc_in',this)">입고현황</button>
+            <button onclick="changeTab('desc_out',this)">출고현황</button>
+        </div>
+        <ul class="stock_cont">
+            <!--            재고 관리-->
+            <li class="desc_stock st_tab">
+                <div class="search">
+                    <h2>재고관리</h2>
+                    <table>
+                        <tr>
+                            <td>검색어</td>
+                            <td colspan="3">
+                                <select name="type">
+                                    <option value="품목명">품목명</option>
+                                    <option value="품목코드">품목코드</option>
+                                </select>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>카테고리</td>
+                            <td colspan="3">
+                                <select name="type">
+                                    <option value="카테고리선택">카테고리선택</option>
+                                    <option value="절화">절화</option>
+                                    <option value="부자재">부자재</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>기간검색</td>
+                            <td>
+                                <select name="day">
+                                    <option value="최근수정일">최근수정일</option>
+                                    <option value="등록일">등록일</option>
+                                </select>
+                                <input type="text">~<input type="text">
+                                <button>오늘</button>
+                                <button>일주일</button>
+                                <button>1개월</button>
+                                <button>3개월</button>
+                            </td>
+                            <td>상품가격</td>
+                            <td>
+                                <select name="price">
+                                    <option value="판매가격">판매가격</option>
+                                    <option value="할인가격">할인가격</option>
+                                </select>
+                                <input type="text">원 이상~<input type="text">원 이하
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>판매여부</td>
+                            <td>
+                                <input type="radio" name="sale1" value="전체"> 전체
+                                <input type="radio" name="sale1" value="진열"> 진열
+                                <input type="radio" name="sale1" value="품절"> 품절
+                                <input type="radio" name="sale1" value="단종"> 단종
+                                <input type="radio" name="sale1" value="중지"> 중지
+                            </td>
+                            <td>필수옵션</td>
+                            <td>
+                                <input type="radio" name="option" value="사용"> 사용
+                                <input type="radio" name="option" value="미사용"> 미사용
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btn">
+                        <button class="btn1">검색</button>
+                        <button class="btn2">초기화</button>
+                    </div>
+                </div>
+                <div class="wrap_list">
+                    <table class="stock_list">
+                        <thead>
+                        <tr>
+                            <th>품목코드</th>
+                            <th>품목명</th>
+                            <th>카테고리</th>
+                            <th>품목단위</th>
+                            <th>재고</th>
+                            <th>보관창고</th>
+                            <th>　</th>
+                        </tr>
+                        </thead>
+                        <tbody id="stock-body">
+
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+            <!--            입고 관리-->
+            <li class="desc_in st_tab">
+                <div class="search">
+                    <h2>입고관리</h2>
+                    <table>
+                        <tr>
+                            <td>품목검색</td>
+                            <td>
+                                <select name="type">
+                                    <option value="품목명">품목명</option>
+                                    <option value="품목코드">품목코드</option>
+                                </select>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>기간검색</td>
+                            <td>
+                                <select name="day">
+                                    <option value="최근수정일">최근수정일</option>
+                                    <option value="입고일">입고일</option>
+                                </select>
+                                <input type="text">~<input type="text">
+                                <button>오늘</button>
+                                <button>일주일</button>
+                                <button>1개월</button>
+                                <button>3개월</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btn">
+                        <button class="btn1">검색</button>
+                        <button class="btn2">초기화</button>
+                    </div>
+                </div>
+                <div class="wrap_list">
+                    <div>
+                        <button class="add_btn">입고등록</button>
+                    </div>
+                    <table class="stock_list">
+                        <thead>
+                        <tr>
+                            <th>입고일자</th>
+                            <th>품목코드</th>
+                            <th>품목명</th>
+                            <th>카테고리</th>
+                            <th>입고수량</th>
+                            <th>공급처</th>
+                            <th>담당자</th>
+                            <th>　</th>
+                        </tr>
+                        </thead>
+                        <tbody id="stock_in-body">
+
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+            <!--            출고 관리-->
+            <li class="desc_out st_tab">
+                <div class="search">
+                    <h2>입고관리</h2>
+                    <table>
+                        <tr>
+                            <td>품목검색</td>
+                            <td>
+                                <select name="type">
+                                    <option value="품목명">품목명</option>
+                                    <option value="품목코드">품목코드</option>
+                                </select>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>기간검색</td>
+                            <td>
+                                <select name="day">
+                                    <option value="최근수정일">최근수정일</option>
+                                    <option value="출고일">출고일</option>
+                                </select>
+                                <input type="text">~<input type="text">
+                                <button>오늘</button>
+                                <button>일주일</button>
+                                <button>1개월</button>
+                                <button>3개월</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btn">
+                        <button class="btn1">검색</button>
+                        <button class="btn2">초기화</button>
+                    </div>
+                </div>
+                <div class="wrap_list">
+                    <div>
+                        <button class="add_btn">출고등록</button>
+                    </div>
+                    <table class="stock_list">
+                        <thead>
+                        <tr>
+                            <th>출고일자</th>
+                            <th>품목코드</th>
+                            <th>품목명</th>
+                            <th>카테고리</th>
+                            <th>출고수량</th>
+                            <th>출고처</th>
+                            <th>담당자</th>
+                            <th>　</th>
+                        </tr>
+                        </thead>
+                        <tbody id="stock_out-body">
+
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <div id="sales" class="tab">
+        <ul class="sales_info">
+            <li>
+                <img src="images/admin/icon_sales_big.png" alt="매출아이콘">
+                <h3>오늘의 매출</h3>
+                <p>2,867,500<span>원</span></p>
+            </li>
+            <li>
+                <img src="images/admin/icon_sales_big.png" alt="매출아이콘">
+                <h3>이번달 매출</h3>
+                <p>18,524,700<span>원</span></p>
+            </li>
+            <li>
+                <img src="images/admin/icon_over_deli.png" alt="매출아이콘">
+                <h3>이번달 주문수</h3>
+                <p>146<span>건</span></p>
+            </li>
+            <li>
+                <img src="images/admin/icon_average.png" alt="평균아이콘">
+                <h3>평균 객단가</h3>
+                <p>126,880<span>원</span></p>
+            </li>
+        </ul>
+
+        <div class="sale_chart">
+            <div class="sale_title">
+                <h2>기간별 매출</h2>
+                <button onclick="openChart('day_sales',this);" class="day">일별</button>
+                <button onclick="openChart('week_sales',this);" class="week">주별</button>
+                <button onclick="openChart('month_sales',this);" class="month">월별</button>
+            </div>
+            <div class="chart_area">
+                <canvas id="day_sales" class="charts" width="780" height="110"></canvas>
+                <canvas id="week_sales" class="charts" width="780" height="110"></canvas>
+                <canvas id="month_sales" class="charts" width="780" height="110"></canvas>
+            </div>
+        </div>
+        <div class="category_chart">
+            <h2>카테고리별 매출 비중</h2>
+            <div class="c_chart_area">
+                <canvas id="c_day_sales" class="c_charts" width="780" height="110"></canvas>
+                <canvas id="c_week_sales" class="c_charts" width="780" height="110"></canvas>
+                <canvas id="c_month_sales" class="c_charts" width="780" height="110"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="order" class="tab">
+        주문내역관리~~~
+    </div>
+</div>
+<!-- 멤버리스트 JS -->
+<script th:inline="javascript">
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const searchBtn = document.getElementById('search-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const input = document.getElementById('search-input');
+        const categorySelect = document.getElementById('search-category');
+        const startDateInput = document.getElementById('start-date');
+        const endDateInput = document.getElementById('end-date');
+        const tableBody = document.getElementById('member-table-body');
+
+        searchBtn.addEventListener('click', function () {
+            const keyword = input.value.trim();
+            const category = categorySelect.value;
+            const startDate = startDateInput.value;
+            const endDate = endDateInput.value;
+
+            const params = new URLSearchParams();
+
+            if (keyword) {
+                params.append('keyword', keyword);
+                params.append('category', category);
+            }
+            if (startDate) params.append('startDate', startDate);
+            if (endDate) params.append('endDate', endDate);
+
+            fetch(`/admin/member-search?${params.toString()}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("서버 응답 오류");
+                    return response.json();
+                })
+                .then(data => {
+                    tableBody.innerHTML = "";
+
+                    if (data.length === 0) {
+                        tableBody.innerHTML = '<tr><td colspan="11">검색 결과 없음</td></tr>';
+                        return;
+                    }
+
+                    data.forEach((member, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${member.userID}</td>
+                            <td>${member.nickName}</td>
+                            <td>${member.userName}</td>
+                            <td>${member.userEmail}</td>
+                            <td>${member.regDate}</td>
+                            <td>${member.address01}</td>
+                            <td>${member.address02 ?? ''}</td>
+                            <td>${member.tel}</td>
+                            <td>
+                              <a href="/admin/member-list/${member.userID}">
+                                <button>관리</button>
+                              </a>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    alert("검색 중 오류 발생: " + error.message);
+                });
+        });
+
+        resetBtn.addEventListener('click', function () {
+            location.reload();
+        });
+    });
+</script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,9 +1,7 @@
 package com.onsil.onsil.admin.service;
 
 import com.onsil.onsil.admin.dao.AdminDao;
-import com.onsil.onsil.admin.dto.MemberDto;
-import com.onsil.onsil.admin.dto.PopularCountDto;
-import com.onsil.onsil.admin.dto.SubscribeDto;
+import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Subscribe;
@@ -151,23 +149,38 @@ public class AdminService {
         return adminDao.popularSubscribe();
     }
 
-    public List<SubscribeDto> findRecentSubscribeInOneMonth() {
+    public SubscribeSumDto subscribeInOneMonth() {
+
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-        Pageable topFive = PageRequest.of(0, 5);
+//        Pageable topFive = PageRequest.of(0, 5);
 
-        List<Subscribe> subscribes = adminDao.findRecentInMonth(oneMonthAgo, topFive);
+        List<Subscribe> subscribes = adminDao.findRecentInMonth(oneMonthAgo);
 
-        return subscribes.stream().map(s -> SubscribeDto.builder()
+        List<SubscribeDto> dtos = subscribes.stream().map(s -> SubscribeDto.builder()
                 .id(s.getId())
                 .userID(s.getMember().getUserID())
                 .startDate(s.getStartDate())
                 .endDate(s.getEndDate())
-                .orderNumber("ORD-" + s.getId()) // 주문번호는 예시 (규칙에 따라 수정)
+                .orderNumber("ORD-" + s.getId())
                 .productName(s.getProduct().getFlowerName())
                 .productPrice(s.getProduct().getPrice())
                 .period(s.getPeriod())
                 .build()
         ).toList();
+
+        int totalPrice = dtos.stream()
+                .mapToInt(SubscribeDto::getProductPrice)
+                .sum();
+
+        return new SubscribeSumDto(dtos, totalPrice);
     }
 
+    public int inOneWeekReview() {
+        LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
+        return adminDao.inOneWeekReview(oneWeekAgo);
+    }
+
+    public DeliveryStatusDto getDeliveryStatusSummary() {
+        return adminDao.countDeliveryStatuses();
+    }
 }

@@ -31,6 +31,6 @@ public interface AdminSubscribeRepository extends JpaRepository<Subscribe, Integ
     @Query("SELECT s FROM Subscribe s " +
             "WHERE s.startDate >= :oneMonthAgo " +
             "ORDER BY s.startDate DESC")
-    List<Subscribe> findRecentInMonth(@Param("oneMonthAgo") LocalDateTime oneMonthAgo, Pageable pageable);
+    List<Subscribe> findRecentInMonth(@Param("oneMonthAgo") LocalDateTime oneMonthAgo);
 
 }

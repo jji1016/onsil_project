@@ -1,11 +1,13 @@
 package com.onsil.onsil.admin.dao;
 
+import com.onsil.onsil.admin.dto.DeliveryStatusDto;
 import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.admin.repository.AdminOrderListRepository;
 import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Subscribe;
+import com.onsil.onsil.product.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ public class AdminDao {
     private final AdminMemberRepository memberRepository;
     private final AdminOrderListRepository orderListRepository;
     private final AdminSubscribeRepository subscribeRepository;
+    private final ReviewRepository reviewRepository;
 
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
@@ -53,7 +56,15 @@ public class AdminDao {
         return subscribeRepository.popularSubscribe(PageRequest.of(0, 5));
     }
 
-    public List<Subscribe> findRecentInMonth(LocalDateTime oneMonthAgo, Pageable topFive) {
-        return  subscribeRepository.findRecentInMonth(oneMonthAgo, topFive);
+    public List<Subscribe> findRecentInMonth(LocalDateTime oneMonthAgo) {
+        return  subscribeRepository.findRecentInMonth(oneMonthAgo);
+    }
+
+    public int inOneWeekReview(LocalDateTime oneWeekAgo) {
+        return reviewRepository.countOneWeekReview(oneWeekAgo);
+    }
+
+    public DeliveryStatusDto countDeliveryStatuses() {
+        return orderListRepository.countDeliveryStatuses();
     }
 }

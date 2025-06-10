@@ -1,9 +1,6 @@
 package com.onsil.onsil.admin.controller;
 
-import com.onsil.onsil.admin.dto.AdminOutputDto;
-import com.onsil.onsil.admin.dto.MemberDto;
-import com.onsil.onsil.admin.dto.PopularCountDto;
-import com.onsil.onsil.admin.dto.SubscribeDto;
+import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -25,32 +22,39 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+    private final AdminOutputService adminOutputService;
 
-    @GetMapping("/dashboard")
-    public String index(Model model) {
+    @GetMapping("/onsil-html")
+    public String onsilHtml(Model model) {
 
+        // 총 멤버수
         int countedMember = adminService.countAllMembers();
+        // 한달이내 가입자 수(중복제거)
         int inOneMonthSubscribeMember = adminService.countOneMonth();
+        // 인기상품 리스트
         List<PopularCountDto> popularSubscribe = adminService.popularSubscribe();
-        List<SubscribeDto> recentSubscribes = adminService.findRecentSubscribeInOneMonth();
+        // 한달이내 주문건수
+        SubscribeSumDto recentSubscribes = adminService.subscribeInOneMonth();
+        // 멤버리스트
+        List<MemberDto> memberList = adminService.getAllMembers();
+        // 일주일 내 리뷰 수
+        int inOneWeekReview = adminService.inOneWeekReview();
+        // 배송현황
+        DeliveryStatusDto statusSummary = adminService.getDeliveryStatusSummary();
+
 
         model.addAttribute("allSubscribeMember", countedMember);
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
         model.addAttribute("popularSubscribe", popularSubscribe);
-        model.addAttribute("recentSubscribes", recentSubscribes);
-
-
-        return "admin/dashboard";
-    }
-
-    @GetMapping("/member-list")
-    public String memberList(Model model) {
-
-        List<MemberDto> memberList = adminService.getAllMembers();
+        model.addAttribute("recentSubscribes", recentSubscribes.getList());
+        model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
         model.addAttribute("memberList", memberList);
+        model.addAttribute("inOneWeekReview", inOneWeekReview);
+        model.addAttribute("statusSummary", statusSummary);
 
-        return "admin/member-list";
+        return "admin/onsil-html";
     }
+
 
     @PostMapping("/member-list/delete/{userID}")
     @ResponseBody
@@ -82,7 +86,6 @@ public class AdminController {
         return "redirect:/admin/member-list";
     }
 
-
     @GetMapping("/order-list/{id}")
     public String orderList(@PathVariable int id, Model model) {
 
@@ -106,7 +109,6 @@ public class AdminController {
         return adminService.search(keyword, category, start, end);
     }
 
-    private final AdminOutputService adminOutputService;
 
 
 
