@@ -9,8 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class AdminStockDto {
+    private int productId;
     private String flowerName;
     private int quantity;
-    private String warehouse;
-
 }

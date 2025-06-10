@@ -30,9 +30,9 @@ public class AdminStockService {
         log.info("objects: {}", objects);
         List<AdminStockDto> adminStockDtos = objects.stream()
                 .map(index -> new AdminStockDto(
-                        ((String) index[0]),
-                        ((Number) index[1]).intValue(),
-                        ((String) index[2])
+                        ((Number) index[0]).intValue(),
+                        ((String) index[1]),
+                        ((Number) index[2]).intValue()
                 ))
                 .collect(Collectors.toList());
         return adminStockDtos;
