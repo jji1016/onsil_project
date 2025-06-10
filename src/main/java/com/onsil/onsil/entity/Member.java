@@ -1,5 +1,6 @@
 package com.onsil.onsil.entity;
 
+import com.onsil.onsil.constant.Role;
 import com.onsil.onsil.member.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -58,7 +59,8 @@ public class Member {
     private LocalDateTime regdate;
 
     @Builder.Default
-    private String role = "ROLE_USER";
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ROLE_USER;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Cart> cartList;
@@ -100,7 +102,7 @@ public class Member {
                 .zipcode(this.getZipcode())
                 .regDate(this.getRegdate())
                 .modifyDate(this.getRegdate())
-                .role(this.getRole())
+                .role(this.role)
                 .build();
     }
 }

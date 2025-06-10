@@ -5,8 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum Role {
-    ROLE_USER("일반회원"),
-    ROLE_ADMIN("관리자");
+public enum Status {
+    ORDERED("배송 준비중"),
+    DELIVERING("배송 중"),
+    SHIPPED("배송 완료"),
+    CANCELED("취소됨");
     private final String label;
+
 }
