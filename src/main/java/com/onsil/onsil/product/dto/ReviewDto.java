@@ -1,5 +1,6 @@
 package com.onsil.onsil.product.dto;
 
+import com.onsil.onsil.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,18 @@ public class ReviewDto {
     private int rating;
     private LocalDateTime regDate;
     private String image;
+
+    public static ReviewDto fromEntity(Review review) {
+        ReviewDto dto = new ReviewDto();
+        dto.setId(review.getId());
+        dto.setProductId(review.getProduct().getId());
+        dto.setMemberId(review.getMember().getId());
+        dto.setMemberNickName(review.getMember().getNickName());
+        dto.setUserId(review.getMember().getUserID());
+        dto.setContent(review.getContent());
+        dto.setRating(review.getRating());
+        dto.setImage(review.getImage());
+        dto.setRegDate(review.getRegDate());
+        return dto;
+    }
 }

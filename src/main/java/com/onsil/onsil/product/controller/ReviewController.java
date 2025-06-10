@@ -1,5 +1,6 @@
 package com.onsil.onsil.product.controller;
 
+import com.onsil.onsil.product.dto.ReviewDto;
 import com.onsil.onsil.product.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/write")
-    public String writeReview(@RequestParam("productId") int productId,
+    public String writeReview(
+                              @RequestParam("productId") int productId,
                               @RequestParam("rating") int rating,
                               @RequestParam("content") String content,
                               @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
@@ -45,5 +47,13 @@ public class ReviewController {
             redirectAttributes.addFlashAttribute("errorMessage", "리뷰 삭제 중 오류가 발생했습니다.");
         }
         return "redirect:/product/detail/" + productId;
+    }
+    @PostMapping("/edit")
+    public String editReview(@ModelAttribute ReviewDto reviewDto,
+                             @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+
+        reviewService.updateReview(reviewDto, imageFile);
+
+        return "redirect:/product/detail/" + reviewDto.getProductId();
     }
 }

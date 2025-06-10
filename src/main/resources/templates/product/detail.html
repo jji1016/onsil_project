@@ -96,7 +96,6 @@
             <input type="hidden" name="reviewId" th:value="${review.id}" />
             <input type="hidden" name="productId" th:value="${flower.id}" />
             <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">🗑️ 삭제</button>
-
         </form>
     </div>
 </div>
@@ -107,28 +106,59 @@
     <div th:if="${#authorization.expression('isAuthenticated()')}">
         <div th:if="${myReview != null}">
             <p>이미 리뷰를 작성하셨습니다.</p>
-            <form th:action="@{/review/edit}" method="get">
-                <input type="hidden" name="reviewId" th:value="${myReview.id}" />
-                <button type="submit">✏️ 리뷰 수정하기</button>
+
+            <!-- 기존 리뷰 간단 표시 -->
+            <div>
+                <strong th:text="'작성자: ' + ${myReview.memberNickName}"></strong><br>
+                <span th:text="'평점: ' + ${myReview.rating} + '/5'"></span><br>
+                <span th:text="${myReview.content}"></span><br>
+                <div th:if="${myReview.image != null}">
+                    <img th:src="@{'/upload/reviews/' + ${myReview.image}}" width="200"/>
+                </div>
+            </div>
+
+            <!-- 수정 폼 토글 버튼 -->
+            <button type="button" onclick="toggleEditForm()">✏️ 리뷰 수정</button>
+
+            <!-- 리뷰 수정 폼 -->
+            <form id="editForm" th:action="@{/review/edit}" method="post" enctype="multipart/form-data"
+                  style="display: none; margin-top: 20px;">
+                <input type="hidden" name="id" th:value="${myReview.id}" />
+                <input type="hidden" name="productId" th:value="${flower.id}" />
+
+                <div>
+                    <label for="rating">평점 (1~5): </label>
+                    <input type="number" id="rating" name="rating" min="1" max="5" th:value="${myReview.rating}" required>
+                </div>
+                <div>
+                    <label for="content">리뷰 내용:</label><br>
+                    <textarea id="content" name="content" rows="4" cols="50" th:text="${myReview.content}"></textarea>
+                </div>
+                <div>
+                    <label for="imageFile">리뷰 이미지 변경:</label><br>
+                    <input type="file" id="imageFile" name="imageFile" accept="image/*">
+                </div>
+                <button type="submit">수정 완료</button>
             </form>
         </div>
+
         <div th:if="${myReview == null}">
-        <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="productId" th:value="${flower.id}">
-            <div>
-                <label for="rating">평점 (1~5): </label>
-                <input type="number" id="rating" name="rating" min="1" max="5" required>
-            </div>
-            <div>
-                <label for="content">리뷰 내용:</label><br>
-                <textarea id="content" name="content" rows="4" cols="50" required></textarea>
-            </div>
-            <div>
-                <label for="image">리뷰 이미지:</label><br>
-                <input type="file" id="image" name="imageFile" accept="image/*">
-            </div>
-            <button type="submit">리뷰 작성</button>
-        </form>
+            <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="productId" th:value="${flower.id}">
+                <div>
+                    <label for="rating">평점 (1~5): </label>
+                    <input type="number" id="rating" name="rating" min="1" max="5" required>
+                </div>
+                <div>
+                    <label for="content">리뷰 내용:</label><br>
+                    <textarea id="content" name="content" rows="4" cols="50" required></textarea>
+                </div>
+                <div>
+                    <label for="image">리뷰 이미지:</label><br>
+                    <input type="file" id="image" name="imageFile" accept="image/*">
+                </div>
+                <button type="submit">리뷰 작성</button>
+            </form>
         </div>
     </div>
 
@@ -142,8 +172,12 @@
         alert("리뷰를 작성하려면 로그인해야 합니다.");
         window.location.href = "/member/login";
     }
-</script>
 
+    function toggleEditForm() {
+        const form = document.getElementById('editForm');
+        form.style.display = (form.style.display === 'none') ? 'block' : 'none';
+    }
+</script>
 
 </body>
 </html>

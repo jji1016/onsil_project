@@ -1,5 +1,6 @@
 package com.onsil.onsil.entity;
 
+import com.onsil.onsil.constant.Role;
 import com.onsil.onsil.member.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,13 +51,16 @@ public class Member {
     @Column(nullable = false)
     private String zipcode;
 
+    @Column(nullable = false)
+    private boolean deleteStatus;
+
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime regdate;
 
     @Builder.Default
-    private String role = "ROLE_USER";
-
-    private boolean deleteStatus = false; //탈퇴 할 경우 true로 변경
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ROLE_USER;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Cart> cartList;
@@ -73,7 +77,17 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Output> outputList;
 
+    public void updateInfo(String nickName, String userEmail, String zipcode, String address01, String address02) {
+        this.nickName = nickName;
+        this.userEmail = userEmail;
+        this.zipcode = zipcode;
+        this.address01 = address01;
+        this.address02 = address02;
+    }
 
+    public void markAsDeleted() {
+        this.deleteStatus = true;
+    }
 
     public MemberDto toMemberDto() {
         return MemberDto.builder()
@@ -88,7 +102,5 @@ public class Member {
                 .zipcode(this.getZipcode())
                 .regDate(this.getRegdate())
                 .modifyDate(this.getRegdate())
-                .role(this.getRole())
                 .build();
     }
-}
