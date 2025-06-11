@@ -22,26 +22,19 @@ public class AdminInputService {
     private final AdminInputDao adminInputDao;
     //private final AdminInputRepository adminInputRepository;
 
-    public List<AdminInputDto> searchInputs(String flowerName, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<AdminInputDto> searchInputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
 
-        List<Object[]> objects = adminInputDao.searchInputs(flowerName,startDate,endDate);
+        List<Object[]> results = adminInputDao.searchInputs(category,keyword,startDate,endDate);
 
-        log.info("objects: {}", objects);
-        List<AdminInputDto> adminInputDtos = objects.stream()
-                .map(index -> new AdminInputDto(
-                        ((Timestamp) index[0]).toLocalDateTime(),
-                        ((Number) index[1]).intValue(),
-                        ((String) index[2]),
-                        ((Number) index[3]).intValue(),
-                        ((String) index[4]),
-                        ((String) index[5])
-                ))
-                 .collect(Collectors.toList());
-        return adminInputDtos;
+        log.info("results: {}", results);
+        return results.stream().map(obj -> AdminInputDto.builder()
+                .regDate(((java.sql.Timestamp)obj[0]).toLocalDateTime())
+                .inputId(((Number)obj[1]).intValue())
+                .productId(((Number)obj[2]).intValue())
+                .flowerName((String)obj[3])
+                .amount(((Number)obj[4]).intValue())
+                .company((String)obj[5])
+                .build()).collect(Collectors.toList());
+    }
     }
 
-    //입고 목록 검색
-//    public List<AdminInputDto> searchInputs(String keyword, LocalDate startDate, LocalDate endDate) {
-//        return adminInputRepository.searchByConditions(keyword, startDate, endDate);
-//    }
-}

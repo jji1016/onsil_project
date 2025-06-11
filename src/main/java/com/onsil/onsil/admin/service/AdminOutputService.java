@@ -24,26 +24,17 @@ public class AdminOutputService {
     private final AdminOutputDao adminOutputDao;
 //    private final AdminOutputRepository adminOutputRepository;
 
-    public List<AdminOutputDto> searchOutputs(String flowerName,
-                                              LocalDateTime startDate,
-                                              LocalDateTime endDate) {
-
-        List<Object[]> results = adminOutputDao.searchOutputs(flowerName, startDate, endDate);
-
+    public List<AdminOutputDto> searchOutputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        List<Object[]> results = adminOutputDao.searchOutputs(category, keyword, startDate, endDate);
         return results.stream().map(obj -> AdminOutputDto.builder()
-                .regDate(((Timestamp) obj[0]).toLocalDateTime())
-                .memberId(((Number) obj[1]).intValue())
-                .flowerName((String) obj[2])
-                .amount(((Number) obj[3]).intValue())
-                .outPlace((String) obj[4])
-                .userName((String) obj[5])
+                .regDate(((Timestamp)obj[0]).toLocalDateTime().toLocalDate())
+                .productId(((Number)obj[1]).intValue()) // 품목코드 가공
+                .flowerName((String)obj[2])
+                .outputAmount(((Number)obj[3]).intValue())
+                .userName((String)obj[4])
                 .build()).collect(Collectors.toList());
     }
 }
 
-//출고 검색 기능
-//    public List<AdminOutputDto> searchOutputs(String keyword, LocalDate startDate, LocalDate endDate) {
-//        return adminOutputRepository.searchByConditions(keyword, startDate, endDate);
-//    }
 
 

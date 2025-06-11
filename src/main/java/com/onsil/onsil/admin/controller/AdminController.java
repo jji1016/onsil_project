@@ -34,40 +34,41 @@ public class AdminController {
 
     private final AdminOrderListService adminOrderListService;
 
-//    public AdminInputController(AdminInputService adminInputService) {
-//        this.adminInputService = adminInputService;
-//    }
-
-    //입고 목록 조회
-//    @GetMapping("/inputlist")
-//    public String inputList(Model model,@ModelAttribute AdminInputDto adminInputDto) {
-//
-//        List<AdminInputDto> inputList = adminInputService.searchInputs(key);
-//        log.info("inputlist={}", inputList);
-//        model.addAttribute("inputList", inputList);
-//        return "admin/input";
-//    }
-
     //입고 검색 기능
     @GetMapping("/inputlist")
-    public String inputList(@RequestParam(required = false) String flowerName,
-                            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime startDate,
-                            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate,
-                            Model model) {
-        List<AdminInputDto> inputList = adminInputService.searchInputs(flowerName, startDate, endDate);
+    public String inputList(@RequestParam(required = false) String category,
+                            @RequestParam(required = false) String keyword,
+                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                            Model model
+    ) {log.info("category={}, keyword={}, startDate={}, endDate={}", category, keyword, startDate, endDate);
+        List<AdminInputDto> inputList = adminInputService.searchInputs(category, keyword, startDate, endDate);
         model.addAttribute("inputList", inputList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         return "admin/input";
     }
+
     //출고 검색 기능
     @GetMapping("/outputlist")
-    public String outputList(@RequestParam(required = false) String flowerName,
-                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
-                             Model model) {
-        List<AdminOutputDto> outputList = adminOutputService.searchOutputs(flowerName, startDate, endDate);
+    public String outputList(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+            Model model
+    ) {
+        List<AdminOutputDto> outputList = adminOutputService.searchOutputs(category, keyword, startDate, endDate);
         model.addAttribute("outputList", outputList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         return "admin/output";
     }
+
     //재고 검색 기능
     @GetMapping("/stocklist")
     public String stocklist(@RequestParam(required = false) String flowerName,
@@ -89,7 +90,7 @@ public class AdminController {
                                  @RequestParam(required = false) String status,
                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDate,
                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime endDate,
-                                 Model model){
+                                 Model model) {
         List<AdminOrderListDto> orderList = adminOrderListService.searchOrderlists(userId, status, startDate, endDate);
         model.addAttribute("orderList", orderList);
         return "admin/order";

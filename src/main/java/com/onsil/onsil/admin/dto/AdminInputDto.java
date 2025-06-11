@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class AdminInputDto {
-    private LocalDateTime regDate;
-    private int memberId;
-    private String flowerName;
-    private int amount;
-    private String supplyName;
-    private String userName;
+    private LocalDateTime regDate;  // 입고일자 (INPUT.REGDATE)
+    private int inputId;            // 입고번호
+    private int productId;          // 품목코드 (PRODUCT.PRODUCTID)
+    private String flowerName;      // 품목명 (PRODUCT.FLOWERNAME)
+    private int amount;             // 입고수량 (INPUT.AMOUNT)
+    private String company;         // 공급처 (INPUT.COMPANY)
 }

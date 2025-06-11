@@ -12,15 +12,24 @@ import java.util.List;
 
 //입고 목록 조회와 검색 기능
 public interface AdminInputRepository extends JpaRepository<Input, Integer> {
-    @Query(value = "SELECT i.AMOUNT, i.REGDATE, i.COMPANY, p.FLOWERNAME, m.USERNAME " +
+    @Query(value = "SELECT i.REGDATE, i.INPUTID, p.PRODUCTID, p.FLOWERNAME, i.AMOUNT, i.COMPANY " +
             "FROM INPUT i " +
             "JOIN PRODUCT p ON i.PRODUCTID = p.PRODUCTID " +
-            "JOIN MEMBER m ON i.PRODUCTID = m.MEMBERID " +
-            "WHERE (:flowerName IS NULL OR p.FLOWERNAME LIKE %:flowerName%) " +
+            "WHERE " +
+            "   (:category IS NULL OR " +
+            "       (:category = 'flowerName' AND p.FLOWERNAME LIKE '%' || :keyword || '%') OR " +
+            "       (:category = 'productId' AND p.PRODUCTID = :keyword) OR " +
+            "       (:category = 'company' AND i.COMPANY LIKE '%' || :keyword || '%') " +
+            "   ) " +
             "AND (:startDate IS NULL OR i.REGDATE >= :startDate) " +
-            "AND (:endDate IS NULL OR i.REGDATE <= :endDate)", nativeQuery = true)
-    List<Object[]> searchInputs(@Param("flowerName") String flowerName,
-                                @Param("startDate") LocalDateTime startDate,
-                                @Param("endDate") LocalDateTime endDate);
+            "AND (:endDate IS NULL OR i.REGDATE <= :endDate) " +
+            "ORDER BY i.REGDATE DESC",
+            nativeQuery = true)
+    List<Object[]> searchInputs(
+            @Param("category") String category,
+            @Param("keyword") String keyword,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
+    );
 }
 
