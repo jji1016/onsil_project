@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function(){
         <td>${member.point}</td>
         <td>${member.login}</td>
         <td>
-        <button class="admin_btn">관리</button>
+        <button class="admin_btn">수정</button>
         <button class="del_btn">삭제</button>
         </td>
     `;
@@ -133,6 +133,39 @@ document.addEventListener("DOMContentLoaded", function(){
 
     //회원 숫자 세기
     document.querySelector(".mem_count").textContent = members.length;
+
+
+    
+    //모달창 tab 메뉴---------------------------------------------------
+    function openPage(tabName, btn){
+
+        let tabs = document.getElementsByClassName('tab-cont');
+        for(let i = 0; i < tabs.length; i++){
+            tabs[i].style.display = "none";
+        }
+
+        let menus = document.querySelectorAll(".wrap-cont li");
+        menus.forEach(list => list.classList.remove("activeM"));
+
+        let buttons = document.querySelectorAll(".tab-btn>li");
+        buttons.forEach(b => b.classList.remove("activeM"));
+
+        document.getElementById(tabName).style.display = "block";
+        if(btn){
+            btn.classList.add("activeM");
+        }
+
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+        let firstBtn = document.querySelector(".wrap-cont li");
+        openPage("mem-info", firstBtn);
+    });
+    document.addEventListener("DOMContentLoaded", function(){
+        let firstBtn = document.querySelector(".tab-btn li");
+        openPage("mem-info", firstBtn);
+    });
+
 
 
 
@@ -657,6 +690,163 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 
+//주문내역관리 페이지
+    const orders = [
+    {
+        no: 2,
+        date: "2025-06-09",
+        orderNo: "20250609007A",
+        product: "6월의 탄생화 장미 시리즈",
+        count : "1",
+        fee: "0",
+        state: "결제완료",
+        id: "jiminpro",
+        name: "한지민",
+        delName: "이석훈",
+        price: "48,900",
+        pay: "신용카드"
+    },
+    {
+        no: 1,
+        date: "2025-06-09",
+        orderNo: "20250609007A",
+        product: "6월의 탄생화 장미 시리즈",
+        count : "1",
+        fee: "0",
+        state: "결제완료",
+        id: "jiminpro",
+        name: "한지민",
+        delName: "이석훈",
+        price: "48,900",
+        pay: "신용카드"
+    }
+    ];
+
+    const orderBody = document.getElementById("order-body");
+
+    orders.forEach(order => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td>${order.no}</td>
+        <td>${order.date}</td>
+        <td  class="order_btn">${order.orderNo}</td>
+        <td>${order.product}</td>
+        <td>${order.count}</td>
+        <td>${order.fee}</td>
+        <td>${order.state}</td>
+        <td>${order.id}</td>
+        <td>${order.name}</td>
+        <td>${order.delName}</td>
+        <td>${order.price}</td>
+        <td>${order.pay}</td>
+    `;
+
+    orderBody.appendChild(tr);
+    });
+
+
+
+
+
+//주문내역 모달창  주문정보영역--------------
+    const orderD = [ 
+    {
+        no: "2505230098",
+        date: "2025-06-09 14:05",
+        id: "figma",
+        name: "유재석",
+        product: "[6월의 탄생화] 사랑을 담은 수국 꽃다발",
+        state : "결제완료",
+        price: "68,600",
+        discount: "2,000",
+        sum: "66,800",
+        pay: "신용카드"
+    }
+];
+
+const orderInforBody = document.getElementById("orderInforBody");
+
+orderD.forEach(order => {
+    // no, date
+    let tr1 = document.createElement("tr");
+    tr1.innerHTML = `
+        <td>주문번호</td><td>${order.no}</td>
+        <td>주문일시</td><td>${order.date}</td>
+    `;
+    orderInforBody.appendChild(tr1);
+
+    // id, name
+    let tr2 = document.createElement("tr");
+    tr2.innerHTML = `
+        <td>아이디</td><td>${order.id}</td>
+        <td>이름</td><td>${order.name}</td>
+    `;
+    orderInforBody.appendChild(tr2);
+
+    // product, state
+    let tr3 = document.createElement("tr");
+    tr3.innerHTML = `
+        <td>상품명</td><td>${order.product}</td>
+        <td>상태</td><td>${order.state}</td>
+    `;
+    orderInforBody.appendChild(tr3);
+
+    // price, discount
+    let tr4 = document.createElement("tr");
+    tr4.innerHTML = `
+        <td>가격</td><td>${order.price}</td>
+        <td>할인</td><td>${order.discount}</td>
+    `;
+    orderInforBody.appendChild(tr4);
+
+    // sum, pay
+    let tr5 = document.createElement("tr");
+    tr5.innerHTML = `
+        <td>총합</td><td>${order.sum}</td>
+        <td>결제수단</td><td>${order.pay}</td>
+    `;
+    orderInforBody.appendChild(tr5);
+});
+
+
+
+//주문내역 모달창  배송정보영역--------------
+    const delivery = [ 
+    {
+        name: "한지민",
+        phone: "010-1234-5678",
+        adress: "경기도 고양시 장항로 111, 101동 1234호 (온실마을, 온실아파트)",
+        msg: "부재시 문앞에 놔주세요."
+    }
+];
+
+const deliBody = document.getElementById("deliBody");
+
+delivery.forEach(info => {
+    // name, phone
+    let tr1 = document.createElement("tr");
+    tr1.innerHTML = `
+        <td>수령인</td><td>${info.name}</td>
+        <td>전화번호</td><td>${info.phone}</td>
+    `;
+    deliBody.appendChild(tr1);
+
+    // adress
+    let tr2 = document.createElement("tr");
+    tr2.innerHTML = `
+        <td>배송주소</td><td colspan="3">${info.adress}</td>
+    `;
+    deliBody.appendChild(tr2);
+
+    // msg
+    let tr3 = document.createElement("tr");
+    tr3.innerHTML = `
+        <td>배송메세지</td><td colspan="3">${info.msg}</td>
+    `;
+    deliBody.appendChild(tr3);
+
+});
 
 
 
@@ -666,3 +856,61 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 
+// 상품관리 페이지--------------------------------
+
+    
+    const items = [
+    {
+        no: "1",
+        code: "AE202050000AB07",
+        name: "유럽피언 꽃구독 S",
+        category: "절화",
+        date: "2024-12-11",
+        dateR: "2025-06-10",
+        price: "36,000",
+        sellPrice: "52,000",
+    },
+    {
+        no: "2",
+        code: "AE202040000CF12",
+        name: "유럽피언 꽃구독 M",
+        category: "절화",
+        date: "2024-10-11",
+        dateR: "2025-05-10",
+        price: "42,000",
+        sellPrice: "58,000",
+    }
+    ];
+
+    const itemsBody = document.getElementById("items_body");
+
+    items.forEach(itemsIn => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td>${itemsIn.no}</td>
+        <td>${itemsIn.code}</td>
+        <td>${itemsIn.name}</td>
+        <td>${itemsIn.category}</td>
+        <td>${itemsIn.date}</td>
+        <td>${itemsIn.dateR}</td>
+        <td>${itemsIn.price}</td>
+        <td>${itemsIn.sellPrice}</td>
+        <td>
+        <button class="modi_btn">수정</button>
+        <button class="del_btn">삭제</button>
+        </td>
+    `;
+
+    itemsBody.appendChild(tr);
+    });
+
+    //상품수량 카운트
+    document.querySelector(".item_count").textContent = items.length;
+
+
+
+
+
+
+    
