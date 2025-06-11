@@ -1,28 +1,25 @@
 package com.onsil.onsil.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Product {
-    
+public class SubMaterials {
+
     @Id
-    @Column(name = "productID")
+    @Column(name = "materialsID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     @Column(nullable = false)
-    private String flowerName;
+    private String productName;
 
     @Column(nullable = false)
-    private String flowerInfo;
+    private String productInfo;
 
     @Column(nullable = false)
     private int price;
@@ -45,3 +42,4 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Output> outputList;
 }
+

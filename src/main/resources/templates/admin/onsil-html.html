@@ -77,13 +77,13 @@
                         <p th:text="${recentSubscribes.size()}">57<span>건</span></p>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <img src="images/admin/icon_over_qna.png" alt="문의아이콘">
-                        <h3>신규 문의</h3>
-                        <p>17<span>건</span></p>
-                    </a>
-                </li>
+<!--                <li>-->
+<!--                    <a href="#">-->
+<!--                        <img src="images/admin/icon_over_qna.png" alt="문의아이콘">-->
+<!--                        <h3>신규 문의</h3>-->
+<!--                        <p>17<span>건</span></p>-->
+<!--                    </a>-->
+<!--                </li>-->
                 <li>
                     <a href="#">
                         <img src="images/admin/icon_over_review.png" alt="리뷰아이콘">
@@ -96,14 +96,14 @@
                 <div class="ad_info">
                     <img src="images/admin/admin.png" alt="관리자이미지">
                     <h3>사용자 이름</h3>
-                    <p>전체 관리자</p>
+<!--                    <p>전체 관리자</p>-->
                 </div>
                 <ul class="setting">
                     <li>
-                        <img src="images/admin/icon_setting.png" alt="수정">수정
+                        <a href="/mypage/info"><img src="images/admin/icon_setting.png" alt="수정">수정</a>
                     </li>
                     <li>
-                        <img src="images/admin/icon_logout.png" alt="로그아웃">로그아웃
+                        <a href="/member/logout"> <img src="images/admin/icon_logout.png" alt="로그아웃">로그아웃</a>
                     </li>
                 </ul>
             </div>
@@ -229,14 +229,12 @@
                         <!--                            <option value="주문일">주문일</option>-->
                         <!--                        </select>-->
                         <!--                        <input type="text">~<input type="text">-->
-                        <input type="date" id="start-date" placeholder="시작일">
-                        <input type="date" id="end-date" placeholder="종료일">
-
-
-                        <button>오늘</button>
-                        <button>일주일</button>
-                        <button>1개월</button>
-                        <button>3개월</button>
+                        <input type="date" id="start-date" placeholder="시작일"><p>부터</p>
+                        <input type="date" id="end-date" placeholder="종료일"><p>까지</p>
+<!--                        <button>오늘</button>-->
+<!--                        <button>일주일</button>-->
+<!--                        <button>1개월</button>-->
+<!--                        <button>3개월</button>-->
                     </td>
                 </tr>
                 <tr>
@@ -572,7 +570,6 @@
 </div>
 <!-- 멤버리스트 JS -->
 <script th:inline="javascript">
-
     document.addEventListener('DOMContentLoaded', function () {
 
         const searchBtn = document.getElementById('search-btn');

@@ -3,6 +3,7 @@ package com.onsil.onsil.admin.service;
 import com.onsil.onsil.admin.dao.AdminDao;
 import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.repository.AdminMemberRepository;
+import com.onsil.onsil.constant.Role;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Subscribe;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class AdminService {
 
     public List<MemberDto> getAllMembers() {
         return adminDao.getAllMembers().stream()
-                .filter(member -> member.getRole().equals("ROLE_USER") && !member.isDeleteStatus())
+                .filter(member -> member.getRole() == Role.ROLE_USER && !member.isDeleteStatus())
                 .map(member ->
                         MemberDto.builder()
                                 .zipcode(member.getZipcode())
@@ -37,7 +38,6 @@ public class AdminService {
                                 .userName(member.getUserName())
                                 .userEmail(member.getUserEmail())
                                 .regDate(member.getRegdate())
-                                .role(member.getRole())
                                 .build())
                 .toList();
     }
@@ -85,7 +85,7 @@ public class AdminService {
                         .startDate(subscribe.getStartDate())
                         .endDate(subscribe.getEndDate())
                         .productPrice(subscribe.getProduct().getPrice())
-                        .period(subscribe.getPeriod())
+                        .period(subscribe.getPeriod().name())
                         .build())
                 .toList();
     }
@@ -107,7 +107,7 @@ public class AdminService {
                 })
                 .filter(m -> startDate == null || !m.getRegdate().isBefore(startDate))
                 .filter(m -> endDate == null || !m.getRegdate().isAfter(endDate))
-                .filter(m -> !m.getRole().equals("admin")) // 또는 m.getRole().equals("member")
+                .filter(m -> m.getRole() == Role.ROLE_USER) // 또는 m.getRole() != Role.ROLE_ADMIN
                 .map(m -> MemberDto.builder()
                         .zipcode(m.getZipcode())
                         .address01(m.getAddress01())
@@ -118,7 +118,7 @@ public class AdminService {
                         .userName(m.getUserName())
                         .userEmail(m.getUserEmail())
                         .regDate(m.getRegdate())
-                        .role(m.getRole())
+                        .role(m.getRole().name())
                         .build())
                 .toList();
     }
@@ -164,7 +164,7 @@ public class AdminService {
                 .orderNumber("ORD-" + s.getId())
                 .productName(s.getProduct().getFlowerName())
                 .productPrice(s.getProduct().getPrice())
-                .period(s.getPeriod())
+                .period(s.getPeriod().name())
                 .build()
         ).toList();
 

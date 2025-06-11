@@ -1,11 +1,10 @@
 package com.onsil.onsil.entity;
 
-import com.onsil.onsil.config.OrderStatus;
+import com.onsil.onsil.constant.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -38,6 +37,6 @@ public class OrderList {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderStatus status = OrderStatus.ORDERED;
+    private Status status = Status.ORDERED;
 
 }

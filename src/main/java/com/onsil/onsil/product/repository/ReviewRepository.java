@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 
+import java.util.Optional;
+
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
     boolean existsByMemberAndProduct(Member member, Product product);
 
@@ -17,4 +19,5 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
 //    @Query("SELECT COUNT(DISTINCT s.member.id) FROM Subscribe s WHERE s.startDate >= :todayDate")
 //    int countOneMonthMember(@Param("todayDate") LocalDateTime todayDate);
+
 }

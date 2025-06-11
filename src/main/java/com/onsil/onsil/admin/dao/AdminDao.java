@@ -38,9 +38,6 @@ public class AdminDao {
         return subscribeRepository.findByMember_id(id);
     }
 
-    //    public List<Member> searchMembers(String keyword, String category, LocalDateTime startDate, LocalDateTime endDate) {
-//        return memberRepository.searchMembers(keyword, category, startDate,endDate);
-//    }
     public List<Member> searchMembers() {
         return memberRepository.findAll();
     }

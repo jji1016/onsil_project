@@ -1,21 +1,20 @@
 package com.onsil.onsil.mypage;
 
 import com.onsil.onsil.entity.Member;
-import com.onsil.onsil.entity.OrderList;
-import com.onsil.onsil.mypage.dto.MypageOrderListDto;
+import com.onsil.onsil.mypage.repository.MypageMemberRepository;
+import com.onsil.onsil.mypage.repository.MypageSubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class MypageDao {
     private final MypageMemberRepository mypageMemberRepository;
+    private final MypageSubscribeRepository mypageSubscribeRepository;
 
     public Optional<Member> findByUserID(String userID) {
         return mypageMemberRepository.findByUserID(userID);
@@ -41,5 +40,9 @@ public class MypageDao {
 
     public List<Object[]> findSubscribe(Integer loggedMemberID) {
         return mypageMemberRepository.findSubscribe(loggedMemberID);
+    }
+
+    public void deleteById(Integer id) {
+        mypageSubscribeRepository.deleteById(id);
     }
 }
