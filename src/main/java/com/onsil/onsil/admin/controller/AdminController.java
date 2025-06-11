@@ -79,6 +79,7 @@ public class AdminController {
                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate,
                             Model model) {
         List<AdminStockDto> stockList = adminStockService.searchStocks(flowerName, minPrice, maxPrice, minStock, maxStock, startDate, endDate);
+        //model.addAttribute("stockList", stockList);
         return "admin/stock";
     }
 

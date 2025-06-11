@@ -25,16 +25,17 @@ public class AdminStockService {
                                             LocalDateTime startDate,
                                             LocalDateTime endDate) {
 
-        List<Object[]> objects = adminStockDao.searchStocks(flowerName, minPrice, maxPrice, minStock, maxStock, startDate, endDate);
+        List<Object[]> results = adminStockDao.searchStocks(flowerName, minPrice, maxPrice, minStock, maxStock, startDate, endDate);
 
-        log.info("objects: {}", objects);
-        List<AdminStockDto> adminStockDtos = objects.stream()
-                .map(index -> new AdminStockDto(
-                        ((Number) index[0]).intValue(),
-                        ((String) index[1]),
-                        ((Number) index[2]).intValue()
-                ))
+        log.info("results: {}", results);
+        return results.stream()
+                .map(obj -> AdminStockDto.builder()
+                        .productId(((Number)obj[0]).intValue())
+                        .flowerName(String.valueOf(obj[1]))
+                        .unit(String.valueOf(obj[2]))
+                        .amount(((Number)obj[3]).intValue())
+                        .warehouse(String.valueOf(obj[4]))
+                        .build())
                 .collect(Collectors.toList());
-        return adminStockDtos;
     }
 }
