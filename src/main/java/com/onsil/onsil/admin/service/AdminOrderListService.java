@@ -27,6 +27,7 @@ public class AdminOrderListService {
         List<Object[]> objects = adminOrderListDao.searchOrderLists(userId, status, startDate, endDate);
 
         log.info("objects: {}", objects);
+
         List<AdminOrderListDto> adminOrderListDtos = objects.stream()
                 .map(row -> new AdminOrderListDto(
                         ((Timestamp) row[0]).toLocalDateTime(),         // orderDate

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>orderlist.html</h1>
+<!--<th:block th:each="outputList : ${outputList}">-->
+    <ul th:each ="orderList, orderListStat :${orderList}">
+        <li><span>주문일자</span><p th:text="${orderList.getOrderDate()}"></p></li>
+        <li><span>주문번호</span><p th:text="${orderList.getMemberId}"></p></li>
+        <li><span>꽃이름</span><p th:text="${orderList.getFlowerName()}"></p></li>
+        <li><span>수량</span><p th:text="${orderList.getQuantity()}"></p></li>
+        <li><span>상품금액</span><p th:text="${orderList.getPrice()}"></p></li>
+        <li><span>주문상태</span><p th:text="${orderList.getOrderStatus()}"></p></li>
+        <li><span>주문자</span><p th:text="${orderList.getOrderName()}"></p></li>
+        <li><span>수령인</span><p th:text="${orderList.getReceiveName()}"></p></li>
+    </ul>
+<!--    <hr>-->
+<!--</th:block>-->
+
+</body>
+</html>

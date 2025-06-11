@@ -20,7 +20,7 @@ public class AdminOrderListDao {
                                            LocalDateTime startDate,
                                            LocalDateTime endDate) {
         List<Object[]> list = adminOrderListRepository.searchOrderList(userId, status, startDate, endDate);
-        log.info("DaoList={}",list.toString());
+//        log.info("DaoList={}",list.toString());
         return list;
     }
 }

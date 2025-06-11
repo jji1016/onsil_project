@@ -6,11 +6,11 @@
 </head>
 <body>
 <h1>stocklist.html</h1>
-<th:block th:each="stockListStat : ${stockListStat}">
-    <div th:text="${stockListStat.flowerName}"></div>
-    <div th:text="${stockListStat.quantity}"></div>
-    <div th:text="${stockListStat.warehouse}"></div>
-    <hr>
-</th:block>
+<ul th:each ="stockList, stockListStat :${stockList}">
+    <li><span>품목코드</span><p th:text="${stockList.getProductId()}"></p></li>
+    <li><span>품목명</span><p th:text="${stockList.getFlowerName()}"></p></li>
+    <li><span>품목단위</span><p th:text="${stockList.getUnit()}"></p></li>
+    <li><span>재고</span><p th:text="${stockList.getAmount()}"></p></li>
+</ul>
 </body>
 </html>

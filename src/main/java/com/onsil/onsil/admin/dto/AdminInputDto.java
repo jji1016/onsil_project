@@ -11,9 +11,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class AdminInputDto {
-    private int amount;
     private LocalDateTime regDate;
+    private int memberId;
     private String flowerName;
-    private String userName;
+    private int amount;
     private String supplyName;
+    private String userName;
 }

@@ -19,8 +19,8 @@ public class AdminOutputDao {
     public List<Object[]> searchOutputs(String flowerName,
                                         LocalDateTime startDate,
                                         LocalDateTime endDate) {
-        List<Object[]> list = adminOutputRepository.searchOutputs(flowerName, startDate, endDate);
-        log.info("DaoList={}",list.toString());
-        return list;
+        List<Object[]> result = adminOutputRepository.searchOutputs(flowerName, startDate, endDate);
+//        log.info("출고내역 조회 결과: {}", result.size());
+        return result;
     }
 }

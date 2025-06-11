@@ -6,13 +6,17 @@
 </head>
 <body>
 <h1>input.html</h1>
-<th:block th:each="inputList : ${inputList}">
-    <div th:text="${inputList.amount}"></div>
-    <div th:text="${inputList.regDate}"></div>
-    <div th:text="${inputList.flowerName}"></div>
-    <div th:text="${inputList.userName}"></div>
-    <div th:text="${inputList.supplyName}"></div>
-    <hr>
-</th:block>
+<!--<th:block th:each="inputList : ${inputList}">-->
+<ul th:each ="inputList, inputListStat :${inputList}">
+        <li><span>입고일자</span><p th:text="${inputList.getRegDate()}"></p></li>
+        <li><span>품목코드</span><p th:text="${inputList.getMemberId()}"></p></li>
+        <li><span>품목명</span><p th:text="${inputList.getFlowerName()}"></p></li>
+        <li><span>입고수량</span><p th:text="${inputList.getAmount()}"></p></li>
+        <li><span>공급처</span><p th:text="${inputList.getSupplyName()}"></p></li>
+        <li><span>담당자</span><p th:text="${inputList.getUserName()}"></p></li>
+
+    </ul>
+<!--    <hr>-->
+<!--</th:block>-->
 </body>
 </html>

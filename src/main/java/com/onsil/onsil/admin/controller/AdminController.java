@@ -55,17 +55,17 @@ public class AdminController {
                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate,
                             Model model) {
         List<AdminInputDto> inputList = adminInputService.searchInputs(flowerName, startDate, endDate);
-//        model.addAttribute("inputList", inputList);
+        model.addAttribute("inputList", inputList);
         return "admin/input";
     }
     //출고 검색 기능
     @GetMapping("/outputlist")
     public String outputList(@RequestParam(required = false) String flowerName,
-                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDate,
-                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime endDate,
+                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                              Model model) {
         List<AdminOutputDto> outputList = adminOutputService.searchOutputs(flowerName, startDate, endDate);
-//        model.addAttribute("outputList", outputList);
+        model.addAttribute("outputList", outputList);
         return "admin/output";
     }
     //재고 검색 기능
@@ -79,7 +79,7 @@ public class AdminController {
                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate,
                             Model model) {
         List<AdminStockDto> stockList = adminStockService.searchStocks(flowerName, minPrice, maxPrice, minStock, maxStock, startDate, endDate);
-        //model.addAttribute("stockList", stockList);
+        model.addAttribute("stockList", stockList);
         return "admin/stock";
     }
 
@@ -91,6 +91,7 @@ public class AdminController {
                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime endDate,
                                  Model model){
         List<AdminOrderListDto> orderList = adminOrderListService.searchOrderlists(userId, status, startDate, endDate);
-        return "admin/orderlist";
+        model.addAttribute("orderList", orderList);
+        return "admin/order";
     }
 }

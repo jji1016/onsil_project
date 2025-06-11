@@ -28,23 +28,22 @@ public class AdminOutputService {
                                               LocalDateTime startDate,
                                               LocalDateTime endDate) {
 
-        List<Object[]> objects = adminOutputDao.searchOutputs(flowerName, startDate, endDate);
+        List<Object[]> results = adminOutputDao.searchOutputs(flowerName, startDate, endDate);
 
-        log.info("objects: {}", objects);
-        List<AdminOutputDto> adminOutputDtos = objects.stream()
-                .map(index -> new AdminOutputDto(
-                        ((Number) index[0]).intValue(),
-                        ((String) index[1]),
-                        ((String) index[2]),
-                        ((Timestamp) index[3]).toLocalDateTime()
-                ))
-                .collect(Collectors.toList());
-        return adminOutputDtos;
+        return results.stream().map(obj -> AdminOutputDto.builder()
+                .regDate(((Timestamp) obj[0]).toLocalDateTime())
+                .memberId(((Number) obj[1]).intValue())
+                .flowerName((String) obj[2])
+                .amount(((Number) obj[3]).intValue())
+                .outPlace((String) obj[4])
+                .userName((String) obj[5])
+                .build()).collect(Collectors.toList());
     }
+}
 
-    //출고 검색 기능
+//출고 검색 기능
 //    public List<AdminOutputDto> searchOutputs(String keyword, LocalDate startDate, LocalDate endDate) {
 //        return adminOutputRepository.searchByConditions(keyword, startDate, endDate);
 //    }
-}
+
 

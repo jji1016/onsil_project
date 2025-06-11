@@ -29,11 +29,12 @@ public class AdminInputService {
         log.info("objects: {}", objects);
         List<AdminInputDto> adminInputDtos = objects.stream()
                 .map(index -> new AdminInputDto(
-                        ((Number) index[0]).intValue(),
-                        ((Timestamp) index[1]).toLocalDateTime(),
+                        ((Timestamp) index[0]).toLocalDateTime(),
+                        ((Number) index[1]).intValue(),
                         ((String) index[2]),
-                        ((String) index[3]),
-                        ((String) index[4])
+                        ((Number) index[3]).intValue(),
+                        ((String) index[4]),
+                        ((String) index[5])
                 ))
                  .collect(Collectors.toList());
         return adminInputDtos;

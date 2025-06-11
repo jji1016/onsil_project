@@ -34,7 +34,6 @@ public class AdminStockService {
                         .flowerName(String.valueOf(obj[1]))
                         .unit(String.valueOf(obj[2]))
                         .amount(((Number)obj[3]).intValue())
-                        .warehouse(String.valueOf(obj[4]))
                         .build())
                 .collect(Collectors.toList());
     }
