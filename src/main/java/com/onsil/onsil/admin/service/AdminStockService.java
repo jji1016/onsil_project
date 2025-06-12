@@ -17,24 +17,19 @@ public class AdminStockService {
 
     private final AdminStockDao adminStockDao;
 
-    public List<AdminStockDto> searchStocks(String flowerName,
-                                            Integer minPrice,
-                                            Integer maxPrice,
-                                            Integer minStock,
-                                            Integer maxStock,
-                                            LocalDateTime startDate,
-                                            LocalDateTime endDate) {
-
-        List<Object[]> results = adminStockDao.searchStocks(flowerName, minPrice, maxPrice, minStock, maxStock, startDate, endDate);
-
-        log.info("results: {}", results);
-        return results.stream()
-                .map(obj -> AdminStockDto.builder()
-                        .productId(((Number)obj[0]).intValue())
-                        .flowerName(String.valueOf(obj[1]))
-                        .unit(String.valueOf(obj[2]))
-                        .amount(((Number)obj[3]).intValue())
-                        .build())
-                .collect(Collectors.toList());
+    public List<AdminStockDto> searchStocks(
+            String category, String keyword,
+            Integer minQuantity, Integer maxQuantity,
+            Integer minPrice, Integer maxPrice
+    ) {
+        List<Object[]> results = adminStockDao.searchStocks(
+                category, keyword, minQuantity, maxQuantity, minPrice, maxPrice
+        );
+        return results.stream().map(obj -> AdminStockDto.builder()
+                .productId(((Number)obj[0]).intValue())
+                .flowerName((String)obj[1])
+                .price(((Number)obj[2]).intValue())
+                .quantity(((Number)obj[3]).intValue())
+                .build()).collect(Collectors.toList());
     }
 }

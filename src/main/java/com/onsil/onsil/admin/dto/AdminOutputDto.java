@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class AdminOutputDto {
-    private LocalDate regDate;      // 출고일자 (OUTPUT.REGDATE)
-    private int productId;          // 품목코드 (가공된 PRODUCTID)
-    private String flowerName;      // 품목명 (PRODUCT.FLOWERNAME)
-    private int outputAmount;       // 출고수량 (OUTPUT.AMOUNT)
-    private String userName;        // 담당자 (MEMBER.USERNAME)
+    private LocalDateTime regDate;   // 출고일자 (OUTPUT.REGDATE)
+    private int outputId;            // 출고번호 (OUTPUT.OUTPUTID)
+    private int productId;           // 품목코드 (PRODUCT.PRODUCTID)
+    private String flowerName;       // 품목명 (PRODUCT.FLOWERNAME)
+    private int amount;              // 출고수량 (OUTPUT.AMOUNT)
 }

@@ -9,9 +9,8 @@
 <form th:action="@{/admin/outputlist}" method="get">
     <label>카테고리</label>
     <select name="category">
-        <option value="productName" th:selected="${category == 'productName'}">품목명</option>
-        <option value="productCode" th:selected="${category == 'productCode'}">품목코드</option>
-        <option value="userName" th:selected="${category == 'userName'}">담당자</option>
+        <option value="flowerName" th:selected="${category == 'flowerName'}">품목명</option>
+        <option value="productId" th:selected="${category == 'productId'}">품목코드</option>
     </select>
     <input type="text" name="keyword" th:value="${keyword}">
     <label>기간검색</label>
@@ -20,17 +19,17 @@
     <input type="datetime-local" name="endDate"
            th:value="${endDate != null ? #temporals.format(endDate, 'yyyy-MM-dd''T''HH:mm') : ''}">
     <button type="submit">검색</button>
-    <button type="button" onclick="location.href='@{/admin/outputlist}'">초기화</button>
+    <button type="button" onclick="location.href='@{/admin/output}'">초기화</button>
 </form>
 
 <table border="1">
     <thead>
     <tr>
         <th>출고일자</th>
+        <th>출고번호</th>
         <th>품목코드</th>
         <th>품목명</th>
         <th>출고수량</th>
-        <th>담당자</th>
         <th>수정</th>
         <th>삭제</th>
     </tr>
@@ -38,10 +37,10 @@
     <tbody>
     <tr th:each="output : ${outputList}">
         <td th:text="${output.regDate}"></td>
+        <td th:text="${output.outputId}"></td>
         <td th:text="${output.productId}"></td>
         <td th:text="${output.flowerName}"></td>
-        <td th:text="${output.outputAmount}"></td>
-        <td th:text="${output.userName}"></td>
+        <td th:text="${output.amount}"></td>
         <td><button>수정</button></td>
         <td><button>삭제</button></td>
     </tr>

@@ -11,16 +11,15 @@
     <select name="category">
         <option value="flowerName" th:selected="${category == 'flowerName'}">품목명</option>
         <option value="productId" th:selected="${category == 'productId'}">품목코드</option>
-        <option value="company" th:selected="${category == 'company'}">공급처</option>
     </select>
-    <input type="text" name="flowerName" th:value="${keyword}">
+    <input type="text" name="keyword" th:value="${keyword}">
     <label>기간검색</label>
     <input type="datetime-local" name="startDate"
            th:value="${startDate != null ? #temporals.format(startDate, 'yyyy-MM-dd''T''HH:mm') : ''}">
     <input type="datetime-local" name="endDate"
            th:value="${endDate != null ? #temporals.format(endDate, 'yyyy-MM-dd''T''HH:mm') : ''}">
     <button type="submit">검색</button>
-    <button type="button" onclick="location.href='@{/admin/inputlist}'">초기화</button>
+    <button type="button" onclick="location.href='@{/admin/input}'">초기화</button>
 </form>
 
 <table border="1">
@@ -31,7 +30,6 @@
         <th>품목코드</th>
         <th>품목명</th>
         <th>입고수량</th>
-        <th>공급처</th>
         <th>수정</th>
         <th>삭제</th>
     </tr>
@@ -43,7 +41,6 @@
         <td th:text="${input.productId}"></td>
         <td th:text="${input.flowerName}"></td>
         <td th:text="${input.amount}"></td>
-        <td th:text="${input.company}"></td>
         <td><button>수정</button></td>
         <td><button>삭제</button></td>
     </tr>

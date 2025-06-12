@@ -11,6 +11,6 @@ import lombok.*;
 public class AdminStockDto {
     private int productId;          // 품목코드
     private String flowerName;      // 품목명
-    private String unit;            // 품목단위
-    private int amount;             // 재고수량
+    private int price;              // 품목가격
+    private int quantity;           // 재고수량
 }

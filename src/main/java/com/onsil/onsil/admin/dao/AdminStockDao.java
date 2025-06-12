@@ -4,27 +4,25 @@ import com.onsil.onsil.admin.repository.AdminStockRepository;
 import com.onsil.onsil.admin.service.AdminStockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
+@Component
 @RequiredArgsConstructor
-@Slf4j
 public class AdminStockDao {
-
     private final AdminStockRepository adminStockRepository;
 
-    public List<Object[]> searchStocks(String flowerName,
-                                       Integer minPrice,
-                                       Integer maxPrice,
-                                       Integer minStock,
-                                       Integer maxStock,
-                                       LocalDateTime startDate,
-                                       LocalDateTime endDate) {
-        List<Object[]> list = adminStockRepository.searchStockStatus(flowerName, minPrice, maxPrice, minStock, maxStock, startDate, endDate);
-        log.info("DaoList={}",list.toString());
-        return list;
+    public List<Object[]> searchStocks(
+            String category, String keyword,
+            Integer minQuantity, Integer maxQuantity,
+            Integer minPrice, Integer maxPrice
+    ) {
+        return adminStockRepository.searchStocks(
+                category, keyword, minQuantity, maxQuantity, minPrice, maxPrice
+        );
     }
 }
+

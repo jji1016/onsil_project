@@ -1,24 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>주문내역관리</title>
 </head>
 <body>
-<h1>orderlist.html</h1>
-<!--<th:block th:each="outputList : ${outputList}">-->
-    <ul th:each ="orderList, orderListStat :${orderList}">
-        <li><span>주문일자</span><p th:text="${orderList.getOrderDate()}"></p></li>
-        <li><span>주문번호</span><p th:text="${orderList.getMemberId}"></p></li>
-        <li><span>꽃이름</span><p th:text="${orderList.getFlowerName()}"></p></li>
-        <li><span>수량</span><p th:text="${orderList.getQuantity()}"></p></li>
-        <li><span>상품금액</span><p th:text="${orderList.getPrice()}"></p></li>
-        <li><span>주문상태</span><p th:text="${orderList.getOrderStatus()}"></p></li>
-        <li><span>주문자</span><p th:text="${orderList.getOrderName()}"></p></li>
-        <li><span>수령인</span><p th:text="${orderList.getReceiveName()}"></p></li>
-    </ul>
-<!--    <hr>-->
-<!--</th:block>-->
+<h2>주문내역관리</h2>
+<form th:action="@{/admin/orderlist}" method="get">
+    <label>검색어</label>
+    <select name="category">
+        <option value="orderNo" th:selected="${category == 'orderNo'}">주문번호</option>
+        <option value="productName" th:selected="${category == 'productName'}">상품명</option>
+        <option value="userName" th:selected="${category == 'userName'}">주문자</option>
+    </select>
+    <input type="text" name="keyword" th:value="${keyword}">
+    <label>기간검색</label>
+    <input type="datetime-local" name="startDate"
+           th:value="${startDate != null ? #temporals.format(startDate, 'yyyy-MM-dd''T''HH:mm') : ''}">
+    <input type="datetime-local" name="endDate"
+           th:value="${endDate != null ? #temporals.format(endDate, 'yyyy-MM-dd''T''HH:mm') : ''}">
+    <button type="submit">검색</button>
+    <button type="button" onclick="location.href='@{/admin/order}'">초기화</button>
+</form>
 
+<table border="1">
+    <thead>
+    <tr>
+        <th>주문일시</th>
+        <th>주문번호</th>
+        <th>상품명</th>
+        <th>수량</th>
+        <th>주문상태</th>
+        <th>주문자</th>
+        <th>총주문금액</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order, iterStat : ${orderList}">
+        <td th:text="${order.orderTime}"></td>
+        <td th:text="${order.orderListId}"></td>
+        <td th:text="${order.flowerName}"></td>
+        <td th:text="${order.quantity}"></td>
+        <td th:text="${order.status}"></td>
+        <td th:text="${order.userName}"></td>
+        <td th:text="${order.totalPrice}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

@@ -71,28 +71,43 @@ public class AdminController {
 
     //재고 검색 기능
     @GetMapping("/stocklist")
-    public String stocklist(@RequestParam(required = false) String flowerName,
-                            @RequestParam(required = false) Integer minPrice,
-                            @RequestParam(required = false) Integer maxPrice,
-                            @RequestParam(required = false) Integer minStock,
-                            @RequestParam(required = false) Integer maxStock,
-                            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime startDate,
-                            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate,
-                            Model model) {
-        List<AdminStockDto> stockList = adminStockService.searchStocks(flowerName, minPrice, maxPrice, minStock, maxStock, startDate, endDate);
+    public String stocklist(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Integer minQuantity,
+            @RequestParam(required = false) Integer maxQuantity,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            Model model
+    ) {
+        List<AdminStockDto> stockList = adminStockService.searchStocks(
+                category, keyword, minQuantity, maxQuantity, minPrice, maxPrice
+        );
         model.addAttribute("stockList", stockList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("minQuantity", minQuantity);
+        model.addAttribute("maxQuantity", maxQuantity);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
         return "admin/stock";
     }
 
     //주문내역 검색 기능
     @GetMapping("/orderlist")
-    public String adminOrderList(@RequestParam(required = false) String userId,
-                                 @RequestParam(required = false) String status,
-                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDate,
-                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime endDate,
-                                 Model model) {
-        List<AdminOrderListDto> orderList = adminOrderListService.searchOrderlists(userId, status, startDate, endDate);
+    public String orderList(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+            Model model
+    ) {
+        List<AdminOrderListDto> orderList = adminOrderListService.searchOrderLists(category, keyword, startDate, endDate);
         model.addAttribute("orderList", orderList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         return "admin/order";
     }
 }

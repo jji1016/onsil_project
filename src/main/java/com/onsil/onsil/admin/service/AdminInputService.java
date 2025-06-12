@@ -33,7 +33,6 @@ public class AdminInputService {
                 .productId(((Number)obj[2]).intValue())
                 .flowerName((String)obj[3])
                 .amount(((Number)obj[4]).intValue())
-                .company((String)obj[5])
                 .build()).collect(Collectors.toList());
     }
     }

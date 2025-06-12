@@ -12,14 +12,12 @@ import java.util.List;
 
 public interface AdminOutputRepository extends JpaRepository<Output, Integer> {
 
-    @Query(value = "SELECT o.REGDATE, p.PRODUCTID, p.FLOWERNAME, o.AMOUNT, m.USERNAME " +
+    @Query(value = "SELECT o.REGDATE, o.OUTPUTID, o.PRODUCTID, p.FLOWERNAME, o.AMOUNT " +
             "FROM OUTPUT o " +
             "JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID " +
-            "JOIN MEMBER m ON o.MEMBERID = m.MEMBERID " +
-            "WHERE (:category IS NULL OR " +
-            "       (:category = 'productName' AND p.FLOWERNAME LIKE '%' || :keyword || '%') OR " +
-            "       (:category = 'productCode' AND p.PRODUCTID = :keyword) OR " +
-            "       (:category = 'userName' AND m.USERNAME LIKE '%' || :keyword || '%') " +
+            "WHERE (:keyword IS NULL OR " +
+            "       (:category = 'flowerName' AND p.FLOWERNAME LIKE '%' || :keyword || '%') OR " +
+            "       (:category = 'productId' AND p.PRODUCTID LIKE '%' || :keyword || '%')" +
             "      ) " +
             "AND (:startDate IS NULL OR o.REGDATE >= :startDate) " +
             "AND (:endDate IS NULL OR o.REGDATE <= :endDate) " +

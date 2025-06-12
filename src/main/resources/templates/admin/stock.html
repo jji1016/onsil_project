@@ -1,16 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>재고현황</title>
 </head>
 <body>
-<h1>stocklist.html</h1>
-<ul th:each ="stockList, stockListStat :${stockList}">
-    <li><span>품목코드</span><p th:text="${stockList.getProductId()}"></p></li>
-    <li><span>품목명</span><p th:text="${stockList.getFlowerName()}"></p></li>
-    <li><span>품목단위</span><p th:text="${stockList.getUnit()}"></p></li>
-    <li><span>재고</span><p th:text="${stockList.getAmount()}"></p></li>
-</ul>
+<h2>재고현황</h2>
+<form th:action="@{/admin/stocklist}" method="get">
+    <label>검색어</label>
+    <select name="category">
+        <option value="flowerName" th:selected="${category == 'flowerName'}">품목명</option>
+        <option value="productId" th:selected="${category == 'productId'}">품목코드</option>
+    </select>
+    <input type="text" name="keyword" th:value="${keyword}">
+    <label>상품재고</label>
+    <input type="number" name="minQuantity" placeholder="최소" th:value="${minQuantity}">
+    <input type="number" name="maxQuantity" placeholder="최대" th:value="${maxQuantity}">
+    <label>상품가격</label>
+    <input type="number" name="minPrice" placeholder="최소" th:value="${minPrice}">
+    <input type="number" name="maxPrice" placeholder="최대" th:value="${maxPrice}">
+    <button type="submit">검색</button>
+    <button type="button" onclick="location.href='@{/admin/stock}'">초기화</button>
+</form>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>품목코드</th>
+        <th>품목명</th>
+        <th>가격</th>
+        <th>재고</th>
+        <th>수정</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="stock : ${stockList}">
+        <td th:text="${stock.productId}"></td>
+        <td th:text="${stock.flowerName}"></td>
+        <td th:text="${stock.price}"></td>
+        <td th:text="${stock.quantity}"></td>
+        <td><button>수정</button></td>
+        <td><button>삭제</button></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

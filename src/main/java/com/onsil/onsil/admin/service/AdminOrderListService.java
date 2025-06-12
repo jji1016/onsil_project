@@ -19,28 +19,16 @@ public class AdminOrderListService {
 
     private final AdminOrderListDao adminOrderListDao;
 
-    public List<AdminOrderListDto> searchOrderlists(String userId,
-                                                    String status,
-                                                    LocalDateTime startDate,
-                                                    LocalDateTime endDate) {
-
-        List<Object[]> objects = adminOrderListDao.searchOrderLists(userId, status, startDate, endDate);
-
-        log.info("objects: {}", objects);
-
-        List<AdminOrderListDto> adminOrderListDtos = objects.stream()
-                .map(row -> new AdminOrderListDto(
-                        ((Timestamp) row[0]).toLocalDateTime(),         // orderDate
-                        ((Number) row[1]).intValue(),
-                        String.valueOf(row[2]), // memberId
-                        ((Number) row[3]).intValue(),                   // quantity
-                        String.valueOf(row[4]),                         // price
-                        String.valueOf(row[5]),                         // orderStatus
-                        String.valueOf(row[6]),                         // orderName
-                        String.valueOf(row[7])                          // receiveName
-                        //String.valueOf(row[8])                        // paymentMethod
-                ))
-                .collect(Collectors.toList());
-        return adminOrderListDtos;
+    public List<AdminOrderListDto> searchOrderLists(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        List<Object[]> results = adminOrderListDao.searchOrderLists(category, keyword, startDate, endDate);
+        return results.stream().map(obj -> AdminOrderListDto.builder()
+                .orderTime(((Timestamp)obj[0]).toLocalDateTime())
+                .orderListId(((Number)obj[1]).intValue())
+                .flowerName((String)obj[2])
+                .quantity(((Number)obj[3]).intValue())
+                .status((String)obj[4])
+                .userName((String)obj[5])
+                .totalPrice(((Number)obj[6]).intValue())
+                .build()).collect(Collectors.toList());
     }
 }

@@ -27,11 +27,11 @@ public class AdminOutputService {
     public List<AdminOutputDto> searchOutputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
         List<Object[]> results = adminOutputDao.searchOutputs(category, keyword, startDate, endDate);
         return results.stream().map(obj -> AdminOutputDto.builder()
-                .regDate(((Timestamp)obj[0]).toLocalDateTime().toLocalDate())
-                .productId(((Number)obj[1]).intValue()) // 품목코드 가공
-                .flowerName((String)obj[2])
-                .outputAmount(((Number)obj[3]).intValue())
-                .userName((String)obj[4])
+                .regDate(((Timestamp)obj[0]).toLocalDateTime())
+                .outputId(((Number)obj[1]).intValue())
+                .productId(((Number)obj[2]).intValue())
+                .flowerName((String)obj[3])
+                .amount(((Number)obj[4]).intValue())
                 .build()).collect(Collectors.toList());
     }
 }
