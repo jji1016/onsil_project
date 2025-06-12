@@ -4,6 +4,7 @@ import com.onsil.onsil.cart.dto.CartItemDto;
 import com.onsil.onsil.cart.dto.CartSummaryDto;
 import com.onsil.onsil.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,10 +27,17 @@ public class CartController {
 
     // 상품명으로 장바구니에 상품 추가
     @PostMapping
-    public void addToCart(@RequestParam Integer memberId,
-                          @RequestParam String flowerName,
-                          @RequestParam int quantity) {
-        cartService.addToCart(memberId, flowerName, quantity);
+    public ResponseEntity<?> addToCart(@RequestParam Integer memberId,
+                                       @RequestParam String flowerName,
+                                       @RequestParam int quantity) {
+        try {
+            cartService.addToCart(memberId, flowerName, quantity);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("서버 오류: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{cartId}")
