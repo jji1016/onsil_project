@@ -46,18 +46,20 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
-        animations: {
-            x: {
-                duration: 0
-            },
-            y: {
-                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-                delay: ctx => ctx.index * 100,
-                type: 'number',
-                easing: 'easeOutQuart'
-            }
-        },
+        animations: false,
+        // {
+            
+        //     x: {
+        //         duration: 0
+        //     },
+        //     y: {
+        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+        //         delay: ctx => ctx.index * 100,
+        //         type: 'number',
+        //         easing: 'easeOutQuart'
+        //     }
+        // },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -456,18 +458,19 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
-        animations: {
-            x: {
-                duration: 0
-            },
-            y: {
-                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-                delay: ctx => ctx.index * 100,
-                type: 'number',
-                easing: 'easeOutQuart'
-            }
-        },
+        animations: false,
+        // {
+        //     x: {
+        //         duration: 0
+        //     },
+        //     y: {
+        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+        //         delay: ctx => ctx.index * 100,
+        //         type: 'number',
+        //         easing: 'easeOutQuart'
+        //     }
+        // },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -519,18 +522,19 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
-        animations: {
-            x: {
-                duration: 0
-            },
-            y: {
-                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-                delay: ctx => ctx.index * 100,
-                type: 'number',
-                easing: 'easeOutQuart'
-            }
-        },
+        animations: false,
+        // {
+        //     x: {
+        //         duration: 0
+        //     },
+        //     y: {
+        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+        //         delay: ctx => ctx.index * 100,
+        //         type: 'number',
+        //         easing: 'easeOutQuart'
+        //     }
+        // },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -584,18 +588,19 @@ document.addEventListener("DOMContentLoaded", function(){
         },
         options: {
             responsive: true,
-            animations: {
-            x: {
-                duration: 0
-            },
-            y: {
-                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-                delay: ctx => ctx.index * 100,
-                type: 'number',
-                easing: 'easeOutQuart'
-            }
-        },
+            animations: false,
+        //     {
+        //     x: {
+        //         duration: 0
+        //     },
+        //     y: {
+        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+        //         delay: ctx => ctx.index * 100,
+        //         type: 'number',
+        //         easing: 'easeOutQuart'
+        //     }
+        // },
             plugins: {
                 legend: {
                     display: false
@@ -651,18 +656,19 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
-        animations: {
-            x: {
-                duration: 0
-            },
-            y: {
-                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-                delay: ctx => ctx.index * 100,
-                type: 'number',
-                easing: 'easeOutQuart'
-            }
-        },
+        animations: false, 
+        // {
+        //     x: {
+        //         duration: 0
+        //     },
+        //     y: {
+        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+        //         delay: ctx => ctx.index * 100,
+        //         type: 'number',
+        //         easing: 'easeOutQuart'
+        //     }
+        // },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -713,18 +719,19 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
-        animations: {
-            x: {
-                duration: 0
-            },
-            y: {
-                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-                delay: ctx => ctx.index * 100,
-                type: 'number',
-                easing: 'easeOutQuart'
-            }
-        },
+        animations: false,
+        // {
+        //     x: {
+        //         duration: 0
+        //     },
+        //     y: {
+        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+        //         delay: ctx => ctx.index * 100,
+        //         type: 'number',
+        //         easing: 'easeOutQuart'
+        //     }
+        // },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -777,18 +784,19 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
-        animations: {
-            x: {
-                duration: 0
-            },
-            y: {
-                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-                delay: ctx => ctx.index * 100,
-                type: 'number',
-                easing: 'easeOutQuart'
-            }
-        },
+        animations: false,
+        // {
+        //     x: {
+        //         duration: 0
+        //     },
+        //     y: {
+        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+        //         delay: ctx => ctx.index * 100,
+        //         type: 'number',
+        //         easing: 'easeOutQuart'
+        //     }
+        // },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
