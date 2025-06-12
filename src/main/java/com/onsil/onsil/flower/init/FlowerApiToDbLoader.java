@@ -15,14 +15,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
 public class FlowerApiToDbLoader {
     private final FlowerRepository flowerRepository;
-
-    // 본인 서비스키로 교체!
-    private final String serviceKey = "8N3SDxEYbYGIkUP0giZCVk4OubROuxfvWO0ryBU9kWnF/pakQ1rkEUZ5+ZAGM0ui56IxZKiu9pmdg1KRowKxkg==";
+    private final String serviceKey = "HjWN57F2fgCJmRiid1d76b2X6HS6Jn9E0tTy0VXnq0R7t5u6TeGOR2aQKNsHuy4G4Jhwmbmds67XG1wY2KQHlg==";
 
     @PostConstruct
     public void loadFromApi() {
@@ -30,14 +29,19 @@ public class FlowerApiToDbLoader {
             System.out.println("FLOWER 테이블에 이미 데이터가 있습니다. 적재 생략.");
             return;
         }
+
+        // 월별로 6개씩만 저장
+        Map<Integer, List<Flower>> monthMap = new HashMap<>();
         for (int dataNo = 1; dataNo <= 366; dataNo++) {
             try {
                 Flower flower = getFlowerFromApi(dataNo);
-                if (flower != null) {
-                    flowerRepository.save(flower);
-                    System.out.println("dataNo=" + dataNo + " 저장 완료");
-                } else {
-                    System.out.println("dataNo=" + dataNo + " 데이터 없음/파싱 실패");
+                if (flower != null && flower.getFMonth() != null) {
+                    int month = flower.getFMonth();
+                    monthMap.putIfAbsent(month, new ArrayList<>());
+                    if (monthMap.get(month).size() < 6) {
+                        monthMap.get(month).add(flower);
+                        System.out.println("월 " + month + " - dataNo=" + dataNo + " 저장 예정");
+                    }
                 }
             } catch (Exception e) {
                 System.out.println("dataNo=" + dataNo + " 저장 실패: " + e.getMessage());
@@ -48,7 +52,9 @@ public class FlowerApiToDbLoader {
                 Thread.currentThread().interrupt();
             }
         }
-        System.out.println("==== 꽃 데이터 적재 완료 ====");
+        // 저장
+        monthMap.values().forEach(list -> list.forEach(flowerRepository::save));
+        System.out.println("==== 월별 6개씩 꽃 데이터 적재 완료 ====");
     }
 
     private Flower getFlowerFromApi(int dataNo) throws Exception {
@@ -78,22 +84,12 @@ public class FlowerApiToDbLoader {
         return Flower.builder()
                 .dataNo(parseInt(getTagValue("dataNo", e)))
                 .fMonth(parseInt(getTagValue("fMonth", e)))
-                .fDay(parseInt(getTagValue("fDay", e)))
                 .flowNm(getTagValue("flowNm", e))
-                .fSctNm(getTagValue("fSctNm", e))
-                .fEngNm(getTagValue("fEngNm", e))
                 .flowLang(getTagValue("flowLang", e))
                 .fContent(getTagValue("fContent", e))
                 .fUse(getTagValue("fUse", e))
                 .fGrow(getTagValue("fGrow", e))
                 .fType(getTagValue("fType", e))
-                .fileName1(getTagValue("fileName1", e))
-                .fileName2(getTagValue("fileName2", e))
-                .fileName3(getTagValue("fileName3", e))
-                .imgUrl1(getTagValue("imgUrl1", e))
-                .imgUrl2(getTagValue("imgUrl2", e))
-                .imgUrl3(getTagValue("imgUrl3", e))
-                .publishOrg(getTagValue("publishOrg", e))
                 .build();
     }
 

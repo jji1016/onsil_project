@@ -1,4 +1,3 @@
-// src/main/java/com/onsil/onsil/flower/service/FlowerService.java
 package com.onsil.onsil.flower.service;
 
 import com.onsil.onsil.flower.dto.FlowerDto;
@@ -7,7 +6,6 @@ import com.onsil.onsil.flower.repository.FlowerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,25 +15,15 @@ import java.util.stream.Collectors;
 public class FlowerService {
     private final FlowerRepository flowerRepository;
 
+    // 월별 6개만 (DB에 이미 6개만 저장되어 있다고 가정)
     public List<FlowerDto> getFlowersByMonth(int month) {
         return flowerRepository.findByfMonth(month).stream()
                 .map(FlowerDto::new)
                 .collect(Collectors.toList());
     }
 
-    public List<FlowerDto> getRecommendedFlowersByMonth(int month) {
-        List<FlowerDto> all = getFlowersByMonth(month);
-        int n = Math.min(5, all.size());
-        Collections.shuffle(all);
-        return all.subList(0, n);
-    }
-
-    public List<FlowerDto> getBirthFlowersByMonth(int month) {
-        return getFlowersByMonth(month);
-    }
-
-    public FlowerDto getFlowerDetailFromApi(Integer dataNo) {
-        Optional<Flower> flower = flowerRepository.findByDataNo(dataNo);
+    public FlowerDto getFlowerDetail(Integer dataNo) {
+        Optional<Flower> flower = flowerRepository.findById(dataNo);
         return flower.map(FlowerDto::new).orElse(null);
     }
 }
