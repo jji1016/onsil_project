@@ -46,6 +46,18 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
+        animations: {
+            x: {
+                duration: 0
+            },
+            y: {
+                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+                delay: ctx => ctx.index * 100,
+                type: 'number',
+                easing: 'easeOutQuart'
+            }
+        },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -131,6 +143,22 @@ document.addEventListener("DOMContentLoaded", function(){
     tbody.appendChild(tr);
     });
 
+    
+    //회원아이디 불러오기(모달창 주문내역 아이디 부분)
+    document.querySelectorAll('.admin_btn').forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+            // 버튼이 눌린 row의 ID를 가져오기!
+            const clickedId = members[index].id;
+
+            // <td class="view-user-id">에 넣기!
+            document.querySelector('.view-user-id').textContent = clickedId;
+        });
+        });
+
+
+
+
+
     //회원 숫자 세기
     document.querySelector(".mem_count").textContent = members.length;
 
@@ -167,6 +195,42 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
 
+    //회원별주문내역관리 페이지
+    const memOrders = [
+    {
+        no: 1,
+        date: "2025-06-09",
+        orderNo: "20250609007A",
+        product: "6월의 탄생화 장미 시리즈",
+        state: "결제완료",
+        price: "48,900"
+    },
+    {
+        no: 2,
+        date: "2025-06-09",
+        orderNo: "20250609007A",
+        product: "6월의 탄생화 장미 시리즈",
+        state: "결제완료",
+        price: "48,900"
+    }
+    ];
+
+    const memOrderBody = document.getElementById("mem-order-body");
+
+    memOrders.forEach(order => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td>${order.no}</td>
+        <td>${order.date}</td>
+        <td>${order.orderNo}</td>
+        <td>${order.product}</td>
+        <td>${order.state}</td>
+        <td>${order.price}</td>
+    `;
+
+    memOrderBody.appendChild(tr);
+    });
 
 
 
@@ -392,6 +456,18 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
+        animations: {
+            x: {
+                duration: 0
+            },
+            y: {
+                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+                delay: ctx => ctx.index * 100,
+                type: 'number',
+                easing: 'easeOutQuart'
+            }
+        },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -443,6 +519,18 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
+        animations: {
+            x: {
+                duration: 0
+            },
+            y: {
+                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+                delay: ctx => ctx.index * 100,
+                type: 'number',
+                easing: 'easeOutQuart'
+            }
+        },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -496,6 +584,18 @@ document.addEventListener("DOMContentLoaded", function(){
         },
         options: {
             responsive: true,
+            animations: {
+            x: {
+                duration: 0
+            },
+            y: {
+                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+                delay: ctx => ctx.index * 100,
+                type: 'number',
+                easing: 'easeOutQuart'
+            }
+        },
             plugins: {
                 legend: {
                     display: false
@@ -551,6 +651,18 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
+        animations: {
+            x: {
+                duration: 0
+            },
+            y: {
+                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+                delay: ctx => ctx.index * 100,
+                type: 'number',
+                easing: 'easeOutQuart'
+            }
+        },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -601,6 +713,18 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
+        animations: {
+            x: {
+                duration: 0
+            },
+            y: {
+                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+                delay: ctx => ctx.index * 100,
+                type: 'number',
+                easing: 'easeOutQuart'
+            }
+        },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼
@@ -653,6 +777,18 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
+        animations: {
+            x: {
+                duration: 0
+            },
+            y: {
+                from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+                to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+                delay: ctx => ctx.index * 100,
+                type: 'number',
+                easing: 'easeOutQuart'
+            }
+        },
         plugins: {
         legend: {
             display: false // label 숨기고 싶으면 true로 바꿔도 돼

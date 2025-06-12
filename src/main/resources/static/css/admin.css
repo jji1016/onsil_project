@@ -532,6 +532,8 @@ body{
 }
 
 
+
+
 /* 탭버튼 */
 #section #member #mem-modal .wrap-all .tab-btn{
     display: flex;
@@ -674,6 +676,45 @@ body{
 #section #member #mem-modal .wrap-all .close{
     background-color: #888888;
 }
+
+
+
+
+/* 주문내역 모달창 테이블 */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order table{
+    border: 1px solid  #D2D2D2;
+    margin: 20px;
+    border-collapse: collapse;
+    text-align: center;
+    width: 94%;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order table td{
+    padding: 10px;
+    height: 60px;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order table tr:nth-child(even){
+    background-color: #F5F5ED;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order table th{
+    border-bottom: 1px solid  #D2D2D2;
+    height: 40px;
+    padding: 10px;
+}
+
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order .user-id{
+    border-left: none;
+    border-right: none;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order .user-id tr td{
+    height: 25px;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order .user-id tr td:first-child{
+    background-color: #F8F8F8;
+    width: 20%;
+    color: #4B4A45;
+    font-weight: 600;
+}
+
 
 
 
