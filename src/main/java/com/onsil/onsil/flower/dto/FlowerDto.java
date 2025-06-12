@@ -1,5 +1,7 @@
+// src/main/java/com/onsil/onsil/flower/dto/FlowerDto.java
 package com.onsil.onsil.flower.dto;
 
+import com.onsil.onsil.entity.Flower;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -41,4 +43,26 @@ public class FlowerDto {
     private String imgUrl3;
     @JsonProperty("publishOrg")
     private String publishOrg;
+
+    // 엔티티 → DTO 변환 생성자
+    public FlowerDto(Flower flower) {
+        this.dataNo = flower.getDataNo();
+        this.fMonth = flower.getFMonth();
+        this.fDay = flower.getFDay();
+        this.flowNm = flower.getFlowNm();
+        this.fSctNm = flower.getFSctNm();
+        this.fEngNm = flower.getFEngNm();
+        this.flowLang = flower.getFlowLang();
+        this.fContent = flower.getFContent();
+        this.fUse = flower.getFUse();
+        this.fGrow = flower.getFGrow();
+        this.fType = flower.getFType();
+        this.fileName1 = flower.getFileName1();
+        this.fileName2 = flower.getFileName2();
+        this.fileName3 = flower.getFileName3();
+        this.imgUrl1 = flower.getImgUrl1();
+        this.imgUrl2 = flower.getImgUrl2();
+        this.imgUrl3 = flower.getImgUrl3();
+        this.publishOrg = flower.getPublishOrg();
+    }
 }
