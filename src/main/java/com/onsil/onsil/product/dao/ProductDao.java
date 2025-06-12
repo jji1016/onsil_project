@@ -53,13 +53,13 @@ public class ProductDao {
     public List<ProductDto> findAll() {
         List<Product> productList = productRepository.findAll();
         List<ProductDto> productDtoList = productList.stream().map(
-            product -> ProductDto.builder()
-                    .id(product.getId())
-                    .flowerName(product.getFlowerName())
-                    .flowerInfo(product.getFlowerInfo())
-                    .price(product.getPrice())
-                    .image(product.getImage())
-                    .build()
+                product -> ProductDto.builder()
+                        .id(product.getId())
+                        .flowerName(product.getFlowerName())
+                        .flowerInfo(product.getFlowerInfo())
+                        .price(product.getPrice())
+                        .image(product.getImage())
+                        .build()
         ).toList();
         return productDtoList;
     }
