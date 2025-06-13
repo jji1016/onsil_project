@@ -180,10 +180,38 @@ body {
 #section .my_list .content_wrap .content .order{
   margin-top:60px;
   display: flex;
+  position: relative;
 }
+
 #section .my_list .content_wrap .content .order>h2{
   font-size: 25px;
   /* margin-left:30px; */
+}
+#section .my_list .content_wrap .content .order .search_box{
+  background-color: #f0f0f0;
+  position: absolute;
+  top: 0px; left: 500px;
+  height: 40px;
+}
+#section .my_list .content_wrap .content .order .search_txt{
+    background-color: #f0f0f0;
+  height: 40px;
+  padding: 10px;
+    float: left;
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 15px;
+}
+#section .my_list .content_wrap .content .order .search_btn{
+  color: #ededed;
+  float: right;
+  width: 40px; height: 40px;
+  border: 0px;
+  background-color: #f0f0f0;
+  border-radius: 50%;
 }
 #section .my_list .content_wrap .content .order .year_select{
   width:70px;
@@ -230,6 +258,16 @@ body {
 #section .my_list .content_wrap .content .order_table>tbody>tr:nth-child(even){
   background-color: #f5f5ed;
 }
+
+#section .my_list .content_wrap .content .page_btn{
+  margin-left: 360px;
+  margin-top: 30px;
+}
+#section .my_list .content_wrap .content .page_btn tbody tr td a{
+  margin: 0px 10px;
+}
+
+
 
 #section .my_list .content_wrap .content .request_detail{
   width:900px; height: 50px;
