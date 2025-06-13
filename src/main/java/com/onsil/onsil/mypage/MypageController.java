@@ -64,20 +64,6 @@ public class MypageController {
 //        return "redirect:/mypage/info";
 //    }
 //
-    @GetMapping("/orderList") //주문내역 조회
-    public String orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                            @ModelAttribute SearchDto searchDto,
-                            Model model) {
-        log.info("searchDto: {}", searchDto);
-        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
-        log.info("orderlist-loggedMemberID: {}", loggedMemberID);
-
-        List<MypageOrderListDto> mypageOrderListDto = mypageService.findSearchOrderList(loggedMemberID,searchDto); //로그인한 사람의 주문내역
-        log.info("orderlist-mypageOrderListDto: {}", mypageOrderListDto);
-        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
-
-        return "mypage/orderList";
-    }
 //
 //    @GetMapping("/subscribe") //정기배송 신청내역 조회
 //    public String subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
@@ -112,14 +98,31 @@ public class MypageController {
         return "mypage/mypage";
     }
 
-    @PostMapping("/delete") //회원 탈퇴
-    public String deleteAccount(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
-        int isDelete = mypageService.deleteAccount(id);
+    @GetMapping("/orderList") //주문내역 조회
+    public String orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                            @ModelAttribute SearchDto searchDto,
+                            Model model) {
+        log.info("searchDto: {}", searchDto);
+        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
+        log.info("orderlist-loggedMemberID: {}", loggedMemberID);
 
-        if (isDelete == 1) {
-            redirectAttributes.addFlashAttribute("message", "삭제가 완료되었습니다.");
+        List<MypageOrderListDto> mypageOrderListDto = mypageService.findSearchOrderList(loggedMemberID,searchDto); //로그인한 사람의 주문내역
+        log.info("orderlist-mypageOrderListDto: {}", mypageOrderListDto);
+        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
+
+        return "mypage/mypage";
+    }
+
+    @GetMapping("/delete/{id}") //회원 탈퇴
+    @ResponseBody
+    public Map<String,String> deleteAccount(@PathVariable("id") Integer id) {
+        int result = mypageService.deleteAccount(id);
+
+        Map<String,String> map = new HashMap<>();
+        if (result == 1) {
+            map.put("isDelete", "true");
         }
-        return "redirect:/member/logout";
+        return map;
     }
 
     @GetMapping("/cancelSubscribe/{id}") //정기배송 구독 취소
