@@ -1,15 +1,11 @@
-// src/main/java/com/onsil/onsil/flower/repository/FlowerRepository.java
 package com.onsil.onsil.flower.repository;
 
-import com.onsil.onsil.entity.Flower;
+import com.onsil.onsil.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
-import java.util.Optional;
 
-public interface FlowerRepository extends JpaRepository<Flower, Integer> {
-
-    List<Flower> findByfMonth(Integer fMonth);
-
-    Optional<Flower> findByDataNo(Integer dataNo);
+public interface FlowerRepository extends JpaRepository<Product, Integer> {
+    // 월별 6개만 반환
+    List<Product> findByFMonth(Integer fMonth, Pageable pageable);
 }
