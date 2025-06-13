@@ -1,8 +1,12 @@
 package com.onsil.onsil.admin.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
+import com.onsil.onsil.entity.OrderList;
+import com.onsil.onsil.mypage.dto.MypageOrderListDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,32 +29,43 @@ public class AdminController {
     private final AdminOutputService adminOutputService;
 
     @GetMapping("/onsil-html")
-    public String onsilHtml(Model model) {
+    public String onsilHtml(Model model) throws JsonProcessingException {
 
         // 총 멤버수
         int countedMember = adminService.countAllMembers();
         // 한달이내 가입자 수(중복제거)
         int inOneMonthSubscribeMember = adminService.countOneMonth();
-        // 인기상품 리스트
-        List<PopularCountDto> popularSubscribe = adminService.popularSubscribe();
-        // 한달이내 주문건수
-        SubscribeSumDto recentSubscribes = adminService.subscribeInOneMonth();
-        // 멤버리스트
-        List<MemberDto> memberList = adminService.getAllMembers();
         // 일주일 내 리뷰 수
         int inOneWeekReview = adminService.inOneWeekReview();
+
+        // 인기상품 리스트
+        List<PopularCountDto> popularSubscribe = adminService.popularSubscribe();
+        // 멤버리스트
+        List<MemberDto> memberList = adminService.getAllMembers();
+        // orderLists
+        List<AdminOrderListDto> orderLists = adminService.getAllOrderLists();
+        // subscribeLists
+        List<SubscribeDto> subscribeDtos = adminService.getAllLists();
+
+        // 오늘 주문건
+        SubscribeSumDto todaySubscribe = adminService.subscribeToday();
+        // 한달이내 주문건수
+        SubscribeSumDto recentSubscribes = adminService.subscribeInOneMonth();
         // 배송현황
         DeliveryStatusDto statusSummary = adminService.getDeliveryStatusSummary();
-
 
         model.addAttribute("allSubscribeMember", countedMember);
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
         model.addAttribute("popularSubscribe", popularSubscribe);
         model.addAttribute("recentSubscribes", recentSubscribes.getList());
+        model.addAttribute("todaySubscribe",todaySubscribe.getList());
         model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
         model.addAttribute("memberList", memberList);
         model.addAttribute("inOneWeekReview", inOneWeekReview);
         model.addAttribute("statusSummary", statusSummary);
+        model.addAttribute("orderLists", orderLists);
+        model.addAttribute("subscribeLists", subscribeDtos);
+
 
         return "admin/onsil-html";
     }
@@ -88,14 +103,12 @@ public class AdminController {
     @PostMapping("/member-modify/{userID}")
     public String modifyMember(@PathVariable String userID, @ModelAttribute MemberDto dto) {
         adminService.modifyMember(userID, dto);
-        return "redirect:/admin/member-list";
+        return "redirect:/admin/onsil-html";
     }
 
     @GetMapping("/order-list/{id}")
     public String orderList(@PathVariable int id, Model model) {
 
-        List<SubscribeDto> orderLists = adminService.findByMemberID(id);
-        model.addAttribute("orderLists", orderLists);
 
         return "admin/order-list";
     }

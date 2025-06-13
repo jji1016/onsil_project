@@ -6,6 +6,7 @@ import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.constant.Role;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Subscribe;
+import com.onsil.onsil.mypage.dto.MypageOrderListDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -72,20 +73,29 @@ public class AdminService {
         return dto;
     }
 
-    public List<SubscribeDto> findByMemberID(int id) {
-
-        List<Subscribe> membersSubscribe = adminDao.findByMemberID(id);
-
-        return membersSubscribe.stream()
+    public List<SubscribeDto> getAllLists() {
+        return adminDao.getAllLists().stream()
                 .map(subscribe -> SubscribeDto.builder()
-                        .id(subscribe.getId())
                         .userID(subscribe.getMember().getUserID())
                         .productName(subscribe.getProduct().getFlowerName())
                         .orderNumber("250604160511")
                         .startDate(subscribe.getStartDate())
-                        .endDate(subscribe.getEndDate())
                         .productPrice(subscribe.getProduct().getPrice())
                         .period(subscribe.getPeriod().name())
+                        .build())
+                .toList();
+    }
+
+    public List<AdminOrderListDto> getAllOrderLists() {
+        return adminDao.getAllOrderLists().stream()
+                .map(subscribe -> AdminOrderListDto.builder()
+                        .userID(subscribe.getMember().getUserID())
+                        .flowerName(subscribe.getProduct().getFlowerName())
+                        .orderTime(subscribe.getOrderTime())
+                        .orderNum("250604160511")
+                        .price(subscribe.getProduct().getPrice())
+                        .quantity(subscribe.getQuantity())
+                        .status(subscribe.getStatus().toString())
                         .build())
                 .toList();
     }
@@ -175,6 +185,32 @@ public class AdminService {
         return new SubscribeSumDto(dtos, totalPrice);
     }
 
+    public SubscribeSumDto subscribeToday() {
+
+        LocalDateTime today = LocalDateTime.now().minusDays(1);
+//        Pageable topFive = PageRequest.of(0, 5);
+
+        List<Subscribe> subscribes = adminDao.findRecentInMonth(today);
+
+        List<SubscribeDto> dtos = subscribes.stream().map(s -> SubscribeDto.builder()
+                .id(s.getId())
+                .userID(s.getMember().getUserID())
+                .startDate(s.getStartDate())
+                .endDate(s.getEndDate())
+                .orderNumber("ORD-" + s.getId())
+                .productName(s.getProduct().getFlowerName())
+                .productPrice(s.getProduct().getPrice())
+                .period(s.getPeriod().name())
+                .build()
+        ).toList();
+
+        int totalPrice = dtos.stream()
+                .mapToInt(SubscribeDto::getProductPrice)
+                .sum();
+
+        return new SubscribeSumDto(dtos, totalPrice);
+    }
+
     public int inOneWeekReview() {
         LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
         return adminDao.inOneWeekReview(oneWeekAgo);
@@ -187,4 +223,5 @@ public class AdminService {
     public List<SalesByMonthDto> getMonthlySales() {
         return adminDao.findMonthlySales();
     }
+
 }

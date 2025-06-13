@@ -7,6 +7,7 @@ import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.admin.repository.AdminOrderListRepository;
 import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
 import com.onsil.onsil.entity.Member;
+import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.entity.Subscribe;
 import com.onsil.onsil.product.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -68,5 +69,13 @@ public class AdminDao {
 
     public List<SalesByMonthDto> findMonthlySales() {
         return subscribeRepository.findMonthlySales();
+    }
+
+    public List<OrderList> getAllOrderLists() {
+        return orderListRepository.findAll();
+    }
+
+    public List<Subscribe> getAllLists() {
+        return subscribeRepository.findAll();
     }
 }
