@@ -6,9 +6,13 @@
     <style>
         body { font-family: '맑은 고딕', sans-serif; margin: 40px; }
         h1 { margin-bottom: 30px; }
-        .flower-list { display: flex; flex-wrap: wrap; gap: 30px; }
+        .flower-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
         .flower-card {
-            width: 260px; border: 1px solid #ddd; border-radius: 8px; padding: 18px;
+            border: 1px solid #ddd; border-radius: 8px; padding: 18px;
             box-shadow: 2px 2px 10px #eee; background: #fafbfc;
             display: flex; flex-direction: column; align-items: flex-start;
         }
@@ -27,6 +31,7 @@
         #close-modal { position: absolute; right: 18px; top: 18px; font-size: 1.5em; color: #aaa; cursor: pointer;}
         .label { color: #2a7; font-weight: bold; }
         .msg { color: #d00; margin: 10px 0; }
+        img { max-width: 100%; border-radius: 8px; margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -49,7 +54,6 @@
 </div>
 
 <script>
-    // 월 선택 셀렉트박스 초기화
     for (let i = 1; i <= 12; i++) {
         document.getElementById('monthSelect').innerHTML += `<option value="${i}">${i}월</option>`;
     }
@@ -59,7 +63,6 @@
         return "농촌진흥청 국립원예특작과학원";
     }
 
-    // 이달의 꽃 6개만 조회
     async function loadFlowers() {
         const month = document.getElementById('monthSelect').value;
         const res = await fetch(`/api/flowers/month/${month}`);
@@ -75,33 +78,34 @@
         renderFlowerList('flower-list', flowers);
     }
 
-    // 꽃 카드 렌더링 (이미지 없이 텍스트만)
     function renderFlowerList(divId, flowers) {
         const container = document.getElementById(divId);
         container.innerHTML = '';
         flowers.forEach(flower => {
             container.innerHTML += `
                     <div class="flower-card">
-                        <div class="flower-name">${flower.flowNm || '-'}</div>
+                        <img src="${flower.image || 'default.jpg'}" alt="${flower.flowerName || '-'}">
+                        <div class="flower-name">${flower.flowerName || '-'}</div>
                         <div class="flower-label">${flower.flowLang || ''}</div>
-                        <button class="detail-btn" onclick="showDetail(${flower.dataNo})">상세보기</button>
+                        <div class="flower-label">가격: ${flower.price || '-'}원</div>
+                        <button class="detail-btn" onclick="showDetail(${flower.id})">상세보기</button>
                     </div>
                 `;
         });
     }
 
-    // 꽃 상세정보 모달 (이미지 없이 텍스트만)
-    async function showDetail(dataNo) {
-        const res = await fetch(`/api/flowers/${dataNo}`);
+    async function showDetail(id) {
+        const res = await fetch(`/api/flowers/${id}`);
         const data = await res.json();
         const body = document.getElementById('detail-body');
         body.innerHTML = `
-                <h2>${data.flowNm || '-'}</h2>
+                <h2>${data.flowerName || '-'}</h2>
                 <p><span class="label">꽃말:</span> ${data.flowLang || '-'}</p>
-                <p><span class="label">설명:</span> ${data.fContent || '-'}</p>
+                <p><span class="label">설명:</span> ${data.flowerInfo || '-'}</p>
                 <p><span class="label">활용:</span> ${data.fUse || '-'}</p>
                 <p><span class="label">재배/생육:</span> ${data.fGrow || '-'}</p>
                 <p><span class="label">분류:</span> ${data.fType || '-'}</p>
+                <p><span class="label">가격:</span> ${data.price || '-'}원</p>
                 <p><span class="label">출처:</span> ${getPublishOrg()}</p>
             `;
         document.getElementById('detail-modal').style.display = 'flex';
@@ -111,7 +115,6 @@
         document.getElementById('detail-modal').style.display = 'none';
     }
 
-    // 페이지 로딩 시 자동 조회
     window.onload = loadFlowers;
 </script>
 </body>

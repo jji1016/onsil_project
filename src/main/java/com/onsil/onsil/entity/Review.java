@@ -26,6 +26,10 @@ public class Review {
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subscribeID", nullable = false)
+    private Subscribe subscribe;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberID", nullable = false)
     private Member member;
 
