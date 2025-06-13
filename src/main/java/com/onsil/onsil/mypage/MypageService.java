@@ -1,5 +1,7 @@
 package com.onsil.onsil.mypage;
 
+import com.onsil.onsil.constant.Period;
+import com.onsil.onsil.constant.Status;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.member.dto.MemberDto;
 import com.onsil.onsil.mypage.dto.MypageOrderListDto;
@@ -41,7 +43,7 @@ public class MypageService {
         List<MypageOrderListDto> mypageOrderListDto = ObjectOrderList.stream()
                 .map(index -> new MypageOrderListDto(
                         ((Number) index[0]).intValue(),
-                        (String) index[1],
+                        Status.valueOf((String) index[1]).getLabel(),
                         ((Timestamp) index[2]).toLocalDateTime(),
                         (String) index[3],
                         ((Number) index[4]).intValue(),
@@ -69,7 +71,7 @@ public class MypageService {
         List<MypageOrderListDto> mypageSearchOrderListDtos = ObjectSearchOrderList.stream()
                 .map(index -> new MypageOrderListDto(
                         ((Number) index[0]).intValue(),
-                        (String) index[1],
+                        Status.valueOf((String) index[1]).getLabel(),
                         ((Timestamp) index[2]).toLocalDateTime(),
                         (String) index[3],
                         ((Number) index[4]).intValue(),
@@ -96,7 +98,7 @@ public class MypageService {
         List<MypageSubscribeDto> mypageSubscribeDtoList = ObjectMypageSubscribe.stream()
                 .map(index -> new MypageSubscribeDto(
                         ((Number) index[0]).intValue(),
-                        (String) index[1],
+                        Period.valueOf((String) index[1]).getLabel(),
                         ((Timestamp) index[2]).toLocalDateTime().toLocalDate(),
                         ((Timestamp) index[3]).toLocalDateTime().toLocalDate(),
                         (String) index[4],
