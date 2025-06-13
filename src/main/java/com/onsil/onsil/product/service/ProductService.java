@@ -1,6 +1,5 @@
 package com.onsil.onsil.product.service;
 
-import com.onsil.onsil.entity.Product;
 import com.onsil.onsil.product.dao.ProductDao;
 import com.onsil.onsil.product.dto.ProductDto;
 import lombok.RequiredArgsConstructor;

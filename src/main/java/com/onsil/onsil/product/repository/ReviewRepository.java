@@ -9,8 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 
-import java.util.Optional;
-
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
     boolean existsByMemberAndProduct(Member member, Product product);
 
