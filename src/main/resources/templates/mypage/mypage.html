@@ -102,27 +102,23 @@
                 </ul>
                 <div class="order">
                     <h2>나의 주문내역 (지난 6개월)</h2>
-                    <div class="search_box">
-                        <form action="" method="post">
-                            <input class="search_txt" type="text"/>
-                            <button class="search_btn" type="submit">
-                                <i
-                                        class="fa-solid fa-magnifying-glass fa-2xl"
-                                        style="color: #b5b5b5"
-                                ></i>
-                            </button>
-                        </form>
-                    </div>
-                    <select name="" class="year_select">
-                        <option value="">2025</option>
-                        <option value="">2024</option>
-                        <option value="">2023</option>
-                        <option value="">2022</option>
-                        <option value="">2021</option>
-                        <option value="">2020</option>
-                    </select>
-                    <p>년</p>
-                    <button type="button" class="btn_search">조회</button>
+                        <div class="subscript">
+                            <div class="search_box">
+                                <input name="orderListSearch" class="search_txt" type="text" />
+                            </div>
+                            <div class="list_box">
+                                <select name="orderListYear" class="year_select">
+                                    <option value="">전체</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn_search">조회</button>
+                        </div>
                 </div>
                 <form action="">
                     <table class="order_table">
@@ -399,6 +395,7 @@
         console.log(e.target.dataset.id)
 
         if (!target.matches("button.calcelSubscribe")) return;
+        e.preventDefault();
 
         const confirmCancel = confirm("정말 구독을 취소하시겠습니까?");
         if (!confirmCancel) return;
@@ -415,6 +412,7 @@
             })
     })
 
+    // 회원 탈퇴
     const deleteAccountBtn = document.querySelector(".cus_edit2"); //회원 탈퇴 버튼
     const loggedMemberID = deleteAccountBtn.dataset.id;
     deleteAccountBtn.addEventListener("click", (e) =>{
@@ -431,6 +429,9 @@
         } else {
             alert("삭제가 취소되었습니다.");
         }
+
+        // 주문내역 검색 및 페이징
+        const searchOrderListBtn = document.querySelector(".btn_search");
     })
 </script>
 </body>
