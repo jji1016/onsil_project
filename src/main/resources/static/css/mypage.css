@@ -347,9 +347,15 @@ body {
 #section .my_list .content_wrap .content .personal_info td .p_num{
   width:64px;
 }
-#section .my_list .content_wrap .content .cus_edit{
+#section .my_list .content_wrap .cus_btn {
+  display: flex;
+  justify-content: center;
+}
+#section .my_list .content_wrap .content .cus_edit,
+#section .my_list .content_wrap .content .cus_edit2
+{
   width:200px; height: 45px;
-  margin-left:350px;
+  margin-left:20px;
   margin-top:60px;
   border:1px solid #8b9773;
   background-color: #8b9773;
