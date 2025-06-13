@@ -26,54 +26,44 @@ public class MypageController {
     private final MypageService mypageService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/home")
-    public String home(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
-
-        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-        model.addAttribute("loggedMemberDto", loggedMemberDto);
-
-        Integer loggedMemberID = loggedMemberDto.getId(); //Member 테이블의 기본키
-        List<MypageOrderListDto> mypageOrderListDto = mypageService.findOrderList(loggedMemberID); //로그인한 사람의 주문내역
-        log.info("mypageOrderListDto: {}", mypageOrderListDto);
-        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
-
-        return "mypage/home";
-    }
-
-    @GetMapping("/info") //회원 상세 정보 페이지
-    public String info(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
-        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-        log.info("loggedMemberDto: {}", loggedMemberDto);
-        model.addAttribute("loggedMemberDto", loggedMemberDto);
-        return "mypage/info";
-    }
-
-    @PostMapping("/modify") //회원 정보 수정
-    public String modify(@ModelAttribute MemberDto memberDto, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        if (memberDto.getUserPW() == null || memberDto.getUserPW().isEmpty()) { //비밀번호 수정 안할시
-            memberDto.setUserPW(customUserDetails.getPassword());
-        }else{ //비밀번호 수정시 받아서 암호화
-            String userPW = memberDto.getUserPW();
-            String encodeUserPW = bCryptPasswordEncoder.encode(userPW);
-            log.info("encodeUserPW: {}", encodeUserPW);
-            memberDto.setUserPW(encodeUserPW);
-        }
-        mypageService.updateInfo(memberDto);
-        return "redirect:/mypage/info";
-    }
-
-    @PostMapping("/delete") //회원 탈퇴
-    public String deleteAccount(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
-        int isDelete = mypageService.deleteAccount(id);
-
-        if (isDelete == 1) {
-            redirectAttributes.addFlashAttribute("message", "삭제가 완료되었습니다.");
-        }
-        return "redirect:/member/logout";
-    }
-
+//    @GetMapping("/home")
+//    public String home(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+//        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
+//
+//        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
+//        model.addAttribute("loggedMemberDto", loggedMemberDto);
+//
+//        Integer loggedMemberID = loggedMemberDto.getId(); //Member 테이블의 기본키
+//        List<MypageOrderListDto> mypageOrderListDto = mypageService.findOrderList(loggedMemberID); //로그인한 사람의 주문내역
+//        log.info("mypageOrderListDto: {}", mypageOrderListDto);
+//        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
+//
+//        return "mypage/home";
+//    }
+//
+//    @GetMapping("/info") //회원 상세 정보 페이지
+//    public String info(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+//        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
+//        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
+//        log.info("loggedMemberDto: {}", loggedMemberDto);
+//        model.addAttribute("loggedMemberDto", loggedMemberDto);
+//        return "mypage/info";
+//    }
+//
+//    @PostMapping("/modify") //회원 정보 수정
+//    public String modify(@ModelAttribute MemberDto memberDto, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+//        if (memberDto.getUserPW() == null || memberDto.getUserPW().isEmpty()) { //비밀번호 수정 안할시
+//            memberDto.setUserPW(customUserDetails.getPassword());
+//        }else{ //비밀번호 수정시 받아서 암호화
+//            String userPW = memberDto.getUserPW();
+//            String encodeUserPW = bCryptPasswordEncoder.encode(userPW);
+//            log.info("encodeUserPW: {}", encodeUserPW);
+//            memberDto.setUserPW(encodeUserPW);
+//        }
+//        mypageService.updateInfo(memberDto);
+//        return "redirect:/mypage/info";
+//    }
+//
     @GetMapping("/orderList") //주문내역 조회
     public String orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                             @ModelAttribute SearchDto searchDto,
@@ -88,15 +78,48 @@ public class MypageController {
 
         return "mypage/orderList";
     }
+//
+//    @GetMapping("/subscribe") //정기배송 신청내역 조회
+//    public String subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+//        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
+//        List<MypageSubscribeDto> mypageSubscribeDtoList = mypageService.findSubscribe(loggedMemberID);
+//        log.info("mypageSubscribeDtoList: {}", mypageSubscribeDtoList);
+//        model.addAttribute("mypageSubscribeDtoList", mypageSubscribeDtoList);
+//
+//        return "mypage/subscribe";
+//    }
 
-    @GetMapping("/subscribe") //정기배송 신청내역 조회
-    public String subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
+
+
+    @GetMapping("/mypage")
+    public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
+        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
+        Integer loggedMemberID = loggedMemberDto.getId(); //Member 테이블의 기본키
+        log.info("loggedMemberDto: {}", loggedMemberDto);
+
+        //주문내역 조회
+        List<MypageOrderListDto> mypageOrderListDto = mypageService.findOrderList(loggedMemberID);
+        log.info("mypageOrderListDto: {}", mypageOrderListDto);
+
+        //정기배송 신청내역 조회
         List<MypageSubscribeDto> mypageSubscribeDtoList = mypageService.findSubscribe(loggedMemberID);
         log.info("mypageSubscribeDtoList: {}", mypageSubscribeDtoList);
-        model.addAttribute("mypageSubscribeDtoList", mypageSubscribeDtoList);
 
-        return "mypage/subscribe";
+        model.addAttribute("mypageSubscribeDtoList", mypageSubscribeDtoList);
+        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
+        model.addAttribute("loggedMemberDto", loggedMemberDto);
+        return "mypage/mypage";
+    }
+
+    @PostMapping("/delete") //회원 탈퇴
+    public String deleteAccount(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
+        int isDelete = mypageService.deleteAccount(id);
+
+        if (isDelete == 1) {
+            redirectAttributes.addFlashAttribute("message", "삭제가 완료되었습니다.");
+        }
+        return "redirect:/member/logout";
     }
 
     @GetMapping("/cancelSubscribe/{id}") //정기배송 구독 취소
