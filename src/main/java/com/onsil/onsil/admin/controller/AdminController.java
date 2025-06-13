@@ -1,13 +1,7 @@
 package com.onsil.onsil.admin.controller;
 
-import com.onsil.onsil.admin.dto.AdminInputDto;
-import com.onsil.onsil.admin.dto.AdminOrderListDto;
-import com.onsil.onsil.admin.dto.AdminOutputDto;
-import com.onsil.onsil.admin.dto.AdminStockDto;
-import com.onsil.onsil.admin.service.AdminInputService;
-import com.onsil.onsil.admin.service.AdminOrderListService;
-import com.onsil.onsil.admin.service.AdminOutputService;
-import com.onsil.onsil.admin.service.AdminStockService;
+import com.onsil.onsil.admin.dto.*;
+import com.onsil.onsil.admin.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +27,8 @@ public class AdminController {
     private final AdminStockService adminStockService;
 
     private final AdminOrderListService adminOrderListService;
+
+    private final AdminProductService adminProductService;
 
     //입고 검색 기능
     @GetMapping("/inputlist")
@@ -109,5 +105,19 @@ public class AdminController {
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
         return "admin/order";
+    }
+
+    //상품내역 검색 기능
+    @GetMapping("/productlist")
+    public String productList(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            Model model
+    ) {
+        List<AdminProductDto> productList = adminProductService.searchProducts(category, keyword);
+        model.addAttribute("productList", productList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        return "admin/product";
     }
 }
