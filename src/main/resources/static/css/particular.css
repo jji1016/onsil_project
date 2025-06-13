@@ -187,13 +187,14 @@ body{
   display: flex;
   margin-right:18px;
 }
-#section .frist_se .right_text .text_arr2 h5 span{
+#section .frist_se .right_text .text_arr2 h5 p{
   height: 14px;
-  line-height: 19px;
-  font-size: 12px;
+  line-height: 15px;
+  font-size: 15px;
   margin-top: 5px;
   margin-right: 5px;
   border-right:1px solid gray;
+    color: #8B9773;
   padding-right: 5px;
   color: #191919;
 }
@@ -253,6 +254,7 @@ body{
   color: #4b4a45;
   border-radius: 40px;
   background-color: #F1F1F1;
+  cursor: pointer;
 }
 #section .secound_se .top_re,
 #section .secound_se .bottom_re
