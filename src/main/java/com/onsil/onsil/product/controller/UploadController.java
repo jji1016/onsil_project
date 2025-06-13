@@ -1,13 +1,11 @@
 package com.onsil.onsil.product.controller;
 
 import com.onsil.onsil.entity.Product;
-import com.onsil.onsil.product.dto.ProductDto;
 import com.onsil.onsil.product.repository.ProductRepository;
 import com.onsil.onsil.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("/upload")
