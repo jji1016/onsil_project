@@ -1,145 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>장바구니 가상구현</title>
-    <style>
-        body { font-family: '맑은 고딕', sans-serif; margin: 40px; }
-        table { border-collapse: collapse; width: 80%; margin-bottom: 30px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-        th { background: #f5f5f5; }
-        .btn { padding: 4px 12px; margin: 2px; }
-        #pay-btn { margin-top: 30px; padding: 10px 30px; font-size: 18px; background: #2a7; color: #fff; border: none; border-radius: 6px; cursor: pointer;}
-        #pay-btn:active { background: #185; }
-        .error-msg { color: red; margin-top: 10px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>장바구니</title>
+  <link rel="stylesheet" href="css/cart.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <script src="https://kit.fontawesome.com/f982cc5938.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>장바구니</h1>
-<div>
-    <label>회원번호: <input type="number" id="memberId" value="1" style="width:60px;"></label>
-    <button onclick="loadCart()">장바구니 조회</button>
-    <button onclick="clearCart()">장바구니 전체 비우기</button>
+<div id="header">
+<h1 class="h_logo"><img src="images/logo.png" alt="logo"></h1>
+        <ul class="gnb">
+            <li><button type="button" class="login">로그인</button></li>
+            <li><i class="fa-solid fa-bag-shopping"></i></li>
+            <li><i class="fa-solid fa-user"></i></li>
+        </ul>
+        <ul class="nav">
+            <li><a href="#">꽃 정기구독</a></li>
+            <li><a href="#">꽃 노트</a></li>
+            <li><a href="#">꽃.식물</a></li>
+            <li><a href="#">클래스</a></li>
+            <li><a href="#">기업제휴</a></li>
+            <li><a href="#">고객센터</a></li>
+        </ul>
+
 </div>
-<div id="cart-summary"></div>
-<table id="cart-table">
-    <thead>
-    <tr>
-        <th>상품명</th><th>가격</th><th>수량</th><th>이미지</th><th>닉네임</th><th>수정/삭제</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-<div>
-    <h3>상품 추가</h3>
-    <label>상품명: <input type="text" id="flowerName" style="width:120px;"></label>
-    <label>수량: <input type="number" id="quantity" value="1" style="width:40px;" min="1"></label>
-    <button onclick="addToCart()">추가</button>
-    <div id="add-error" class="error-msg"></div>
+
+<div id="section">
+  <div class="back_btn">
+    <ul class="btn_ti">
+      <li><a href="#"><img src="images/Group 71.png" alt=""></a></li>
+      <li><h2>장바구니</h2></li>
+    </ul>
+  </div>
+
+  <div class="selall_btn">
+    <input type="checkbox" name="items_all" id="all"><span>전체선택</span>
+    <input type="button" value="전체삭제" id="all_del">
+  </div>
+
+  <div class="sel_check">
+    <ul class="check_ti">
+      <li>선택상태</li>
+      <li>제품이미지</li>
+      <li>제품이름/가격</li>
+      <li>제품수량</li>
+      <li>　</li>
+    </ul>
+  </div>
+
+  <div class="sel_item">
+    <ul class="item_sel">
+      <li><input type="checkbox" name="item" class="sell_it"></li>
+      <li><img src="images/lineup01.png" alt=""></li>
+      <li>
+        <h3>유로피언 꽃 구독 M사이즈 / <span>36,900원</span></h3>
+      </li>
+      <li>
+        <div class="btn_all">
+        <input class="sel_mp" type="button" value="-">
+        <span>1</span>
+        <input class="sel_mp" type="button" value="+">
+        </div>
+      </li>
+      <li><input id="de_btn" type="button" value="삭제"></li>
+    </ul>
+  </div>
+
+  <div class="price">
+    <div class="price_txt"><h1><span>총 수량 0개</span> 36,900원</h1></div>
+      <div class="buy_btn">
+    <input class="btn_buy" type="button" value="상품구매">
+  </div>
+  </div>
+
+
+
+  <div class="notandum">
+    <ul class="notandum_txt">
+      <li>
+        장바구니에 최대 200개의 상품을 담을 수 있습니다.
+      </li>
+      <li>
+        장바구니 상품은 최대 90일간 저장됩니다.
+      </li>
+      <li>
+        장바구니에 담긴 상품은 옵션 또는 추가상품 단위로 최대 100개의 상품만 동시 주문할 수 있습니다.
+      </li>
+      <li>
+        가격, 옵션 등 정보가 변경된 경우 주문이 불가할 수 있습니다.
+      </li>
+      <li>
+        오늘출발 정보는 판매자가 설정한 정보에 의해 제공되며, 물류위탁 상품인 경우 물류사의 사정에 따라 실제와 다를 수 있습니다.
+      </li>
+      <li>
+        일부 상품의 경우 카드 할부기간이 카드사 제공 기간보다 적게 제공될 수 있습니다.
+      </li>
+      <li>
+        장바구니에 보여지는 배송비는 최종적으로 발생하는 배송비가 아니며, 주문 주소지에 따라 도서산간 비용 등이 추가 발생할 수 있습니다.
+      </li>
+    </ul>
+  </div>
+
 </div>
-<!-- 결제하기 버튼 추가 -->
-<div style="text-align:center;">
-    <button id="pay-btn" onclick="goToPayment()">결제하기</button>
+
+<div id="footer">
+      <div class="f_cont">
+      <h1 class="f_logo"><img src="images/logo.png" alt="logo"></h1>
+        <ul class="f_info">
+          <li>온실 플라워스튜디오</li>
+          <li>대표: 김서진</li>
+          <li>주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+          <li>이메일: contact@flowerstudio.com</li>
+          <li>사업자 등록번호: 101-54-64295</li>
+          <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+        </ul>
+    </div>
 </div>
-<script>
-    async function loadCart() {
-        const memberId = document.getElementById('memberId').value;
-        try {
-            const res = await fetch(`/api/cart/${memberId}`);
-            if (!res.ok) throw new Error("장바구니 불러오기 실패");
-            const items = await res.json();
-            const tbody = document.querySelector('#cart-table tbody');
-            tbody.innerHTML = '';
-            items.forEach(item => {
-                tbody.innerHTML += `
-                        <tr>
-                            <td>${item.flowerName}</td>
-                            <td>${item.price}</td>
-                            <td>
-                                <input type="number" value="${item.quantity}" min="1" style="width:40px;"
-                                    onchange="updateQuantity(${item.cartId}, this.value)">
-                            </td>
-                            <td><img src="${item.image}" alt="" style="width:60px;"></td>
-                            <td>${item.memberNickName}</td>
-                            <td>
-                                <button class="btn" onclick="removeFromCart(${item.cartId})">삭제</button>
-                            </td>
-                        </tr>
-                    `;
-            });
-
-            // 합계/배송비
-            const summaryRes = await fetch(`/api/cart/${memberId}/summary`);
-            if (!summaryRes.ok) throw new Error("합계 정보 불러오기 실패");
-            const summary = await summaryRes.json();
-            document.getElementById('cart-summary').innerHTML =
-                `<b>총액:</b> ${summary.totalPrice}원, <b>배송비:</b> ${summary.deliveryFee}원, <b>결제예정:</b> ${summary.finalPrice}원`;
-
-            // 결제하기 버튼에 memberId, finalPrice 저장
-            document.getElementById('pay-btn').dataset.memberId = memberId;
-            document.getElementById('pay-btn').dataset.finalPrice = summary.finalPrice;
-        } catch (err) {
-            document.getElementById('cart-summary').innerHTML = `<span class="error-msg">${err.message}</span>`;
-        }
-    }
-
-    async function addToCart() {
-        const memberId = document.getElementById('memberId').value;
-        const flowerName = document.getElementById('flowerName').value.trim();
-        const quantity = document.getElementById('quantity').value;
-        const errorDiv = document.getElementById('add-error');
-        errorDiv.textContent = '';
-
-        if (!flowerName) {
-            errorDiv.textContent = "상품명을 입력하세요.";
-            return;
-        }
-        if (quantity < 1) {
-            errorDiv.textContent = "수량은 1 이상이어야 합니다.";
-            return;
-        }
-
-        const res = await fetch(`/api/cart?memberId=${memberId}&flowerName=${encodeURIComponent(flowerName)}&quantity=${quantity}`, {
-            method: 'POST'
-        });
-        if (!res.ok) {
-            const msg = await res.text();
-            errorDiv.textContent = "추가 실패: " + msg;
-            return;
-        }
-        document.getElementById('flowerName').value = '';
-        document.getElementById('quantity').value = 1;
-        loadCart();
-    }
-
-    async function updateQuantity(cartId, quantity) {
-        await fetch(`/api/cart/${cartId}?quantity=${quantity}`, {
-            method: 'PUT'
-        });
-        loadCart();
-    }
-
-    async function removeFromCart(cartId) {
-        await fetch(`/api/cart/${cartId}`, { method: 'DELETE' });
-        loadCart();
-    }
-
-    async function clearCart() {
-        const memberId = document.getElementById('memberId').value;
-        await fetch(`/api/cart/clear/${memberId}`, { method: 'DELETE' });
-        loadCart();
-    }
-
-    // 결제하기 버튼 클릭 시 결제창으로 이동 (memberId, finalPrice 전달)
-    function goToPayment() {
-        const btn = document.getElementById('pay-btn');
-        const memberId = btn.dataset.memberId;
-        const finalPrice = btn.dataset.finalPrice;
-        window.location.href = `payment.html?memberId=${memberId}&finalPrice=${finalPrice}`;
-    }
-
-    // 페이지 로딩 시 자동 조회
-    window.onload = loadCart;
-</script>
 </body>
 </html>
