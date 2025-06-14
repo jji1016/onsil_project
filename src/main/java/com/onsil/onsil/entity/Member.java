@@ -101,7 +101,6 @@ public class Member {
                 .address02(this.getAddress02())
                 .zipcode(this.getZipcode())
                 .regDate(this.getRegdate())
-                .modifyDate(this.getRegdate())
                 .role(this.role)
                 .build();
     }

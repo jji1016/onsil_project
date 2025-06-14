@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+
+
+
 @Controller
 @RequestMapping("/member")
 @Slf4j
@@ -30,13 +33,19 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid @ModelAttribute MemberDto memberDto, BindingResult bindingResult) {
+    public String signup(@Valid @ModelAttribute MemberDto memberDto, BindingResult bindingResult,
+                         Model model) {
         if(bindingResult.hasErrors()) {
+            bindingResult.getFieldErrors().forEach(error -> {
+                System.out.println("필드: " + error.getField());
+                System.out.println("오류 메시지: " + error.getDefaultMessage());
+            });
+            model.addAttribute("errors", bindingResult.getAllErrors());
             return "member/signup";
         }
         memberService.save(memberDto);
 
-        return "member/login";
+        return "redirect:/member/login";
     }
 
     // 아이디 중복 체크

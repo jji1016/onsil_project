@@ -56,7 +56,8 @@ public class MemberDto {
     private Role role;
 
     private LocalDateTime regDate;
-    private LocalDateTime modifyDate;
+
+    private boolean deleteStatus;
 
     public Member toMember() {
         return Member.builder()
@@ -70,6 +71,7 @@ public class MemberDto {
                 .address02(this.address02)
                 .zipcode(this.zipcode)
                 .role(this.role)
+                .deleteStatus(true)
                 .build();
     }
 
