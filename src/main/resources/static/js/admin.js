@@ -999,11 +999,10 @@ delivery.forEach(info => {
 
 
 
+//상품관리 페이지--------------------------------
 
-// 상품관리 페이지--------------------------------
 
-    
-    const items = [
+    /*const items = [
     {
         no: "1",
         code: "AE202050000AB07",
@@ -1013,9 +1012,11 @@ delivery.forEach(info => {
         dateR: "2025-06-10",
         price: "36,000",
         sellPrice: "52,000",
+
+
     },
     {
-        no: "2",
+        /*no: "2",
         code: "AE202040000CF12",
         name: "유럽피언 꽃구독 M",
         category: "절화",
@@ -1024,7 +1025,7 @@ delivery.forEach(info => {
         price: "42,000",
         sellPrice: "58,000",
     }
-    ];
+    ];*/
 
     const itemsBody = document.getElementById("items_body");
 
@@ -1041,8 +1042,8 @@ delivery.forEach(info => {
         <td>${itemsIn.price}</td>
         <td>${itemsIn.sellPrice}</td>
         <td>
-        <button class="modi_btn">수정</button>
-        <button class="del_btn">삭제</button>
+        <button class="modify_btn">수정</button>
+        <button class="delete_btn">삭제</button>
         </td>
     `;
 

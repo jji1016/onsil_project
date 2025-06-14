@@ -142,7 +142,7 @@ public class AdminController {
 
     @GetMapping("/product")
     public String product(@RequestParam(defaultValue = "0") int page, Model model) {
-        Pageable pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.DESC, "id"));
+        Pageable pageable = PageRequest.of(page, 7, Sort.by(Sort.Direction.DESC, "id"));
         Page<Product> productPage = productRepository.findAll(pageable);
 
         model.addAttribute("products", productPage.getContent());

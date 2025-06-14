@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -20,22 +21,27 @@ public class MemberDto {
     private Integer id;
 
     @NotBlank(message="아이디는 필수입력사항입니다.")
+    @Pattern(regexp="^[a-z0-9]{6,16}$", message="아이디는 6~16자의 소문자 영문/숫자만 가능합니다.")
     private String userID;
 
     @NotBlank(message="패스워드는 필수입력사항입니다.")
+    @Pattern(
+            regexp="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{6,16}$",
+            message="비밀번호는 영문, 숫자, 특수문자 포함 6~16자여야 합니다.")
     private String userPW;
 
     @NotBlank(message="이름은 필수입력사항입니다.")
     private String userName;
 
-    @Email(message="이메일형식에 맞게 써주세요")
+    @Email
     @NotBlank(message="이메일은 필수입력사항입니다.")
     private String userEmail;
 
-    @NotBlank(message="님네임은 필수입력사항입니다.")
+    @NotBlank(message="닉네임은 필수입력사항입니다.")
     private String nickName;
 
-    @NotBlank(message="전화번호는 필수입력사항입니다.")
+    @NotBlank
+    @Pattern(regexp="^01\\d-\\d{3,4}-\\d{4}$", message="전화번호 형식이 올바르지 않습니다.")
     private String tel;
 
     @NotBlank(message="주소는 필수입력사항입니다.")
