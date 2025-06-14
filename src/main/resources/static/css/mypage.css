@@ -180,24 +180,76 @@ body {
 #section .my_list .content_wrap .content .order{
   margin-top:60px;
   display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  /* background-color: salmon; */
 }
+
 #section .my_list .content_wrap .content .order>h2{
   font-size: 25px;
   /* margin-left:30px; */
 }
-#section .my_list .content_wrap .content .order .year_select{
-  width:70px;
-  margin-left:480px;
+#section .my_list .content_wrap .content .order .subscript{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 450px; height: 50px;
+  /* background-color: orange; */
+}
+#section .my_list .content_wrap .content .order .search_box{  /* background-color: #f0f0f0; */
+  border:1px solid rgb(218, 218, 218);
+  height: 33px;
+  display: flex;
+  justify-content: space-between;
+
+}
+#section .my_list .content_wrap .content .order .search_txt{
+  height: 35px;
+  padding: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  background: none;
+  border: none;
   outline: none;
-  border:1px solid #d2d2d2;
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+}
+#section .my_list .content_wrap .content .order .search_btn{
+  color: #ededed;
+  width: 40px; height: 30px;
+  margin-top: 2px;
+  border: 0px;
+  background-color: #ffffff;
+}
+
+
+
+
+#section .my_list .content_wrap .content .order .subscript .list_box{
+  display: flex;
+  
+}
+
+
+
+
+
+
+
+#section .my_list .content_wrap .content .order .year_select{
+  width:100px;
+  height: 35px;
+  /* margin-left:480px; */
+  outline: none;
+  border:1px solid rgb(218, 218, 218);
   font-size: 16px;
 }
 #section .my_list .content_wrap .content .order>p{
   margin-top:10px;
-  margin-left: 3px;
 }
 #section .my_list .content_wrap .content .order .btn_search{
-  width:50px; height:40px;
+  width:50px; height:35px;
   margin-left:10px;
   border:1px solid #8b9773;
   background-color: #8b9773;
@@ -212,7 +264,7 @@ body {
   width: 900px;
   border-collapse: separate;
   border-spacing:0;
-  border:1px solid #D2D2D2;
+  border:1px solid rgb(218, 218, 218);
   border-radius: 20px;
   margin-top:20px;
   text-align: center;
@@ -222,7 +274,7 @@ body {
   height:60px;
 }
 #section .my_list .content_wrap .content .order_table>thead>tr>th{
-  border-bottom:1px solid #D2D2D2;
+  border-bottom:1px solid rgb(218, 218, 218);
 }
 #section .my_list .content_wrap .content .order_table>tbody>tr{
   height: 60px;
@@ -230,6 +282,16 @@ body {
 #section .my_list .content_wrap .content .order_table>tbody>tr:nth-child(even){
   background-color: #f5f5ed;
 }
+
+#section .my_list .content_wrap .content .page_btn{
+  margin-left: 360px;
+  margin-top: 30px;
+}
+#section .my_list .content_wrap .content .page_btn tbody tr td a{
+  margin: 0px 10px;
+}
+
+
 
 #section .my_list .content_wrap .content .request_detail{
   width:900px; height: 50px;
@@ -309,9 +371,15 @@ body {
 #section .my_list .content_wrap .content .personal_info td .p_num{
   width:64px;
 }
-#section .my_list .content_wrap .content .cus_edit{
+#section .my_list .content_wrap .cus_btn {
+  display: flex;
+  justify-content: center;
+}
+#section .my_list .content_wrap .content .cus_edit,
+#section .my_list .content_wrap .content .cus_edit2
+{
   width:200px; height: 45px;
-  margin-left:350px;
+  margin-left:20px;
   margin-top:60px;
   border:1px solid #8b9773;
   background-color: #8b9773;

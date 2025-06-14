@@ -14,7 +14,7 @@ body{
 }
 #section .banner{
   width: 100%; height: 600px;
-  background-image: url(../images/상단타이틀.png);
+  background-image: url(../images/particular/상단타이틀.png);
   background-repeat: no-repeat;
   text-align: center;
   background-size: cover;

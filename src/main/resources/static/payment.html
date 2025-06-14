@@ -13,7 +13,7 @@
       <div class="left_arr">
         <div class="sel_info">
           <h3>주문 상품 정보</h3>
-          <div class="img_arr"><img src="images/lineup01.png" alt="">
+          <div class="img_arr"><img src="images/particular/lineup01.png" alt="">
           <div class="img_txt">
             <h4>유럽피언 꽃 구독 M사이즈</h4>
             <p>사이즈: M사이즈</p>
@@ -31,7 +31,7 @@
             <h5>010-0000-0000</h5>
             <h5>qonf@naver.com</h5>
           </div>
-          <input type="button" value="수정" class="btn_fix">
+          <button type="submit" value="수정" class="btn_fix">수정</button>
         </div>
       </div>
 
@@ -49,26 +49,8 @@
                 <option value="del_memo">택배보관함에 넣어주세요</option>
               </select>
             </div>
-          <input type="button" value="변경" class="btn_fix">
+          <button type="submit" value="변경" class="btn_fix">변경</button>
           <!-- 변경버튼 클릭시 다른 이름및 주소 등등이 변경가능할수있게 만들어야됨 -->
-          </div>
-        </div>
-
-        <div class="coupon">
-          <div class="cou_text">
-          <h4>쿠폰</h4>
-          <input type="text" class="cou_txt">
-          <input type="button" value="쿠폰적용" class="cou_btn">
-          </div>
-          <div class="cou_number">
-          <h4>쿠폰번호</h4>
-          <input type="text" placeholder="쿠폰번호를 입력해주세요" class="counum_txt">
-          <input type="button" value="번호확인" class="num_serch">
-          </div>
-          <div class="point_arr">
-          <h4>포인트</h4>
-          <input type="text" class="point_use">
-          <input type="button" value="전액사용" class="point_btn">
           </div>
         </div>
       </div>
@@ -149,19 +131,10 @@
   </div>
 </div>
 
-<div class="agree">
-  <input type="checkbox" id="agree_all" class="box_ti">
-  <span>전체동의</span>
 
-  <div class="line_te">
-    <div class="li_line"></div>
-    <input type="checkbox" name="agree" id="agree_one" class="box_ti">
-    <span>구매조건 확인 및 결제진행에 동의</span>
-  </div>
-</div>
 
 <div class="buy">
-  <input type="button" value="결제하기" class="buy_bt" id="buy_button" disabled>
+  <button type="submit" value="결제하기" class="buy_bt" id="buy_button" disabled>결제하기</button>
 </div>
 
   <script>
@@ -181,22 +154,7 @@
     });
   });
 
-    const agreeAll = document.getElementById('agree_all');
-  const buyButton = document.getElementById('buy_button');
 
-  agreeAll.addEventListener('change', function () {
-    if (this.checked) {
-      buyButton.disabled = false; // 버튼 활성화
-    } else {
-      buyButton.disabled = true;  // 버튼 비활성화
-    }
-  });
-
-  const agreeOne = document.getElementById('agree_one');
-
-agreeAll.addEventListener('change', function () {
-  agreeOne.checked = this.checked;
-});
   </script>
 </body>
 </html>
