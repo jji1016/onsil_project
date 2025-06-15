@@ -2,9 +2,7 @@ package com.onsil.onsil.mypage;
 
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.member.dto.MemberDto;
-import com.onsil.onsil.mypage.dto.MypageOrderListDto;
-import com.onsil.onsil.mypage.dto.MypageSubscribeDto;
-import com.onsil.onsil.mypage.dto.SearchDto;
+import com.onsil.onsil.mypage.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -65,52 +63,82 @@ public class MypageController {
 //    }
 //
 //
-//    @GetMapping("/subscribe") //정기배송 신청내역 조회
-//    public String subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-//        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
-//        List<MypageSubscribeDto> mypageSubscribeDtoList = mypageService.findSubscribe(loggedMemberID);
-//        log.info("mypageSubscribeDtoList: {}", mypageSubscribeDtoList);
-//        model.addAttribute("mypageSubscribeDtoList", mypageSubscribeDtoList);
-//
-//        return "mypage/subscribe";
-//    }
+
 
 
 
     @GetMapping("/mypage")
     public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
+        Integer loggedMemberID = customUserDetails.getLoggedMember().getId(); //member테이블 PK(memberID)
         MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-        Integer loggedMemberID = loggedMemberDto.getId(); //Member 테이블의 기본키
         log.info("loggedMemberDto: {}", loggedMemberDto);
 
-        //주문내역 조회
-        List<MypageOrderListDto> mypageOrderListDto = mypageService.findOrderList(loggedMemberID);
-        log.info("mypageOrderListDto: {}", mypageOrderListDto);
+        StatusCountDto statusCountDto = mypageService.statusCount(loggedMemberID);
+        log.info("statusCountDto: {}", statusCountDto);
 
-        //정기배송 신청내역 조회
-        List<MypageSubscribeDto> mypageSubscribeDtoList = mypageService.findSubscribe(loggedMemberID);
-        log.info("mypageSubscribeDtoList: {}", mypageSubscribeDtoList);
-
-        model.addAttribute("mypageSubscribeDtoList", mypageSubscribeDtoList);
-        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
         model.addAttribute("loggedMemberDto", loggedMemberDto);
+        model.addAttribute("statusCountDto", statusCountDto);
         return "mypage/mypage";
     }
 
-    @GetMapping("/orderList") //주문내역 조회
-    public String orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                            @ModelAttribute SearchDto searchDto,
-                            Model model) {
-        log.info("searchDto: {}", searchDto);
+    @PostMapping("/orderList") //주문내역 조회 및 검색
+    @ResponseBody
+    public Map<String, Object> orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                            @RequestBody SearchDto searchDto) {
         Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
-        log.info("orderlist-loggedMemberID: {}", loggedMemberID);
 
-        List<MypageOrderListDto> mypageOrderListDto = mypageService.findSearchOrderList(loggedMemberID,searchDto); //로그인한 사람의 주문내역
-        log.info("orderlist-mypageOrderListDto: {}", mypageOrderListDto);
-        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
+        // 주문내역 전체 개수
+        int totalItems = mypageService.countSearchOrderList(loggedMemberID, searchDto);
 
-        return "mypage/mypage";
+        int currentPage = searchDto.getCurrentPage() == 0 ? 1 : searchDto.getCurrentPage();
+        int itemsPerPage = searchDto.getItemsPerPage() == 0 ? 5 : searchDto.getItemsPerPage();
+
+        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+
+        PageDto pageDto = PageDto.builder()
+                .totalItems(totalItems)
+                .currentPage(currentPage)
+                .totalPages(totalPages)
+                .itemsPerPage(itemsPerPage)
+                .build();
+
+        List<MypageOrderListDto> orders  = mypageService.findSearchOrderList(loggedMemberID,searchDto, currentPage, itemsPerPage); //로그인한 사람의 주문내역
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("orders", orders);
+        map.put("pageDto", pageDto);
+
+        return map;
+    }
+
+    @PostMapping("/subscribe") //정기배송 신청내역 조회
+    @ResponseBody
+    public  Map<String, Object> subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                          @RequestBody SearchDto searchDto) {
+        Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
+
+        int totalItems = mypageService.countSubscribeList(loggedMemberID);
+        int itemsPerPage = searchDto.getItemsPerPage() == 0 ? 5 : searchDto.getItemsPerPage();
+        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+        //받아온 현재 페이지가 총 페이지수보다 클 경우 1
+        int currentPage = searchDto.getCurrentPage() > totalPages ? 1 : searchDto.getCurrentPage();
+
+        List<MypageSubscribeDto> mypageSubscribeDtoList = mypageService.findSubscribe(loggedMemberID,currentPage,itemsPerPage);
+        log.info("mypageSubscribeDtoList: {}", mypageSubscribeDtoList);
+
+        PageDto pageDto = PageDto.builder()
+                .totalItems(totalItems)
+                .currentPage(currentPage)
+                .totalPages(totalPages)
+                .itemsPerPage(itemsPerPage)
+                .build();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("subscribes", mypageSubscribeDtoList);
+        map.put("pageDto", pageDto);
+
+        return map;
     }
 
     @GetMapping("/delete/{id}") //회원 탈퇴
