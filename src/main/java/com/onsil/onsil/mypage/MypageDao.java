@@ -1,6 +1,7 @@
 package com.onsil.onsil.mypage;
 
 import com.onsil.onsil.entity.Member;
+import com.onsil.onsil.mypage.dto.StatusCountDto;
 import com.onsil.onsil.mypage.repository.MypageMemberRepository;
 import com.onsil.onsil.mypage.repository.MypageSubscribeRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,6 @@ public class MypageDao {
         return mypageMemberRepository.findByUserID(userID);
     }
 
-    public List<Object[]> findOrderList(Integer loggedMemberID) {
-        return mypageMemberRepository.findOrderList(loggedMemberID);
-    }
-
     public void save(Member member) {
         mypageMemberRepository.save(member);
     }
@@ -32,17 +29,27 @@ public class MypageDao {
         return mypageMemberRepository.deleteAccount(id);
     }
 
-
-
-    public List<Object[]> findSearchOrderList(Integer loggedMemberID, String category, String keyword, LocalDate startDate, LocalDate endDate) {
-        return mypageMemberRepository.findSearchOrderList(loggedMemberID,category,keyword,startDate,endDate);
-    }
-
-    public List<Object[]> findSubscribe(Integer loggedMemberID) {
-        return mypageMemberRepository.findSubscribe(loggedMemberID);
+    public List<Object[]> findSubscribe(Integer loggedMemberID, int offset, int itemsPerPage) {
+        return mypageMemberRepository.findSubscribe(loggedMemberID,offset,itemsPerPage);
     }
 
     public void deleteById(Integer id) {
         mypageSubscribeRepository.deleteById(id);
+    }
+
+    public List<Object[]> findSearchOrderList(Integer loggedMemberID, String searchInfo, String searchYear, int offset, int itemsPerPage ) {
+        return mypageMemberRepository.findSearchOrderList(loggedMemberID,searchInfo,searchYear,offset,itemsPerPage);
+    }
+
+    public int countSearchOrderList(Integer loggedMemberID, String searchInfo, String searchYear) {
+        return mypageMemberRepository.countSearchOrderList(loggedMemberID,searchInfo,searchYear);
+    }
+
+    public int countSubscribeList(Integer loggedMemberID) {
+        return mypageMemberRepository.countSubscribeList(loggedMemberID);
+    }
+
+    public List<Object[]> statusCount(Integer loggedMemberID) {
+        return mypageMemberRepository.statusCount(loggedMemberID);
     }
 }
