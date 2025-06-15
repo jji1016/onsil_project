@@ -58,7 +58,7 @@
 <div id="section">
     <div class="my_top">
         <div class="top_left">
-            <p>안녕하세요. <span th:value="${loggedMemberDto.userName}">아무개</span>님</p>
+            <p>안녕하세요. <span th:text="${loggedMemberDto.userName}">아무개</span>님</p>
             <div class="left_txt">
                 <p>기념일을 저장하시면<br>5% 할인 쿠폰과 알림을 받으실 수 있습니다.</p>
                 <a href="#">기념일 등록 &gt;</a>
@@ -95,30 +95,30 @@
             <div class="content">
                 <h2>주문 / 배송 조회<span>(최근 1개월 기준)</span></h2>
                 <ul class="delivery_status">
-                    <li>입금전<br><span id="st_number1">0</span></li>
-                    <li>배송준비중<br><span id="st_number2">0</span></li>
-                    <li>배송중<br><span id="st_number3">1</span></li>
-                    <li>배송완료<br><span id="st_number4">0</span></li>
+                    <li>배송준비중<br><span th:text="${statusCountDto.ORDERED}" id="st_number1"></span></li>
+                    <li>배송중<br><span th:text="${statusCountDto.DELIVERING}" id="st_number2"></span></li>
+                    <li>배송완료<br><span th:text="${statusCountDto.SHIPPED}" id="st_number3"></span></li>
+                    <li>주문 취소<br><span th:text="${statusCountDto.CANCELED}" id="st_number4"></span></li>
                 </ul>
                 <div class="order">
                     <h2>나의 주문내역 (지난 6개월)</h2>
-                        <div class="subscript">
-                            <div class="search_box">
-                                <input name="orderListSearch" class="search_txt" type="text" />
-                            </div>
-                            <div class="list_box">
-                                <select name="orderListYear" class="year_select">
-                                    <option value="">전체</option>
-                                    <option value="2025">2025</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2020">2020</option>
-                                </select>
-                            </div>
-                            <button type="button" class="btn_search">조회</button>
+                    <div class="subscript">
+                        <div class="search_box">
+                            <input name="orderListSearch" id="orderListSearch" class="search_txt" type="text"/>
                         </div>
+                        <div class="list_box">
+                            <select name="orderListYear" id="orderListYear" class="year_select">
+                                <option value="">전체</option>
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn_search">조회</button>
+                    </div>
                 </div>
                 <form action="">
                     <table class="order_table">
@@ -132,30 +132,15 @@
                             <th>주문처리상태</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <!-- 주문내역 반복문 -->
-                        <th:block th:each="orderlist : ${mypageOrderListDto}">
-                            <tr>
-                                <td th:text="${#temporals.format(orderlist.orderTime,'yyyy-MM-dd')}"></td>
-                                <td th:src="@{'/upload/products/' + ${orderlist.image}}"></td>
-                                <td th:text="${orderlist.flowerName}"></td>
-                                <td th:text="${orderlist.quantity}"></td>
-                                <td th:text="${orderlist.price}"></td>
-                                <td th:text="${orderlist.status}"></td>
-                            </tr>
-                        </th:block>
+                        <tbody id="orderListRap">
+                            <!-- 주문내역 들어가는 자리 -->
                         </tbody>
                     </table>
 
                     <table class="page_btn">
                         <tbody>
-                        <tr>
-                            <td><a href="#">&lt;</a></td>
-                            <td><a href="#">1</a></td>
-                            <td><a href="#">2</a></td>
-                            <td><a href="#">3</a></td>
-                            <td><a href="#">4</a></td>
-                            <td><a href="#">&gt;</a></td>
+                        <tr id="orderListPagination">
+
                         </tr>
                         </tbody>
                     </table>
@@ -176,37 +161,19 @@
                             <th>이미지</th>
                             <th>상품정보</th>
                             <th>상품금액</th>
-                            <th>배송시작일</th>
+                            <th>배송주기</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody id="subscribeRap">
-                        <th:block th:each="subscribeList : ${mypageSubscribeDtoList}">
-                            <tr>
-                                <td th:text="${subscribeList.startDate}"></td>
-                                <td th:src="@{'/upload/products/' + ${subscribeList.image}}"></td>
-                                <td th:text="${subscribeList.flowerName}"></td>
-                                <td th:text="${subscribeList.price}"></td>
-                                <td th:text="${subscribeList.period}"></td>
-                                <td>
-                                    <button th:data-id="${subscribeList.subscribeID}"
-                                            class="cancel_btn calcelSubscribe">구독 취소
-                                    </button>
-                                </td>
-                            </tr>
-                        </th:block>
+
                         </tbody>
                     </table>
 
                     <table class="page_btn">
                         <tbody>
-                        <tr>
-                            <td><a href="#">&lt;</a></td>
-                            <td><a href="#">1</a></td>
-                            <td><a href="#">2</a></td>
-                            <td><a href="#">3</a></td>
-                            <td><a href="#">4</a></td>
-                            <td><a href="#">&gt;</a></td>
+                        <tr id="subscribePagination">
+                            <!-- 구독내역 들어가는 자리 -->
                         </tr>
                         </tbody>
                     </table>
@@ -388,11 +355,135 @@
         }).open();
     }
 
-    // 구독 취소
+    // 회원 탈퇴
+    const deleteAccountBtn = document.querySelector(".cus_edit2"); //회원 탈퇴 버튼
+    const loggedMemberID = deleteAccountBtn.dataset.id;
+    deleteAccountBtn.addEventListener("click", (e) => {
+        console.log("loggedMemberID== " + loggedMemberID);
+        //회원 탈퇴버튼 클릭시 confirm
+        if (confirm("정말로 계정을 삭제하시겠습니까?")) {
+            fetch("/mypage/delete/" + loggedMemberID)
+                .then(response => response.json())
+                .then(json => {
+                    if (json.isDelete) {
+                        alert("삭제가 완료되었습니다.");
+                    }
+                })
+        } else {
+            alert("삭제가 취소되었습니다.");
+        }
+    })
+
+    const searchOrderListBtn = document.querySelector(".btn_search");
+    const orderListSearch = document.querySelector("#orderListSearch");
+    const orderListYear = document.querySelector("#orderListYear");
+    const orderListRap = document.querySelector("#orderListRap");
+
+    // 주문내역 검색 및 페이징
+    function lookupOrderList(page = 1){
+        const searchInfo = orderListSearch.value;
+        const searchYear = orderListYear.value;
+        const itemsPerPage = 5;
+        console.log("searchInfo = " + searchInfo);
+        console.log("searchYear = " + searchYear);
+
+        fetch("/mypage/orderList", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                searchInfo: searchInfo,
+                searchYear: searchYear,
+                currentPage: page,
+                itemsPerPage: itemsPerPage
+            })
+        })
+            .then(response => response.json())
+            .then(json => {
+                const orders = json.orders; // 주문 목록
+                const pageDto = json.pageDto; // 페이징 정보
+                orderListRap.innerHTML = "";
+
+                orders.forEach(order => {
+                    const tr = document.createElement("tr");
+
+                    tr.innerHTML = `
+                        <td>${order.orderTime.substring(0, 10)}</td>
+                        <td><img src="/upload/products/${order.image}"></td>
+                        <td>${order.flowerName}</td>
+                        <td>${order.quantity}</td>
+                        <td>${order.price}</td>
+                        <td>${order.status}</td>
+                    `;
+                    orderListRap.appendChild(tr);
+                });
+
+                // 페이징 함수 호출
+                renderPagination(pageDto,"order");
+            })
+    }
+    //페이지 로딩시 주문내역 조회
+    document.addEventListener('DOMContentLoaded', ()=>{
+        lookupOrderList();
+    });
+    //조회 버튼 클릭시 주문내역 조회
+    searchOrderListBtn.addEventListener("click", ()=>{
+        lookupOrderList();
+    });
+
     const subscribeRap = document.querySelector("#subscribeRap");
+    //구독 내역 조회 및 페이징
+    function lookupSubscribeList(page = 1){
+        const itemsPerPage = 5;
+
+        fetch("/mypage/subscribe", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                currentPage: page,
+                itemsPerPage: itemsPerPage
+            })
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+                const subscribes = json.subscribes; // 구독 목록
+                const pageDto = json.pageDto; // 페이징 정보
+                subscribeRap.innerHTML = "";
+
+                subscribes.forEach(subscribes => {
+                    const tr = document.createElement("tr");
+
+                    tr.innerHTML = `
+                        <td>${subscribes.startDate.substring(0, 10)}</td>
+                        <td><img src="/upload/products/${subscribes.image}"></td>
+                        <td>${subscribes.flowerName}</td>
+                        <td>${subscribes.price}</td>
+                        <td>${subscribes.period}</td>
+                        <td>
+                            <button class="cancel_btn calcelSubscribe" data-page="${pageDto.currentPage}" data-id="${subscribes.subscribeID}">구독 취소</button>
+                        </td>
+                    `;
+                    subscribeRap.appendChild(tr);
+                });
+
+                // 페이징 함수 호출
+                renderPagination(pageDto,"subscribe");
+            })
+    }
+
+    //페이지 로딩시 주문내역 조회
+    document.addEventListener('DOMContentLoaded', ()=>{
+        lookupSubscribeList();
+    });
+
+    // 구독 취소
     subscribeRap.addEventListener("click", (e) => {
         const target = e.target;
-        console.log(e.target.dataset.id)
+        const page = target.dataset.page;
 
         if (!target.matches("button.calcelSubscribe")) return;
         e.preventDefault();
@@ -404,35 +495,43 @@
             .then(response => response.json())
             .then(json => {
                 if (json.isdelete) {
-                    console.log("inin")
                     alert("구독이 취소되었습니다.")
-                    const ul = e.target.closest("ul");
-                    ul.remove();
+                    lookupSubscribeList(page);
                 }
             })
     })
 
-    // 회원 탈퇴
-    const deleteAccountBtn = document.querySelector(".cus_edit2"); //회원 탈퇴 버튼
-    const loggedMemberID = deleteAccountBtn.dataset.id;
-    deleteAccountBtn.addEventListener("click", (e) =>{
-    console.log("loggedMemberID== "+loggedMemberID);
-        //회원 탈퇴버튼 클릭시 confirm
-        if (confirm("정말로 계정을 삭제하시겠습니까?")) {
-            fetch("/mypage/delete/"+loggedMemberID)
-                .then(response => response.json())
-                .then(json => {
-                    if (json.isDelete){
-                        alert("삭제가 완료되었습니다.");
-                    }
-                })
-        } else {
-            alert("삭제가 취소되었습니다.");
+    const orderListPagination = document.querySelector("#orderListPagination");
+    const subscribePagination = document.querySelector("#subscribePagination");
+    // 페이징 함수
+    function renderPagination(pageDto,category) {
+        let paginationRap = "";
+        if (category == "order"){
+            paginationRap = orderListPagination;
+            console.log("order 페이징 실행");
+        } else if(category == "subscribe"){
+            paginationRap = subscribePagination;
+            console.log("subscribe 페이징 실행");
         }
+        paginationRap.innerHTML = "";
 
-        // 주문내역 검색 및 페이징
-        const searchOrderListBtn = document.querySelector(".btn_search");
-    })
+        for(let i = 1; i <= pageDto.totalPages; i++) {
+            const btn = document.createElement("td");
+            btn.textContent = i;
+            btn.style.padding = "0px 10px";
+
+            btn.addEventListener("click", () => {
+                if (category == "order"){
+                    lookupOrderList(i);
+                } else if(category == "subscribe"){
+                    lookupSubscribeList(i);
+                }
+
+            });
+            paginationRap.appendChild(btn);
+        }
+    }
+
 </script>
 </body>
 </html>
