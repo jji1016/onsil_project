@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +30,8 @@ public class AdminController {
     private final AdminOrderListService adminOrderListService;
 
     private final AdminProductService adminProductService;
+
+    private final AdminSalesService adminSalesService;
 
     //입고 검색 기능
     @GetMapping("/inputlist")
@@ -120,4 +123,21 @@ public class AdminController {
         model.addAttribute("keyword", keyword);
         return "admin/product";
     }
-}
+
+    // 매출관리 페이지 진입
+    @GetMapping("/sales")
+    public String salesPage() {
+        return "admin/sales";
+    }
+
+    // 통합 응답 (기간별+카테고리별)
+    @GetMapping("/sales/dashboard")
+    @ResponseBody
+    public AdminSalesDashboardDto getSalesDashboard(
+            @RequestParam String type,
+            @RequestParam String startDate,
+            @RequestParam String endDate) {
+        return adminSalesService.getSalesDashboard(type, startDate, endDate);
+    }
+    }
+
