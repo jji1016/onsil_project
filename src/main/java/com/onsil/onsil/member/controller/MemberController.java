@@ -2,6 +2,9 @@ package com.onsil.onsil.member.controller;
 
 import com.onsil.onsil.member.dto.MemberDto;
 import com.onsil.onsil.member.service.MemberService;
+import com.onsil.onsil.subscribe.dao.SubscribeDao;
+import com.onsil.onsil.subscribe.dto.SubscribeDto;
+import com.onsil.onsil.subscribe.service.SubscribeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
+import java.util.List;
 
 
 @Controller
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final SubscribeService subscribeService;
 
     @GetMapping("/login")
     public String login() {
@@ -32,7 +36,8 @@ public class MemberController {
             model.addAttribute("loginErrorMessage", "아이디, 비밀번호를 확인하세요.");
             return "member/login";
         }
-        
+        List<SubscribeDto> subscribes = subscribeService.getRandom6Subscribes();
+        model.addAttribute("subscribes", subscribes);
         return "index/index";
     }
     @GetMapping("/signup")

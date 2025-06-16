@@ -65,19 +65,19 @@
                 <p>온실 스튜디오 정기구독 서비스</p>
                 <h2>시간이 지나도, 꽃은 매달 다시 피어나니까</h2>
                 <p class="eng">Your monthly dose of floral happiness</p>
-                <button type="button" class="m_btn">만나러가기</button>
+                <button type="button" class="m_btn" onclick="location.href='/subscribe/subscribe'">만나러가기</button>
             </div>
             <div class="swiper-slide bg2">
                 <p>온실 스튜디오 정기구독 서비스</p>
                 <h2>오늘도, 당신을 닮아 피어난 꽃 한 송이</h2>
                 <p class="eng">Today too, a flower blooms — just like you</p>
-                <button type="button" class="m_btn">만나러가기</button>
+                <button type="button" class="m_btn" onclick="location.href='/subscribe/subscribe'">만나러가기</button>
             </div>
             <div class="swiper-slide bg3">
                 <p>온실 스튜디오 정기구독 서비스</p>
                 <h2>꽃이 피는 순간, 변하는 당신의 공간</h2>
                 <p class="eng">As flowers bloom, so does the atmosphere around you</p>
-                <button type="button" class="m_btn">만나러가기</button>
+                <button type="button" class="m_btn" onclick="location.href='/subscribe/subscribe'">만나러가기</button>
             </div>
         </div>
     </div>
@@ -86,52 +86,21 @@
         <h2>많이 사랑받는 꽃들</h2>
         <div class="swiper cont1">
             <div class="swiper-wrapper c1_cont">
-                <div class="swiper-slide">
+                <div class="swiper-slide" th:each="sub : ${subscribes}">
                     <ul>
-                        <li><img src="../images/index/cont1-1.png" alt="c1-1"></li>
-                        <li class="c1_txt">유럽피언 꽃 구독 S 사이즈</li>
-                        <li><del>36,200원</del></li>
-                        <li><p><span>25%</span>26,900원</p></li>
-                    </ul>
-                </div>
-                <div class="swiper-slide">
-                    <ul>
-                        <li><img src="../images/index/cont1-2.png" alt="c1-2"></li>
-                        <li class="c1_txt">유럽피언 꽃 구독 M 사이즈</li>
-                        <li><del>49,200원</del></li>
-                        <li><p><span>25%</span>36,900원</p></li>
-                    </ul>
-                </div>
-                <div class="swiper-slide">
-                    <ul>
-                        <li><img src="../images/index/cont1-3.png" alt="c1-3"></li>
-                        <li class="c1_txt">유럽피언 꽃 구독 L 사이즈</li>
-                        <li><del>62,000원</del></li>
-                        <li><p><span>25%</span>46,500원</p></li>
-                    </ul>
-                </div>
-                <div class="swiper-slide">
-                    <ul>
-                        <li><img src="../images/index/cont1-4.png" alt="c1-4"></li>
-                        <li class="c1_txt">런던 꽃 구독 S 사이즈</li>
-                        <li><del>36,200원</del></li>
-                        <li><p><span>25%</span>26,900원</p></li>
-                    </ul>
-                </div>
-                <div class="swiper-slide">
-                    <ul>
-                        <li><img src="../images/index/cont1-5.png" alt="c1-5"></li>
-                        <li class="c1_txt">런던 꽃 구독 M 사이즈</li>
-                        <li><del>49,200원</del></li>
-                        <li><p><span>25%</span>36,900원</p></li>
-                    </ul>
-                </div>
-                <div class="swiper-slide">
-                    <ul>
-                        <li><img src="../images/index/cont1-6.png" alt="c1-6"></li>
-                        <li class="c1_txt">런던 꽃 구독 L 사이즈</li>
-                        <li><del>62,000원</del></li>
-                        <li><p><span>25%</span>46,500원</p></li>
+                        <li>
+                            <img th:src="@{${sub.productImage}}" th:alt="${sub.productName} + ' 이미지'"/>
+                        </li>
+                        <li class="c1_txt" th:text="${sub.productName} + ' 구독'"></li>
+                        <li>
+                            <del th:text="${#numbers.formatInteger(sub.price, 0, 'COMMA')} + '원'">36,200원</del>
+                        </li>
+                        <li>
+                            <p>
+                                <span>25%</span>
+                                <span th:text="${#numbers.formatInteger(sub.price * 0.75, 0, 'COMMA')} + '원'">26,900원</span>
+                            </p>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -255,7 +224,7 @@
         loop:true,
         autoplay:{
             delay:4000,
-            disableOnIneraction:false,
+            disableOnInteraction:false,
         },
         effect:'slide',
     });
