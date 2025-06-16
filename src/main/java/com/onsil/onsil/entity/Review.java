@@ -2,43 +2,45 @@ package com.onsil.onsil.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Check;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "REVIEW")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor
+@Builder
 public class Review {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "reviewID")
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "REVIEWID")
+    private Integer reviewId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productID", nullable = false)
+    @JoinColumn(name = "PRODUCTID")
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberID", nullable = false)
+    @JoinColumn(name = "MEMBERID")
     private Member member;
 
-    @Column(nullable = false, length = 1000)
+    @Column(name = "CONTENT")
     private String content;
 
-    @Column(nullable = false)
-    @Check(constraints = "rating BETWEEN 1 AND 5")
-    private int rating;
+    @Column(name = "RATING")
+    private Integer rating;
 
-    @CreatedDate
+    @Column(name = "REGDATE")
     private LocalDateTime regDate;
 
+    @Column(name = "IMAGE")
     private String image;
 
-
+    @PrePersist
+    public void prePersist() {
+        this.regDate = LocalDateTime.now();
+    }
 }

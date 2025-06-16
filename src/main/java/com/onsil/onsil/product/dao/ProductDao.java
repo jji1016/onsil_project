@@ -16,26 +16,28 @@ import java.util.stream.Collectors;
 public class ProductDao {
     private final ProductRepository productRepository;
 
-    public ProductDto findByDtoId(int id) {
+    public ProductDto findByDtoId(Integer id) { // Integer 타입 유지
         Optional<Product> findedProduct = productRepository.findById(id);
         if (findedProduct.isPresent()) {
             Product product = findedProduct.get();
 
             List<ReviewDto> reviewDtoList = product.getReviewList().stream()
                     .map(review -> new ReviewDto(
-                            review.getId(),
-                            review.getProduct().getId(),
-                            review.getMember().getId(),
+                            review.getReviewId(), // Review의 ID는 Integer
+                            review.getProduct().getProductId(), // Product의 ID는 Integer
+                            Integer.valueOf(review.getMember().getId()), // Integer → Integer 변환
+                            review.getMember().getUserID(),
                             review.getMember().getUserName(),
+                            review.getMember().getNickName(),
                             review.getContent(),
                             review.getRating(),
-                            review.getRegDate(),
+                            review.getRegdate(),
                             review.getImage()
                     ))
                     .collect(Collectors.toList());
 
             ProductDto productDto = ProductDto.builder()
-                    .id(product.getId())
+                    .id(product.getProductId()) // Product의 ID는 Integer
                     .flowerName(product.getFlowerName())
                     .flowerInfo(product.getFlowerInfo())
                     .price(product.getPrice())
@@ -50,15 +52,15 @@ public class ProductDao {
 
     public List<ProductDto> findAll() {
         List<Product> productList = productRepository.findAll();
-        List<ProductDto> productDtoList = productList.stream().map(
-            product -> ProductDto.builder()
-                    .id(product.getId())
-                    .flowerName(product.getFlowerName())
-                    .flowerInfo(product.getFlowerInfo())
-                    .price(product.getPrice())
-                    .image(product.getImage())
-                    .build()
-        ).toList();
-        return productDtoList;
+        return productList.stream()
+                .map(product -> ProductDto.builder()
+                        .id(product.getProductId())
+                        .flowerName(product.getFlowerName())
+                        .flowerInfo(product.getFlowerInfo())
+                        .price(product.getPrice())
+                        .image(product.getImage())
+                        .build()
+                )
+                .collect(Collectors.toList());
     }
 }
