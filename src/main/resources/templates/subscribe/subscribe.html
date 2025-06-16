@@ -83,24 +83,42 @@
         </div>
         <div class="sec3">
             <h3 class="sub_title">온실 정기구독 라인업</h3>
-            <ul class="line_up" th:each="sub : ${subscribes}">
-                <li class="scroll_item">
+
+            <ul class="line_up">
+                <li class="scroll_item" th:each="sub, iterStat : ${subscribes}"
+                    th:if="${iterStat.index} < 3">
                     <a th:href="@{'/subscribe/detail/' + ${sub.productId}}">
                         <p class="sale_subs">최대 25% 할인 구독자 모집</p>
                         <div class="sale_img" th:style="'background-image:url(' + ${sub.productImage} + ')'"></div>
                         <h2 th:text="${sub.productName} + ' 구독'"></h2>
-                        <!--원래가격-->
                         <p class="cc_price">
                             <del th:text="${#numbers.formatInteger(sub.price, 0, 'COMMA')} + '원'">36,200원</del>
                         </p>
-                        <!--할인가격-->
                         <p class="fn_price">
                             <span>25%　</span>
                             <span th:text="${#numbers.formatInteger(sub.price * 0.75, 0, 'COMMA')} + '원'">26,900원</span>
                         </p>
                     </a>
                 </li>
-                </ul>
+            </ul>
+
+            <ul class="line_up">
+                <li class="scroll_item" th:each="sub, iterStat : ${subscribes}"
+                    th:if="${iterStat.index} >= 3 and ${iterStat.index} < 6">
+                    <a th:href="@{'/subscribe/detail/' + ${sub.productId}}">
+                        <p class="sale_subs">최대 25% 할인 구독자 모집</p>
+                        <div class="sale_img" th:style="'background-image:url(' + ${sub.productImage} + ')'"></div>
+                        <h2 th:text="${sub.productName} + ' 구독'"></h2>
+                        <p class="cc_price">
+                            <del th:text="${#numbers.formatInteger(sub.price, 0, 'COMMA')} + '원'">36,200원</del>
+                        </p>
+                        <p class="fn_price">
+                            <span>25%　</span>
+                            <span th:text="${#numbers.formatInteger(sub.price * 0.75, 0, 'COMMA')} + '원'">26,900원</span>
+                        </p>
+                    </a>
+                </li>
+            </ul>
         </div>
         <div class="sec4">
             <ul class="desc4">

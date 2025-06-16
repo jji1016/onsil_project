@@ -17,7 +17,7 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Integer> {
     // member 객체로 구독 리스트 조회
     List<Subscribe> findByMember(Member member);
 
-    // memberId로 랜덤 6개 조회
-    @Query("SELECT s FROM Subscribe s ORDER BY FUNCTION('DBMS_RANDOM.VALUE')")
-    Page<Subscribe> findRandomSubscribes(Pageable pageable);
+    // 상품 랜덤 6개 조회
+    @Query("SELECT s FROM Subscribe s JOIN FETCH s.product p ORDER BY FUNCTION('DBMS_RANDOM.VALUE')")
+    List<Subscribe> findRandom6Subscribes(org.springframework.data.domain.Pageable pageable);
 }
