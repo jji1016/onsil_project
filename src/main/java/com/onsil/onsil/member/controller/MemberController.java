@@ -26,6 +26,15 @@ public class MemberController {
         return "member/login";
     }
 
+    @PostMapping("/login")
+    public String login(@Valid MemberDto memberDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("loginErrorMessage", "아이디, 비밀번호를 확인하세요.");
+            return "member/login";
+        }
+        
+        return "index/index";
+    }
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("memberDto", new MemberDto());
@@ -72,5 +81,3 @@ public class MemberController {
         return ResponseEntity.ok(isDuplicate);
     }
 }
-
-

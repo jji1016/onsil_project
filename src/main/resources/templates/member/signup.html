@@ -531,7 +531,7 @@
 
                         부 칙(시행일) 이 약관은 2017년 12월 16일부터 시행합니다. 부 칙(시행일) 이 약관은 2017년 12월 16일부터 시행합니다.
                     </div>
-                    <label>이용약관에 동의하십니까?　<input type="checkbox" class="agreeCheck"> 동의함</label>
+                    <label>이용약관에 동의하십니까?　<input type="checkbox" class="agreeCheck required"> 동의함</label>
                 </div>
 
                 <div class="agreement-box">
@@ -586,7 +586,7 @@
 
                         ※ 동의를 거부할 수 있으나 거부시 회원 가입이 불가능합니다.<br><br>
                     </div>
-                    <label>개인정보 수집 및 이용에 동의하십니까?　<input type="checkbox" class="agreeCheck"> 동의함</label>
+                    <label>개인정보 수집 및 이용에 동의하십니까?　<input type="checkbox" class="agreeCheck required"> 동의함</label>
                 </div>
 
                 <div class="agreement-box">
@@ -763,16 +763,24 @@
     //동의 체크박스
     const allAgree = document.getElementById('allAgree');
     const checkboxes = document.querySelectorAll('.agreeCheck');
+    const requiredChecks = document.querySelectorAll('.agreeCheck.required');
 
-    allAgree.addEventListener('change', function () {
+
+
+    allAgree.addEventListener('change', () =>  {
         checkboxes.forEach(box => box.checked = allAgree.checked);
     });
 
-    checkboxes.forEach(box => {
-        box.addEventListener('change', () => {
-            allAgree.checked = [...checkboxes].every(box => box.checked);
-        });
+    // 회원가입 버튼 클릭 시 필수 약관 체크 여부 검사
+    document.querySelector('.join_btn').addEventListener('click', function (e) {
+        const allRequiredChecked = [...requiredChecks].every(box => box.checked);
+        if (!allRequiredChecked) {
+            e.preventDefault(); // 🚫 폼 제출 막기
+            alert('약관에 모두 동의해 주세요.');
+        }
     });
+
+
 </script>
 <script>
     //전화번호 분리 처리과정
@@ -823,6 +831,33 @@
 <script th:if="${errors != null}">
     //memberdto에 적어둔 @Pattern 제한조건 충족못할시 message alert로 출력
     alert('[[${errors[0].defaultMessage}]]');
+</script>
+<script>
+    //index/index에서 이메일 입력시 처리과정
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(location.search);
+        const fullEmail = params.get('email');     // hello@abc.com 형태
+
+        if (!fullEmail || !fullEmail.includes('@')) return;
+
+
+        const [idPart, domainPart] = fullEmail.split('@');
+
+
+        document.getElementById('emailId').value = idPart;
+
+
+        const emailSelect = document.getElementById('email');
+        emailSelect.value = 'direct';
+
+
+        const emailDirect = document.getElementById('emailDirect');
+        emailDirect.style.display = 'inline-block';
+        emailDirect.value = domainPart;
+
+
+        emailChange();
+    });
 </script>
 
 </body>

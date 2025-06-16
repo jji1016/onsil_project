@@ -34,6 +34,7 @@ public class MemberService {
         Member savedMember = memberDto.toMember();
         memberDao.save(savedMember);
     }
+
     //아이디 중복 검사
     public boolean isUserIDDuplicate(String userID) {
         return memberDao.existsByUserID(userID);

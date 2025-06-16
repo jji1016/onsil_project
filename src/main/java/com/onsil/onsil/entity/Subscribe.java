@@ -40,4 +40,18 @@ public class  Subscribe {
     @JoinColumn(name = "productID", nullable = false)
     private Product product;
 
+    @PrePersist
+    @PreUpdate
+    public void prePersist() {
+        // period 값을 한 달로 강제 고정
+        this.period = Period.MONTHLY;
+
+        // startDate가 null인 경우 현재 시간으로 설정
+        if (this.startDate == null) {
+            this.startDate = LocalDateTime.now();
+        }
+
+        // endDate를 startDate 기준으로 1달 후로 설정
+        this.endDate = this.startDate.plusMonths(1);
+    }
 }

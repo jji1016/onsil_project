@@ -11,7 +11,7 @@ import com.onsil.onsil.entity.Product;
 import com.onsil.onsil.entity.Subscribe;
 import com.onsil.onsil.product.repository.ProductRepository;
 import com.onsil.onsil.product.service.ProductService;
-import com.onsil.onsil.subscribe.repository.SubScribeRepository;
+import com.onsil.onsil.subscribe.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +41,7 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
-    private final SubScribeRepository subscribeRepository;
+    private final SubscribeRepository subscribeRepository;
     private final ProductService productService;
     private final ProductRepository productRepository;
     @Value("${file.path}products/")

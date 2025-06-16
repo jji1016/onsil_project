@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,12 +31,24 @@
 <div id="header">
     <h1 class="h_logo"><img src="../images/header/onsil_logo.png" alt="logo"></h1>
     <ul class="gnb">
-        <li><button type="button" class="login">로그인</button></li>
+        <!-- 로그인 버튼: 로그인하지 않은 사용자에게만 보임 -->
+        <li sec:authorize="!isAuthenticated()">
+            <button type="button" class="login" th:onclick="|location.href='@{/member/login}'|">로그인</button>
+        </li>
+
+        <!-- 로그아웃 / 프로필: 로그인한 사용자에게만 보임 -->
+        <li sec:authorize="isAuthenticated()">
+            <span sec:authentication="name">사용자</span> 님 |
+            <form th:action="@{/member/logout}" method="post">
+                <button type="submit" class="login">로그아웃</button>
+            </form>
+        </li>
+
         <li><i class="fa-solid fa-bag-shopping"></i></li>
         <li><i class="fa-solid fa-user"></i></li>
     </ul>
     <ul class="nav">
-        <li><a href="#">꽃 정기구독</a></li>
+        <li><a th:href="@{/subscribe/subsc}">꽃 정기구독</a></li>
         <li><a href="#">꽃 노트</a></li>
         <li><a href="#">꽃.식물</a></li>
         <li><a href="#">클래스</a></li>
@@ -173,7 +188,7 @@
         <h2>계절을 담은 편지, 꽃과 이야기가 도착하는 순간</h2>
         <p>온실에서 피어나는 신상품소식을 담아</p>
         <div class="sub">
-            <input type="text" value="이메일 주소를 입력하세요." class="email"><br>
+            <input type="text" placeholder="이메일 주소를 입력하세요." class="email"><br>
             <button type="button" class="c2_btn">지금, 온실과 연결하기</button>
         </div>
     </div>
@@ -304,6 +319,21 @@
                 slidePerView: 3,
             },
         },
+    });
+</script>
+
+<script>
+    /* 메일 입력 → /member/signup?email=xxx@yyy.com 으로 이동 */
+    document.querySelector('.c2_btn').addEventListener('click', () => {
+        const email = document.querySelector('.sub .email').value.trim();
+
+        if (!email || !email.includes('@')) {
+            alert('이메일 형식으로 입력해 주세요.');
+            return;
+        }
+
+        /* localhost:8080 기준 – 상대경로 사용 */
+        location.href = '../member/signup?email=' + encodeURIComponent(email);
     });
 </script>
 </body>
