@@ -18,8 +18,8 @@ public class CustomUserDetails implements UserDetails {
     private final Member loggedMember;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        log.info("loggedMember.getRole().name()==={}",loggedMember.getRole());
-        return List.of(new SimpleGrantedAuthority(loggedMember.getRole()));
+        log.info("loggedMember.getRole().name()==={}",loggedMember.getRole().name());
+        return List.of(new SimpleGrantedAuthority(loggedMember.getRole().name()));
     }
 
     @Override

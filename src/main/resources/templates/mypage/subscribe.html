@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>mypage/subscribe</h1>
+
+<div id="subscribeRap">
+    <th:block th:each="subscribeList : ${mypageSubscribeDtoList}">
+        <ul>
+            <li th:text="${subscribeList.period}"></li>
+            <li th:text="${subscribeList.startDate}"></li>
+            <li th:text="${subscribeList.endDate}"></li>
+            <li th:text="${subscribeList.flowerName}"></li>
+            <li th:text="${subscribeList.price}"></li>
+            <li th:src="@{'/upload/products/' + ${subscribeList.image}}"></li>
+            <button th:data-id="${subscribeList.subscribeID}" class="calcelSubscribe">구독 취소</button>
+            <hr>
+        </ul>
+    </th:block>
+</div>
+<script>
+    const subscribeRap = document.querySelector("#subscribeRap");
+    subscribeRap.addEventListener("click", (e) => {
+        const target = e.target;
+        console.log(e.target.dataset.id)
+
+        if (!target.matches("button.calcelSubscribe")) return;
+
+        const confirmCancel = confirm("정말 구독을 취소하시겠습니까?");
+        if (!confirmCancel) return;
+
+        fetch("/mypage/cancelSubscribe/" + target.dataset.id)
+            .then(response => response.json())
+            .then(json => {
+                if (json.isdelete) {
+                    console.log("inin")
+                    alert("구독이 취소되었습니다.")
+                    const ul = e.target.closest("ul");
+                    ul.remove();
+                }
+            })
+    })
+</script>
+</body>
+</html>

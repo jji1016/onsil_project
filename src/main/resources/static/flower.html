@@ -2,174 +2,120 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>월별 꽃 추천/탄생화/설명/상세</title>
+    <title>이달의 꽃</title>
     <style>
         body { font-family: '맑은 고딕', sans-serif; margin: 40px; }
-        .month-select { margin-bottom: 20px; }
-        .section-title { font-size: 1.2em; margin-top: 30px; margin-bottom: 10px; color: #2a7; }
-        .flower-list, .birth-list, .recommend-list { display: flex; flex-wrap: wrap; gap: 18px; }
-        .flower-card {
-            border: 1px solid #ddd; border-radius: 8px; padding: 12px; width: 200px; background: #fafafa;
-            cursor: pointer; transition: box-shadow .2s;
+        h1 { margin-bottom: 30px; }
+        .flower-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
-        .flower-card:hover { box-shadow: 0 2px 8px #bbb; background: #fff; }
-        .flower-img { max-width: 160px; max-height: 100px; margin-bottom: 6px; }
-        .label { font-weight: bold; color: #2a7; }
-        #flower-detail { margin-top: 36px; border: 1px solid #ccc; border-radius: 8px; padding: 20px; max-width: 600px; }
+        .flower-card {
+            border: 1px solid #ddd; border-radius: 8px; padding: 18px;
+            box-shadow: 2px 2px 10px #eee; background: #fafbfc;
+            display: flex; flex-direction: column; align-items: flex-start;
+        }
+        .flower-name { font-size: 1.3em; font-weight: bold; margin-bottom: 6px; }
+        .flower-label { color: #888; font-size: 0.95em; }
+        .detail-btn { margin-top: 8px; padding: 4px 12px; border: none; background: #2a7; color: #fff; border-radius: 5px; cursor: pointer;}
+        .detail-btn:active { background: #185; }
+        #detail-modal {
+            display: none; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.4); z-index: 1000; align-items: center; justify-content: center;
+        }
+        #detail-content {
+            background: #fff; padding: 30px 40px; border-radius: 12px; min-width: 350px; max-width: 90vw;
+            box-shadow: 2px 2px 20px #aaa; position: relative;
+        }
+        #close-modal { position: absolute; right: 18px; top: 18px; font-size: 1.5em; color: #aaa; cursor: pointer;}
+        .label { color: #2a7; font-weight: bold; }
+        .msg { color: #d00; margin: 10px 0; }
+        img { max-width: 100%; border-radius: 8px; margin-bottom: 8px; }
     </style>
 </head>
 <body>
-<h1>월별 꽃 추천 & 탄생화</h1>
-<div class="month-select">
-    <label class="label">월 선택: </label>
-    <select id="monthSelect" onchange="loadAll()">
-        <option value="1">1월</option>
-        <option value="2">2월</option>
-        <option value="3">3월</option>
-        <option value="4">4월</option>
-        <option value="5">5월</option>
-        <option value="6">6월</option>
-        <option value="7">7월</option>
-        <option value="8">8월</option>
-        <option value="9">9월</option>
-        <option value="10">10월</option>
-        <option value="11">11월</option>
-        <option value="12">12월</option>
-    </select>
+<h1>이달의 꽃</h1>
+<div>
+    <label>월 선택:
+        <select id="monthSelect"></select>
+    </label>
+    <button onclick="loadFlowers()">조회</button>
 </div>
-
-<div class="section-title">이 달의 탄생화</div>
-<div id="birth-list" class="birth-list"></div>
-
-<div class="section-title">이 달의 꽃 추천</div>
-<div id="recommend-list" class="recommend-list"></div>
-
-<div class="section-title">꽃 설명 리스트</div>
+<div id="flower-msg" class="msg"></div>
 <div id="flower-list" class="flower-list"></div>
 
-<div class="section-title">꽃 상세 설명</div>
-<div id="flower-detail"></div>
+<!-- 꽃 상세 모달 -->
+<div id="detail-modal">
+    <div id="detail-content">
+        <span id="close-modal" onclick="closeModal()">×</span>
+        <div id="detail-body"></div>
+    </div>
+</div>
 
 <script>
-    window.onload = () => {
-        const nowMonth = new Date().getMonth() + 1;
-        document.getElementById('monthSelect').value = nowMonth;
-        loadAll();
-    };
+    for (let i = 1; i <= 12; i++) {
+        document.getElementById('monthSelect').innerHTML += `<option value="${i}">${i}월</option>`;
+    }
+    document.getElementById('monthSelect').value = new Date().getMonth() + 1;
 
-    async function loadAll() {
+    function getPublishOrg() {
+        return "농촌진흥청 국립원예특작과학원";
+    }
+
+    async function loadFlowers() {
         const month = document.getElementById('monthSelect').value;
-        loadBirthFlowers(month);
-        loadRecommendedFlowers(month);
-        loadFlowerList(month);
-        document.getElementById('flower-detail').innerHTML = '';
+        const res = await fetch(`/api/flowers/month/${month}`);
+        let flowers = await res.json();
+        if (!Array.isArray(flowers)) {
+            document.getElementById('flower-msg').textContent = flowers.error || "이달의 꽃 데이터를 불러올 수 없습니다.";
+            flowers = [];
+        } else if (flowers.length === 0) {
+            document.getElementById('flower-msg').textContent = "이달의 꽃이 없습니다.";
+        } else {
+            document.getElementById('flower-msg').textContent = "";
+        }
+        renderFlowerList('flower-list', flowers);
     }
 
-    async function loadBirthFlowers(month) {
-        const div = document.getElementById('birth-list');
-        div.innerHTML = '불러오는 중...';
-        try {
-            const res = await fetch(`/api/flowers/month/${month}/birth`);
-            const list = await res.json();
-            if (!Array.isArray(list) || list.length === 0) {
-                div.innerHTML = "<span style='color:red;'>탄생화 정보가 없습니다.</span>";
-                return;
-            }
-            div.innerHTML = '';
-            list.forEach(flower => {
-                div.innerHTML += `
-                    <div class="flower-card" onclick="showDetail(${flower.dataNo})">
-                        <img src="${flower.imgUrl1 || ''}" alt="꽃 이미지" class="flower-img" onerror="this.style.display='none';">
-                        <div><span class="label">${flower.flowNm || ''}</span></div>
-                        <div style="font-size:13px; color:#888;">${flower.flowLang || ''}</div>
+    function renderFlowerList(divId, flowers) {
+        const container = document.getElementById(divId);
+        container.innerHTML = '';
+        flowers.forEach(flower => {
+            container.innerHTML += `
+                    <div class="flower-card">
+                        <img src="${flower.image || 'default.jpg'}" alt="${flower.flowerName || '-'}">
+                        <div class="flower-name">${flower.flowerName || '-'}</div>
+                        <div class="flower-label">${flower.flowLang || ''}</div>
+                        <div class="flower-label">가격: ${flower.price || '-'}원</div>
+                        <button class="detail-btn" onclick="showDetail(${flower.id})">상세보기</button>
                     </div>
                 `;
-            });
-        } catch (err) {
-            div.innerHTML = `<span style='color:red;'>오류: ${err.message}</span>`;
-        }
+        });
     }
 
-    async function loadRecommendedFlowers(month) {
-        const div = document.getElementById('recommend-list');
-        div.innerHTML = '불러오는 중...';
-        try {
-            const res = await fetch(`/api/flowers/month/${month}/recommend`);
-            const list = await res.json();
-            if (!Array.isArray(list) || list.length === 0) {
-                div.innerHTML = "<span style='color:red;'>추천 꽃 정보가 없습니다.</span>";
-                return;
-            }
-            div.innerHTML = '';
-            list.forEach(flower => {
-                div.innerHTML += `
-                    <div class="flower-card" onclick="showDetail(${flower.dataNo})">
-                        <img src="${flower.imgUrl1 || ''}" alt="꽃 이미지" class="flower-img" onerror="this.style.display='none';">
-                        <div><span class="label">${flower.flowNm || ''}</span></div>
-                        <div style="font-size:13px; color:#888;">${flower.flowLang || ''}</div>
-                    </div>
-                `;
-            });
-        } catch (err) {
-            div.innerHTML = `<span style='color:red;'>오류: ${err.message}</span>`;
-        }
-    }
-
-    async function loadFlowerList(month) {
-        const div = document.getElementById('flower-list');
-        div.innerHTML = '불러오는 중...';
-        try {
-            const res = await fetch(`/api/flowers/month/${month}/list`);
-            const list = await res.json();
-            if (!Array.isArray(list) || list.length === 0) {
-                div.innerHTML = "<span style='color:red;'>꽃 설명 리스트가 없습니다.</span>";
-                return;
-            }
-            div.innerHTML = '';
-            list.forEach(flower => {
-                div.innerHTML += `
-                    <div class="flower-card" onclick="showDetail(${flower.dataNo})">
-                        <img src="${flower.imgUrl1 || ''}" alt="꽃 이미지" class="flower-img" onerror="this.style.display='none';">
-                        <div><span class="label">${flower.flowNm || ''}</span></div>
-                        <div style="font-size:13px; color:#888;">${flower.flowLang || ''}</div>
-                        <div style="font-size:12px; color:#555;">${flower.fContent ? flower.fContent.substring(0, 40) + '...' : ''}</div>
-                    </div>
-                `;
-            });
-        } catch (err) {
-            div.innerHTML = `<span style='color:red;'>오류: ${err.message}</span>`;
-        }
-    }
-
-    async function showDetail(dataNo) {
-        const detailDiv = document.getElementById('flower-detail');
-        detailDiv.innerHTML = '상세정보 불러오는 중...';
-        try {
-            const res = await fetch(`/api/flowers/${dataNo}`);
-            const data = await res.json();
-            if (!data || !data.flowNm) {
-                detailDiv.innerHTML = data.error
-                    ? `<span style='color:red;'>${data.error}</span>`
-                    : "<span style='color:red;'>꽃 정보를 찾을 수 없습니다.</span>";
-                return;
-            }
-            detailDiv.innerHTML = `
-                <h2>${data.flowNm || ''}</h2>
-                <img src="${data.imgUrl1 || ''}" alt="꽃 이미지" style="max-width:200px;" onerror="this.style.display='none';"><br>
-                <p><span class="label">학명:</span> ${data.fSctNm || '-'}</p>
-                <p><span class="label">영문명:</span> ${data.fEngNm || '-'}</p>
-                <p><span class="label">월/일:</span> ${data.fMonth || '-'}월 ${data.fDay || '-'}일</p>
+    async function showDetail(id) {
+        const res = await fetch(`/api/flowers/${id}`);
+        const data = await res.json();
+        const body = document.getElementById('detail-body');
+        body.innerHTML = `
+                <h2>${data.flowerName || '-'}</h2>
                 <p><span class="label">꽃말:</span> ${data.flowLang || '-'}</p>
-                <p><span class="label">설명:</span> ${data.fContent || '-'}</p>
+                <p><span class="label">설명:</span> ${data.flowerInfo || '-'}</p>
                 <p><span class="label">활용:</span> ${data.fUse || '-'}</p>
-                <p><span class="label">생육:</span> ${data.fGrow || '-'}</p>
-                <p><span class="label">유형:</span> ${data.fType || '-'}</p>
-                <p><span class="label">출처:</span> ${data.publishOrg || '-'}</p>
+                <p><span class="label">재배/생육:</span> ${data.fGrow || '-'}</p>
+                <p><span class="label">분류:</span> ${data.fType || '-'}</p>
+                <p><span class="label">가격:</span> ${data.price || '-'}원</p>
+                <p><span class="label">출처:</span> ${getPublishOrg()}</p>
             `;
-        } catch (err) {
-            detailDiv.innerHTML = `<span style='color:red;'>상세정보 오류: ${err.message}</span>`;
-        }
+        document.getElementById('detail-modal').style.display = 'flex';
     }
+
+    function closeModal() {
+        document.getElementById('detail-modal').style.display = 'none';
+    }
+
+    window.onload = loadFlowers;
 </script>
 </body>
 </html>

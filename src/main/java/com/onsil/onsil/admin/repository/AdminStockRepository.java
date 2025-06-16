@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface AdminStockRepository extends JpaRepository<Stock, Integer> {
+public interface AdminStockRepository extends JpaRepository<Product, Integer> {
 
     @Query(value = "SELECT " +
             "p.PRODUCTID, " +

@@ -9,6 +9,9 @@
         th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
         th { background: #f5f5f5; }
         .btn { padding: 4px 12px; margin: 2px; }
+        #pay-btn { margin-top: 30px; padding: 10px 30px; font-size: 18px; background: #2a7; color: #fff; border: none; border-radius: 6px; cursor: pointer;}
+        #pay-btn:active { background: #185; }
+        .error-msg { color: red; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -30,48 +33,82 @@
 <div>
     <h3>상품 추가</h3>
     <label>상품명: <input type="text" id="flowerName" style="width:120px;"></label>
-    <label>수량: <input type="number" id="quantity" value="1" style="width:40px;"></label>
+    <label>수량: <input type="number" id="quantity" value="1" style="width:40px;" min="1"></label>
     <button onclick="addToCart()">추가</button>
+    <div id="add-error" class="error-msg"></div>
+</div>
+<!-- 결제하기 버튼 추가 -->
+<div style="text-align:center;">
+    <button id="pay-btn" onclick="goToPayment()">결제하기</button>
 </div>
 <script>
     async function loadCart() {
         const memberId = document.getElementById('memberId').value;
-        const res = await fetch(`/api/cart/${memberId}`);
-        const items = await res.json();
-        const tbody = document.querySelector('#cart-table tbody');
-        tbody.innerHTML = '';
-        items.forEach(item => {
-            tbody.innerHTML += `
-                    <tr>
-                        <td>${item.flowerName}</td>
-                        <td>${item.price}</td>
-                        <td>
-                            <input type="number" value="${item.quantity}" min="1" style="width:40px;"
-                                onchange="updateQuantity(${item.cartId}, this.value)">
-                        </td>
-                        <td><img src="${item.image}" alt="" style="width:60px;"></td>
-                        <td>${item.memberNickName}</td>
-                        <td>
-                            <button class="btn" onclick="removeFromCart(${item.cartId})">삭제</button>
-                        </td>
-                    </tr>
-                `;
-        });
+        try {
+            const res = await fetch(`/api/cart/${memberId}`);
+            if (!res.ok) throw new Error("장바구니 불러오기 실패");
+            const items = await res.json();
+            const tbody = document.querySelector('#cart-table tbody');
+            tbody.innerHTML = '';
+            items.forEach(item => {
+                tbody.innerHTML += `
+                        <tr>
+                            <td>${item.flowerName}</td>
+                            <td>${item.price}</td>
+                            <td>
+                                <input type="number" value="${item.quantity}" min="1" style="width:40px;"
+                                    onchange="updateQuantity(${item.cartId}, this.value)">
+                            </td>
+                            <td><img src="${item.image}" alt="" style="width:60px;"></td>
+                            <td>${item.memberNickName}</td>
+                            <td>
+                                <button class="btn" onclick="removeFromCart(${item.cartId})">삭제</button>
+                            </td>
+                        </tr>
+                    `;
+            });
 
-        // 합계/배송비
-        const summaryRes = await fetch(`/api/cart/${memberId}/summary`);
-        const summary = await summaryRes.json();
-        document.getElementById('cart-summary').innerHTML =
-            `<b>총액:</b> ${summary.totalPrice}원, <b>배송비:</b> ${summary.deliveryFee}원, <b>결제예정:</b> ${summary.finalPrice}원`;
+            // 합계/배송비
+            const summaryRes = await fetch(`/api/cart/${memberId}/summary`);
+            if (!summaryRes.ok) throw new Error("합계 정보 불러오기 실패");
+            const summary = await summaryRes.json();
+            document.getElementById('cart-summary').innerHTML =
+                `<b>총액:</b> ${summary.totalPrice}원, <b>배송비:</b> ${summary.deliveryFee}원, <b>결제예정:</b> ${summary.finalPrice}원`;
+
+            // 결제하기 버튼에 memberId, finalPrice 저장
+            document.getElementById('pay-btn').dataset.memberId = memberId;
+            document.getElementById('pay-btn').dataset.finalPrice = summary.finalPrice;
+        } catch (err) {
+            document.getElementById('cart-summary').innerHTML = `<span class="error-msg">${err.message}</span>`;
+        }
     }
 
     async function addToCart() {
         const memberId = document.getElementById('memberId').value;
-        const flowerName = document.getElementById('flowerName').value;
+        const flowerName = document.getElementById('flowerName').value.trim();
         const quantity = document.getElementById('quantity').value;
-        await fetch(`/api/cart?memberId=${memberId}&flowerName=${encodeURIComponent(flowerName)}&quantity=${quantity}`, {
+        const errorDiv = document.getElementById('add-error');
+        errorDiv.textContent = '';
+
+        if (!flowerName) {
+            errorDiv.textContent = "상품명을 입력하세요.";
+            return;
+        }
+        if (quantity < 1) {
+            errorDiv.textContent = "수량은 1 이상이어야 합니다.";
+            return;
+        }
+
+        const res = await fetch(`/api/cart?memberId=${memberId}&flowerName=${encodeURIComponent(flowerName)}&quantity=${quantity}`, {
             method: 'POST'
         });
+        if (!res.ok) {
+            const msg = await res.text();
+            errorDiv.textContent = "추가 실패: " + msg;
+            return;
+        }
+        document.getElementById('flowerName').value = '';
+        document.getElementById('quantity').value = 1;
         loadCart();
     }
 
@@ -91,6 +128,14 @@
         const memberId = document.getElementById('memberId').value;
         await fetch(`/api/cart/clear/${memberId}`, { method: 'DELETE' });
         loadCart();
+    }
+
+    // 결제하기 버튼 클릭 시 결제창으로 이동 (memberId, finalPrice 전달)
+    function goToPayment() {
+        const btn = document.getElementById('pay-btn');
+        const memberId = btn.dataset.memberId;
+        const finalPrice = btn.dataset.finalPrice;
+        window.location.href = `payment.html?memberId=${memberId}&finalPrice=${finalPrice}`;
     }
 
     // 페이지 로딩 시 자동 조회
