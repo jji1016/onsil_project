@@ -26,7 +26,8 @@ body{
     align-items: center;
     justify-content: space-between;
 }
-#footer .f_cont .f_logo>img{
+
+#footer .f_cont .f_logo a img{
     width:184px; height: 90px;
 }
 #footer .f_cont .f_info{
