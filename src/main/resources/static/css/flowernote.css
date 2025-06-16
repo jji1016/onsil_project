@@ -7,202 +7,202 @@ img{border: none; vertical-align: top;}
 input:focus {outline: none;}
 
 body{
-  background-color: #E5E0D8;
-  font-family: 'Pretendard Variable', sans-serif;   
-  color: #191919;
+    background-color: #E5E0D8;
+    font-family: 'Pretendard Variable', sans-serif;
+    color: #191919;
 }
 
 /* section- 상단타이틀배너영역 */
 #section .top-banner{
-  width: 100%;
-  height: 610px;
-  background-image: url(../images/flowernote/note_top_bg.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  text-align: center;
+    width: 100%;
+    height: 610px;
+    background-image: url(../images/flowernote/note_top_bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
 }
 
 #section .top-banner .t-ban-txt{
-  color: rgb(252, 252, 252);
-  padding-top: 220px;
+    color: rgb(252, 252, 252);
+    padding-top: 220px;
 }
 
 #section .top-banner .t-ban-txt h3{
-  font-size: 20px;
-  font-weight: 200;
+    font-size: 20px;
+    font-weight: 200;
 }
 #section .top-banner .t-ban-txt h2{
-  font-size: 38px;
-  font-weight: 500;
-  margin: 20px 0;
+    font-size: 38px;
+    font-weight: 500;
+    margin: 20px 0;
 }
 #section .top-banner .t-ban-txt p{
-  font-size: 20px;
-  font-weight: 200;
+    font-size: 20px;
+    font-weight: 200;
 }
 
 
 /* 꽃 검색 영역 */
 #section .wrap-note-search{
-  background-image: url(../images/flowernote/search_bg.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 100%;
-  height: 896px;
-  background-attachment: fixed;
+    background-image: url(../images/flowernote/search_bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 896px;
+    background-attachment: fixed;
 }
 
 #section .wrap-note-search .note-cont{
-  width: 70%;
-  height: 80%;
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto ;
-  padding-top: 80px;
-  box-sizing: border-box;
-  /* border: 1px solid red; */
+    width: 70%;
+    height: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto ;
+    padding-top: 80px;
+    box-sizing: border-box;
+    /* border: 1px solid red; */
 }
 #section .wrap-note-search .note-cont .search-area{
-  width: 50%;
-  text-align: center;
-  padding-top: 290px;
+    width: 50%;
+    text-align: center;
+    padding-top: 290px;
 }
 #section .wrap-note-search .note-cont .search-area li>p{
-  font-size: 30px;
-  color: #8b9773;
-  font-weight: 600;
+    font-size: 30px;
+    color: #8b9773;
+    font-weight: 600;
 }
 #section .wrap-note-search .note-cont .search-area li>input{
-  width: 60%;
-  height: 40px;
-  border: 1px solid #d2d2d2;
-  color:#A4A4A4;
-  font-size: 16px;
-  text-align: center;
-  padding: 0 10px;
+    width: 60%;
+    height: 40px;
+    border: 1px solid #d2d2d2;
+    color:#A4A4A4;
+    font-size: 16px;
+    text-align: center;
+    padding: 0 10px;
 }
 #section .wrap-note-search .note-cont .search-area li.search-f{
-  position: relative;
-  margin: 30px 0 20px;
+    position: relative;
+    margin: 30px 0 20px;
 }
 #section .wrap-note-search .note-cont .search-area li.search-f> a{
-  position: absolute;
-  top: 8px; right: 150px;
-  display: block;
-  color: #A4A4A4;
+    position: absolute;
+    top: 8px; right: 150px;
+    display: block;
+    color: #A4A4A4;
 }
 #section .wrap-note-search .note-cont .search-area li.tag span{
-  font-size: 14px;
-  color: #4B4A45;
-  margin: 0 5px;
-  transition: all 0.3s;
-  cursor: pointer;
+    font-size: 14px;
+    color: #4B4A45;
+    margin: 0 5px;
+    transition: all 0.3s;
+    cursor: pointer;
 }
 #section .wrap-note-search .note-cont .search-area li.tag span.tag-title{
-  background-color: #e6e6e6;
-  padding: 5px;
-  border-radius: 20px;
-  margin-right: 10px;
-  display: inline-block;
-  cursor: default;
+    background-color: #e6e6e6;
+    padding: 5px;
+    border-radius: 20px;
+    margin-right: 10px;
+    display: inline-block;
+    cursor: default;
 }
 #section .wrap-note-search .note-cont .search-area li.tag span+span:hover{
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 
 
 /* 검색결과 표출영역 */
 #section .wrap-note-search .note-cont .search-result{
-  width: 450px;
-  height: 600px;
-  margin-top: 100px;
-  cursor: pointer;
-  /* display: none; */
+    width: 450px;
+    height: 600px;
+    margin-top: 100px;
+    cursor: pointer;
+    /* display: none; */
 }
 #section .wrap-note-search .note-cont .search-result .img-area{
-  width: 100%;
-  height: 88%;
-  background-color: rgb(255, 254, 251);
+    width: 100%;
+    height: 88%;
+    background-color: rgb(255, 254, 251);
 }
 #section .wrap-note-search .note-cont .search-result .flower-name{
-  width: 100%;
-  height: 10%;
-  background-color: #F2EFEB;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 10%;
+    background-color: #F2EFEB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #section .wrap-note-search .note-cont .search-result .flower-name .name-txt{
-  font-size: 18px;
-  font-weight: 600;
-  color: #8b9773;
+    font-size: 18px;
+    font-weight: 600;
+    color: #8b9773;
 }
 
 
 
 /* 이달의 꽃 영역 ------*/
 #section .wrap-month-flower{
-  width: 100%;
+    width: 100%;
 }
 
 
 /* 이달의 꽃 탭메뉴 */
 #section .wrap-month-flower .month-tab{
-  width: 100%;
-  margin: 0 auto;
-  padding: 50px 200px 20px;
-  background-color: #EFEBE2;
-  border-top: 1px solid #D0CAC2;
-  border-bottom: 1px solid #D0CAC2;
-  box-sizing: border-box;
-  text-align: center;
-  /* border: 1px solid blue; */
+    width: 100%;
+    margin: 0 auto;
+    padding: 50px 200px 20px;
+    background-color: #EFEBE2;
+    border-top: 1px solid #D0CAC2;
+    border-bottom: 1px solid #D0CAC2;
+    box-sizing: border-box;
+    text-align: center;
+    /* border: 1px solid blue; */
 }
 #section .wrap-month-flower .month-tab h2{
-  color: #4B4A45;
-  margin: 20px 0 50px;
+    color: #4B4A45;
+    margin: 20px 0 50px;
 }
 #section .wrap-month-flower .month-tab .years{
-  width: 70%;
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  margin: 30px auto;
-  /* border: 1px solid red; */
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin: 30px auto;
+    /* border: 1px solid red; */
 }
 #section .wrap-month-flower .month-tab .years li{
-  width: 150px;
-  height: 50px;
-  border-radius: 30px;
-  background-color: #E5E0D8;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
+    width: 150px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: #E5E0D8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 #section .wrap-month-flower .month-tab .years li p{
-  font-size: 16px;
-  color: #4d4d4d;
-  transition: all 0.3s;
+    font-size: 16px;
+    color: #4d4d4d;
+    transition: all 0.3s;
 }
 #section .wrap-month-flower .month-tab .years li span{
-  font-size: 12px;
-  color: #868686;
-  font-weight: 300;
-  transition: all 0.3s;
+    font-size: 12px;
+    color: #868686;
+    font-weight: 300;
+    transition: all 0.3s;
 }
 
 /* 탭버튼 클릭시 */
 #section .wrap-month-flower .month-tab .years li.active{
-  background-color: #8b9773;
+    background-color: #8b9773;
 }
 #section .wrap-month-flower .month-tab .years li.active p{
-  color: #fff;
+    color: #fff;
 }
 #section .wrap-month-flower .month-tab .years li.active span{
-  color: #fff;
+    color: #fff;
 }
 /* #section .wrap-month-flower .month-tab .years .test{
   background-color: red;
@@ -215,62 +215,62 @@ body{
 
 /* 이달의 꽃 컨텐츠 영역 */
 #section .wrap-month-flower .month-cont{
-  width: 70%;
-  margin: 0 auto;
-  height: 1300px;
+    width: 70%;
+    margin: 0 auto;
+    height: 1300px;
 }
 
 #section .wrap-month-flower .month-cont .m-flower-list{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  /* display: none; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    /* display: none; */
 }
 #section .wrap-month-flower .month-cont .m-flower-list li{
-  width: 400px;
-  height: 500px;
-  margin-top: 90px;
-  cursor: pointer;
+    width: 400px;
+    height: 500px;
+    margin-top: 90px;
+    cursor: pointer;
 }
 #section .wrap-month-flower .month-cont .m-flower-list li .flower-image{
-  width: 100%;
-  height: 90%;
-  background-color: rgb(255, 254, 251);
+    width: 100%;
+    height: 90%;
+    background-color: rgb(255, 254, 251);
 }
 #section .wrap-month-flower .month-cont .m-flower-list .flower-name{
-  width: 100%;
-  height: 10%;
-  background-color: #F2EFEB;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 10%;
+    background-color: #F2EFEB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #section .wrap-month-flower .month-cont .m-flower-list .flower-name .name-txt{
-  font-size: 18px;
-  font-weight: 600;
-  color: #8b9773;
+    font-size: 18px;
+    font-weight: 600;
+    color: #8b9773;
 }
 
 #section .wrap-month-flower .month-cont #june li .flower-image{
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 #section .wrap-month-flower .month-cont #june li.list1 .flower-image{
-  background-image: url(../images/flowernote/month_list1.png);
+    background-image: url(../images/flowernote/month_list1.png);
 }
 #section .wrap-month-flower .month-cont #june li.list2 .flower-image{
-  background-image: url(../images/flowernote/month_list2.png);
+    background-image: url(../images/flowernote/month_list2.png);
 }
 #section .wrap-month-flower .month-cont #june li.list3 .flower-image{
-  background-image: url(../images/flowernote/month_list3.png);
+    background-image: url(../images/flowernote/month_list3.png);
 }
 #section .wrap-month-flower .month-cont #june li.list4 .flower-image{
-  background-image: url(../images/flowernote/month_list4.png);
+    background-image: url(../images/flowernote/month_list4.png);
 }
 #section .wrap-month-flower .month-cont #june li.list5 .flower-image{
-  background-image: url(../images/flowernote/month_list5.png);
+    background-image: url(../images/flowernote/month_list5.png);
 }
 #section .wrap-month-flower .month-cont #june li.list6 .flower-image{
-  background-image: url(../images/flowernote/month_list6.png);
+    background-image: url(../images/flowernote/month_list6.png);
 }
