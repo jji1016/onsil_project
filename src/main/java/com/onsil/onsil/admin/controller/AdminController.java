@@ -5,12 +5,10 @@ import com.onsil.onsil.admin.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,7 +38,8 @@ public class AdminController {
                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                             Model model
-    ) {log.info("category={}, keyword={}, startDate={}, endDate={}", category, keyword, startDate, endDate);
+    ) {
+        log.info("category={}, keyword={}, startDate={}, endDate={}", category, keyword, startDate, endDate);
         List<AdminInputDto> inputList = adminInputService.searchInputs(category, keyword, startDate, endDate);
         model.addAttribute("inputList", inputList);
         model.addAttribute("category", category);
@@ -139,5 +138,5 @@ public class AdminController {
             @RequestParam String endDate) {
         return adminSalesService.getSalesDashboard(type, startDate, endDate);
     }
-    }
+}
 

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface AdminStockRepository extends JpaRepository<Product, Integer> {
+public interface AdminStockRepository extends JpaRepository<Stock, Integer> {
 
     @Query(value = "SELECT " +
             "p.PRODUCTID, " +
@@ -36,4 +36,5 @@ public interface AdminStockRepository extends JpaRepository<Product, Integer> {
             @Param("minPrice") Integer minPrice,
             @Param("maxPrice") Integer maxPrice
     );
+
 }

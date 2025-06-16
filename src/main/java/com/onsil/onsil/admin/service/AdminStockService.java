@@ -2,6 +2,7 @@ package com.onsil.onsil.admin.service;
 
 import com.onsil.onsil.admin.dao.AdminStockDao;
 import com.onsil.onsil.admin.dto.AdminStockDto;
+import com.onsil.onsil.admin.repository.AdminStockRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 public class AdminStockService {
 
     private final AdminStockDao adminStockDao;
+
+    private final AdminStockRepository adminStockRepository;
 
     public List<AdminStockDto> searchStocks(
             String category, String keyword,
@@ -32,4 +35,5 @@ public class AdminStockService {
                 .quantity(((Number)obj[3]).intValue())
                 .build()).collect(Collectors.toList());
     }
+
 }
