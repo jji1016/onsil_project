@@ -24,22 +24,6 @@ public class MypageController {
     private final MypageService mypageService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @GetMapping("/home")
-//    public String home(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-//        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
-//
-//        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-//        model.addAttribute("loggedMemberDto", loggedMemberDto);
-//
-//        Integer loggedMemberID = loggedMemberDto.getId(); //Member 테이블의 기본키
-//        List<MypageOrderListDto> mypageOrderListDto = mypageService.findOrderList(loggedMemberID); //로그인한 사람의 주문내역
-//        log.info("mypageOrderListDto: {}", mypageOrderListDto);
-//        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
-//
-//        return "mypage/home";
-//    }
-//
-
     @GetMapping("/mypage")
     public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
@@ -141,7 +125,7 @@ public class MypageController {
     public MemberDto info(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
         MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-        log.info("loggedMemberDto: {}", loggedMemberDto);
+
         return loggedMemberDto;
     }
 
@@ -163,6 +147,7 @@ public class MypageController {
         String userID = customUserDetails.getUsername();
         MemberDto loggedMemberDto = mypageService.findByUserID(userID);
 
+        log.info("loggedMemberDto: {}", loggedMemberDto);
         // 비밀번호 검증
         if (password != null && !password.isBlank()) {
             if (!password.equals(password2)) {
@@ -171,6 +156,7 @@ public class MypageController {
                 return result;
             }
 
+            log.info("customUserDetails.getPassword(): {}", customUserDetails.getPassword());
             if (!bCryptPasswordEncoder.matches(currentPassword, customUserDetails.getPassword())) {
                 result.put("isModify", "false");
                 result.put("error", "현재 비밀번호가 올바르지 않습니다.");
@@ -189,7 +175,7 @@ public class MypageController {
         if (newZipcode != null) loggedMemberDto.setZipcode(newZipcode);
         if (newAddress01 != null) loggedMemberDto.setAddress01(newAddress01);
         if (newAddress02 != null) loggedMemberDto.setAddress02(newAddress02);
-
+        log.info("modify_loggedMemberDto: {}", loggedMemberDto);
         mypageService.updateInfo(loggedMemberDto);
         result.put("isModify", "true");
         return result;

@@ -221,20 +221,19 @@
                     <tr>
                         <td>기본주소지</td>
                         <td>
-                            <span id="zipcode" data-field="zipcode">10554</span><br>
-                            <span id="address01" data-field="address01">서울시 강북구 00동</span><br>
-                            <span id="address02" data-field="address02">17-2 00빌라 201호</span>
+                            <span id="zipcode" data-field="zipcode"></span><br>
+                            <span id="address01" data-field="address01"></span><br>
+                            <span id="address02" data-field="address02"></span>
                         </td>
                     </tr>
                     <tr>
                         <td>주소지 변경</td>
                         <td>
-                            <input type="text" placeholder="우편번호" class="ad_num" data-field="newZipcode" readonly>
+                            <input type="text" placeholder="우편번호" class="ad_num" data-field="newZipcode" id="newZipcode" readonly>
                             <button type="button" class="ad_search" onclick="execDaumPostcode()">주소검색</button>
                             <br>
-                            <input type="text" placeholder="기본주소" class="address" data-field="newAddress01"
-                                   readonly><br>
-                            <input type="text" placeholder="상세주소" class="address" data-field="newAddress02">
+                            <input type="text" placeholder="기본주소" class="address" data-field="newAddress01" id="newAddress01" readonly><br>
+                            <input type="text" placeholder="상세주소" class="address" data-field="newAddress02" id="newAddress02">
                         </td>
                     </tr>
                     <tr>
@@ -244,7 +243,7 @@
                     <tr>
                         <td>휴대전화 변경</td>
                         <td>
-                            <input type="text" maxlength="4" class="p_num" data-field="newTel">
+                            <input type="text" maxlength="11" class="p_num" data-field="newTel">
                         </td>
                     </tr>
                 </table>
@@ -335,9 +334,10 @@
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function (data) {
-                document.getElementById('zipcode').value = data.zonecode;
-                document.getElementById('address01').value = data.address;
-                document.getElementById('address02').focus();
+                console.log(data);
+                document.getElementById('newZipcode').value = data.zonecode;
+                document.getElementById('newAddress01').value = data.address;
+                document.getElementById('newAddress02').focus();
             }
         }).open();
     }
@@ -351,7 +351,6 @@
         })
             .then(response => response.json())
             .then(json => {
-                console.log(json);
                 const responseData = {
                     userName: json.userName,
                     userID: json.userID,
@@ -362,7 +361,6 @@
                     address02: json.address02,
                     tel: json.tel,
                 };
-                console.log(responseData);
 
                 Object.entries(responseData).forEach(([key, value]) => {
                     const el = document.querySelector(`[data-field="${key}"]`);
@@ -398,9 +396,14 @@
         })
             .then(response => response.json())
             .then(json => {
-                if (json.isModify) {
+                console.log("modify 부분")
+                console.log(json)
+                if (json.isModify == "true") {
                     alert("수정이 완료되었습니다.");
                     lookupMemberInfo();
+                    inputFields.forEach(field => {
+                        field.value="";
+                    });
                 }else{
                     alert(json.error);
                 }
