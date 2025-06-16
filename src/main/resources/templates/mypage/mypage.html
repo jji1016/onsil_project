@@ -411,16 +411,15 @@
     })
 
     // 회원 탈퇴
-    const loggedMemberID = deleteAccountBtn.dataset.id;
     deleteAccountBtn.addEventListener("click", (e) => {
-        console.log("loggedMemberID== " + loggedMemberID);
         //회원 탈퇴버튼 클릭시 confirm
         if (confirm("정말로 계정을 삭제하시겠습니까?")) {
-            fetch("/mypage/delete/" + loggedMemberID)
+            fetch("/mypage/delete/" + deleteAccountBtn.dataset.id)
                 .then(response => response.json())
                 .then(json => {
-                    if (json.isDelete) {
+                    if (json.isDelete == "true") {
                         alert("삭제가 완료되었습니다.");
+                        location.href = "/member/logout";
                     }
                 })
         } else {
