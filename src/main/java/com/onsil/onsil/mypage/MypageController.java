@@ -24,49 +24,6 @@ public class MypageController {
     private final MypageService mypageService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @GetMapping("/home")
-//    public String home(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-//        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
-//
-//        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-//        model.addAttribute("loggedMemberDto", loggedMemberDto);
-//
-//        Integer loggedMemberID = loggedMemberDto.getId(); //Member 테이블의 기본키
-//        List<MypageOrderListDto> mypageOrderListDto = mypageService.findOrderList(loggedMemberID); //로그인한 사람의 주문내역
-//        log.info("mypageOrderListDto: {}", mypageOrderListDto);
-//        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
-//
-//        return "mypage/home";
-//    }
-//
-//    @GetMapping("/info") //회원 상세 정보 페이지
-//    public String info(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-//        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
-//        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-//        log.info("loggedMemberDto: {}", loggedMemberDto);
-//        model.addAttribute("loggedMemberDto", loggedMemberDto);
-//        return "mypage/info";
-//    }
-//
-//    @PostMapping("/modify") //회원 정보 수정
-//    public String modify(@ModelAttribute MemberDto memberDto, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-//        if (memberDto.getUserPW() == null || memberDto.getUserPW().isEmpty()) { //비밀번호 수정 안할시
-//            memberDto.setUserPW(customUserDetails.getPassword());
-//        }else{ //비밀번호 수정시 받아서 암호화
-//            String userPW = memberDto.getUserPW();
-//            String encodeUserPW = bCryptPasswordEncoder.encode(userPW);
-//            log.info("encodeUserPW: {}", encodeUserPW);
-//            memberDto.setUserPW(encodeUserPW);
-//        }
-//        mypageService.updateInfo(memberDto);
-//        return "redirect:/mypage/info";
-//    }
-//
-//
-
-
-
-
     @GetMapping("/mypage")
     public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
@@ -162,5 +119,67 @@ public class MypageController {
         map.put("isdelete", "true");
         return map;
     }
+
+    @PostMapping("/info") //회원 정보 조회
+    @ResponseBody
+    public MemberDto info(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
+        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
+
+        return loggedMemberDto;
+    }
+
+    @PostMapping("/modify")
+    @ResponseBody
+    public Map<String, String> modify(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                      @RequestBody Map<String, String> data) {
+        Map<String, String> result = new HashMap<>();
+
+        String currentPassword = data.get("currentPassword");
+        String password = data.get("password"); // 새 비밀번호
+        String password2 = data.get("password2"); // 새 비밀번호 확인
+        String newEmail = data.get("newEmail");
+        String newZipcode = data.get("newZipcode");
+        String newAddress01 = data.get("newAddress01");
+        String newAddress02 = data.get("newAddress02");
+        String newTel = data.get("newTel");
+
+        String userID = customUserDetails.getUsername();
+        MemberDto loggedMemberDto = mypageService.findByUserID(userID);
+
+        log.info("loggedMemberDto: {}", loggedMemberDto);
+        // 비밀번호 검증
+        if (password != null && !password.isBlank()) {
+            if (!password.equals(password2)) {
+                result.put("isModify", "false");
+                result.put("error", "비밀번호 확인이 일치하지 않습니다.");
+                return result;
+            }
+
+            log.info("customUserDetails.getPassword(): {}", customUserDetails.getPassword());
+            if (!bCryptPasswordEncoder.matches(currentPassword, customUserDetails.getPassword())) {
+                result.put("isModify", "false");
+                result.put("error", "현재 비밀번호가 올바르지 않습니다.");
+                return result;
+            }
+
+            String encodeUserPW = bCryptPasswordEncoder.encode(password);
+            loggedMemberDto.setUserPW(encodeUserPW);
+        } else {
+            // 비밀번호 변경 안 하는 경우 기존 비밀번호 유지
+            loggedMemberDto.setUserPW(customUserDetails.getPassword());
+        }
+
+        if (newEmail != null) loggedMemberDto.setUserEmail(newEmail);
+        if (newTel != null) loggedMemberDto.setTel(newTel);
+        if (newZipcode != null) loggedMemberDto.setZipcode(newZipcode);
+        if (newAddress01 != null) loggedMemberDto.setAddress01(newAddress01);
+        if (newAddress02 != null) loggedMemberDto.setAddress02(newAddress02);
+        log.info("modify_loggedMemberDto: {}", loggedMemberDto);
+        mypageService.updateInfo(loggedMemberDto);
+        result.put("isModify", "true");
+        return result;
+    }
+
 
 }

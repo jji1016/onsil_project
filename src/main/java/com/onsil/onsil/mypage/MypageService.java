@@ -90,9 +90,19 @@ public class MypageService {
         return mypageSubscribeDtoList;
     }
 
+
     public void updateInfo(MemberDto memberDto) {
-        Member member = memberDto.toMember();
-        mypageDao.save(member);
+        Member member = mypageDao.findById(memberDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("회원 없음"));
+
+        member.updateInfo(
+                memberDto.getUserPW(),
+                memberDto.getUserEmail(),
+                memberDto.getTel(),
+                memberDto.getZipcode(),
+                memberDto.getAddress01(),
+                memberDto.getAddress02()
+        );
     }
 
     public int deleteAccount(Integer id) {

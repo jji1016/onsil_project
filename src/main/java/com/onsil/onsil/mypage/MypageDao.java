@@ -52,4 +52,8 @@ public class MypageDao {
     public List<Object[]> statusCount(Integer loggedMemberID) {
         return mypageMemberRepository.statusCount(loggedMemberID);
     }
+
+    public Optional<Member> findById(Integer id) {
+        return mypageMemberRepository.findById(id);
+    }
 }
