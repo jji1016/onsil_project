@@ -24,4 +24,8 @@ public class SubscribeController {
         model.addAttribute("subscribes", subscribes);
         return "subscribe/subscribe";
     }
+    @GetMapping("/particular")
+    public String particular(Model model, @AuthenticationPrincipal MemberDto memberDto) {
+        return "subscribe/particular";
+    }
 }
