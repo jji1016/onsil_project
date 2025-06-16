@@ -43,7 +43,7 @@ body{
 }
 
 #section .frist_se .right_text{
-  margin-top: 43px;
+  margin-top: 5px;
 }
 #section .frist_se .right_text .product_na h2{
   font-size: 35px;
@@ -152,7 +152,7 @@ body{
   border: 1px solid #D2D2D2;
   font-size: 14px;
   padding: 5px;
-  margin: 5px 0px;
+  margin: 10px 0px;
   box-sizing: border-box;
   outline: none;
   color: #949494;
@@ -162,7 +162,6 @@ body{
   border: 1px solid #D2D2D2;
   font-size: 14px;
   padding: 5px;
-  margin: 5px 0px;
   box-sizing: border-box;
   outline: none;
   color: #7e7e7e;
@@ -170,7 +169,7 @@ body{
 
 #section .frist_se .right_text .text_arr p{
   font-size: 11px;
-  margin-top: 3px;
+  margin-top: 8px;
   margin-bottom: 5px;
 }
 #section .frist_se .right_text .text_arr2{
