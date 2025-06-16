@@ -36,7 +36,7 @@ body{
   margin: 20px 0;
 }
 #section .se_all .left_arr .sel_info{
-  padding: 20px;
+  padding: 30px;
   box-sizing: border-box;
   background-color: #EFEBE2;
   margin-bottom: 30px;
@@ -68,7 +68,7 @@ body{
 }
 
 #section .se_all .left_arr .order_name{
-  padding: 20px;
+  padding: 30px;
   box-sizing: border-box;
   background-color: #EFEBE2;
   margin-bottom: 30px;
@@ -123,44 +123,6 @@ body{
 }
 
 
-#section .se_all .left_arr .coupon{
-  padding: 23px;
-  background-color: #EFEBE2;
-    color: #4b4a45;
-}
-#section .se_all .left_arr .coupon .cou_text,
-#section .se_all .left_arr .coupon .cou_number,
-#section .se_all .left_arr .coupon .point_arr
-{
-  margin-bottom: 10px;
-
-}
-#section .se_all .left_arr .coupon .cou_text h4,
-#section .se_all .left_arr .coupon .cou_number h4,
-#section .se_all .left_arr .coupon .point_arr h4
-{
-  margin-bottom: 5px;
-}
-#section .se_all .left_arr .coupon .cou_text .cou_txt,
-#section .se_all .left_arr .coupon .cou_number .counum_txt,
-#section .se_all .left_arr .coupon .point_arr .point_use
-{
-  width: 400px; height: 25px;
-  border: 0;
-  outline: none;
-}
-#section .se_all .left_arr .coupon .cou_text .cou_btn,
-#section .se_all .left_arr .coupon .cou_number .num_serch,
-#section .se_all .left_arr .coupon .point_arr .point_btn
-{
-  height: 30px; width: 60px;
-  cursor: pointer;
-  background-color: #8b9773;
-  border: 0;
-  color: white;text-align: center;
-  line-height: 5px;
-}
-
 
 
 #section .se_all .right_arr{
@@ -213,7 +175,6 @@ body{
   height: 300px;
   position: relative;
   background-color: #EFEBE2;
-  margin-bottom: 20px;
 }
 #section .se_all .right_arr .pay_method h3{
   margin-bottom: 20px;
@@ -275,25 +236,6 @@ body{
 }
 
 
-#section .se_all .right_arr .agree{
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: #EFEBE2;
-}
-#section .se_all .right_arr .agree .li_line{
-  width: 8px; height: 8px;
-  border-bottom: 1px solid;
-  margin-left: 5px;
-  margin-top: 5px;
-  margin-right: 5px;
-  border-left: 1px solid;
-}
-#section .se_all .right_arr .agree .line_te{
-  display: flex;
-}
-#section .se_all .right_arr .agree .box_ti{
-  margin-right: 5px;
-}
 #section .se_all .right_arr .buy_bt{
   width: 450px; height: 50px;
   font-size: 20px;

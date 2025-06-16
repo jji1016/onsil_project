@@ -43,12 +43,13 @@ body{
 }
 
 #section .frist_se .right_text{
-  margin-top: 43px;
+  margin-top: 5px;
 }
 #section .frist_se .right_text .product_na h2{
   font-size: 35px;
   margin-left: 92px;
   margin-bottom: 30px;
+  margin-top: 50px;
 }
 
 #section .frist_se .right_text .product_na h5{
@@ -72,10 +73,22 @@ body{
   color: #8B9773;
     font-size: 20px;
 }
-#section .frist_se .right_text .product_na p{
-  margin-left: 300px;
+#section .frist_se .right_text .product_na .review_write{
+  display: flex;
+}
+#section .frist_se .right_text .product_na .review_write .reviwe_btn{
+  border: 0;
+  background-color: #F1F1F1;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 40px;
+}
+#section .frist_se .right_text .product_na .review_write p{
+  margin-left: 227px;
   font-size: 14px;
 }
+
 #section .frist_se .right_text .line{
   width: 450px; 
   margin-top: 20px;
@@ -139,7 +152,7 @@ body{
   border: 1px solid #D2D2D2;
   font-size: 14px;
   padding: 5px;
-  margin: 5px 0px;
+  margin: 10px 0px;
   box-sizing: border-box;
   outline: none;
   color: #949494;
@@ -149,7 +162,6 @@ body{
   border: 1px solid #D2D2D2;
   font-size: 14px;
   padding: 5px;
-  margin: 5px 0px;
   box-sizing: border-box;
   outline: none;
   color: #7e7e7e;
@@ -157,7 +169,7 @@ body{
 
 #section .frist_se .right_text .text_arr p{
   font-size: 11px;
-  margin-top: 3px;
+  margin-top: 8px;
   margin-bottom: 5px;
 }
 #section .frist_se .right_text .text_arr2{
@@ -174,13 +186,14 @@ body{
   display: flex;
   margin-right:18px;
 }
-#section .frist_se .right_text .text_arr2 h5 span{
+#section .frist_se .right_text .text_arr2 h5 p{
   height: 14px;
-  line-height: 19px;
-  font-size: 12px;
+  line-height: 15px;
+  font-size: 15px;
   margin-top: 5px;
   margin-right: 5px;
   border-right:1px solid gray;
+    color: #8B9773;
   padding-right: 5px;
   color: #191919;
 }
@@ -202,6 +215,12 @@ body{
   line-height: 28px;
   background-color: #F1F1F1;
 }
+#section .frist_se .right_text .sell_txt .se_txt>li .btn_sell4{
+    background-color: #F1F1F1;
+    border: 0;
+    border-radius: 50%;
+    padding: 5px;
+}
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell3{
   background-color: #8B9773;
   color: white;
@@ -213,17 +232,8 @@ body{
   color: #4b4a45;
   background-color: #fff;
 }
-#section .frist_se .right_text .sell_txt .se_txt>li:nth-child(1) a{
-  display: block;
-  width: 30px; height: 30px;
-  border-radius: 50%;
-    line-height: 2px;
-      margin-left: -10px;
-      margin-right: 10px;
-      padding: 5px;
-      background-color: #F1F1F1;
-}
-#section .frist_se .right_text .sell_txt .se_txt>li:nth-child(1) a:hover{
+
+#section .frist_se .right_text .sell_txt .se_txt>li .btn_sell4:hover{
   background-color: white;
 }
 #section .frist_se .right_text .sell_txt .se_txt>li:nth-child(1) img{
@@ -233,6 +243,17 @@ body{
 
 #section .secound_se{
   margin-top: 100px;
+}
+#section .secound_se .reviwe_more{
+  padding: 8px 16px;
+  font-size: 16px;
+  margin: 30px 0;
+  margin-left: 903px;
+  border: 0;
+  color: #4b4a45;
+  border-radius: 40px;
+  background-color: #F1F1F1;
+  cursor: pointer;
 }
 #section .secound_se .top_re,
 #section .secound_se .bottom_re
