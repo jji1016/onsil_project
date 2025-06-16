@@ -18,7 +18,7 @@ public class FlowerService {
 
     // 월별 6개만 (3*2)
     public List<FlowerDto> getFlowersByMonth(int month) {
-        return flowerRepository.findByFMonth(month, PageRequest.of(0, 6)).stream()
+        return flowerRepository.findByfMonth(month, PageRequest.of(0, 6)).stream()
                 .map(FlowerDto::new)
                 .collect(Collectors.toList());
     }

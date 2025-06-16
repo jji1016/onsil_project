@@ -1,17 +1,15 @@
 package com.onsil.onsil.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Table(name = "CART")
+@Getter @NoArgsConstructor @AllArgsConstructor @Builder
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Cart {
@@ -29,6 +27,7 @@ public class Cart {
     @JoinColumn(name = "PRODUCTID", nullable = false)
     private Product product;
 
+    // ★ 장바구니 기능을 위해 QUANTITY 컬럼 필수 - DB에 추가 필요
     @Column(name = "QUANTITY", nullable = false)
     private Integer quantity;
 
@@ -36,6 +35,7 @@ public class Cart {
     @Column(name = "ORDERDATE", updatable = false)
     private LocalDateTime orderDate;
 
+    // ★ 수량 변경을 위한 메서드
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }

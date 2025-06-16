@@ -18,11 +18,10 @@
 <hr>
 <th:block th:each="orderlist : ${mypageOrderListDto}">
     <div th:text="${orderlist.quantity}"></div>
-    <div th:text="${orderlist.status.label}"></div>
+    <div th:text="${orderlist.status}"></div>
     <div th:text="${#temporals.format(orderlist.orderTime,'yyyy-MM-dd')}"></div>
     <div th:text="${orderlist.flowerName}"></div>
     <div th:text="${orderlist.price}"></div>
-    <div th:src="@{'/upload/products/' + ${orderlist.image}}"></div>
 </th:block>
 
 </body>

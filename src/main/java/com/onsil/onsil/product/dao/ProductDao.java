@@ -26,9 +26,7 @@ public class ProductDao {
                             review.getId(),
                             review.getProduct().getId(),
                             review.getMember().getId(),
-                            review.getMember().getUserID(),
                             review.getMember().getUserName(),
-                            review.getMember().getNickName(),
                             review.getContent(),
                             review.getRating(),
                             review.getRegDate(),
@@ -53,13 +51,13 @@ public class ProductDao {
     public List<ProductDto> findAll() {
         List<Product> productList = productRepository.findAll();
         List<ProductDto> productDtoList = productList.stream().map(
-                product -> ProductDto.builder()
-                        .id(product.getId())
-                        .flowerName(product.getFlowerName())
-                        .flowerInfo(product.getFlowerInfo())
-                        .price(product.getPrice())
-                        .image(product.getImage())
-                        .build()
+            product -> ProductDto.builder()
+                    .id(product.getId())
+                    .flowerName(product.getFlowerName())
+                    .flowerInfo(product.getFlowerInfo())
+                    .price(product.getPrice())
+                    .image(product.getImage())
+                    .build()
         ).toList();
         return productDtoList;
     }

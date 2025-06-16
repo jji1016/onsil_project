@@ -17,23 +17,13 @@ import java.util.Optional;
 @Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
     private final MemberDao memberDao;
-
     @Override
     public UserDetails loadUserByUsername(String userID) throws UsernameNotFoundException {
         log.info("userID==={}",userID);
         Optional<Member> optionalMember = memberDao.findByUserID(userID);
-
-        if (optionalMember.isEmpty()) {
-            throw new UsernameNotFoundException("존재하지 않는 계정입니다.");
+        if(optionalMember.isPresent()) {
+            return new CustomUserDetails(optionalMember.get());
         }
-
-        Member member = optionalMember.get();
-
-        if (member.isDeleteStatus()) {
-            throw new UsernameNotFoundException("탈퇴한 계정입니다.");
-        }
-
-        return new CustomUserDetails(member);
-
+        throw new UsernameNotFoundException("아이디 패스워드 확인해 주세요");
     }
 }
