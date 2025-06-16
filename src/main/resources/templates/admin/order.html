@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>주문내역관리</h2>
-<form th:action="@{/admin/orderlist}" method="get">
+<form id="searchForm" th:action="@{/admin/orderlist}" method="get">
     <label>검색어</label>
     <select name="category">
         <option value="orderNo" th:selected="${category == 'orderNo'}">주문번호</option>
@@ -20,7 +20,7 @@
     <input type="datetime-local" name="endDate"
            th:value="${endDate != null ? #temporals.format(endDate, 'yyyy-MM-dd''T''HH:mm') : ''}">
     <button type="submit">검색</button>
-    <button type="button" onclick="location.href='@{/admin/order}'">초기화</button>
+    <button type="button" onclick="resetForm()">초기화</button>
 </form>
 
 <table border="1">
@@ -47,5 +47,12 @@
     </tr>
     </tbody>
 </table>
+
+<script>
+    function resetForm() {
+        document.getElementById('searchForm').reset(); // 입력란 초기화
+        location.href = '/admin/orderlist'; // 검색조건 없이 전체 리스트로 이동
+    }
+</script>
 </body>
 </html>

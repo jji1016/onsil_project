@@ -222,10 +222,8 @@ public class AdminController {
     @GetMapping("/sales/dashboard")
     @ResponseBody
     public AdminSalesDashboardDto getSalesDashboard(
-            @RequestParam String type,
-            @RequestParam String startDate,
-            @RequestParam String endDate) {
-        return adminSalesService.getSalesDashboard(type, startDate, endDate);
+            @RequestParam String type) {
+        return adminSalesService.getSalesDashboard(type);
     }
 }
 
