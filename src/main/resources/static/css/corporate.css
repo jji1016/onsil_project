@@ -7,7 +7,7 @@ img{border:0; vertical-align: top;}
 body{
   font-family: 'Pretendard-Regular';
   background-color: #E5E0D8;
-    color: #191919;
+  color: #191919;
 }
 #section{
   width: 100%;
@@ -28,7 +28,6 @@ body{
 #section .second_se{
   margin: 100px auto;
   text-align: center;
-  margin-bottom: 100px;
 }
 
 #section .second_se .left_txt h2{
@@ -92,8 +91,8 @@ body{
 #section .thrid_se .right_text p{
   font-size: 20px;
   padding: 40px 40px;
-    font-weight: 100;
-    color: rgb(78, 78, 78);
+  font-weight: 100;
+  color: rgb(78, 78, 78);
 }
 
 #section .forth_se{
@@ -115,44 +114,52 @@ body{
   font-size: 13px;
   margin-top: 50px;
   margin-left: 20px;
-    color: rgb(78, 78, 78);
+  color: rgb(78, 78, 78);
 }
 #section .forth_se .left_imgti h3{
   margin-top: 15px;
   margin-left: 20px;
   font-size: 25px;
   font-weight: 600;
-    color: rgb(87, 87, 87);
+  color: rgb(87, 87, 87);
 }
 #section .forth_se .left_imgti p{
   margin-top: 15px;
   margin-left: 20px;
   font-size: 20px;
   font-weight: 350;
-    color: rgb(78, 78, 78);
+  color: rgb(78, 78, 78);
 }
 #section .forth_se .part_img{
   margin-left: 50px;
   margin-right: 100px;
 }
-#section .forth_se .part_img .three_img{
+#section .forth_se .part_img .three_img,
+#section .forth_se .part_img .three_img2
+{
   width: 850px;
   display: flex;
   margin-left: -300px;
   margin-top: 40px;
 }
-#section .forth_se .part_img .three_img>li{
+#section .forth_se .part_img .three_img>li,
+#section .forth_se .part_img .three_img2>li
+{
   width: 250px; height: 180px;
   margin: 10px 20px;
   overflow: hidden;
 }
 
-#section .forth_se .part_img .three_img>li img{
+#section .forth_se .part_img .three_img>li img,
+#section .forth_se .part_img .three_img2>li img
+{
   width: 250px; height: 180px;
   align-items: center;
   transition:  all  0.3s;
 }
-#section .forth_se .part_img .three_img>li img:hover{
+#section .forth_se .part_img .three_img>li img:hover,
+#section .forth_se .part_img .three_img2>li img:hover
+{
   transform: scale(1.2);
 }
 
@@ -160,7 +167,7 @@ body{
   width: 100%; height: 700px;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   overflow: hidden;
   background-color: white;
   box-sizing: border-box;
@@ -170,14 +177,14 @@ body{
   font-size: 45px;
   font-weight: 600;
   margin-bottom: 30px;
-  margin-top: 100px;
-    color: rgb(78, 78, 78);
+  margin-top: 70px;
+  color: rgb(78, 78, 78);
 }
 #section .part_send .left_explan h4{
   font-size: 21px;
   font-weight: 500;
   margin-bottom: 30px;
-    color: rgb(78, 78, 78);
+  color: rgb(78, 78, 78);
 }
 #section .part_send .left_explan h5{
   font-size: 18px;
@@ -185,18 +192,19 @@ body{
   border-bottom: 1px solid gray;
   margin-bottom: 50px;
   padding-bottom: 40px;
-    color: rgb(78, 78, 78);
+  color: rgb(78, 78, 78);
 }
 #section .part_send .left_explan .adre{
   font-size: 18px;
   font-weight: 250;
-    color: rgb(78, 78, 78);
+  color: rgb(78, 78, 78);
 }
 
 #section .part_send .right_infor{
-  width: 700px; height: 500px;
+  width: 700px; height: 550px;
   margin-left: 50px;
   padding: 40px;
+  box-sizing: border-box;
   margin-top: 60px;
   background-color: #8B9773;
 }
@@ -226,7 +234,7 @@ body{
   margin-left: 30px;
 }
 input::placeholder {
-	color:white;
+  color:white;
 }
 #section .part_send .right_infor .bottom_text{
   padding: 10px 0;
@@ -299,17 +307,17 @@ input[type='radio']:checked {
 
 
 @media screen and (max-width:767px){
-#section .banner{
-  width: 750px; height: 200px;
-}
+  #section .banner{
+    width: 750px; height: 200px;
+  }
 
-#section .second_se .right_txt .img_text>li img {
-  width: 80px;
-}
+  #section .second_se .right_txt .img_text>li img {
+    width: 80px;
+  }
 
-#section .second_se .right_txt .img_text h5{
-  font-size: 13px;
-}
+  #section .second_se .right_txt .img_text h5{
+    font-size: 13px;
+  }
 
 
 
@@ -320,28 +328,131 @@ input[type='radio']:checked {
   #section .forth_se .left_imgti h5{
     font-size: 12x;
   }
-#section .forth_se .left_imgti h3{
-  font-size: 30px;
-}
+  #section .forth_se .left_imgti h3{
+    font-size: 30px;
+  }
 
-#section .forth_se .left_imgti p{
-  font-size: 20px;
-}
+  #section .forth_se .left_imgti p{
+    font-size: 20px;
+  }
 
   #section .forth_se .part_img .three_img{
     display: none;
   }
 
-    #section .part_send .right_infor{
-      margin-left: -20px;
-    }
+  #section .part_send .right_infor{
+    margin-left: -20px;
+  }
   #section .part_send .left_explan{
     display: none;
   }
 }
 
-@media all and (min-width:768px) and (max-width:1023px){
+@media all and (min-width:768px) and (max-width:1024px){
   #section .banner{
-    width: 1000px;
+    width: 1008px; height: 400px;
+    margin: 0 auto;
+  }
+  #section .second_se{
+    margin-bottom: 50px;
+  }
+  #section .second_se .left_txt h2{
+    margin-bottom: 20px;
+    margin-top: -60px;
+  }
+  #section .second_se .left_txt p{
+    margin-bottom: 60px;
+  }
+  #section .thrid_se{
+    height: 150px;
+  }
+  #section .forth_se{
+    height: 400px;
+  }
+  #section .forth_se .left_imgti{
+    width: 300px; height: 450px;
+    margin-left: -100px;
+    background-size: cover;
+    justify-content: space-between;
+  }
+  #section .forth_se .part_img{
+    position: relative;
+  }
+  #section .forth_se .part_img .three_img{
+    position: absolute;
+    left: -40px; top: 0;
+  }
+  #section .forth_se .part_img .three_img2{
+    position: absolute;
+    top:200px; left: -40px;
+  }
+  #section .forth_se .part_img .three_img>li,
+  #section .forth_se .part_img .three_img2>li
+  {
+    width: 150px; height: 130px;
+  }
+  #section .forth_se .part_img .three_img>li img,
+  #section .forth_se .part_img .three_img2>li img
+  {
+    width: 150px; height: 130px;
+  }
+  #section .part_send{
+    /* padding-top: 170px; */
+    height: 450px;
+    box-sizing: border-box;
+  }
+  #section .part_send .left_explan h2{
+    font-size: 30px;
+  }
+  #section .part_send .left_explan h4{
+    font-size: 15px;
+  }
+  #section .part_send .left_explan h5,
+  #section .part_send .left_explan .adre
+  {
+    font-size: 12px;
+  }
+  #section .part_send .right_infor{
+    width: 450px; height: 290px;
+    padding: 20px;
+
+  }
+  #section .part_send .right_infor h1{
+    font-size: 15px;
+    padding: 0;
+  }
+  #section .part_send .right_infor .top_text .name,
+  #section .part_send .right_infor .top_text .part_name,
+  #section .part_send .right_infor .bottom_text .number,
+  #section .part_send .right_infor .bottom_text .email{
+    width: 200px; height: 30px;
+  }
+  #section .part_send .right_infor .infor_text h1{
+    font-size: 15px;
+    margin-top: -10px;
+  }
+  #section .part_send .right_infor .infor_text .in_txt .infor{
+    width: 410px; height: 45px;
+    padding: 12px;
+  }
+  #section .part_send .right_infor p{
+    margin-top: 20px;
+  }
+}
+
+@media all and (min-width:1025px) and (max-width:1280px){
+  #section .banner{
+    width: 1260px; height: 430px;
+    margin: 0 auto;
+  }
+  #section .second_se{
+    margin: 30px 0;
+  }
+  #section .second_se .left_txt h2{
+    margin-bottom: 15px;
+    margin-top: 50px;
+  }
+  #section .second_se .left_txt p{
+    margin-bottom: 65px;
   }
 }

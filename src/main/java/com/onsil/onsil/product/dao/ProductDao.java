@@ -31,7 +31,7 @@ public class ProductDao {
                             review.getMember().getNickName(),
                             review.getContent(),
                             review.getRating(),
-                            review.getRegdate(),
+                            review.getRegDate(),
                             review.getImage()
                     ))
                     .collect(Collectors.toList());

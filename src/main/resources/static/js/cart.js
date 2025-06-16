@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (buyBtn) {
         buyBtn.addEventListener("click", function () {
             // 단순 이동 (쿼리스트링 등 추가 정보 필요 없으면 이대로)
-            location.href = "payment.html";
+            location.href = "/payment";
         });
     }
 

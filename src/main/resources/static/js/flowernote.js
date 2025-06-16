@@ -4,10 +4,10 @@
 let currentSearchResults = [];
 let isSearchMode = false;
 
-function openTab(tabName, btn){
+function openTab(tabName, btn) {
     let tabs = document.getElementsByClassName('m-flower-list');
 
-    for(let i = 0; i < tabs.length; i++){
+    for (let i = 0; i < tabs.length; i++) {
         tabs[i].style.display = "none";
     }
 
@@ -16,7 +16,7 @@ function openTab(tabName, btn){
 
     document.getElementById(tabName).style.display = "flex";
 
-    if(btn){
+    if (btn) {
         btn.classList.add("active");
     }
 
@@ -88,11 +88,11 @@ function createNewListItem(index) {
     const li = document.createElement('li');
     li.className = `list${index}`;
     li.innerHTML = `
-        <div class="flower-image"></div>
-        <div class="flower-name">
-            <p class="name-txt">꽃이름</p>
-        </div>
-    `;
+            <div class="flower-image"></div>
+            <div class="flower-name">
+                <p class="name-txt">꽃이름</p>
+            </div>
+        `;
     return li;
 }
 
@@ -136,7 +136,7 @@ function initializeSearchFeature() {
                 if (searchInput) {
                     // 기존 입력창을 검색용으로 활용
                     searchInput.placeholder = '꽃 이름이나 꽃말을 검색해보세요...';
-                    searchInput.addEventListener('keypress', function(e) {
+                    searchInput.addEventListener('keypress', function (e) {
                         if (e.key === 'Enter') {
                             performSearch(this.value);
                         }
@@ -182,7 +182,7 @@ function showSearchResults(flowers) {
 
     // 월별 리스트 숨기기
     let tabs = document.getElementsByClassName('m-flower-list');
-    for(let i = 0; i < tabs.length; i++){
+    for (let i = 0; i < tabs.length; i++) {
         tabs[i].style.display = "none";
     }
 
@@ -278,11 +278,11 @@ function showNoResultsMessage() {
     }
 }
 
-// 검색 결과 숨기기
+// 검색 결과 숨기기(안 나와도 보이게 수정)
 function hideSearchResults() {
     const searchResult = document.querySelector('.search-result');
     if (searchResult) {
-        searchResult.style.display = 'none';
+        searchResult.style.display = 'block';
     }
 }
 
@@ -311,89 +311,89 @@ function createAndShowModal(flower) {
     const modal = document.createElement('div');
     modal.id = 'flowerDetailModal';
     modal.style.cssText = `
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    `;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `;
 
-    const imageUrl = flower.imageUrl || `/images/flower/${String(flower.dataNo).padStart(5, '0')}_${flower.flowerName}.png`;
+    const imageUrl = flower.imageUrl || (flower.image ? `/images/flower/${flower.image}` : '/images/flower/default.jpg');
 
     modal.innerHTML = `
-        <div style="
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            margin: 20px;
-        ">
-            <span onclick="closeFlowerModal()" style="
-                position: absolute;
-                right: 15px;
-                top: 15px;
-                font-size: 24px;
-                cursor: pointer;
-                color: #aaa;
-            ">&times;</span>
-            
-            <div style="text-align: center; margin-bottom: 20px;">
-                <img src="${imageUrl}" alt="${flower.flowerName}" 
-                     style="width: 100%; max-width: 300px; height: 200px; object-fit: cover; border-radius: 10px;"
-                     onerror="this.src='/images/flower/default.png'">
+            <div style="
+                background-color: white;
+                padding: 30px;
+                border-radius: 15px;
+                max-width: 600px;
+                max-height: 80vh;
+                overflow-y: auto;
+                position: relative;
+                margin: 20px;
+            ">
+                <span onclick="closeFlowerModal()" style="
+                    position: absolute;
+                    right: 15px;
+                    top: 15px;
+                    font-size: 24px;
+                    cursor: pointer;
+                    color: #aaa;
+                ">&times;</span>
+                
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="${imageUrl}" alt="${flower.flowerName}" 
+                         style="width: 100%; max-width: 300px; height: 200px; object-fit: cover; border-radius: 10px;"
+                         onerror="this.src='/images/flower/default.png'">
+                </div>
+                
+                <h2 style="color: #8b9773; text-align: center; margin-bottom: 20px;">${flower.flowerName}</h2>
+                
+                <div style="line-height: 1.6;">
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #4B4A45;">꽃말:</strong>
+                        <p style="margin: 5px 0; color: #333;">${flower.flowLang || '정보가 없습니다.'}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #4B4A45;">꽃 정보:</strong>
+                        <p style="margin: 5px 0; color: #333;">${flower.flowerInfo || '정보가 없습니다.'}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #4B4A45;">용도:</strong>
+                        <p style="margin: 5px 0; color: #333;">${flower.fUse || '정보가 없습니다.'}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #4B4A45;">재배법:</strong>
+                        <p style="margin: 5px 0; color: #333;">${flower.fGrow || '정보가 없습니다.'}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #4B4A45;">꽃 종류:</strong>
+                        <p style="margin: 5px 0; color: #333;">${flower.fType || '정보가 없습니다.'}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #4B4A45;">가격:</strong>
+                        <p style="margin: 5px 0; color: #333;">₩${flower.price ? flower.price.toLocaleString() : '가격미정'}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #4B4A45;">계절:</strong>
+                        <p style="margin: 5px 0; color: #333;">${flower.fMonth}월의 꽃</p>
+                    </div>
+                </div>
             </div>
-            
-            <h2 style="color: #8b9773; text-align: center; margin-bottom: 20px;">${flower.flowerName}</h2>
-            
-            <div style="line-height: 1.6;">
-                <div style="margin-bottom: 15px;">
-                    <strong style="color: #4B4A45;">꽃말:</strong>
-                    <p style="margin: 5px 0; color: #333;">${flower.flowLang || '정보가 없습니다.'}</p>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <strong style="color: #4B4A45;">꽃 정보:</strong>
-                    <p style="margin: 5px 0; color: #333;">${flower.flowerInfo || '정보가 없습니다.'}</p>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <strong style="color: #4B4A45;">용도:</strong>
-                    <p style="margin: 5px 0; color: #333;">${flower.fUse || '정보가 없습니다.'}</p>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <strong style="color: #4B4A45;">재배법:</strong>
-                    <p style="margin: 5px 0; color: #333;">${flower.fGrow || '정보가 없습니다.'}</p>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <strong style="color: #4B4A45;">꽃 종류:</strong>
-                    <p style="margin: 5px 0; color: #333;">${flower.fType || '정보가 없습니다.'}</p>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <strong style="color: #4B4A45;">가격:</strong>
-                    <p style="margin: 5px 0; color: #333;">₩${flower.price ? flower.price.toLocaleString() : '가격미정'}</p>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <strong style="color: #4B4A45;">계절:</strong>
-                    <p style="margin: 5px 0; color: #333;">${flower.fMonth}월의 꽃</p>
-                </div>
-            </div>
-        </div>
-    `;
+        `;
 
     // 모달 외부 클릭 시 닫기
-    modal.onclick = function(event) {
+    modal.onclick = function (event) {
         if (event.target === modal) {
             closeFlowerModal();
         }
@@ -411,7 +411,7 @@ function closeFlowerModal() {
 }
 
 // ESC 키로 모달 닫기
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
         closeFlowerModal();
     }

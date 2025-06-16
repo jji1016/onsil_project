@@ -30,7 +30,7 @@ public class FlowerController {
         Map<Integer, Integer> monthlyCounts = flowerService.getAllMonthlyFlowerCounts();
         model.addAttribute("monthlyCounts", monthlyCounts);
 
-        return "flowernote"; // flowernote.html 템플릿 반환
+        return "flowernote/flowernote"; // flowernote.html 템플릿 반환
     }
 
     /**
