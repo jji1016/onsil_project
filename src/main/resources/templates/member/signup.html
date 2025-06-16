@@ -302,8 +302,8 @@
                         <td><label for="nickName">닉네임 <span>*</span></label></td>
                         <td>
                             <div class="nickname_check">
-                            <input type="text" id="nickName"  name="nickName" th:field="*{nickName}">
-                            <button type="button" id="checkNickNameBtn">닉네임중복확인</button>
+                                <input type="text" id="nickName"  name="nickName" th:field="*{nickName}">
+                                <button type="button" id="checkNickNameBtn">닉네임중복확인</button>
                             </div>
                         </td>
                     </tr>
@@ -638,7 +638,7 @@
     let isUserIDChecked = false;
     let isNickNameChecked = false;
     let isEmailChecked = false;
-//중복체크 안하고 회원가입 버튼 누를경우
+    //중복체크 안하고 회원가입 버튼 누를경우
     document.getElementById('signupForm').addEventListener('submit', function(event) {
         const fields = [
             { id: 'userID', label: '아이디' },
