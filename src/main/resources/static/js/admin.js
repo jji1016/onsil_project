@@ -118,32 +118,186 @@ document.addEventListener("DOMContentLoaded", function(){
         history: 2,
         point: "1,500",
         login: 8
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
+    },
+    {
+        no: 345,
+        name: "한지민",
+        id: "jiminpro",
+        grade: "구독회원",
+        phone: "010-1234-5678",
+        joined: "2025-04-27 16:34",
+        history: 3,
+        point: "2,000",
+        login: 5
     }
     ];
 
-    const tbody = document.getElementById("member-body");
 
-    members.forEach(member => {
-    const tr = document.createElement("tr");
+const rowsPerPage = 9;
+let currentPage = 1;
 
-    tr.innerHTML = `
-        <td>${member.no}</td>
-        <td>${member.name}</td>
-        <td>${member.id}</td>
-        <td>${member.grade}</td>
-        <td>${member.phone}</td>
-        <td>${member.joined}</td>
-        <td>${member.history}</td>
-        <td>${member.point}</td>
-        <td>${member.login}</td>
+const tbody = document.getElementById("member-body"); // member-body를 가져와서 tbody 변수에 저장
+const pager = document.getElementById("member-pagination");
+
+function renderTable(page = 1) { //renderTable 함수 , 기본값 1페이지
+    currentPage = page; //현재 페이지 번호 
+    const start = (page - 1) * rowsPerPage; //몇번째 회원부터 보여줄지 계산
+    const slice = members.slice(start, start + rowsPerPage); //회원 배열에서 보여줄 만큼 잘라서 slice에 저장함
+
+    tbody.innerHTML = slice.map(m => `
+        <tr>
+        <td>${m.no}</td>
+        <td>${m.name}</td>
+        <td>${m.id}</td>
+        <td>${m.grade}</td>
+        <td>${m.phone}</td>
+        <td>${m.joined}</td>
+        <td>${m.history}</td>
+        <td>${m.point}</td>
+        <td>${m.login}</td>
         <td>
-        <button class="admin_btn">수정</button>
-        <button class="del_btn">삭제</button>
+            <button class="admin_btn">수정</button>
+            <button class="del_btn">삭제</button>
         </td>
-    `;
+        </tr>
+    `).join('');
+    }
 
-    tbody.appendChild(tr);
+    function renderPagination() { 
+    const totalPages = Math.ceil(members.length / rowsPerPage);
+    pager.innerHTML = '';
+
+    pager.appendChild(makeBtn('◀', currentPage - 1, currentPage === 1));
+
+    for(let i = 1; i <= totalPages; i++) {
+        pager.appendChild(makeBtn(i, i, false, i === currentPage));
+    }
+
+    pager.appendChild(makeBtn('▶', currentPage + 1, currentPage === totalPages));
+    }
+
+    function makeBtn(label, goPage, disabled, active) {
+    const btn = document.createElement('button');
+    btn.textContent = label;
+    btn.disabled = disabled;
+    if (active) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+        renderTable(goPage);
+        renderPagination();
     });
+    return btn;
+    }
+
+    window.onload = () => {
+    renderTable();
+    renderPagination();
+    };
+
+    window.onload = () => {
+        renderTable();
+        renderPagination();
+    };
+
+
 
     
     //회원아이디 불러오기(모달창 주문내역 아이디 부분)
@@ -277,7 +431,7 @@ document.addEventListener("DOMContentLoaded", function(){
         code: "AE202050000AB07",
         name: "유럽피언 꽃구독 S",
         category: "절화",
-        grade: "다발",
+        unit: "다발",
         count: "52",
         storage: "장항동 온실하우스"
     },
@@ -285,34 +439,131 @@ document.addEventListener("DOMContentLoaded", function(){
         code: "AE202050000AB08",
         name: "유럽피언 꽃구독 M",
         category: "절화",
-        grade: "다발",
+        unit: "다발",
         count: "42",
+        storage: "장항동 온실하우스"
+    },
+    {
+        code: "AE202050000AB07",
+        name: "유럽피언 꽃구독 S",
+        category: "절화",
+        unit: "다발",
+        count: "52",
+        storage: "장항동 온실하우스"
+    },
+    {
+        code: "AE202050000AB07",
+        name: "유럽피언 꽃구독 S",
+        category: "절화",
+        unit: "다발",
+        count: "52",
+        storage: "장항동 온실하우스"
+    },
+    {
+        code: "AE202050000AB07",
+        name: "유럽피언 꽃구독 S",
+        category: "절화",
+        unit: "다발",
+        count: "52",
+        storage: "장항동 온실하우스"
+    },
+    {
+        code: "AE202050000AB07",
+        name: "유럽피언 꽃구독 S",
+        category: "절화",
+        unit: "다발",
+        count: "52",
+        storage: "장항동 온실하우스"
+    },
+    {
+        code: "AE202050000AB07",
+        name: "유럽피언 꽃구독 S",
+        category: "절화",
+        unit: "다발",
+        count: "52",
+        storage: "장항동 온실하우스"
+    },
+    {
+        code: "AE202050000AB07",
+        name: "유럽피언 꽃구독 S",
+        category: "절화",
+        unit: "다발",
+        count: "52",
+        storage: "장항동 온실하우스"
+    },
+    {
+        code: "AE202050000AB07",
+        name: "유럽피언 꽃구독 S",
+        category: "절화",
+        unit: "다발",
+        count: "52",
         storage: "장항동 온실하우스"
     }
     ];
 
-    const sbody = document.getElementById("stock-body");
+const stocksPerPage = 8;
+let currentStockPage = 1;
 
-    stocks.forEach(stock => {
-    const tr = document.createElement("tr");
+const sbody = document.getElementById("stock-body");
+const stockPager = document.getElementById("stock-pagination");
 
-    tr.innerHTML = `
+function renderStockTable(page = 1) {
+    currentStockPage = page;
+    const start = (page - 1) * stocksPerPage;
+    const slice = stocks.slice(start, start + stocksPerPage);
+
+    sbody.innerHTML = slice.map(stock => `
+        <tr>
         <td>${stock.code}</td>
         <td>${stock.name}</td>
         <td>${stock.category}</td>
-        <td>${stock.grade}</td>
+        <td>${stock.unit}</td>
         <td>${stock.count}</td>
         <td>${stock.storage}</td>
         <td>
-        <button class="admin_btn">관리</button>
-        <button class="del_btn">삭제</button>
+            <button class="admin_btn">관리</button>
+            <button class="del_btn">삭제</button>
         </td>
-    `;
+        </tr>
+    `).join('');
+    }
 
-    sbody.appendChild(tr);
+    function renderStockPagination() {
+    const totalPages = Math.ceil(stocks.length / stocksPerPage);
+    stockPager.innerHTML = '';
+
+    stockPager.appendChild(makeStockBtn('◀', currentStockPage - 1, currentStockPage === 1));
+
+    for(let i = 1; i <= totalPages; i++) {
+        stockPager.appendChild(makeStockBtn(i, i, false, i === currentStockPage));
+    }
+
+    stockPager.appendChild(makeStockBtn('▶', currentStockPage + 1, currentStockPage === totalPages));
+    }
+
+    function makeStockBtn(label, goPage, disabled, active) {
+    const btn = document.createElement('button');
+    btn.textContent = label;
+    btn.disabled = disabled;
+    if (active) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+        renderStockTable(goPage);
+        renderStockPagination();
     });
+    return btn;
+    }
+
+    
 
 
+
+
+
+
+
+
+
+    
     //입고------------------------
     const stocksIn = [
     {
@@ -334,28 +585,75 @@ document.addEventListener("DOMContentLoaded", function(){
         director: "김나라"
     }
     ];
+    const stocksInPerPage = 8;
+    let currentStockInPage = 1;
 
-    const iBody = document.getElementById("stock_in-body");
+    const sInbody = document.getElementById("stock_in-body");
+    const stockInPager = document.getElementById("stockIn-pagination");
 
-    stocksIn.forEach(stockIn => {
-    const tr = document.createElement("tr");
+    function renderStockInTable(page = 1) {
+        currentStockInPage = page;
+        const start = (page - 1) * stocksInPerPage;
+        const slice = stocksIn.slice(start, start + stocksInPerPage);
 
-    tr.innerHTML = `
-        <td>${stockIn.date}</td>
-        <td>${stockIn.code}</td>
-        <td>${stockIn.name}</td>
-        <td>${stockIn.category}</td>
-        <td>${stockIn.count}</td>
-        <td>${stockIn.storage}</td>
-        <td>${stockIn.director}</td>
-        <td>
-        <button class="admin_btn">관리</button>
-        <button class="del_btn">삭제</button>
-        </td>
-    `;
+        sInbody.innerHTML = slice.map(stocksIn => `
+            <tr>
+            <td>${stocksIn.date}</td>
+            <td>${stocksIn.code}</td>
+            <td>${stocksIn.name}</td>
+            <td>${stocksIn.category}</td>
+            <td>${stocksIn.count}</td>
+            <td>${stocksIn.storage}</td>
+            <td>${stocksIn.director}</td>
+            <td>
+                <button class="admin_btn">관리</button>
+                <button class="del_btn">삭제</button>
+            </td>
+            </tr>
+        `).join('');
+        }
 
-    iBody.appendChild(tr);
-    });
+        function renderStockInPagination() {
+        const totalInPages = Math.ceil(stocksIn.length / stocksInPerPage);
+        stockInPager.innerHTML = '';
+
+        stockInPager.appendChild(makeStockBtn('◀', currentStockInPage - 1, currentStockInPage === 1));
+
+        for(let i = 1; i <= totalInPages; i++) {
+            stockInPager.appendChild(makeStockBtn(i, i, false, i === currentStockInPage));
+        }
+
+        stockInPager.appendChild(makeStockBtn('▶', currentStockInPage + 1, currentStockInPage === totalInPages));
+        }
+
+        function makeStockInBtn(label, goPage, disabled, active) {
+        const btn = document.createElement('button');
+        btn.textContent = label;
+        btn.disabled = disabled;
+        if (active) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+            renderStockInTable(goPage);
+            renderStockInPagination();
+        });
+        return btn;
+    }
+
+    // 페이지 로딩 시 테이블 다 렌더링
+    window.onload = () => {
+        renderTable();
+        renderPagination();
+        renderStockTable();
+        renderStockPagination();
+        renderStockInTable();
+        renderStockInPagination();
+    };
+    
+
+
+
+
+
+
 
 
 
@@ -381,27 +679,65 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     ];
 
-    const oBody = document.getElementById("stock_out-body");
+    const stocksOutPerPage = 8;
+    let currentStockOutPage = 1;
 
-    stocksOut.forEach(stockOut => {
-    const tr = document.createElement("tr");
+    const sOutbody = document.getElementById("stock_out-body");
+    const stockOutPager = document.getElementById("stockOut-pagination");
 
-    tr.innerHTML = `
-        <td>${stockOut.date}</td>
-        <td>${stockOut.code}</td>
-        <td>${stockOut.name}</td>
-        <td>${stockOut.category}</td>
-        <td>${stockOut.count}</td>
-        <td>${stockOut.storage}</td>
-        <td>${stockOut.director}</td>
-        <td>
-        <button class="admin_btn">관리</button>
-        <button class="del_btn">삭제</button>
-        </td>
-    `;
+    function renderStockOutTable(page = 1) {
+        currentStockOutPage = page;
+        const start = (page - 1) * stocksOutPerPage;
+        const slice = stocksOut.slice(start, start + stocksOutPerPage);
 
-    oBody.appendChild(tr);
+        sOutbody.innerHTML = slice.map(stockOut => `
+            <tr>
+            <td>${stockOut.date}</td>
+            <td>${stockOut.code}</td>
+            <td>${stockOut.name}</td>
+            <td>${stockOut.category}</td>
+            <td>${stockOut.count}</td>
+            <td>${stockOut.storage}</td>
+            <td>${stockOut.director}</td>
+            <td>
+                <button class="admin_btn">관리</button>
+                <button class="del_btn">삭제</button>
+            </td>
+            </tr>
+        `).join('');
+        }
+
+        function renderStockOutPagination() {
+        const totalOutPages = Math.ceil(stocksOut.length / stocksOutPerPage);
+        stockOutPager.innerHTML = '';
+
+        stockOutPager.appendChild(makeStockOutBtn('◀', currentStockOutPage - 1, currentStockOutPage === 1));
+
+        for(let i = 1; i <= totalOutPages; i++) {
+            stockOutPager.appendChild(makeStockOutBtn(i, i, false, i === currentStockOutPage));
+        }
+
+        stockOutPager.appendChild(makeStockOutBtn('▶', currentStockOutPage + 1, currentStockOutPage === totalOutPages));
+        }
+
+        function makeStockOutBtn(label, goPage, disabled, active) {
+        const btn = document.createElement('button');
+        btn.textContent = label;
+        btn.disabled = disabled;
+        if (active) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+            renderStockOutTable(goPage);
+            renderStockOutPagination();
+        });
+        return btn;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        renderStockOutTable();
+        renderStockOutPagination();
     });
+
+
 
 
 
@@ -863,31 +1199,84 @@ document.addEventListener("DOMContentLoaded", function(){
         delName: "이석훈",
         price: "48,900",
         pay: "신용카드"
+    },
+    {
+        no: 1,
+        date: "2025-06-09",
+        orderNo: "20250609007A",
+        product: "6월의 탄생화 장미 시리즈",
+        count : "1",
+        fee: "0",
+        state: "결제완료",
+        id: "jiminpro",
+        name: "한지민",
+        delName: "이석훈",
+        price: "48,900",
+        pay: "신용카드"
     }
     ];
 
+
+    const orderPerPage = 7;
+    let currentOrderPage = 1;
+
     const orderBody = document.getElementById("order-body");
+    const orderPager = document.getElementById("order-pagination");
 
-    orders.forEach(order => {
-    const tr = document.createElement("tr");
+    function renderOrderTable(page = 1) {
+        currentOrderPage = page;
+        const start = (page - 1) * orderPerPage;
+        const slice = orders.slice(start, start + orderPerPage);
 
-    tr.innerHTML = `
-        <td>${order.no}</td>
-        <td>${order.date}</td>
-        <td  class="order_btn">${order.orderNo}</td>
-        <td>${order.product}</td>
-        <td>${order.count}</td>
-        <td>${order.fee}</td>
-        <td>${order.state}</td>
-        <td>${order.id}</td>
-        <td>${order.name}</td>
-        <td>${order.delName}</td>
-        <td>${order.price}</td>
-        <td>${order.pay}</td>
-    `;
+        orderBody.innerHTML = slice.map(order => `
+            <tr>
+            <td>${order.no}</td>
+            <td>${order.date}</td>
+            <td  class="order_btn">${order.orderNo}</td>
+            <td>${order.product}</td>
+            <td>${order.count}</td>
+            <td>${order.fee}</td>
+            <td>${order.state}</td>
+            <td>${order.id}</td>
+            <td>${order.name}</td>
+            <td>${order.delName}</td>
+            <td>${order.price}</td>
+            <td>${order.pay}</td>
+            </tr>
+        `).join('');
+        }
 
-    orderBody.appendChild(tr);
+        function renderOrderPagination() {
+        const totalorderPages = Math.ceil(orders.length / orderPerPage);
+        orderPager.innerHTML = '';
+
+        orderPager.appendChild(makeOrderBtn('◀', currentOrderPage - 1, currentOrderPage === 1));
+
+        for(let i = 1; i <= totalorderPages; i++) {
+            orderPager.appendChild(makeOrderBtn(i, i, false, i === currentOrderPage));
+        }
+
+        orderPager.appendChild(makeOrderBtn('▶', currentOrderPage + 1, currentOrderPage === totalorderPages));
+        }
+
+        function makeOrderBtn(label, goPage, disabled, active) {
+        const btn = document.createElement('button');
+        btn.textContent = label;
+        btn.disabled = disabled;
+        if (active) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+            renderOrderTable(goPage);
+            renderOrderPagination();
+        });
+        return btn;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        renderOrderTable();
+        renderOrderPagination();
     });
+
+
 
 
 
@@ -1026,28 +1415,66 @@ delivery.forEach(info => {
     }
     ];
 
-    const itemsBody = document.getElementById("items_body");
+        const itemPerPage = 7;
+        let currentItemPage = 1;
 
-    items.forEach(itemsIn => {
-    const tr = document.createElement("tr");
+        const itemBody = document.getElementById("items_body");
+        const itemPager = document.getElementById("item-pagination");
 
-    tr.innerHTML = `
-        <td>${itemsIn.no}</td>
-        <td>${itemsIn.code}</td>
-        <td>${itemsIn.name}</td>
-        <td>${itemsIn.category}</td>
-        <td>${itemsIn.date}</td>
-        <td>${itemsIn.dateR}</td>
-        <td>${itemsIn.price}</td>
-        <td>${itemsIn.sellPrice}</td>
-        <td>
-        <button class="modi_btn">수정</button>
-        <button class="del_btn">삭제</button>
-        </td>
-    `;
+        function renderItemTable(page = 1) {
+            currentItemPage = page;
+            const start = (page - 1) * itemPerPage;
+            const slice = items.slice(start, start + itemPerPage);
 
-    itemsBody.appendChild(tr);
+            itemBody.innerHTML = slice.map(itemsIn => `
+                <tr>
+                <td>${itemsIn.no}</td>
+                <td>${itemsIn.code}</td>
+                <td>${itemsIn.name}</td>
+                <td>${itemsIn.category}</td>
+                <td>${itemsIn.date}</td>
+                <td>${itemsIn.dateR}</td>
+                <td>${itemsIn.price}</td>
+                <td>${itemsIn.sellPrice}</td>
+                <td>
+                <button class="modi_btn">수정</button>
+                <button class="del_btn">삭제</button>
+                </td>
+                </tr>
+            `).join('');
+            }
+
+            function renderItemPagination() {
+            const totalItemPages = Math.ceil(items.length / itemPerPage);
+            itemPager.innerHTML = '';
+
+            itemPager.appendChild(makeItemBtn('◀', currentItemPage - 1, currentItemPage === 1));
+
+            for(let i = 1; i <= totalItemPages; i++) {
+                itemPager.appendChild(makeItemBtn(i, i, false, i === currentItemPage));
+            }
+
+            itemPager.appendChild(makeItemBtn('▶', currentItemPage + 1, currentItemPage === totalItemPages));
+            }
+
+            function makeItemBtn(label, goPage, disabled, active) {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            btn.disabled = disabled;
+            if (active) btn.classList.add('active');
+            btn.addEventListener('click', () => {
+                renderItemTable(goPage);
+                renderItemPagination();
+            });
+            return btn;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderItemTable();
+            renderItemPagination();
     });
+
+
 
     //상품수량 카운트
     document.querySelector(".item_count").textContent = items.length;
