@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온실 플라워 스튜디오 - 관리자</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function(){
+            //주문내역 모달창
+            $(".order_btn").click(function(){
+                $("#order_modal").stop().fadeIn(300);
+            });
+            $(".close").click(function(){
+                $("#order_modal").stop().fadeOut(300);
+            });
+
+
+            //상품등록 모달창
+            $(".add_btn").click(function(){
+                $("#items_modal").stop().fadeIn(300);
+            });
+            $(".close").click(function(){
+                $("#items_modal").stop().fadeOut(300);
+            });
+
+            //회원관리 수정 모달창
+            $(document).on("click",".admin_btn",function(){
+                $("#mem-modal").stop().fadeIn(300);
+            });
+            //$("item-btn>.close").click(function()
+            $(document).on("click",".mem-btn>.close",function(){
+                $("#mem-modal").stop().fadeOut(300);
+            });
+
+        });
+    </script>
+    
+
+</head>
+<body>
+    <div id="header">
+        <div class="wrap_hd">
+            <div class="wrap_logo">
+                <h1 class="logo"><a href="#"><img src="images/admin/logo.png" alt="logo"></a></h1>
+                <span>ADMIN</span>
+            </div>
+            <ul class="gnb">
+                <li onclick="openTab('home',this);">
+                    <a href="#">
+                        <span class="icon_area ico1"></span>
+                        홈화면
+                    </a>
+                </li>
+                <li onclick="openTab('member',this);">
+                    <a href="#">
+                        <span class="icon_area ico2"></span>
+                        회원관리
+                    </a>
+                </li>
+                <li onclick="openTab('stock',this);">
+                    <a href="#">
+                        <span class="icon_area ico3"></span>
+                        입출고 및 재고현황
+                    </a>
+                </li>
+                <li onclick="openTab('sales',this);">
+                    <a href="#">
+                        <span class="icon_area ico4"></span>
+                        매출관리
+                    </a>
+                </li>
+                <li onclick="openTab('order',this);">
+                    <a href="#">
+                        <span class="icon_area"></span>
+                        주문내역관리
+                    </a>
+                </li>
+                <li onclick="openTab('items',this);">
+                    <a href="#">
+                        <span class="icon_area"></span>
+                        상품관리
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <div id="section">
+        <div id="home" class="tab">
+            <div class="home_top">
+                <ul class="overview">
+                    <li>
+                        <a href="#">
+                            <img src="images/admin/icon_over_member.png" alt="회원아이콘">
+                            <h3>신규 가입자</h3>
+                            <p>32<span>명</span></p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="images/admin/icon_over_member.png" alt="전체회원아이콘">
+                            <h3>전체 가입자</h3>
+                            <p>345<span>명</span></p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="images/admin/icon_over_deli.png" alt="배송아이콘">
+                            <h3>신규 주문</h3>
+                            <p>57<span>건</span></p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="images/admin/icon_over_qna.png" alt="문의아이콘">
+                            <h3>신규 문의</h3>
+                            <p>17<span>건</span></p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="images/admin/icon_over_review.png" alt="리뷰아이콘">
+                            <h3>신규 리뷰</h3>
+                            <p>24<span>건</span></p>
+                        </a>
+                    </li>
+                </ul>
+                <div class="admin">
+                    <div class="ad_info">
+                        <img src="images/admin/admin.png" alt="관리자이미지">
+                        <h3>사용자 이름</h3>
+                        <p>전체 관리자</p>
+                    </div>
+                    <ul class="setting">
+                        <li>
+                            <img src="images/admin/icon_setting.png" alt="수정">수정
+                        </li>
+                        <li>
+                            <img src="images/admin/icon_logout.png" alt="로그아웃">로그아웃
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sale_chart">
+                <h2 class="title_txt">월별 매출 요약</h2>
+                <div class="h_chart_area">
+                    <canvas id="homeSales" width="620" height="110"></canvas>
+                </div>
+            </div>
+            <ul class="home_bt">
+                <li class="best_item">
+                    <h2>인기상품</h2>
+                    <div class="cont_area">
+                        <table>
+                            <tr>
+                                <td>1.</td>
+                                <td><span>5월 카네이션 패키지</span></td>
+                            </tr>
+                            <tr>
+                                <td>2.</td>
+                                <td><span>2만원대로 유럽피언 꽃 구독(S)</span></td>
+                            </tr>
+                            <tr>
+                                <td>3.</td>
+                                <td><span>4만원대로 유럽피언 꽃 구독(M)</span></td>
+                            </tr>
+                            <tr>
+                                <td>4.</td>
+                                <td><span>마법같은 행복, 페어리 가든 꽃다발(M)</span></td>
+                            </tr>
+                            <tr>
+                                <td>5.</td>
+                                <td><span>[6월의 탄생화] 사랑을 담은 수국 패키지</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li class="today_order">
+                    <h2>오늘의 주문</h2>
+                    <div class="cont_area">
+                        <table>
+                            <tr>
+                                <th>총 주문 건수</th>
+                                <th>총 주문금액</th>
+                            </tr>
+                            <tr>
+                                <td><span>24</span></td>
+                                <td><span>2,548,800</span></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th>입금대기</th>
+                                <th>결제완료</th>
+                            </tr>
+                            <tr>
+                                <td><span>2</span></td>
+                                <td><span>22</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+                <li class="ship">
+                    <h2>배송현황</h2>
+                    <div class="cont_area">
+                        <table>
+                            <tr>
+                                <th>배송준비중</th>
+                                <th>배송중</th>
+                            </tr>
+                            <tr>
+                                <td><span>28</span></td>
+                                <td><span>14</span></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th>배송완료</th>
+                            </tr>
+                            <tr>
+                                <td><span>32</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div id="member" class="tab">
+            <div class="search">
+                <h2>회원관리</h2>
+                <form>
+                    <table>
+                        <tr>
+                            <td>회원검색</td>
+                            <td>
+                                <select name="type">
+                                    <option value="아이디">아이디</option>
+                                    <option value="이름">이름</option>
+                                </select>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>기간검색</td>
+                            <td>
+                                <select name="day">
+                                    <option value="가입일">가입일</option>
+                                    <option value="주문일">주문일</option>
+                                </select>
+                                <input type="date">~<input type="date">
+                                <button>오늘</button>
+                                <button>일주일</button>
+                                <button>1개월</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>회원등급</td>
+                            <td>
+                                <input type="checkbox" value="전체"> 전체
+                                <input type="checkbox" value="비기너"> 비기너
+                                <input type="checkbox" value="실버"> 실버
+                                <input type="checkbox" value="골드"> 골드
+                                <input type="checkbox" value="구독회원"> 구독회원
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btn">
+                        <button class="btn1" type="submit">검색</button>
+                        <button class="btn2" type="reset">초기화</button>
+                    </div>
+                </form>
+            </div>
+            <div class="wrap_list">
+                <ul class="btn_count">
+                    <li>
+                        <button>엑셀저장</button>
+                    </li>
+                    <li>
+                        <p>총 회원수 : <span class="mem_count">345</span>명</p>
+                    </li>
+                </ul>
+                <table class="mem_list">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>회원명</th>
+                            <th>아이디</th>
+                            <th>회원등급</th>
+                            <th>연락처</th>
+                            <th>가입일시</th>
+                            <th>구매이력</th>
+                            <th>포인트</th>
+                            <th>로그인</th>
+                            <th>　</th>
+                        </tr>
+                    </thead>
+                    <tbody id="member-body">
+                        
+                    </tbody>
+                </table>
+                <div id="member-pagination" class="pagination"></div>
+                <div id="mem-modal">
+                    <div class="wrap-all">
+                        <div class="de_title">
+                            <h1>회원정보관리</h1>
+                        </div>
+                        <ul class="tab-btn">
+                            <li onclick="openPage('mem-info',this);">회원정보</li>
+                            <li onclick="openPage('mem-order',this)">주문내역</li>
+                        </ul>
+                        <ul class="wrap-cont">
+                            <li id="mem-info" class="tab-cont">
+                                <form action="">
+                                    <table>
+                                        <tr>
+                                            <td>아이디</td>
+                                            <td>
+                                                <p>jiminpro</p>
+                                                <input type="button" value="비밀번호 변경">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>이름</td>
+                                            <td>
+                                                <p>한지민</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>이메일</td>
+                                            <td>
+                                                <input type="text">@
+                                                <select name="email">
+                                                    <option value="naver.com">naver.com</option>
+                                                    <option value="nate.com">nate.com</option>
+                                                    <option value="daum.net">daum.net</option>
+                                                    <option value="gmail.com">gmail.com</option>
+                                                </select><br>
+                                                <input type="checkbox" name="수신동의" id=""> 이메일 수신동의
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>주소</td>
+                                            <td>
+                                                <input type="text"> <input type="button" value="우편번호"><br>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>휴대전화</td>
+                                            <td>
+                                                <select name="phone" id="">
+                                                    <option value="선택">선택</option>
+                                                    <option value="010">010</option>
+                                                    <option value="011">011</option>
+                                                    <option value="017">017</option>
+                                                </select>-
+                                                <input type="text">-
+                                                <input type="text">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>일반전화</td>
+                                            <td>
+                                                <select name="tel" id="">
+                                                    <option value="선택">선택</option>
+                                                    <option value="02">02</option>
+                                                    <option value="031">031</option>
+                                                    <option value="032">032</option>
+                                                    <option value="054">054</option>
+                                                    <option value="061">061</option>
+                                                </select>-
+                                                <input type="text">-
+                                                <input type="text">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>생년월일</td>
+                                            <td>
+                                                <input type="text"> 년
+                                                <input type="text"> 월
+                                                <input type="text"> 일
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="mem-btn">
+                                        <button type="submit" class="save">저장</button>
+                                        <button type="button" class="close">닫기</button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li id="mem-order" class="tab-cont">
+                                <table class="user-id">
+                                    <tr>
+                                        <td>회원아이디</td>
+                                        <td class="view-user-id"></td>
+                                    </tr>
+                                </table>
+                                <table class="mem-order-list">
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>주문일시</th>
+                                            <th>주문번호</th>
+                                            <th>상품</th>
+                                            <th>주문상태</th>
+                                            <th>총주문금액</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mem-order-body">
+                                        
+                                    </tbody>
+                                </table>
+                                <div class="mem-btn">
+                                    <button type="button" class="close">닫기</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="stock" class="tab">
+            <div class="stock_btn">
+                <button onclick="changeTab('desc_stock',this)">재고현황</button>
+                <button onclick="changeTab('desc_in',this)">입고현황</button>
+                <button onclick="changeTab('desc_out',this)">출고현황</button>
+            </div>
+            <ul class="stock_cont">
+                <li class="desc_stock st_tab">
+                    <div class="search">
+                        <h2>재고관리</h2>
+                        <form>
+                            <table>
+                                <tr>
+                                    <td>검색어</td>
+                                    <td colspan="3">
+                                        <select name="type">
+                                            <option value="품목명">품목명</option>
+                                            <option value="품목코드">품목코드</option>
+                                        </select>
+                                        <input type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>카테고리</td>
+                                    <td colspan="3">
+                                        <select name="type">
+                                            <option value="카테고리선택">카테고리선택</option>
+                                            <option value="절화">절화</option>
+                                            <option value="부자재">부자재</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>기간검색</td>
+                                    <td>
+                                        <select name="day">
+                                            <option value="최근수정일">최근수정일</option>
+                                            <option value="등록일">등록일</option>
+                                        </select>
+                                        <input type="date">~<input type="date">
+                                        <button>오늘</button>
+                                        <button>일주일</button>
+                                        <button>1개월</button>
+                                    </td>
+                                    <td>상품가격</td>
+                                    <td>
+                                        <select name="price">
+                                            <option value="판매가">판매가</option>
+                                            <option value="할인가">할인가</option>
+                                        </select>
+                                        <input type="text">원 이상~<input type="text">원 이하
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>판매여부</td>
+                                    <td>
+                                        <input type="radio" name="sale1" value="전체"> 전체
+                                        <input type="radio" name="sale1"  value="진열"> 진열
+                                        <input type="radio" name="sale1"  value="품절"> 품절
+                                        <input type="radio" name="sale1"  value="단종"> 단종
+                                        <input type="radio" name="sale1"  value="중지"> 중지
+                                    </td>
+                                    <td>필수옵션</td>
+                                    <td>
+                                        <input type="radio" name="option" value="사용"> 사용
+                                        <input type="radio" name="option"  value="미사용"> 미사용
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="btn">
+                                <button class="btn1" type="submit">검색</button>
+                                <button class="btn2" type="reset">초기화</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="wrap_list">
+                        <table class="stock_list">
+                            <thead>
+                                <tr>
+                                    <th>품목코드</th>
+                                    <th>품목명</th>
+                                    <th>카테고리</th>
+                                    <th>품목단위</th>
+                                    <th>재고</th>
+                                    <th>보관창고</th>
+                                    <th>　</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stock-body">
+                                
+                            </tbody>
+                        </table>
+                        <div id="stock-pagination" class="pagination"></div>
+                    </div>
+                </li>
+                <li class="desc_in st_tab">
+                    <div class="search">
+                        <h2>입고관리</h2>
+                        <form action="">
+                            <table>
+                                <tr>
+                                    <td>품목검색</td>
+                                    <td>
+                                        <select name="type">
+                                            <option value="품목명">품목명</option>
+                                            <option value="품목코드">품목코드</option>
+                                        </select>
+                                        <input type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>기간검색</td>
+                                    <td>
+                                        <select name="day">
+                                            <option value="최근수정일">최근수정일</option>
+                                            <option value="입고일">입고일</option>
+                                        </select>
+                                        <input type="date">~<input type="date">
+                                        <button>오늘</button>
+                                        <button>일주일</button>
+                                        <button>1개월</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="btn">
+                                <button class="btn1" type="submit">검색</button>
+                                <button class="btn2" type="reset">초기화</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="wrap_list">
+                        <div>
+                            <button class="add_btn">입고등록</button>
+                        </div>
+                        <table class="stock_list">
+                            <thead>
+                                <tr>
+                                    <th>입고일자</th>
+                                    <th>품목코드</th>
+                                    <th>품목명</th>
+                                    <th>카테고리</th>
+                                    <th>입고수량</th>
+                                    <th>공급처</th>
+                                    <th>담당자</th>
+                                    <th>　</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stock_in-body">
+                                
+                            </tbody>
+                        </table>
+                        <div id="stockIn-pagination" class="pagination"></div>
+                    </div>
+                </li>
+                <li class="desc_out st_tab">
+                    <div class="search">
+                        <h2>입고관리</h2>
+                        <form action="">
+                            <table>
+                                <tr>
+                                    <td>품목검색</td>
+                                    <td>
+                                        <select name="type">
+                                            <option value="품목명">품목명</option>
+                                            <option value="품목코드">품목코드</option>
+                                        </select>
+                                        <input type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>기간검색</td>
+                                    <td>
+                                        <select name="day">
+                                            <option value="최근수정일">최근수정일</option>
+                                            <option value="출고일">출고일</option>
+                                        </select>
+                                        <input type="date">~<input type="date">
+                                        <button>오늘</button>
+                                        <button>일주일</button>
+                                        <button>1개월</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="btn">
+                                <button class="btn1" type="submit">검색</button>
+                                <button class="btn2" type="reset">초기화</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="wrap_list">
+                        <div>
+                            <button class="add_btn">출고등록</button>
+                        </div>
+                        <table class="stock_list">
+                            <thead>
+                                <tr>
+                                    <th>출고일자</th>
+                                    <th>품목코드</th>
+                                    <th>품목명</th>
+                                    <th>카테고리</th>
+                                    <th>출고수량</th>
+                                    <th>출고처</th>
+                                    <th>담당자</th>
+                                    <th>　</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stock_out-body">
+                                
+                            </tbody>
+                            
+                        </table>
+                        <div id="stockOut-pagination" class="pagination"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+
+        <div id="sales" class="tab">
+            <ul class="sales_info">
+                <li>
+                    <img src="images/admin/icon_sales_big.png" alt="매출아이콘">
+                    <h3>오늘의 매출</h3>
+                    <p>2,867,500<span>원</span></p>
+                </li>
+                <li>
+                    <img src="images/admin/icon_sales_big.png" alt="매출아이콘">
+                    <h3>이번달 매출</h3>
+                    <p>18,524,700<span>원</span></p>
+                </li>
+                <li>
+                    <img src="images/admin/icon_over_deli.png" alt="매출아이콘">
+                    <h3>이번달 주문수</h3>
+                    <p>146<span>건</span></p>
+                </li>
+                <li>
+                    <img src="images/admin/icon_average.png" alt="평균아이콘">
+                    <h3>평균 객단가</h3>
+                    <p>126,880<span>원</span></p>
+                </li>
+            </ul>
+            
+            <div class="sale_chart">
+                <div class="sale_title">
+                    <h2>기간별 매출</h2>
+                    <button onclick="openChart('day_sales',this);" class="day">일별</button>
+                    <button onclick="openChart('week_sales',this);" class="week">주별</button>
+                    <button onclick="openChart('month_sales',this);" class="month">월별</button>
+                </div>
+                <div class="chart_area">
+                    <canvas id="day_sales" class="charts" width="780" height="110"></canvas>
+                    <canvas id="week_sales" class="charts" width="780" height="110"></canvas>
+                    <canvas id="month_sales" class="charts" width="780" height="110"></canvas>
+                </div>
+            </div>
+            <div class="category_chart">
+                <h2>카테고리별 매출 비중</h2>
+                <div class="c_chart_area">
+                    <canvas id="c_day_sales" class="c_charts" width="780" height="110"></canvas>
+                    <canvas id="c_week_sales" class="c_charts" width="780" height="110"></canvas>
+                    <canvas id="c_month_sales" class="c_charts" width="780" height="110"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="order" class="tab">
+            <div class="search">
+                <h2>주문내역관리</h2>
+                <form action="">
+                    <table>
+                        <tr>
+                            <td>검색어</td>
+                            <td>
+                                <select name="type">
+                                    <option value="주문번호">주문번호</option>
+                                    <option value="회원아이디">회원아이디</option>
+                                    <option value="주문자명">주문자명</option>
+                                    <option value="수취인명">수취인명</option>
+                                </select>
+                                <input type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>기간검색</td>
+                            <td>
+                                <select name="day">
+                                    <option value="주문일">주문일</option>
+                                    <option value="입금완료일">입금완료일</option>
+                                </select>
+                                <input type="date">~<input type="date">
+                                <button>오늘</button>
+                                <button>일주일</button>
+                                <button>1개월</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>결제방법</td>
+                            <td>
+                                <input type="radio" name="pay" value="전체"> 전체
+                                <input type="radio" name="pay" value="무통장"> 무통장
+                                <input type="radio" name="pay" value="가상계좌"> 가상계좌
+                                <input type="radio" name="pay" value="휴대폰"> 휴대폰
+                                <input type="radio" name="pay" value="신용카드"> 신용카드
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>주문상태</td>
+                            <td>
+                                <input type="radio" name="state" value="전체"> 전체
+                                <input type="radio" name="state" value="입금대기"> 입금대기
+                                <input type="radio" name="state" value="입금완료"> 입금완료 
+                                <input type="radio" name="state" value="배송준비"> 배송준비
+                                <input type="radio" name="state" value="배송중"> 배송중
+                                <input type="radio" name="state" value="배송완료"> 배송완료
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>구매확정</td>
+                            <td>
+                                <input type="radio" name="dec" value="전체"> 전체
+                                <input type="radio" name="dec" value="구매확정"> 구매확정
+                                <input type="radio" name="dec" value="구매미확정"> 구매미확정  
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btn">
+                        <button class="btn1" type="submit">검색</button>
+                        <button class="btn2" type="reset">초기화</button>
+                    </div>
+                </form>
+            </div>
+            <div class="wrap_list">
+                <ul class="btn_count">
+                    <li>
+                        <button>주문서출력</button>
+                        <button>엑셀저장</button>
+                    </li>
+                </ul>
+                <table class="order_list">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>주문일시</th>
+                            <th>주문번호</th>
+                            <th>상품</th>
+                            <th>수량</th>
+                            <th>배송비</th>
+                            <th>주문상태</th>
+                            <th>회원아이디</th>
+                            <th>주문자명</th>
+                            <th>수령인명</th>
+                            <th>총주문금액</th>
+                            <th>결제방법</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-body">
+                        
+                    </tbody>
+                </table>
+                <div id="order-pagination" class="pagination"></div>
+
+                <div id="order_modal">
+                    <div class="modal_con">
+                        <div class="de_title">
+                            <h1>주문상세</h1>
+                        </div>
+                        <div class="modal_cont">
+                            <div class="tit_txt">
+                                <h2>주문정보</h2>
+                                <div class="bt">
+                                    <button>주문서출력</button>
+                                    <button>영수증출력</button>
+                                </div>
+                            </div>
+                            <table class="order_info">
+                                <tbody id="orderInforBody">
+
+                                </tbody>
+                            </table>
+                            <h2>배송정보</h2>
+                            <table class="deli_info">
+                                <tbody id="deliBody">
+                                    
+                                </tbody>
+                            </table>
+                            <button class="close">닫기</button>
+                        </div>                            
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div id="items" class="tab">
+            <ul class="items_cont">
+                <li class="desc_item it_tab">
+                    <div class="search">
+                        <h2>상품관리</h2>
+                        <form action="">
+                            <table>
+                                <tr>
+                                    <td>품목검색</td>
+                                    <td>
+                                        <select name="type">
+                                            <option value="품목명">품목명</option>
+                                            <option value="품목코드">품목코드</option>
+                                        </select>
+                                        <input type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>기간검색</td>
+                                    <td>
+                                        <select name="day">
+                                            <option value="등록일">등록일</option>
+                                            <option value="최근수정일">최근수정일</option>
+                                        </select>
+                                        <input type="date">~<input type="date">
+                                        <button>오늘</button>
+                                        <button>일주일</button>
+                                        <button>1개월</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="btn">
+                                <button class="btn1" type="submit">검색</button>
+                                <button class="btn2" type="reset">초기화</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="wrap_list">
+                        <div class="item_sub">
+                            <button class="add_btn">상품등록</button>
+                            <p>총 상품수 : <span class="item_count">345</span>개</p>
+                        </div>
+                        <table class="items_list">
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>품목코드</th>
+                                    <th>품목명</th>
+                                    <th>카테고리</th>
+                                    <th>최초등록일</th>
+                                    <th>최근수정일</th>
+                                    <th>공급가</th>
+                                    <th>판매가</th>
+                                    <th>　</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items_body">
+                                
+                            </tbody>
+                        </table>
+                        <div id="item-pagination" class="pagination"></div>
+                        <div id="items_modal">
+                            <div class="modal_con">
+                                <div class="de_title">
+                                    <h1>상품등록</h1>
+                                </div>
+                                <div class="modal_cont">
+                                    <h2>등록정보</h2>
+                                    <form action="">
+                                        <table class="itesm_info">
+                                            <tr>
+                                                <td>카테고리<span>*</span></td>
+                                                <td>
+                                                    <select name="category" id="">
+                                                        <option value="절화">절화</option>
+                                                        <option value="부자재">부자재</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>품목코드<span>*</span></td>
+                                                <td>
+                                                    <input type="text" name="item_code">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>품목명<span>*</span></td>
+                                                <td>
+                                                    <input type="text">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>설명</td>
+                                                <td>
+                                                    <input type="text">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>공급가</td>
+                                                <td>
+                                                    <input type="text">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>판매가<span>*</span></td>
+                                                <td>
+                                                    <input type="text">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>검색키워드</td>
+                                                <td>
+                                                    <input type="text"><br>
+                                                    <p>단어와 단어 사이는 콤마 ( , ) 로 구분하여 여러개를 입력할 수 있습니다.</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>과세설정<span>*</span></td>
+                                                <td>
+                                                    <input type="radio" name="tax"> 과세
+                                                    <input type="radio" name="tax"> 면세
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>판매여부<span>*</span></td>
+                                                <td>
+                                                    <input type="radio" name="sell"> 판매
+                                                    <input type="radio" name="sell"> 품절
+                                                    <input type="radio" name="sell"> 중지
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="item_btn">
+                                            <button type="submit" class="save">저장</button>
+                                            <button type="button" class="close">닫기</button>
+                                        </div>
+                                    </form>
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+<script src="js/admin.js"></script>
+</body>
+</html>
