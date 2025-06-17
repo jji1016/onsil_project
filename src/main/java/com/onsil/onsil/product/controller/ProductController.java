@@ -23,7 +23,7 @@ public class ProductController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<ProductDto> flowers=productService.findAll();
+        List<ProductDto> flowers=productService.findRandom8();
         model.addAttribute("flowers", flowers);
         return "product/list";
     }
