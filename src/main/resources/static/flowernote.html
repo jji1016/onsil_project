@@ -9,17 +9,45 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<<<<<<< HEAD
+=======
+  <script src="https://kit.fontawesome.com/a6d4db907a.js" crossorigin="anonymous"></script>
+>>>>>>> 001ebe8a49a77fd13986b99e1c16eb9d81ee1e27
   <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/flowernote.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<<<<<<< HEAD
+=======
+  <script>
+    $(document).ready(function(){
+        //검색창 모달
+        $(".search-result").click(function(){
+            $(".modal").stop().fadeIn(300);
+        });
+        $(".close").click(function(){
+            $(".modal").stop().fadeOut(300);
+        });
+
+
+        //이달의 꽃 모달
+        $(".m-flower-list").click(function(){
+            $(".modal").stop().fadeIn(300);
+        });
+        $(".close").click(function(){
+            $(".modal").stop().fadeOut(300);
+        });
+  });
+  </script>
+>>>>>>> 001ebe8a49a77fd13986b99e1c16eb9d81ee1e27
 </head>
 <body>
 
   <!-- header영역--------------------------------------------------------------- -->
   <div id="header">
+<<<<<<< HEAD
       <h1 class="h_logo"><img src="images/header/onsil_logo.png" alt="logo"></h1>
       <ul class="gnb">
           <li><button type="button" class="login">로그인</button></li>
@@ -33,6 +61,33 @@
           <li><a href="#">클래스</a></li>
           <li><a href="#">기업제휴</a></li>
           <li><a href="#">고객센터</a></li>
+=======
+      <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
+      <ul class="gnb">
+          <li>
+              <button type="button" class="login">
+                  <a href="login.html">로그인</a>
+              </button>
+          </li>
+          <li>
+              <a href="cart.html">
+                  <i class="fa-solid fa-bag-shopping"></i>
+              </a>
+          </li>
+          <li>
+              <a href="mypage.html">
+                  <i class="fa-solid fa-user"></i>
+              </a>
+          </li>
+      </ul>
+      <ul class="nav">
+          <li><a href="subsc.html">꽃 정기구독</a></li>
+          <li><a href="flowernote.html">꽃 노트</a></li>
+          <li><a href="#">꽃·식물</a></li>
+          <li><a href="#">클래스</a></li>
+          <li><a href="corporate.html">기업제휴</a></li>
+          <li><a href="onsilfaq.html">고객센터</a></li>
+>>>>>>> 001ebe8a49a77fd13986b99e1c16eb9d81ee1e27
       </ul>
   </div>
 
@@ -85,6 +140,19 @@
     </div>
 
 
+<<<<<<< HEAD
+=======
+    <!-- 모달창 -->
+    <div class="modal">
+      <div class="wrap-modal-cont">
+        <h3 class="top-bar"><p>상세 설명</p><span class="close">닫기</span></h3>
+        <div class="modal-cont">
+
+        </div>
+      </div>
+
+    </div>
+>>>>>>> 001ebe8a49a77fd13986b99e1c16eb9d81ee1e27
 
     <!-- 이달의 꽃 영역 -->
     <div class="wrap-month-flower">

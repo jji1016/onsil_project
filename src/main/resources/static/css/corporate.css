@@ -20,9 +20,24 @@ body{
   background-size: cover;
   background-position: center;
   box-sizing: border-box;
+<<<<<<< HEAD
   color: white;
   margin-top: 50px;
 }
+=======
+  text-align: center;
+  color: white;
+  margin-top: 50px;
+}
+#section .banner h1{
+  font-size: 45px;
+  padding: 250px 0;
+}
+#section .banner h3{
+  margin-top: -210px;
+  font-size: 20px;
+}
+>>>>>>> 001ebe8a49a77fd13986b99e1c16eb9d81ee1e27
 
 
 #section .second_se{

@@ -26,7 +26,12 @@ body{
     align-items: center;
     justify-content: space-between;
 }
+<<<<<<< HEAD
 #footer .f_cont .f_logo>img{
+=======
+
+#footer .f_cont .f_logo a img{
+>>>>>>> 001ebe8a49a77fd13986b99e1c16eb9d81ee1e27
     width:184px; height: 90px;
 }
 #footer .f_cont .f_info{
