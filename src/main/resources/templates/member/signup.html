@@ -14,7 +14,11 @@
     </div>
     <div>
         <label for="userPW">userPW</label>
+<<<<<<< HEAD
         <input id="userPW" type="text" name="userPW" th:field="*{userPW}">
+=======
+        <input id="userPW" type="password" name="userPW" th:field="*{userPW}">
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
         <div th:errors="*{userPW}"></div>
     </div>
     <div>
@@ -59,7 +63,11 @@
     </div>
 </form>
 
+<<<<<<< HEAD
 <!-- 주소 API -->
+=======
+
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function execDaumPostcode() {
@@ -73,6 +81,7 @@
     }
 </script>
 
+<<<<<<< HEAD
 <!-- 유효성 검사 + 중복 체크 스크립트 -->
 <script>
     // form 유효성 검사
@@ -130,6 +139,16 @@
     });
 </script>
 <script>
+=======
+
+<script>
+
+    let isUserIDChecked = false;
+    let isNickNameChecked = false;
+    let isEmailChecked = false;
+
+
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     document.getElementById('signupForm').addEventListener('submit', function(event) {
         const fields = [
             { id: 'userID', label: '아이디' },
@@ -142,7 +161,11 @@
             { id: 'zipcode', label: '우편번호' }
         ];
 
+<<<<<<< HEAD
         let missing = []
+=======
+        let missing = [];
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 
         fields.forEach(field => {
             const input = document.getElementById(field.id);
@@ -153,8 +176,117 @@
 
         if (missing.length > 0) {
             alert("다음 항목을 입력해주세요: " + missing.join(', '));
+<<<<<<< HEAD
             event.preventDefault(); // 제출 막기
         }
+=======
+            event.preventDefault();
+            return;
+        }
+
+
+        if (!isUserIDChecked) {
+            alert("아이디 중복 체크를 해주세요.");
+            event.preventDefault();
+            return;
+        }
+        if (!isNickNameChecked) {
+            alert("닉네임 중복 체크를 해주세요.");
+            event.preventDefault();
+            return;
+        }
+        if (!isEmailChecked) {
+            alert("이메일 중복 체크를 해주세요.");
+            event.preventDefault();
+            return;
+        }
+    });
+
+
+    document.getElementById('checkUserIDBtn').addEventListener('click', function () {
+        const userID = document.getElementById('userID').value;
+        if (!userID.trim()) {
+            alert("아이디를 먼저 입력하세요.");
+            isUserIDChecked = false;
+            return;
+        }
+        fetch(`/member/checkUserID?userID=${encodeURIComponent(userID)}`)
+            .then(response => response.json())
+            .then(isDuplicate => {
+                if (isDuplicate) {
+                    alert("이미 사용 중인 아이디입니다.");
+                    isUserIDChecked = false;
+                } else {
+                    alert("사용 가능한 아이디입니다.");
+                    isUserIDChecked = true;
+                }
+            })
+            .catch(() => {
+                alert('중복 체크 중 오류가 발생했습니다.');
+                isUserIDChecked = false;
+            });
+    });
+
+
+    document.getElementById('checkNickNameBtn').addEventListener('click', function () {
+        const nickName = document.getElementById('nickName').value;
+        if (!nickName.trim()) {
+            alert("닉네임을 먼저 입력하세요.");
+            isNickNameChecked = false;
+            return;
+        }
+        fetch(`/member/checkNickName?nickname=${encodeURIComponent(nickName)}`)
+            .then(response => response.json())
+            .then(isDuplicate => {
+                if (isDuplicate) {
+                    alert("이미 사용 중인 닉네임입니다.");
+                    isNickNameChecked = false;
+                } else {
+                    alert("사용 가능한 닉네임입니다.");
+                    isNickNameChecked = true;
+                }
+            })
+            .catch(() => {
+                alert('중복 체크 중 오류가 발생했습니다.');
+                isNickNameChecked = false;
+            });
+    });
+
+
+    document.getElementById('checkEmailBtn').addEventListener('click', function () {
+        const userEmail = document.getElementById('userEmail').value;
+        if (!userEmail.trim()) {
+            alert("이메일을 먼저 입력하세요.");
+            isEmailChecked = false;
+            return;
+        }
+        fetch(`/member/checkUserEmail?email=${encodeURIComponent(userEmail)}`)
+            .then(response => response.json())
+            .then(isDuplicate => {
+                if (isDuplicate) {
+                    alert("이미 사용 중인 이메일입니다.");
+                    isEmailChecked = false;
+                } else {
+                    alert("사용 가능한 이메일입니다.");
+                    isEmailChecked = true;
+                }
+            })
+            .catch(() => {
+                alert('중복 체크 중 오류가 발생했습니다.');
+                isEmailChecked = false;
+            });
+    });
+
+
+    document.getElementById('userID').addEventListener('input', () => {
+        isUserIDChecked = false;
+    });
+    document.getElementById('nickName').addEventListener('input', () => {
+        isNickNameChecked = false;
+    });
+    document.getElementById('userEmail').addEventListener('input', () => {
+        isEmailChecked = false;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     });
 </script>
 </body>

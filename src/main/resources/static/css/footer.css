@@ -27,6 +27,7 @@ body{
     justify-content: space-between;
 }
 
+<<<<<<< HEAD
 #footer .f_cont .f_logo img {
     width: 184px !important;
     height: 90px !important;
@@ -34,6 +35,14 @@ body{
 }
 #footer .f_cont .f_info{
     text-align: right;
+=======
+#footer .f_cont .f_logo a img{
+    width:184px; height: 90px;
+}
+#footer .f_cont .f_info{
+    text-align: right;
+    /* border:1px solid red; */
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #footer .f_cont .f_info>li{
     line-height: 40px;

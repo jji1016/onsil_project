@@ -1,5 +1,9 @@
 package com.onsil.onsil.entity;
 
+<<<<<<< HEAD
+=======
+import com.onsil.onsil.constant.Role;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 import com.onsil.onsil.member.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -49,12 +53,23 @@ public class Member {
 
     @Column(nullable = false)
     private String zipcode;
+<<<<<<< HEAD
+=======
+
+    @Column(nullable = false)
+    private boolean deleteStatus;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 
     @CreatedDate
     private LocalDateTime regdate;
 
     @Builder.Default
+<<<<<<< HEAD
     private String role = "ROLE_USER";
+=======
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ROLE_USER;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Cart> cartList;
@@ -71,7 +86,30 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Output> outputList;
 
+<<<<<<< HEAD
     private boolean deleteStatus = false; //탈퇴 할 경우 true로 변경
+=======
+    public void updateInfo(String nickName, String userEmail, String zipcode, String address01, String address02) {
+        this.nickName = nickName;
+        this.userEmail = userEmail;
+        this.zipcode = zipcode;
+        this.address01 = address01;
+        this.address02 = address02;
+    }
+
+    public void updateInfo(String userPW, String userEmail, String tel, String zipcode, String address01, String address02) {
+        this.userPW = userPW;
+        this.userEmail = userEmail;
+        this.tel = tel;
+        this.zipcode = zipcode;
+        this.address01 = address01;
+        this.address02 = address02;
+    }
+
+    public void markAsDeleted() {
+        this.deleteStatus = true;
+    }
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 
     public MemberDto toMemberDto() {
         return MemberDto.builder()
@@ -86,7 +124,11 @@ public class Member {
                 .zipcode(this.getZipcode())
                 .regDate(this.getRegdate())
                 .modifyDate(this.getRegdate())
+<<<<<<< HEAD
                 .role(this.getRole())
+=======
+                .role(this.role)
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                 .build();
     }
 }

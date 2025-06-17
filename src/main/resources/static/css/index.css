@@ -497,9 +497,15 @@ body {
         width:90%;
     }
 
+<<<<<<< HEAD
     #section .cont3>ul .c3_m_txt1{
         font-size: 40px;
     }
+=======
+#section .cont3>ul .c3_m_txt1{
+    font-size: 40px;
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 
 

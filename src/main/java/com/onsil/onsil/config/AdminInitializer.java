@@ -1,5 +1,9 @@
 package com.onsil.onsil.config;
 
+<<<<<<< HEAD
+=======
+import com.onsil.onsil.constant.Role;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.member.dao.MemberDao;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +27,11 @@ public class AdminInitializer implements CommandLineRunner {
         if(!optionalMember.isPresent()) {
             Member adminMember = Member.builder()
                     .userID(admidID)
+<<<<<<< HEAD
                     .role("ROLE_ADMIN")
+=======
+                    .role(Role.ROLE_ADMIN)
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                     .userName("관리자")
                     .userEmail("admin@hanmail.net")
                     .nickName("adminNickName")
@@ -47,7 +55,11 @@ public class AdminInitializer implements CommandLineRunner {
                     .address01("userAddress01")
                     .zipcode("12345")
                     .userPW(bCryptPasswordEncoder.encode("1234"))
+<<<<<<< HEAD
                     .role("ROLE_USER")
+=======
+                    .role(Role.ROLE_USER)
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                     .build();
             memberDao.save(member1);
         }

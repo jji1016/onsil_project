@@ -5,15 +5,22 @@ ul{list-style: none;}
 a{color: black; text-decoration: none;}
 img{vertical-align: none; border: 0;}
 body{
+<<<<<<< HEAD
   font-family: 'Pretendard-Regular';
   background-color: #E5E0D8;
   color: #191919;
+=======
+    font-family: 'Pretendard-Regular';
+    background-color: #E5E0D8;
+      color: #191919;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 
 
 
 
 #section .frist_se{
+<<<<<<< HEAD
   width: 70%; height: 800px;
   margin: 0 auto;
   display: flex;
@@ -25,6 +32,17 @@ body{
   padding-top: 50px;
   padding-right: 52px;
   border-right: 1px solid rgba(128, 128, 128, 0.5);
+=======
+  width: 1500px; height: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+#section .frist_se .left_img{
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  padding: 50px 40px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .frist_se .left_img img{
   width: 547px; height: 620px;
@@ -43,7 +61,16 @@ body{
 }
 
 #section .frist_se .right_text{
+<<<<<<< HEAD
   margin-top: 5px;
+=======
+  height: 800px;
+  box-sizing: border-box;
+  padding: 0px 79px;
+  padding-left: 80px;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+    border-left: none;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .frist_se .right_text .product_na h2{
   font-size: 35px;
@@ -62,7 +89,11 @@ body{
   font-size: 25px;
   margin-left: 305px;
   margin-bottom: 10px;
+<<<<<<< HEAD
   color: #8B9773;
+=======
+    color: #8B9773;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .frist_se .right_text .product_na h4 span{
   font-size: 17px;
@@ -71,6 +102,7 @@ body{
 }
 #section .frist_se .right_text .product_na h4 span:nth-child(2){
   color: #8B9773;
+<<<<<<< HEAD
   font-size: 20px;
 }
 #section .frist_se .right_text .product_na .review_write{
@@ -86,19 +118,35 @@ body{
 }
 #section .frist_se .right_text .product_na .review_write p{
   margin-left: 227px;
+=======
+    font-size: 20px;
+}
+
+#section .frist_se .right_text .product_na p{
+  margin-left: 295px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   font-size: 14px;
 }
 
 #section .frist_se .right_text .line{
+<<<<<<< HEAD
   width: 450px;
   margin-top: 20px;
+=======
+  width: 450px; 
+  margin-top: 25px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   border: 1px solid rgba(128, 128, 128, 0.281);
 }
 #section .frist_se .right_text .deliver .de_me{
   width: 450px;
   display: flex;
   border: 1px solid rgba(128, 128, 128, 0.322);
+<<<<<<< HEAD
   margin-top: 20px;
+=======
+  margin-top: 25px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   box-sizing: border-box;
   margin-bottom: 20px;
   background-color: #f5f5f5;
@@ -146,13 +194,24 @@ body{
   bottom: 4px;
 }
 
+<<<<<<< HEAD
 
+=======
+#section .frist_se .right_text .de_memo{
+  margin-top:10px;
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 #section .frist_se .right_text .de_memo .de_tex{
   width: 450px; height: 40px;
   border: 1px solid #D2D2D2;
   font-size: 14px;
+<<<<<<< HEAD
   padding: 5px;
   margin: 10px 0px;
+=======
+  padding:10px;
+  margin: 15px 0px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   box-sizing: border-box;
   outline: none;
   color: #949494;
@@ -168,14 +227,24 @@ body{
 }
 
 #section .frist_se .right_text .text_arr p{
+<<<<<<< HEAD
   font-size: 11px;
   margin-top: 8px;
+=======
+  font-size: 13px;
+  margin-top: 10px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   margin-bottom: 5px;
 }
 #section .frist_se .right_text .text_arr2{
   display: flex;
   justify-content: space-between;
+<<<<<<< HEAD
   margin-top: 20px;
+=======
+  margin-top: 40px;
+  margin-bottom: 10px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .frist_se .right_text .text_arr2 .amount_all{
   color: #191919;
@@ -193,7 +262,11 @@ body{
   margin-top: 5px;
   margin-right: 5px;
   border-right:1px solid gray;
+<<<<<<< HEAD
   color: #8B9773;
+=======
+    color: #8B9773;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   padding-right: 5px;
   color: #191919;
 }
@@ -201,7 +274,12 @@ body{
 #section .frist_se .right_text .sell_txt .se_txt{
   display: flex;
   justify-content: space-around;
+<<<<<<< HEAD
   margin-top: 15px;
+=======
+  margin-top: 20px;
+  margin-left: -10px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell,
@@ -216,10 +294,17 @@ body{
   background-color: #F1F1F1;
 }
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell4{
+<<<<<<< HEAD
   background-color: #F1F1F1;
   border: 0;
   border-radius: 50%;
   padding: 5px;
+=======
+    background-color: #F1F1F1;
+    border: 0;
+    border-radius: 50%;
+    padding: 5px;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell3{
   background-color: #8B9773;
@@ -242,7 +327,16 @@ body{
 
 
 #section .secound_se{
+<<<<<<< HEAD
   margin-top: 100px;
+=======
+  width: 1280px;
+  margin: 100px auto;
+}
+#section .secound_se h1{
+  margin-left: 15px;
+  color: #8B9773;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .secound_se .reviwe_more{
   padding: 8px 16px;
@@ -343,10 +437,17 @@ body{
   width: 0px;
   height: 0px;
   margin: 25px 0;
+<<<<<<< HEAD
   color: #EE6452;
   border-right:11px solid transparent;
   border-left: 11px solid transparent;
   border-bottom:8px  solid #EE6452;
+=======
+  color: #EE6452;    
+  border-right:11px solid transparent;
+  border-left: 11px solid transparent;
+  border-bottom:8px  solid #EE6452;    
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   transform: rotate(180deg);
 }
 #section .secound_se .top_re .star_all .star>li:before,
@@ -356,8 +457,13 @@ body{
   width: 0px;
   top: 0;
   height: 0px;
+<<<<<<< HEAD
   color: #EE6452;
   left: -11px;
+=======
+  color: #EE6452;    
+  left: -11px;        
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   border-right: 11px solid transparent;
   border-left: 11px solid transparent;
   border-bottom: 8px solid #EE6452;
@@ -376,8 +482,13 @@ body{
   width: 0px;
   top: 0;
   height: 0px;
+<<<<<<< HEAD
   color: #EE6452;
   left: -11px;
+=======
+  color: #EE6452;    
+  left: -11px;        
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   border-right: 11px solid transparent;
   border-left: 11px solid transparent;
   border-bottom: 8px solid #EE6452;
@@ -490,4 +601,9 @@ body{
 #section .thrid_se .deta_txt .on{
   display: block;
   color: #191919;
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69

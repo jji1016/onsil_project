@@ -5,11 +5,15 @@ import com.onsil.onsil.cart.dto.CartSummaryDto;
 import com.onsil.onsil.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
 import org.springframework.stereotype.Controller;
+=======
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+<<<<<<< HEAD
 @Controller // RestController 대신 Controller 사용
 @RequestMapping("/api/cart")
 @CrossOrigin(origins = "*") // ★ 프론트엔드 연동을 위한 CORS 허용
@@ -37,6 +41,26 @@ public class CartController {
     // ★ 상품 추가 (프론트엔드에서 상품명으로 추가)
     @PostMapping
     @ResponseBody
+=======
+@RestController
+@RequestMapping("/api/cart")
+@RequiredArgsConstructor
+public class CartController {
+    private final CartService cartService;
+
+    @GetMapping("/{memberId}")
+    public List<CartItemDto> getCartList(@PathVariable Integer memberId) {
+        return cartService.getCartItems(memberId);
+    }
+
+    @GetMapping("/{memberId}/summary")
+    public CartSummaryDto getCartSummary(@PathVariable Integer memberId) {
+        return cartService.getCartSummary(memberId);
+    }
+
+    // 상품명으로 장바구니에 상품 추가
+    @PostMapping
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     public ResponseEntity<?> addToCart(@RequestParam Integer memberId,
                                        @RequestParam String flowerName,
                                        @RequestParam int quantity) {
@@ -45,6 +69,7 @@ public class CartController {
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+<<<<<<< HEAD
         }
     }
 
@@ -89,5 +114,26 @@ public class CartController {
     @GetMapping("/page")
     public String cartPage() {
         return "cart/cart";
+=======
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("서버 오류: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{cartId}")
+    public void updateQuantity(@PathVariable Integer cartId,
+                               @RequestParam int quantity) {
+        cartService.updateQuantity(cartId, quantity);
+    }
+
+    @DeleteMapping("/{cartId}")
+    public void removeFromCart(@PathVariable Integer cartId) {
+        cartService.removeFromCart(cartId);
+    }
+
+    @DeleteMapping("/clear/{memberId}")
+    public void clearCart(@PathVariable Integer memberId) {
+        cartService.clearCart(memberId);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     }
 }

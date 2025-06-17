@@ -1,5 +1,6 @@
 package com.onsil.onsil.flower.service;
 
+<<<<<<< HEAD
 import com.onsil.onsil.flower.dto.FlowerDto;
 import com.onsil.onsil.flower.repository.FlowerRepository;
 import com.onsil.onsil.entity.Product;
@@ -8,10 +9,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+=======
+import com.onsil.onsil.entity.Product;
+import com.onsil.onsil.flower.dto.FlowerDto;
+import com.onsil.onsil.flower.repository.FlowerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+<<<<<<< HEAD
 @Transactional(readOnly = true)
 public class FlowerService {
 
@@ -98,10 +111,19 @@ public class FlowerService {
 
         List<Product> products = flowerRepository.searchByKeyword(keyword.trim());
         return products.stream()
+=======
+public class FlowerService {
+    private final FlowerRepository flowerRepository;
+
+    // 월별 6개만 (3*2)
+    public List<FlowerDto> getFlowersByMonth(int month) {
+        return flowerRepository.findByFMonth(month, PageRequest.of(0, 6)).stream()
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                 .map(FlowerDto::new)
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
     /**
      * 꽃 상세정보 조회
      */
@@ -143,5 +165,11 @@ public class FlowerService {
         return products.stream()
                 .map(FlowerDto::new)
                 .collect(Collectors.toList());
+=======
+    // 상세
+    public FlowerDto getFlowerDetail(Integer id) {
+        Optional<Product> flower = flowerRepository.findById(id);
+        return flower.map(FlowerDto::new).orElse(null);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     }
 }

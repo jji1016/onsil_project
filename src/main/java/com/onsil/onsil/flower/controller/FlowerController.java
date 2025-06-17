@@ -1,5 +1,6 @@
 package com.onsil.onsil.flower.controller;
 
+<<<<<<< HEAD
 import com.onsil.onsil.flower.dto.FlowerDto;
 import com.onsil.onsil.flower.service.FlowerService;
 import lombok.RequiredArgsConstructor;
@@ -117,5 +118,32 @@ public class FlowerController {
     public ResponseEntity<Map<Integer, Integer>> getAllMonthlyFlowerCounts() {
         Map<Integer, Integer> response = flowerService.getAllMonthlyFlowerCounts();
         return ResponseEntity.ok(response);
+=======
+import com.onsil.onsil.flower.service.FlowerService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/flowers")
+@RequiredArgsConstructor
+public class FlowerController {
+    private final FlowerService flowerService;
+
+    // 월별 6개 (3*2)
+    @GetMapping("/month/{month}")
+    public ResponseEntity<?> getFlowersByMonth(@PathVariable int month) {
+        return ResponseEntity.ok(flowerService.getFlowersByMonth(month));
+    }
+
+    // 상세
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getFlowerDetail(@PathVariable Integer id) {
+        var dto = flowerService.getFlowerDetail(id);
+        if (dto == null) {
+            return ResponseEntity.status(404).body("꽃 정보를 찾을 수 없습니다.");
+        }
+        return ResponseEntity.ok(dto);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     }
 }

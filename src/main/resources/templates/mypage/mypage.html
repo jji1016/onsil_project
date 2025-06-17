@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>project_onsil_mypage</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/mypage.css">
     <link rel="stylesheet" href="../css/footer.css">
     <script src="https://kit.fontawesome.com/a6d4db907a.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+=======
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/mypage.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <script src="https://kit.fontawesome.com/a6d4db907a.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     <script>
         $(document).ready(function () {
             $(".list1>li").removeClass("l_on");
@@ -36,7 +45,11 @@
 </head>
 <body>
 <div id="header">
+<<<<<<< HEAD
     <h1 class="h_logo"><img src="images/header/onsil_logo.png" alt="logo"></h1>
+=======
+    <h1 class="h_logo"><img src="/images/header/onsil_logo.png" alt="logo"></h1>
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     <ul class="gnb">
         <li>
             <button type="button" class="login">로그인</button>
@@ -133,7 +146,11 @@
                         </tr>
                         </thead>
                         <tbody id="orderListRap">
+<<<<<<< HEAD
                             <!-- 주문내역 들어가는 자리 -->
+=======
+                        <!-- 주문내역 들어가는 자리 -->
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                         </tbody>
                     </table>
 
@@ -181,6 +198,7 @@
             </div>
             <div class="content">
                 <h2>개인정보 수정</h2>
+<<<<<<< HEAD
                 <form action="/mypage/modify" method="post">
                     <input type="hidden" name="id" th:value="${loggedMemberDto.id}"/>
                     <input type="hidden" name="role" th:value="${loggedMemberDto.role}"/>
@@ -268,6 +286,80 @@
                         <button type="button" class="cus_edit2" th:data-id="${loggedMemberDto.id}">회원탈퇴</button>
                     </div>
                 </form>
+=======
+                <table class="personal_info">
+                    <tr>
+                        <td>이름</td>
+                        <td><span id="userName" data-field="userName"></span></td>
+                    </tr>
+                    <tr>
+                        <td>아이디</td>
+                        <td><span id="userID" data-field="userID"></span></td>
+                    </tr>
+                    <tr>
+                        <td>닉네임</td>
+                        <td><span id="nickName" data-field="nickName"></span></td>
+                    </tr>
+                    <tr>
+                        <td>현재 비밀번호</td>
+                        <td><input type="password" data-field="currentPassword"></td>
+                    </tr>
+                    <tr>
+                        <td>새 비밀번호</td>
+                        <td><input type="password" data-field="password"></td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호 확인</td>
+                        <td><input type="password" data-field="password2"></td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td><span id="userEmail" data-field="userEmail"></span></td>
+                    </tr>
+                    <tr>
+                        <td>이메일 변경</td>
+                        <td>
+                            <input type="text" data-field="newEmail">
+                            <button type="button" class="email_btn">인증하기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>기본주소지</td>
+                        <td>
+                            <span id="zipcode" data-field="zipcode"></span><br>
+                            <span id="address01" data-field="address01"></span><br>
+                            <span id="address02" data-field="address02"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>주소지 변경</td>
+                        <td>
+                            <input type="text" placeholder="우편번호" class="ad_num" data-field="newZipcode" id="newZipcode" readonly>
+                            <button type="button" class="ad_search" onclick="execDaumPostcode()">주소검색</button>
+                            <br>
+                            <input type="text" placeholder="기본주소" class="address" data-field="newAddress01" id="newAddress01" readonly><br>
+                            <input type="text" placeholder="상세주소" class="address" data-field="newAddress02" id="newAddress02">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>휴대전화</td>
+                        <td><span id="tel" data-field="tel">010 - 0000 - 0000</span></td>
+                    </tr>
+                    <tr>
+                        <td>휴대전화 변경</td>
+                        <td>
+                            <input type="text" maxlength="11" class="p_num" data-field="newTel">
+                        </td>
+                    </tr>
+                </table>
+
+
+                <div class="cus_btn">
+                    <button type="button" class="cus_edit">수정하기</button>
+                    <button type="button" class="cus_edit2">회원탈퇴</button>
+                </div>
+
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
             </div>
             <div class="content">
                 <h2>기념일 관리</h2>
@@ -275,7 +367,11 @@
                 <div class="specialday">
                     <ul class="s_day">
                         <li class="s_title">나의 기념일　<span>기념일을 저장하시면 5% 할인 쿠폰과 알림을 받으실 수 있습니다.</span></li>
+<<<<<<< HEAD
                         <li>기념일을 등록해주세요<img src="images/mypage/plus_icon.png" alt="icon"></li>
+=======
+                        <li>기념일을 등록해주세요<img src="/images/mypage/plus_icon.png" alt="icon"></li>
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                     </ul>
                     <div class="sday_subtxt">
                         <p>- 기념일 쿠폰은 3만원 이상 구매 시 사용가능합니다.</p>
@@ -300,7 +396,11 @@
                     <button type="button" class="coupon_btn">등록</button>
                 </div>
                 <ul class="coupon_txt">
+<<<<<<< HEAD
                     <li class="coupon_ttxt"><img src="images/mypage/error_icon.png" alt="">포인트 적립 쿠폰 등록 안내</li>
+=======
+                    <li class="coupon_ttxt"><img src="/images/mypage/error_icon.png" alt="">포인트 적립 쿠폰 등록 안내</li>
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                     <li>한 번 등록된 쿠폰 코드는 재사용이 불가능 합니다.</li>
                     <li>쿠폰 등록이 완료되면 포인트가 적립되며 적립된 포인트는 즉시 사용이 가능합니다.</li>
                     <li>포인트 사용은 상품 주문/결제 페이지에서 사용 가능합니다.</li>
@@ -334,7 +434,11 @@
 
 <div id="footer">
     <div class="f_cont">
+<<<<<<< HEAD
         <h1 class="f_logo"><img src="images/footer/logo_white.png" alt="logo"></h1>
+=======
+        <h1 class="f_logo"><img src="/images/footer/logo_white.png" alt="logo"></h1>
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
         <ul class="f_info">
             <li>온실 플라워스튜디오</li>
             <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
@@ -344,6 +448,7 @@
     </div>
 </div>
 <script>
+<<<<<<< HEAD
     // 이메일 중복체크
     function execDaumPostcode() {
         new daum.Postcode({
@@ -351,10 +456,21 @@
                 document.getElementById('zipcode').value = data.zonecode;
                 document.getElementById('address01').value = data.address;
                 document.getElementById('address02').focus();
+=======
+    // 주소 검색
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                console.log(data);
+                document.getElementById('newZipcode').value = data.zonecode;
+                document.getElementById('newAddress01').value = data.address;
+                document.getElementById('newAddress02').focus();
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
             }
         }).open();
     }
 
+<<<<<<< HEAD
     // 회원 탈퇴
     const deleteAccountBtn = document.querySelector(".cus_edit2"); //회원 탈퇴 버튼
     const loggedMemberID = deleteAccountBtn.dataset.id;
@@ -367,6 +483,86 @@
                 .then(json => {
                     if (json.isDelete) {
                         alert("삭제가 완료되었습니다.");
+=======
+    const modifyInfoBtn = document.querySelector(".cus_edit"); //회원 정보 수정 버튼
+    const deleteAccountBtn = document.querySelector(".cus_edit2"); //회원 탈퇴 버튼
+    // 회원 정보 조회
+    function lookupMemberInfo() {
+        fetch("/mypage/info", {
+            method: "POST"
+        })
+            .then(response => response.json())
+            .then(json => {
+                const responseData = {
+                    userName: json.userName,
+                    userID: json.userID,
+                    nickName: json.nickName,
+                    userEmail: json.userEmail,
+                    zipcode: json.zipcode,
+                    address01: json.address01,
+                    address02: json.address02,
+                    tel: json.tel,
+                };
+
+                Object.entries(responseData).forEach(([key, value]) => {
+                    const el = document.querySelector(`[data-field="${key}"]`);
+                    if (!el) return;
+                    el.textContent = value;
+                });
+                deleteAccountBtn.setAttribute("data-id", json.id);
+            })
+    }
+
+    // 페이지 로딩시 회원정보 조회
+    document.addEventListener('DOMContentLoaded', () => {
+        lookupMemberInfo();
+    });
+
+    // 회원 정보 수정
+    modifyInfoBtn.addEventListener("click", (e) => {
+        if (!confirm("수정하시겠습니까?")) return;
+        const data = {};
+        const inputFields = document.querySelectorAll('input[data-field]');
+
+        inputFields.forEach(field => {
+            const key = field.dataset.field;
+            data[key] = field.value;
+
+        });
+        console.log(data);
+
+        fetch("/mypage/modify", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log("modify 부분")
+                console.log(json)
+                if (json.isModify == "true") {
+                    alert("수정이 완료되었습니다.");
+                    lookupMemberInfo();
+                    inputFields.forEach(field => {
+                        field.value="";
+                    });
+                }else{
+                    alert(json.error);
+                }
+            })
+    })
+
+    // 회원 탈퇴
+    deleteAccountBtn.addEventListener("click", (e) => {
+        //회원 탈퇴버튼 클릭시 confirm
+        if (confirm("정말로 계정을 삭제하시겠습니까?")) {
+            fetch("/mypage/delete/" + deleteAccountBtn.dataset.id)
+                .then(response => response.json())
+                .then(json => {
+                    if (json.isDelete == "true") {
+                        alert("삭제가 완료되었습니다.");
+                        location.href = "/member/logout";
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                     }
                 })
         } else {
@@ -380,12 +576,19 @@
     const orderListRap = document.querySelector("#orderListRap");
 
     // 주문내역 검색 및 페이징
+<<<<<<< HEAD
     function lookupOrderList(page = 1){
         const searchInfo = orderListSearch.value;
         const searchYear = orderListYear.value;
         const itemsPerPage = 5;
         console.log("searchInfo = " + searchInfo);
         console.log("searchYear = " + searchYear);
+=======
+    function lookupOrderList(page = 1) {
+        const searchInfo = orderListSearch.value;
+        const searchYear = orderListYear.value;
+        const itemsPerPage = 5;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 
         fetch("/mypage/orderList", {
             method: "POST",
@@ -420,6 +623,7 @@
                 });
 
                 // 페이징 함수 호출
+<<<<<<< HEAD
                 renderPagination(pageDto,"order");
             })
     }
@@ -429,12 +633,30 @@
     });
     //조회 버튼 클릭시 주문내역 조회
     searchOrderListBtn.addEventListener("click", ()=>{
+=======
+                renderPagination(pageDto, "order");
+            })
+    }
+
+    //페이지 로딩시 주문내역 조회
+    document.addEventListener('DOMContentLoaded', () => {
+        lookupOrderList();
+    });
+    //조회 버튼 클릭시 주문내역 조회
+    searchOrderListBtn.addEventListener("click", () => {
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
         lookupOrderList();
     });
 
     const subscribeRap = document.querySelector("#subscribeRap");
+<<<<<<< HEAD
     //구독 내역 조회 및 페이징
     function lookupSubscribeList(page = 1){
+=======
+
+    //구독 내역 조회 및 페이징
+    function lookupSubscribeList(page = 1) {
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
         const itemsPerPage = 5;
 
         fetch("/mypage/subscribe", {
@@ -449,7 +671,10 @@
         })
             .then(response => response.json())
             .then(json => {
+<<<<<<< HEAD
                 console.log(json)
+=======
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                 const subscribes = json.subscribes; // 구독 목록
                 const pageDto = json.pageDto; // 페이징 정보
                 subscribeRap.innerHTML = "";
@@ -471,12 +696,20 @@
                 });
 
                 // 페이징 함수 호출
+<<<<<<< HEAD
                 renderPagination(pageDto,"subscribe");
+=======
+                renderPagination(pageDto, "subscribe");
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
             })
     }
 
     //페이지 로딩시 주문내역 조회
+<<<<<<< HEAD
     document.addEventListener('DOMContentLoaded', ()=>{
+=======
+    document.addEventListener('DOMContentLoaded', () => {
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
         lookupSubscribeList();
     });
 
@@ -503,6 +736,7 @@
 
     const orderListPagination = document.querySelector("#orderListPagination");
     const subscribePagination = document.querySelector("#subscribePagination");
+<<<<<<< HEAD
     // 페이징 함수
     function renderPagination(pageDto,category) {
         let paginationRap = "";
@@ -516,14 +750,34 @@
         paginationRap.innerHTML = "";
 
         for(let i = 1; i <= pageDto.totalPages; i++) {
+=======
+
+    // 페이징 함수
+    function renderPagination(pageDto, category) {
+        let paginationRap = "";
+        if (category == "order") {
+            paginationRap = orderListPagination;
+        } else if (category == "subscribe") {
+            paginationRap = subscribePagination;
+        }
+        paginationRap.innerHTML = "";
+
+        for (let i = 1; i <= pageDto.totalPages; i++) {
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
             const btn = document.createElement("td");
             btn.textContent = i;
             btn.style.padding = "0px 10px";
 
             btn.addEventListener("click", () => {
+<<<<<<< HEAD
                 if (category == "order"){
                     lookupOrderList(i);
                 } else if(category == "subscribe"){
+=======
+                if (category == "order") {
+                    lookupOrderList(i);
+                } else if (category == "subscribe") {
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                     lookupSubscribeList(i);
                 }
 

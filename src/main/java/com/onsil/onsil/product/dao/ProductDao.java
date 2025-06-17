@@ -23,9 +23,15 @@ public class ProductDao {
 
             List<ReviewDto> reviewDtoList = product.getReviewList().stream()
                     .map(review -> new ReviewDto(
+<<<<<<< HEAD
                             review.getReviewId(), // Review의 ID는 Integer
                             review.getProduct().getProductId(), // Product의 ID는 Integer
                             Integer.valueOf(review.getMember().getId()), // Integer → Integer 변환
+=======
+                            review.getId(),
+                            review.getProduct().getId(),
+                            review.getMember().getId(),
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                             review.getMember().getUserID(),
                             review.getMember().getUserName(),
                             review.getMember().getNickName(),
@@ -52,15 +58,26 @@ public class ProductDao {
 
     public List<ProductDto> findAll() {
         List<Product> productList = productRepository.findAll();
+<<<<<<< HEAD
         return productList.stream()
                 .map(product -> ProductDto.builder()
                         .id(product.getProductId())
+=======
+        List<ProductDto> productDtoList = productList.stream().map(
+                product -> ProductDto.builder()
+                        .id(product.getId())
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
                         .flowerName(product.getFlowerName())
                         .flowerInfo(product.getFlowerInfo())
                         .price(product.getPrice())
                         .image(product.getImage())
                         .build()
+<<<<<<< HEAD
                 )
                 .collect(Collectors.toList());
+=======
+        ).toList();
+        return productDtoList;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     }
 }

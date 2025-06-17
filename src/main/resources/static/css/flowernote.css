@@ -8,7 +8,11 @@ input:focus {outline: none;}
 
 body{
   background-color: #E5E0D8;
+<<<<<<< HEAD
   font-family: 'Pretendard Variable', sans-serif;
+=======
+  font-family: 'Pretendard Variable', sans-serif;   
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   color: #191919;
 }
 #section{

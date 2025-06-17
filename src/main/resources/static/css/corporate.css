@@ -7,7 +7,11 @@ img{border:0; vertical-align: top;}
 body{
   font-family: 'Pretendard-Regular';
   background-color: #E5E0D8;
+<<<<<<< HEAD
   color: #191919;
+=======
+    color: #191919;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section{
   width: 100%;
@@ -20,9 +24,24 @@ body{
   background-size: cover;
   background-position: center;
   box-sizing: border-box;
+<<<<<<< HEAD
   color: white;
   margin-top: 50px;
 }
+=======
+  text-align: center;
+  color: white;
+  margin-top: 50px;
+}
+#section .banner h1{
+  font-size: 45px;
+  padding: 250px 0;
+}
+#section .banner h3{
+  margin-top: -210px;
+  font-size: 20px;
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 
 
 #section .second_se{
@@ -91,8 +110,13 @@ body{
 #section .thrid_se .right_text p{
   font-size: 20px;
   padding: 40px 40px;
+<<<<<<< HEAD
   font-weight: 100;
   color: rgb(78, 78, 78);
+=======
+    font-weight: 100;
+    color: rgb(78, 78, 78);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 
 #section .forth_se{
@@ -114,21 +138,33 @@ body{
   font-size: 13px;
   margin-top: 50px;
   margin-left: 20px;
+<<<<<<< HEAD
   color: rgb(78, 78, 78);
+=======
+    color: rgb(78, 78, 78);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .forth_se .left_imgti h3{
   margin-top: 15px;
   margin-left: 20px;
   font-size: 25px;
   font-weight: 600;
+<<<<<<< HEAD
   color: rgb(87, 87, 87);
+=======
+    color: rgb(87, 87, 87);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .forth_se .left_imgti p{
   margin-top: 15px;
   margin-left: 20px;
   font-size: 20px;
   font-weight: 350;
+<<<<<<< HEAD
   color: rgb(78, 78, 78);
+=======
+    color: rgb(78, 78, 78);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .forth_se .part_img{
   margin-left: 50px;
@@ -178,13 +214,21 @@ body{
   font-weight: 600;
   margin-bottom: 30px;
   margin-top: 70px;
+<<<<<<< HEAD
   color: rgb(78, 78, 78);
+=======
+    color: rgb(78, 78, 78);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .part_send .left_explan h4{
   font-size: 21px;
   font-weight: 500;
   margin-bottom: 30px;
+<<<<<<< HEAD
   color: rgb(78, 78, 78);
+=======
+    color: rgb(78, 78, 78);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .part_send .left_explan h5{
   font-size: 18px;
@@ -192,12 +236,20 @@ body{
   border-bottom: 1px solid gray;
   margin-bottom: 50px;
   padding-bottom: 40px;
+<<<<<<< HEAD
   color: rgb(78, 78, 78);
+=======
+    color: rgb(78, 78, 78);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .part_send .left_explan .adre{
   font-size: 18px;
   font-weight: 250;
+<<<<<<< HEAD
   color: rgb(78, 78, 78);
+=======
+    color: rgb(78, 78, 78);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 
 #section .part_send .right_infor{
@@ -234,7 +286,11 @@ body{
   margin-left: 30px;
 }
 input::placeholder {
+<<<<<<< HEAD
   color:white;
+=======
+	color:white;
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 #section .part_send .right_infor .bottom_text{
   padding: 10px 0;
@@ -307,6 +363,7 @@ input[type='radio']:checked {
 
 
 @media screen and (max-width:767px){
+<<<<<<< HEAD
   #section .banner{
     width: 750px; height: 200px;
   }
@@ -318,6 +375,19 @@ input[type='radio']:checked {
   #section .second_se .right_txt .img_text h5{
     font-size: 13px;
   }
+=======
+#section .banner{
+  width: 750px; height: 200px;
+}
+
+#section .second_se .right_txt .img_text>li img {
+  width: 80px;
+}
+
+#section .second_se .right_txt .img_text h5{
+  font-size: 13px;
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 
 
 
@@ -328,6 +398,7 @@ input[type='radio']:checked {
   #section .forth_se .left_imgti h5{
     font-size: 12x;
   }
+<<<<<<< HEAD
   #section .forth_se .left_imgti h3{
     font-size: 30px;
   }
@@ -335,14 +406,29 @@ input[type='radio']:checked {
   #section .forth_se .left_imgti p{
     font-size: 20px;
   }
+=======
+#section .forth_se .left_imgti h3{
+  font-size: 30px;
+}
+
+#section .forth_se .left_imgti p{
+  font-size: 20px;
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 
   #section .forth_se .part_img .three_img{
     display: none;
   }
 
+<<<<<<< HEAD
   #section .part_send .right_infor{
     margin-left: -20px;
   }
+=======
+    #section .part_send .right_infor{
+      margin-left: -20px;
+    }
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   #section .part_send .left_explan{
     display: none;
   }
@@ -366,9 +452,15 @@ input[type='radio']:checked {
   #section .thrid_se{
     height: 150px;
   }
+<<<<<<< HEAD
   #section .forth_se{
     height: 400px;
   }
+=======
+    #section .forth_se{
+      height: 400px;
+    }
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   #section .forth_se .left_imgti{
     width: 300px; height: 450px;
     margin-left: -100px;
@@ -378,6 +470,7 @@ input[type='radio']:checked {
   #section .forth_se .part_img{
     position: relative;
   }
+<<<<<<< HEAD
   #section .forth_se .part_img .three_img{
     position: absolute;
     left: -40px; top: 0;
@@ -391,6 +484,21 @@ input[type='radio']:checked {
   {
     width: 150px; height: 130px;
   }
+=======
+    #section .forth_se .part_img .three_img{
+      position: absolute;
+      left: -40px; top: 0;
+    }
+    #section .forth_se .part_img .three_img2{
+      position: absolute;
+      top:200px; left: -40px;
+    }
+    #section .forth_se .part_img .three_img>li,
+    #section .forth_se .part_img .three_img2>li
+    {
+      width: 150px; height: 130px;
+    }
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   #section .forth_se .part_img .three_img>li img,
   #section .forth_se .part_img .three_img2>li img
   {
@@ -407,11 +515,19 @@ input[type='radio']:checked {
   #section .part_send .left_explan h4{
     font-size: 15px;
   }
+<<<<<<< HEAD
   #section .part_send .left_explan h5,
   #section .part_send .left_explan .adre
   {
     font-size: 12px;
   }
+=======
+#section .part_send .left_explan h5,
+#section .part_send .left_explan .adre
+{
+  font-size: 12px;
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
   #section .part_send .right_infor{
     width: 450px; height: 290px;
     padding: 20px;
@@ -422,6 +538,7 @@ input[type='radio']:checked {
     padding: 0;
   }
   #section .part_send .right_infor .top_text .name,
+<<<<<<< HEAD
   #section .part_send .right_infor .top_text .part_name,
   #section .part_send .right_infor .bottom_text .number,
   #section .part_send .right_infor .bottom_text .email{
@@ -438,6 +555,24 @@ input[type='radio']:checked {
   #section .part_send .right_infor p{
     margin-top: 20px;
   }
+=======
+#section .part_send .right_infor .top_text .part_name,
+#section .part_send .right_infor .bottom_text .number,
+#section .part_send .right_infor .bottom_text .email{
+  width: 200px; height: 30px;
+}
+#section .part_send .right_infor .infor_text h1{
+  font-size: 15px;
+  margin-top: -10px;
+}
+#section .part_send .right_infor .infor_text .in_txt .infor{
+  width: 410px; height: 45px;
+  padding: 12px;
+}
+#section .part_send .right_infor p{
+  margin-top: 20px;
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }
 
 @media all and (min-width:1025px) and (max-width:1280px){
@@ -455,4 +590,8 @@ input[type='radio']:checked {
   #section .second_se .left_txt p{
     margin-bottom: 65px;
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69

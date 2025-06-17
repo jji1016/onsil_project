@@ -2,6 +2,7 @@ package com.onsil.onsil.flower.repository;
 
 import com.onsil.onsil.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+<<<<<<< HEAD
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -38,4 +39,12 @@ public interface FlowerRepository extends JpaRepository<Product, Integer> {
 
     // productId로 상세 정보 조회
     Optional<Product> findByProductId(Integer productId);
+=======
+import org.springframework.data.domain.Pageable;
+import java.util.List;
+
+public interface FlowerRepository extends JpaRepository<Product, Integer> {
+    // 월별 6개만 반환
+    List<Product> findByFMonth(Integer fMonth, Pageable pageable);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 }

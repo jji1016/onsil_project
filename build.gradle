@@ -24,7 +24,10 @@ repositories {
 }
 
 dependencies {
+<<<<<<< HEAD
 
+=======
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'

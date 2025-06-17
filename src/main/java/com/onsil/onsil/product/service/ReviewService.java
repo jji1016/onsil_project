@@ -9,6 +9,11 @@ import com.onsil.onsil.product.repository.ProductRepository;
 import com.onsil.onsil.product.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,8 +35,15 @@ public class ReviewService {
     @Value("${file.path}reviews/")
     String reviewsPath;
 
+<<<<<<< HEAD
     public void writeReview(Integer productId, int rating, String content, MultipartFile imageFile) throws IOException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+=======
+    public void writeReview(int productId, int rating, String content, MultipartFile imageFile) throws IOException {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
         if (!(principal instanceof CustomUserDetails)) {
             throw new RuntimeException("인증된 사용자가 아닙니다.");
         }
@@ -53,11 +65,16 @@ public class ReviewService {
         Review review = new Review();
         review.setProduct(product);
         review.setMember(member);
+<<<<<<< HEAD
         review.setRating(rating); // int → Integer 자동 변환
+=======
+        review.setRating(rating);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
         review.setContent(content);
 
         if (imageFile != null && !imageFile.isEmpty()) {
             String originalFilename = imageFile.getOriginalFilename();
+<<<<<<< HEAD
             if (originalFilename != null && originalFilename.contains(".")) {
                 String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
                 String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
@@ -73,12 +90,29 @@ public class ReviewService {
                 imageFile.transferTo(new File(savePath));
                 review.setImage(storedFileName);
             }
+=======
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
+            String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String storedFileName = baseName + "_" + timestamp + extension;
+
+            String savePath = reviewsPath + storedFileName;
+
+            File saveDir = new File(reviewsPath);
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
+
+            imageFile.transferTo(new File(savePath));
+            review.setImage(storedFileName);
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
         }
 
         reviewRepository.save(review);
     }
 
     @Transactional
+<<<<<<< HEAD
     public void delete(Integer reviewId) throws IllegalAccessException {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
@@ -99,3 +133,11 @@ public class ReviewService {
         reviewRepository.delete(review);
     }
 }
+=======
+    public void delete(int reviewId) throws IllegalAccessException {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+        reviewRepository.delete(review);
+    }
+}
+>>>>>>> ef7780897a89fcccb9445fd9a55465c3081b2c69
