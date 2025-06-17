@@ -43,4 +43,11 @@ public interface AdminSubscribeRepository extends JpaRepository<Subscribe, Integ
 
     @Query("SELECT s FROM Subscribe s JOIN FETCH s.member JOIN FETCH s.product")
     List<Subscribe> findAllWithMemberAndProduct();
+
+    @Query(value = "SELECT TO_CHAR(o.startdate, 'YYYY-MM') AS month, SUM(p.PRICE) " +
+            "FROM subscribe o " +
+            "JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID " +
+            "GROUP BY TO_CHAR(o.startdate, 'YYYY-MM') " +
+            "ORDER BY TO_CHAR(o.startdate, 'YYYY-MM')", nativeQuery = true)
+    List<Object[]> getMonthlySubscribeRevenue();
 }

@@ -14,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/admin")
 @Controller
@@ -53,6 +55,8 @@ public class AdminController {
         SubscribeSumDto recentSubscribes = adminService.subscribeInOneMonth();
         // 배송현황
         DeliveryStatusDto statusSummary = adminService.getDeliveryStatusSummary();
+        // 매출합계
+        Map<String, BigDecimal> revenue = adminService.getMergedMonthlyRevenue();
 
         model.addAttribute("allSubscribeMember", countedMember);
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
@@ -65,7 +69,8 @@ public class AdminController {
         model.addAttribute("statusSummary", statusSummary);
         model.addAttribute("orderLists", orderLists);
         model.addAttribute("subscribeLists", subscribeList);
-
+        model.addAttribute("monthlyLabels", revenue.keySet());
+        model.addAttribute("monthlyData", revenue.values());
 
         return "admin/onsil-html";
     }

@@ -14,8 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +29,7 @@ public class AdminService {
     private final AdminDao adminDao;
     private final AdminMemberRepository memberRepository;
 
+    // 멤버리스트 전체
     public List<MemberDto> getAllMembers() {
         return adminDao.getAllMembers().stream()
                 .filter(member -> member.getRole() == Role.ROLE_USER && !member.isDeleteStatus())
@@ -43,6 +48,7 @@ public class AdminService {
                 .toList();
     }
 
+    // 멤버 휴면전환
     public MemberDto deleteByUserID(String userID) {
         Member deleteUser = adminDao.findByUserID(userID);
         deleteUser.markAsDeleted(); // 삭제 상태로 변경
@@ -53,6 +59,7 @@ public class AdminService {
         return memberDto;
     }
 
+    // userID로 memberDto 리턴
     public MemberDto findByUserID(String userID) {
 
         Member member = adminDao.findByUserID(userID);
@@ -73,6 +80,7 @@ public class AdminService {
         return dto;
     }
 
+    // 구독정보 전체
     public List<SubscribeDto> getAllLists() {
         return adminDao.getAllLists().stream()
                 .map(subscribe -> SubscribeDto.builder()
@@ -86,6 +94,7 @@ public class AdminService {
                 .toList();
     }
 
+    // 주문내역 전체
     public List<AdminOrderListDto> getAllOrderLists() {
         return adminDao.getAllOrderLists().stream()
                 .map(subscribe -> AdminOrderListDto.builder()
@@ -100,6 +109,7 @@ public class AdminService {
                 .toList();
     }
 
+    // 멤버 검색
     public List<MemberDto> search(String keyword, String category, LocalDateTime startDate, LocalDateTime endDate) {
         List<Member> members = adminDao.searchMembers(); // 전체 가져옴
 
@@ -133,6 +143,7 @@ public class AdminService {
                 .toList();
     }
 
+    // 멤버 수정
     @Transactional
     public void modifyMember(String userID, MemberDto dto) {
         Member member = adminDao.findByUserID(userID);
@@ -146,19 +157,23 @@ public class AdminService {
         );
     }
 
+    // 총 멤버 수
     public int countAllMembers() {
         return adminDao.countAllMembers();
     }
 
+    // 한달 이내 구독수.
     public int countOneMonth() {
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
         return adminDao.countOneMonth(oneMonthAgo);
     }
 
+    // 인기 구독아이템
     public List<PopularCountDto> popularSubscribe() {
         return adminDao.popularSubscribe();
     }
 
+    // 한달이내 구독자 총 정보
     public SubscribeSumDto subscribeInOneMonth() {
 
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
@@ -185,6 +200,7 @@ public class AdminService {
         return new SubscribeSumDto(dtos, totalPrice);
     }
 
+    // 오늘 구독자
     public SubscribeSumDto subscribeToday() {
 
         LocalDateTime today = LocalDateTime.now().minusDays(1);
@@ -211,17 +227,42 @@ public class AdminService {
         return new SubscribeSumDto(dtos, totalPrice);
     }
 
+    // 일주일 내 새로생긴 리뷰
     public int inOneWeekReview() {
         LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
         return adminDao.inOneWeekReview(oneWeekAgo);
     }
 
+    // 배송정보
     public DeliveryStatusDto getDeliveryStatusSummary() {
         return adminDao.countDeliveryStatuses();
     }
 
+    // 한달내 판매?
     public List<SalesByMonthDto> getMonthlySales() {
         return adminDao.findMonthlySales();
+    }
+
+    // Service
+    public Map<String, BigDecimal> getMergedMonthlyRevenue() {
+        List<Object[]> orderTotal = adminDao.getMonthlyOrderRevenue();
+        List<Object[]> subscribeTotal = adminDao.getMonthlySubscribeRevenue();
+
+        Map<String, BigDecimal> result = new TreeMap<>();
+
+        for (Object[] row : orderTotal) {
+            String month = (String) row[0];
+            BigDecimal price = (BigDecimal) row[1];
+            result.put(month, price);
+        }
+
+        for (Object[] row : subscribeTotal) {
+            String month = (String) row[0];
+            BigDecimal price = (BigDecimal) row[1];
+            result.merge(month, price, BigDecimal::add);
+        }
+
+        return result;
     }
 
 }

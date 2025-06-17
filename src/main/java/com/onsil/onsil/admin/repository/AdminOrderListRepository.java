@@ -23,4 +23,12 @@ public interface AdminOrderListRepository extends JpaRepository<OrderList, Integ
 
     @Query("SELECT o FROM OrderList o JOIN FETCH o.member JOIN FETCH o.product")
     List<OrderList> findAllWithMemberAndProduct();
+
+    @Query(value = "SELECT TO_CHAR(o.ORDERTIME, 'YYYY-MM') AS month, SUM(p.PRICE) " +
+            "FROM ORDERLIST o " +
+            "JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID " +
+            "GROUP BY TO_CHAR(o.ORDERTIME, 'YYYY-MM') " +
+            "ORDER BY TO_CHAR(o.ORDERTIME, 'YYYY-MM')", nativeQuery = true)
+    List<Object[]> getMonthlyOrderRevenue();
+
 }

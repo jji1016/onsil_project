@@ -346,7 +346,7 @@ body{
 
 #section #member{
     width: 98%;
-    height: 94%;
+    /*height: 94%;*/
     position: absolute;
     top: 3%;
     background-color: #fff;
@@ -454,7 +454,6 @@ body{
     color: #51753D;
     font-weight: 600;
 }
-
 #section #member .wrap_list .mem_list{
     width: 100%;
     border: 1px solid #D2D2D2;
@@ -494,13 +493,13 @@ body{
 
 
 /*  테이블 페이지네이션 ----------- */
-.pagination {
+#member-pagination {
     text-align: center;
     margin: 10px 0;
     /* border: 1px solid red; */
     }
 
-    .pagination button {
+    #member-pagination button {
     background-color: #fff;
     border-radius: 5px;
     margin: 0px 4px;
@@ -510,13 +509,79 @@ body{
     transition: background-color 0.3s ease;
     }
 
-    .pagination button:disabled {
+    #member-pagination button:disabled {
     cursor: not-allowed;
     color: #aaa;
     border-color: #eee;
     }
 
-    .pagination button.active {
+    #member-pagination button.active {
+    background-color: #8B9773;
+    color: white;
+    border-color: #8B9773;
+    font-weight: bold;
+    }
+
+/*  테이블 페이지네이션 ----------- */
+#orderList-pagination {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 10px 0;
+    /* border: 1px solid red; */
+    }
+
+    #orderList-pagination button {
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 0px 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+        text-align: center;
+    transition: background-color 0.3s ease;
+    }
+
+    #orderList-pagination button:disabled {
+    cursor: not-allowed;
+    color: #aaa;
+    border-color: #eee;
+    }
+
+    #orderList-pagination button.active {
+    background-color: #8B9773;
+    color: white;
+    border-color: #8B9773;
+    font-weight: bold;
+    }
+
+/*  테이블 페이지네이션 ----------- */
+#subscribe-pagination {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 10px 0;
+    /* border: 1px solid red; */
+    }
+
+    #subscribe-pagination button {
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 0px 4px;
+    padding: 6px 12px;
+        text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    }
+
+    #subscribe-pagination button:disabled {
+    cursor: not-allowed;
+    color: #aaa;
+    border-color: #eee;
+    }
+
+    #subscribe-pagination button.active {
     background-color: #8B9773;
     color: white;
     border-color: #8B9773;

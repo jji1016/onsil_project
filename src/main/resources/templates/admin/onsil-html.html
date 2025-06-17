@@ -982,6 +982,10 @@
     const memberLists = /*[[${memberList}]]*/ [];
     // Thymeleaf가 JSON으로 넣어줘야 함
 
+    const monthlyLabels = /*[[${monthlyLabels}]]*/ [];
+    const monthlyData = /*[[${monthlyData}]]*/ [];
+
+    // 페이지네이션 함수
     function paginate(dataList, itemsPerPage, maxPageButtons, tbodyEl, paginationEl, renderRowFn, rowBuilderFn) {
         let currentPage = 1;
         let internalDataList = dataList;
@@ -1070,7 +1074,7 @@
         };
     }
 
-
+    // 모달에 정보넣기
     document.querySelectorAll(".admin_btn").forEach(btn => {
         btn.addEventListener("click", function () {
             const userId = this.dataset.userid;
@@ -1087,6 +1091,7 @@
         });
     });
 
+    // 구독내역 페이지네이션
     const subscribePaginator = paginate(
         [], // 초기엔 빈 배열
         5,
@@ -1103,6 +1108,7 @@
     `
     );
 
+    // 주문내역 페이지네이션
     const orderPaginator = paginate(
         [], // 초기엔 빈 배열
         5,
@@ -1120,10 +1126,10 @@
     `
     );
 
-
+    // 멤버 페이지네이션
     const memberPaginator = paginate(
         memberLists,
-        5,
+        7,
         5,
         document.getElementById("member-body"),
         document.getElementById("member-pagination"),
@@ -1168,8 +1174,6 @@
     `;
     }
 
-
-
     function renderOrderList(userID) {
         const userOrders = orderLists.filter(order => order.userID === userID);
         if (userOrders.length === 0) {
@@ -1205,7 +1209,7 @@
         });
     });
 
-
+    // 회원 정보 수정
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("admin_btn")) {
             const row = e.target.closest(".member-row");
@@ -1248,7 +1252,7 @@
         }
     });
 
-    // 검색
+    // 회원 검색
     document.addEventListener('DOMContentLoaded', function () {
 
         const searchBtn = document.getElementById('search-btn');
@@ -1324,7 +1328,7 @@
         });
     });
 
-    // 삭제
+    // 회원 휴면변경
     document.querySelectorAll(".btn-delete")
         .forEach(btn => {
             btn.addEventListener("click", () => {
