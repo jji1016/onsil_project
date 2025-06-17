@@ -30,7 +30,7 @@ public class AdminController {
     private final AdminService adminService;
     private final AdminOutputService adminOutputService;
 
-    @GetMapping("/onsil-html")
+    @GetMapping("/admin")
     public String onsilHtml(Model model) throws JsonProcessingException {
 
         // 총 멤버수
@@ -72,7 +72,7 @@ public class AdminController {
         model.addAttribute("monthlyLabels", revenue.keySet());
         model.addAttribute("monthlyData", revenue.values());
 
-        return "admin/onsil-html";
+        return "admin/admin";
     }
 
     @GetMapping("/api/sales/monthly")
@@ -87,14 +87,7 @@ public class AdminController {
         return adminService.deleteByUserID(userID);
     }
 
-    @GetMapping("/member-detail/{userID}")
-    public String memberDetail(@PathVariable String userID, Model model) {
 
-        MemberDto memberDetail = adminService.findByUserID(userID);
-        model.addAttribute("memberDetail", memberDetail);
-
-        return "admin/member-detail";
-    }
 
     @GetMapping("/member-modify/{userID}")
     public String modifyMember(@PathVariable String userID, Model model) {
@@ -108,7 +101,7 @@ public class AdminController {
     @PostMapping("/member-modify/{userID}")
     public String modifyMember(@PathVariable String userID, @ModelAttribute MemberDto dto) {
         adminService.modifyMember(userID, dto);
-        return "redirect:/admin/onsil-html";
+        return "redirect:admin/admin";
     }
 
     @GetMapping("/order-list/{id}")

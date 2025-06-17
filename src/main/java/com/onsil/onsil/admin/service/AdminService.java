@@ -170,7 +170,7 @@ public class AdminService {
 
     // 인기 구독아이템
     public List<PopularCountDto> popularSubscribe() {
-        return adminDao.popularSubscribe();
+        return adminDao.getPopularProducts();
     }
 
     // 한달이내 구독자 총 정보

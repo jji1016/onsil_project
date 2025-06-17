@@ -1,16 +1,14 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>onsil flower studio admin system</title>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"/>
+    <title>온실 플라워 스튜디오 - 관리자</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
     <link rel="stylesheet" href="/css/admin.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
         $(document).ready(function () {
             //주문내역 모달창
@@ -50,12 +48,14 @@
     </script>
 
 
+
+
 </head>
 <body>
 <div id="header">
     <div class="wrap_hd">
         <div class="wrap_logo">
-            <h1 class="logo"><a href="#"><img src="images/admin/logo.png" alt="logo"></a></h1>
+            <h1 class="logo"><a href="#"><img src="../../static/images/admin/logo.png" alt="logo"></a></h1>
             <span>ADMIN</span>
         </div>
         <ul class="gnb">
@@ -105,35 +105,35 @@
             <ul class="overview">
                 <li>
                     <a href="#">
-                        <img src="images/admin/icon_over_member.png" alt="회원아이콘">
+                        <img src="../../static/images/admin/icon_over_member.png" alt="회원아이콘">
                         <h3>신규 가입자</h3>
                         <p th:text="${inOneMonthSubscribeMember}">32<span>명</span></p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="images/admin/icon_over_member.png" alt="전체회원아이콘">
+                        <img src="../../static/images/admin/icon_over_member.png" alt="전체회원아이콘">
                         <h3>전체 가입자</h3>
                         <p th:text="${allSubscribeMember}">345<span>명</span></p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="images/admin/icon_over_deli.png" alt="배송아이콘">
+                        <img src="../../static/images/admin/icon_over_deli.png" alt="배송아이콘">
                         <h3>신규 주문</h3>
                         <p th:text="${todaySubscribe.size()}">57<span>건</span></p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="images/admin/icon_over_qna.png" alt="문의아이콘">
+                        <img src="../../static/images/admin/icon_over_qna.png" alt="문의아이콘">
                         <h3>신규 문의</h3>
                         <p>17<span>건</span></p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="images/admin/icon_over_review.png" alt="리뷰아이콘">
+                        <img src="../../static/images/admin/icon_over_review.png" alt="리뷰아이콘">
                         <h3>신규 리뷰</h3>
                         <p th:text="${inOneWeekReview}">24<span>건</span></p>
                     </a>
@@ -141,16 +141,16 @@
             </ul>
             <div class="admin">
                 <div class="ad_info">
-                    <img src="images/admin/admin.png" alt="관리자이미지">
+                    <img src="../../static/images/admin/admin.png" alt="관리자이미지">
                     <h3>사용자 이름</h3>
                     <p>전체 관리자</p>
                 </div>
                 <ul class="setting">
                     <li>
-                        <img src="images/admin/icon_setting.png" alt="수정">수정
+                        <img src="../../static/images/admin/icon_setting.png" alt="수정">수정
                     </li>
                     <li>
-                        <a href="/memeber/logout"><img src="images/admin/icon_logout.png" alt="로그아웃">로그아웃</a>
+                        <img src="../../static/images/admin/icon_logout.png" alt="로그아웃">로그아웃
                     </li>
                 </ul>
             </div>
@@ -165,12 +165,35 @@
             <li class="best_item">
                 <h2>인기상품</h2>
                 <div class="cont_area">
+<!--                    <table>-->
+<!--                        <tr>-->
+<!--                            <td>1.</td>-->
+<!--                            <td><span>5월 카네이션 패키지</span></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>2.</td>-->
+<!--                            <td><span>2만원대로 유럽피언 꽃 구독(S)</span></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>3.</td>-->
+<!--                            <td><span>4만원대로 유럽피언 꽃 구독(M)</span></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>4.</td>-->
+<!--                            <td><span>마법같은 행복, 페어리 가든 꽃다발(M)</span></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>5.</td>-->
+<!--                            <td><span>[6월의 탄생화] 사랑을 담은 수국 패키지</span></td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
                     <table>
                         <tr th:each="subscribe, stat : ${popularSubscribe}">
                             <td th:text="${stat.index + 1} + '.'"></td>
                             <td><span th:text="${subscribe.flowerName}"></span></td>
                         </tr>
                     </table>
+
                 </div>
             </li>
             <li class="today_order">
@@ -179,7 +202,7 @@
                     <table>
                         <tr>
                             <th>총 주문 건수</th>
-                            <th>총 주문 금액</th>
+                            <th>총 주문금액</th>
                         </tr>
                         <tr>
                             <td><span th:text="${recentSubscribes.size()}">0</span></td>
@@ -228,45 +251,50 @@
     <div id="member" class="tab">
         <div class="search">
             <h2>회원관리</h2>
-            <table>
-                <tr>
-                    <td>회원검색</td>
-                    <td>
-                        <select name="type" id="search-category">
-                            <option value="userID">아이디</option>
-                            <option value="nickName">닉네임</option>
-                            <option value="userName">이름</option>
-                        </select>
-                        <input type="text" id="search-input" placeholder="검색어 입력">
-                    </td>
-                </tr>
-                <tr>
-                    <td>기간검색</td>
-                    <td>
-                        <!--                            <select name="day">-->
-                        <!--                                <option value="가입일">가입일</option>-->
-                        <!--                                <option value="주문일">주문일</option>-->
-                        <!--                            </select>-->
-                        <!--                            <input type="date">~<input type="date">-->
-                        <!--                        <p>가입일</p>-->
-                        <input type="date" id="start-date" placeholder="시작일">
-                        <input type="date" id="end-date" placeholder="종료일">
-                        <button>오늘</button>
-                        <button>일주일</button>
-                        <button>1개월</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>회원 구분</td>
-                    <td>
-                        <input type="checkbox" value="subscriber"> 구독 회원
-                        <input type="checkbox" value="normal"> 일반 회원
-                    </td>
-            </table>
-            <div class="btn">
-                <button class="btn1" id="search-btn">검색</button>
-                <button class="btn2" id="reset-btn">초기화</button>
-            </div>
+                <table>
+                    <tr>
+                        <td>회원검색</td>
+                        <td>
+                            <select name="type">
+                                <option value="아이디">아이디</option>
+                                <option value="이름">이름</option>
+                            </select>
+                            <input type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>기간검색</td>
+                        <td>
+<!--                            <select name="day">-->
+<!--                                <option value="가입일">가입일</option>-->
+<!--                                <option value="주문일">주문일</option>-->
+<!--                            </select>-->
+<!--                            <input type="date">~<input type="date">-->
+<!--                            <button>오늘</button>-->
+<!--                            <button>일주일</button>-->
+<!--                            <button>1개월</button>-->
+                            <input type="date" id="start-date" placeholder="시작일">
+                            <input type="date" id="end-date" placeholder="종료일">
+                            <button>오늘</button>
+                            <button>일주일</button>
+                            <button>1개월</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>회원등급</td>
+                        <td>
+                            <input type="checkbox" value="전체"> 전체
+                            <input type="checkbox" value="비기너"> 비기너
+                            <input type="checkbox" value="실버"> 실버
+                            <input type="checkbox" value="골드"> 골드
+                            <input type="checkbox" value="구독회원"> 구독회원
+                        </td>
+                    </tr>
+                </table>
+                <div class="btn">
+                    <button class="btn1" id="search-btn">검색</button>
+                    <button class="btn2" id="reset-btn">초기화</button>
+                </div>
         </div>
         <div class="wrap_list">
             <ul class="btn_count">
@@ -289,40 +317,22 @@
                     <th>주소1</th>
                     <th>주소2</th>
                     <th>연락처</th>
-                    <!--                    <th>구매이력</th>-->
                     <th>　</th>
                 </tr>
-
                 </thead>
                 <tbody id="member-body">
-                <!--                <tr th:each="member, memberStat : ${memberList}">-->
-                <!--                    <td th:text="${memberStat.count}">num</td>-->
-                <!--                    <td th:text="${member.userID}">userID</td>-->
-                <!--                    <td th:text="${member.nickName}">nickName</td>-->
-                <!--                    <td th:text="${member.userName}">userName</td>-->
-                <!--                    <td th:text="${member.userEmail}">userEmail</td>-->
-                <!--                    <td th:text="${member.regDate}">regDate</td>-->
-                <!--                    <td th:text="${member.address01}">address01</td>-->
-                <!--                    <td th:text="${member.address02}">address02</td>-->
-                <!--                    <td th:text="${member.tel}">tel</td>-->
-                <!--                    <td>-->
-                <!--                        &lt;!&ndash;                        <a th:href="@{/admin/member-detail/{userID}(userID=${member.userID})}">&ndash;&gt;-->
-                <!--                        <button class="admin_btn">수정</button>-->
-                <!--                        &lt;!&ndash;                        </a>&ndash;&gt;-->
-                <!--                    </td>-->
-                <!--                </tr>-->
+
                 </tbody>
             </table>
-            <div id="member-pagination" style="margin-top: 20px;"></div>
-
-            <div id="mem-modal" style="display: none;">
+            <div id="member-pagination" class="pagination"></div>
+            <div id="mem-modal">
                 <div class="wrap-all">
                     <div class="de_title">
                         <h1>회원정보관리</h1>
                     </div>
                     <ul class="tab-btn">
-                        <li onclick="openPage('mem-info', this);">회원정보</li>
-                        <li onclick="openPage('mem-order', this);">주문내역</li>
+                        <li onclick="openPage('mem-info',this);">회원정보</li>
+                        <li onclick="openPage('mem-order',this)">주문내역</li>
                         <li onclick="openPage('mem-subscribe', this);">구독내역</li>
                     </ul>
                     <ul class="wrap-cont">
@@ -346,9 +356,31 @@
                                         <td>
                                             <input type="text" name="userEmail" id="input-email" placeholder=""
                                                    value="">
+                                            <input type="checkbox" name="수신동의" id=""> 이메일 수신동의
                                         </td>
                                     </tr>
-
+                                    <tr>
+                                        <td>우편번호</td>
+                                        <td>
+                                            <input type="text" name="zipcode" id="input-zipcode" placeholder=""
+                                                   value="">
+                                            <input type="button" id="btn-zipcode" value="우편번호">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>주소1</td>
+                                        <td>
+                                            <input type="text" name="address01" id="input-address01" placeholder=""
+                                                   value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>주소2</td>
+                                        <td>
+                                            <input type="text" name="address02" id="input-address02" placeholder=""
+                                                   value="">
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td>휴대전화</td>
                                         <td>
@@ -358,7 +390,16 @@
                                                 <option value="011">011</option>
                                                 <option value="017">017</option>
                                             </select>-
-                                            <input type="text" name="tel" id="input-tel" placeholder="" value="">
+                                            <input type="text">-
+                                            <input type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>생년월일</td>
+                                        <td>
+                                            <input type="text"> 년
+                                            <input type="text"> 월
+                                            <input type="text"> 일
                                         </td>
                                     </tr>
                                 </table>
@@ -369,6 +410,12 @@
                             </form>
                         </li>
                         <li id="mem-order" class="tab-cont">
+                            <table class="user-id">
+                                <tr>
+                                    <td>회원아이디</td>
+                                    <td class="view-user-id"></td>
+                                </tr>
+                            </table>
                             <table class="mem-order-list">
                                 <thead>
                                 <tr>
@@ -376,7 +423,6 @@
                                     <th>주문일시</th>
                                     <th>주문번호</th>
                                     <th>상품</th>
-                                    <th>수량</th>
                                     <th>주문상태</th>
                                     <th>총주문금액</th>
                                 </tr>
@@ -385,37 +431,14 @@
 
                                 </tbody>
                             </table>
-                            <div id="orderList-pagination" class="pagination"></div>
+
                             <div class="mem-btn">
                                 <button type="button" class="close">닫기</button>
                             </div>
                         </li>
-                        <li id="mem-subscribe" class="tab-cont">
-                            <table class="mem-subscribe-list">
-                                <thead>
-                                <tr>
-                                    <th>번호</th>
-                                    <th>주문일시</th>
-                                    <th>주문번호</th>
-                                    <th>상품</th>
-                                    <th>주간/월간</th>
-                                    <th>총주문금액</th>
-                                </tr>
-                                </thead>
-                                <tbody id="mem-subscribe-body">
-
-                                </tbody>
-                            </table>
-                            <div id="subscribe-pagination" class="pagination"></div>
-                            <div class="mem-btn">
-                                <button type="button" class="close">닫기</button>
-                            </div>
-                        </li>
-
                     </ul>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -477,15 +500,15 @@
                                 <td>판매여부</td>
                                 <td>
                                     <input type="radio" name="sale1" value="전체"> 전체
-                                    <input type="radio" name="sale1" value="진열"> 진열
-                                    <input type="radio" name="sale1" value="품절"> 품절
-                                    <input type="radio" name="sale1" value="단종"> 단종
-                                    <input type="radio" name="sale1" value="중지"> 중지
+                                    <input type="radio" name="sale1"  value="진열"> 진열
+                                    <input type="radio" name="sale1"  value="품절"> 품절
+                                    <input type="radio" name="sale1"  value="단종"> 단종
+                                    <input type="radio" name="sale1"  value="중지"> 중지
                                 </td>
                                 <td>필수옵션</td>
                                 <td>
                                     <input type="radio" name="option" value="사용"> 사용
-                                    <input type="radio" name="option" value="미사용"> 미사용
+                                    <input type="radio" name="option"  value="미사용"> 미사용
                                 </td>
                             </tr>
                         </table>
@@ -512,6 +535,7 @@
 
                         </tbody>
                     </table>
+                    <div id="stock-pagination" class="pagination"></div>
                 </div>
             </li>
             <li class="desc_in st_tab">
@@ -570,6 +594,7 @@
 
                         </tbody>
                     </table>
+                    <div id="stockIn-pagination" class="pagination"></div>
                 </div>
             </li>
             <li class="desc_out st_tab">
@@ -627,32 +652,35 @@
                         <tbody id="stock_out-body">
 
                         </tbody>
+
                     </table>
+                    <div id="stockOut-pagination" class="pagination"></div>
                 </div>
             </li>
         </ul>
     </div>
 
 
+
     <div id="sales" class="tab">
         <ul class="sales_info">
             <li>
-                <img src="images/admin/icon_sales_big.png" alt="매출아이콘">
+                <img src="../../static/images/admin/icon_sales_big.png" alt="매출아이콘">
                 <h3>오늘의 매출</h3>
                 <p>2,867,500<span>원</span></p>
             </li>
             <li>
-                <img src="images/admin/icon_sales_big.png" alt="매출아이콘">
+                <img src="../../static/images/admin/icon_sales_big.png" alt="매출아이콘">
                 <h3>이번달 매출</h3>
                 <p>18,524,700<span>원</span></p>
             </li>
             <li>
-                <img src="images/admin/icon_over_deli.png" alt="매출아이콘">
+                <img src="../../static/images/admin/icon_over_deli.png" alt="매출아이콘">
                 <h3>이번달 주문수</h3>
                 <p>146<span>건</span></p>
             </li>
             <li>
-                <img src="images/admin/icon_average.png" alt="평균아이콘">
+                <img src="../../static/images/admin/icon_average.png" alt="평균아이콘">
                 <h3>평균 객단가</h3>
                 <p>126,880<span>원</span></p>
             </li>
@@ -680,6 +708,7 @@
             </div>
         </div>
     </div>
+
 
 
     <div id="order" class="tab">
@@ -776,6 +805,7 @@
 
                 </tbody>
             </table>
+            <div id="order-pagination" class="pagination"></div>
 
             <div id="order_modal">
                 <div class="modal_con">
@@ -805,6 +835,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -869,6 +900,7 @@
 
                         </tbody>
                     </table>
+                    <div id="item-pagination" class="pagination"></div>
                     <div id="items_modal">
                         <div class="modal_con">
                             <div class="de_title">

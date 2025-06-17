@@ -8,9 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class PopularCountDto {
-
     private Integer productId;
     private String flowerName;
-    private long subscribeCount;
+    private Long totalCount;
 
 }

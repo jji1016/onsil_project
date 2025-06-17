@@ -5,6 +5,7 @@ import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.dto.SalesByMonthDto;
 import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.admin.repository.AdminOrderListRepository;
+import com.onsil.onsil.admin.repository.AdminProductRepository;
 import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.OrderList;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class AdminDao {
     private final AdminOrderListRepository orderListRepository;
     private final AdminSubscribeRepository subscribeRepository;
     private final ReviewRepository reviewRepository;
+    private final AdminProductRepository productRepository;
 
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
@@ -51,12 +54,20 @@ public class AdminDao {
         return subscribeRepository.countOneMonthMember(todayDate);
     }
 
-    public List<PopularCountDto> popularSubscribe() {
-        return subscribeRepository.popularSubscribe(PageRequest.of(0, 5));
+    public List<PopularCountDto> getPopularProducts() {
+        List<Object[]> rows = productRepository.findPopularProducts();
+        return rows.stream()
+                .map(row -> new PopularCountDto(
+                        ((Number) row[0]).intValue(),    // productId
+                        (String) row[1],                 // flowerName
+                        ((Number) row[2]).longValue()    // totalCount
+                ))
+                .toList();
     }
 
+
     public List<Subscribe> findRecentInMonth(LocalDateTime oneMonthAgo) {
-        return  subscribeRepository.findRecentInMonth(oneMonthAgo);
+        return subscribeRepository.findRecentInMonth(oneMonthAgo);
     }
 
     public int inOneWeekReview(LocalDateTime oneWeekAgo) {
@@ -79,11 +90,11 @@ public class AdminDao {
         return orderListRepository.findAllWithMemberAndProduct(); // JPQL fetch join
     }
 
-    public List<Object[]> getMonthlyOrderRevenue(){
+    public List<Object[]> getMonthlyOrderRevenue() {
         return orderListRepository.getMonthlyOrderRevenue();
     }
 
-    public List<Object[]> getMonthlySubscribeRevenue(){
+    public List<Object[]> getMonthlySubscribeRevenue() {
         return subscribeRepository.getMonthlySubscribeRevenue();
     }
 
