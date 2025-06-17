@@ -35,9 +35,9 @@ public class FlowerDto {
 
         // image 컬럼 값(영어 파일명, 확장자 포함)을 그대로 사용
         if (product.getImage() != null && !product.getImage().isEmpty()) {
-            this.imageUrl = "/images/flower/" + product.getImage();
+            this.imageUrl = "/upload/products/" + product.getImage();
         } else {
-            this.imageUrl = "/images/flower/default.jpg";
+            this.imageUrl = "/upload/products/default.jpg";
         }
     }
 }

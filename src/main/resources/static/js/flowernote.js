@@ -77,7 +77,7 @@ function updateListItemWithFlowerData(listItem, flower) {
         nameText.textContent = flower.flowerName;
     }
     if (flowerImage) {
-        const imageUrl = flower.imageUrl || (flower.image ? `/images/flower/${flower.image}` : '/images/flower/default.jpg');
+        const imageUrl = flower.imageUrl || (flower.image ? `/upload/products/${flower.image}` : '/upload/products/default.jpg');
         flowerImage.style.backgroundImage = `url('${imageUrl}')`;
         flowerImage.style.backgroundSize = 'cover';
         flowerImage.style.backgroundPosition = 'center';
@@ -114,6 +114,7 @@ function performSearch(keyword) {
         alert('검색어를 입력해주세요.');
         return;
     }
+    // 검색 키워드 쿼리 보내기
     fetch(`/api/flowers/search?keyword=${encodeURIComponent(keyword.trim())}`)
         .then(response => response.json())
         .then(data => {
@@ -136,19 +137,27 @@ function showSearchResults(flowers) {
             showNoResultsMessage();
             return;
         }
-        displaySearchResultItem(searchResult, flowers[0]);
+        // 검색 결과 하나만 랜덤 조회
+        // flowers가 검색 결과 리스트
+        // 랜덤 인덱스 생성 (0 ~ flowers.length-1)
+        const randomIndex = Math.floor(Math.random() * flowers.length);
+        // 랜덤으로 뽑은 꽃 데이터
+        const randomFlower = flowers[randomIndex];
+        // 검색 결과에 표시
+        displaySearchResultItem(searchResult, randomFlower);
         searchResult.style.display = 'block';
-        if (flowers.length > 1) {
-            showAdditionalSearchResults(flowers.slice(1));
-        }
+        // if (flowers.length > 1) {
+        //     showAdditionalSearchResults(flowers.slice(1));
+        // }
     }
 }
 
+// 검색 출력 공간 할당 및 정보 주입
 function displaySearchResultItem(container, flower) {
     const imgArea = container.querySelector('.img-area');
     const flowerName = container.querySelector('.name-txt');
     if (imgArea) {
-        const imageUrl = flower.imageUrl || (flower.image ? `/images/flower/${flower.image}` : '/images/flower/default.jpg');
+        const imageUrl = flower.imageUrl || (flower.image ? `/upload/products/${flower.image}` : '/upload/products/default.jpg');
         imgArea.style.backgroundImage = `url('${imageUrl}')`;
         imgArea.style.backgroundSize = 'cover';
         imgArea.style.backgroundPosition = 'center';
@@ -160,29 +169,30 @@ function displaySearchResultItem(container, flower) {
     container.onclick = () => showFlowerDetail(flower.productId);
 }
 
-function showAdditionalSearchResults(flowers) {
-    const tempContainer = document.getElementById('june');
-    if (tempContainer) {
-        tempContainer.style.display = 'flex';
-        const maxItems = Math.min(flowers.length, 6);
-        const existingItems = tempContainer.querySelectorAll('li');
-        for (let i = 0; i < 6; i++) {
-            let listItem;
-            if (i < existingItems.length) {
-                listItem = existingItems[i];
-            } else {
-                listItem = createNewListItem(i + 1);
-                tempContainer.appendChild(listItem);
-            }
-            if (i < maxItems) {
-                updateListItemWithFlowerData(listItem, flowers[i]);
-                listItem.style.display = 'block';
-            } else {
-                listItem.style.display = 'none';
-            }
-        }
-    }
-}
+// 검색 결과 전체 리스트
+// function showAdditionalSearchResults(flowers) {
+//     const tempContainer = document.getElementById('june');
+//     if (tempContainer) {
+//         tempContainer.style.display = 'flex';
+//         const maxItems = Math.min(flowers.length, 6);
+//         const existingItems = tempContainer.querySelectorAll('li');
+//         for (let i = 0; i < 6; i++) {
+//             let listItem;
+//             if (i < existingItems.length) {
+//                 listItem = existingItems[i];
+//             } else {
+//                 listItem = createNewListItem(i + 1);
+//                 tempContainer.appendChild(listItem);
+//             }
+//             if (i < maxItems) {
+//                 updateListItemWithFlowerData(listItem, flowers[i]);
+//                 listItem.style.display = 'block';
+//             } else {
+//                 listItem.style.display = 'none';
+//             }
+//         }
+//     }
+// }
 
 function showNoResultsMessage() {
     const searchResult = document.querySelector('.search-result');
@@ -204,7 +214,7 @@ function showNoResultsMessage() {
 function hideSearchResults() {
     const searchResult = document.querySelector('.search-result');
     if (searchResult) {
-        searchResult.style.display = 'block';
+        searchResult.style.display = 'none';
     }
 }
 
@@ -239,7 +249,7 @@ function createAndShowModal(flower) {
             justify-content: center;
             align-items: center;
         `;
-    const imageUrl = flower.imageUrl || (flower.image ? `/images/flower/${flower.image}` : '/images/flower/default.jpg');
+    const imageUrl = flower.imageUrl || (flower.image ? `/upload/products/${flower.image}` : '/upload/products/default.jpg');
     modal.innerHTML = `
             <div style="
                 background-color: white;
@@ -262,7 +272,7 @@ function createAndShowModal(flower) {
                 <div style="text-align: center; margin-bottom: 20px;">
                     <img src="${imageUrl}" alt="${flower.flowerName}" 
                          style="width: 100%; max-width: 300px; height: 200px; object-fit: cover; border-radius: 10px;"
-                         onerror="this.src='/images/flower/default.png'">
+                         onerror="this.src='/upload/products/default.png'">
                 </div>
                 <h2 style="color: #8b9773; text-align: center; margin-bottom: 20px;">${flower.flowerName}</h2>
                 <div style="line-height: 1.6;">
@@ -364,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 productId: 15506,
                 flowerName: "꼬리조팝나무",
                 image: "15506_ggorijopabnamu.jpg",
-                imageUrl: "/images/flower/15506_ggorijopabnamu.jpg",
+                imageUrl: "/upload/products/15506_ggorijopabnamu.jpg",
                 flowLang: "기다림, 인내",
                 flowerInfo: "꼬리조팝나무는 초여름에 하얀 꽃이 피는 관목입니다.",
                 fUse: "조경, 관상용",
