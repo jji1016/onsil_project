@@ -1,6 +1,12 @@
 package com.onsil.onsil.subscribe.controller;
 
+import com.onsil.onsil.entity.Review;
+import com.onsil.onsil.entity.Subscribe;
 import com.onsil.onsil.member.dto.MemberDto;
+import com.onsil.onsil.product.dao.ProductDao;
+import com.onsil.onsil.product.dto.ProductDto;
+import com.onsil.onsil.product.repository.ReviewRepository;
+import com.onsil.onsil.subscribe.dao.SubscribeDao;
 import com.onsil.onsil.subscribe.dto.SubscribeDto;
 import com.onsil.onsil.subscribe.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -16,7 +23,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/subscribe")
 public class SubscribeController {
+    private final ReviewRepository reviewRepository;
     private final SubscribeService subscribeService;
+    private final SubscribeDao subscribeDao;
+
 
     @GetMapping("/subscribe")
     public String subscPage(Model model, @AuthenticationPrincipal MemberDto memberDto) {
@@ -24,8 +34,18 @@ public class SubscribeController {
         model.addAttribute("subscribes", subscribes);
         return "subscribe/subscribe";
     }
-    @GetMapping("/particular")
-    public String particular(Model model, @AuthenticationPrincipal MemberDto memberDto) {
+    @GetMapping("/particular/{id}")
+    public String particularProduct(@PathVariable Integer id, Model model) {
+        SubscribeDto subscribeDto = subscribeService.getSubscribe(id);
+
+        Subscribe subscribe = subscribeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("구독 상품을 찾을 수 없습니다."));
+
+        List<Review> reviews = reviewRepository.findAllBySubscribe(subscribe);
+
+        model.addAttribute("subscribe",subscribeDto);
+
+        model.addAttribute("reviews", reviews);
         return "subscribe/particular";
     }
 }

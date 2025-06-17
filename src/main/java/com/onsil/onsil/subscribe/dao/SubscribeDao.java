@@ -36,4 +36,24 @@ public class SubscribeDao {
                 .build()
         ).toList();
     }
+
+    public SubscribeDto findById(Integer id) {
+        Subscribe s = subscribeRepository.findWithProductById(id)
+                .orElseThrow(() -> new IllegalArgumentException("구독 없음"));
+        return toDto(s);
+    }
+
+    private SubscribeDto toDto(Subscribe s) {
+        return SubscribeDto.builder()
+                .id(s.getId())
+                .memberId(s.getMember().getId())
+                .productId(s.getProduct().getId())
+                .period(s.getPeriod())
+                .startDate(s.getStartDate())
+                .endDate(s.getEndDate())
+                .productName(s.getProduct().getFlowerName())
+                .productImage(s.getProduct().getImage())
+                .price(s.getProduct().getPrice())
+                .build();
+    }
 }

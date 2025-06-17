@@ -44,6 +44,7 @@ public class AdminController {
     private final SubscribeRepository subscribeRepository;
     private final ProductService productService;
     private final ProductRepository productRepository;
+
     @Value("${file.path}products/")
     String productsPath;  // 여기서 주입
 
@@ -196,6 +197,7 @@ public class AdminController {
         product.setPrice(price);
 
         productRepository.save(product);
+
 
         return "redirect:/admin/product";
     }

@@ -20,4 +20,8 @@ public class SubscribeService {
     public List<SubscribeDto> getRandom6Subscribes() {
         return subscribeDao.findRandom6Subscribes();
     }
+    //상세페이지 아이디로 조회
+    public SubscribeDto getSubscribe(Integer id) {
+        return subscribeDao.findById(id);
+    }
 }

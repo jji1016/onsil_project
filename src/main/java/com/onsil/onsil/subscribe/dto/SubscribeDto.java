@@ -1,6 +1,7 @@
 package com.onsil.onsil.subscribe.dto;
 
 import com.onsil.onsil.constant.Period;
+import com.onsil.onsil.entity.Subscribe;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,5 @@ public class SubscribeDto {
     private String productName;
     private String productImage;
     private int price;
+
 }
