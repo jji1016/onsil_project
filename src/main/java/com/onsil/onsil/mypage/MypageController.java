@@ -177,6 +177,7 @@ public class MypageController {
         if (newAddress02 != null) loggedMemberDto.setAddress02(newAddress02);
         log.info("modify_loggedMemberDto: {}", loggedMemberDto);
         mypageService.updateInfo(loggedMemberDto);
+
         result.put("isModify", "true");
         return result;
     }

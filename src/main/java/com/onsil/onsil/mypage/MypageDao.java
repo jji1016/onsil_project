@@ -21,10 +21,6 @@ public class MypageDao {
         return mypageMemberRepository.findByUserID(userID);
     }
 
-    public void save(Member member) {
-        mypageMemberRepository.save(member);
-    }
-
     public int deleteAccount(Integer id) {
         return mypageMemberRepository.deleteAccount(id);
     }
