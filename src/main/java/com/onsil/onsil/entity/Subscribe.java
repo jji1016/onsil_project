@@ -36,8 +36,6 @@ public class  Subscribe {
     @Column(nullable = false)
     private Period period;
 
-    @Column(name = "SUBSCRIBENAME")
-    private String subscribeName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID", nullable = false)
