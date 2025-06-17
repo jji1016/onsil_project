@@ -85,6 +85,15 @@ public class Member {
         this.address02 = address02;
     }
 
+    public void updateInfo(String userPW, String userEmail, String tel, String zipcode, String address01, String address02) {
+        this.userPW = userPW;
+        this.userEmail = userEmail;
+        this.tel = tel;
+        this.zipcode = zipcode;
+        this.address01 = address01;
+        this.address02 = address02;
+    }
+
     public void markAsDeleted() {
         this.deleteStatus = true;
     }

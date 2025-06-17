@@ -430,7 +430,7 @@ body{
 
 /* 회원리스트 */
 #section #member .wrap_list{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 #section #member .wrap_list .btn_count{
     display: flex;
@@ -465,7 +465,7 @@ body{
     overflow: hidden;
 }
 #section #member .wrap_list .mem_list thead th{
-    line-height: 60px;
+    line-height: 40px;
     border-bottom: 1px solid #D2D2D2;
 }
 #section #member .wrap_list .mem_list td{
@@ -491,6 +491,38 @@ body{
 #section #member .wrap_list .mem_list tr:nth-child(even){
     background-color: #F5F5ED;
 }
+
+
+/*  테이블 페이지네이션 ----------- */
+.pagination {
+    text-align: center;
+    margin: 10px 0;
+    /* border: 1px solid red; */
+    }
+
+    .pagination button {
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 0px 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    }
+
+    .pagination button:disabled {
+    cursor: not-allowed;
+    color: #aaa;
+    border-color: #eee;
+    }
+
+    .pagination button.active {
+    background-color: #8B9773;
+    color: white;
+    border-color: #8B9773;
+    font-weight: bold;
+    }
+
 
 
 
@@ -782,7 +814,7 @@ body{
 
 /* 테이블 디자인 */
 #section #stock .wrap_list{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 #section #stock .wrap_list .stock_list{
     width: 100%;
@@ -794,7 +826,7 @@ body{
     overflow: hidden;
 }
 #section #stock .wrap_list .stock_list thead th{
-    line-height: 60px;
+    line-height: 40px;
     border-bottom: 1px solid #D2D2D2;
 }
 #section #stock .wrap_list .stock_list td{
@@ -1165,11 +1197,11 @@ body{
     font-weight: 500;
     cursor: pointer;
 }
-#section #items .wrap_list .items_list td > .modify_btn{
+#section #items .wrap_list .items_list td > .modi_btn{
     background-color: #8B9773;
     color: white;
 }
-#section #items .wrap_list .items_list td > .delete_btn{
+#section #items .wrap_list .items_list td > .del_btn{
     background-color: #E8E8E8;
     color: #4B4A45;
 }
@@ -1282,40 +1314,4 @@ body{
 }
 #section #items #items_modal .modal_con .modal_cont .close{
     background-color: #888888;
-}
-#section #items .pagination {
-    margin-top: 20px;
-    text-align: center;
-}
-
-#section #items .pagination ul {
-    display: inline-flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#section #items .pagination ul li {
-    margin: 0 5px;
-}
-
-#section #items .pagination ul li a {
-    display: block;
-    padding: 8px 12px;
-    text-decoration: none;
-    background-color: #F4F4F4;
-    color: #333;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#section #items .pagination ul li a:hover {
-    background-color: #8B9773;
-    color: white;
-}
-
-#section #items .pagination ul li a.active {
-    background-color: #51753D;
-    color: white;
 }

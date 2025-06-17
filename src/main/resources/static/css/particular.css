@@ -5,9 +5,9 @@ ul{list-style: none;}
 a{color: black; text-decoration: none;}
 img{vertical-align: none; border: 0;}
 body{
-  font-family: 'Pretendard-Regular';
-  background-color: #E5E0D8;
-  color: #191919;
+    font-family: 'Pretendard-Regular';
+    background-color: #E5E0D8;
+      color: #191919;
 }
 
 
@@ -62,7 +62,7 @@ body{
   font-size: 25px;
   margin-left: 305px;
   margin-bottom: 10px;
-  color: #8B9773;
+    color: #8B9773;
 }
 #section .frist_se .right_text .product_na h4 span{
   font-size: 17px;
@@ -71,7 +71,7 @@ body{
 }
 #section .frist_se .right_text .product_na h4 span:nth-child(2){
   color: #8B9773;
-  font-size: 20px;
+    font-size: 20px;
 }
 #section .frist_se .right_text .product_na .review_write{
   display: flex;
@@ -90,7 +90,7 @@ body{
 }
 
 #section .frist_se .right_text .line{
-  width: 450px;
+  width: 450px; 
   margin-top: 20px;
   border: 1px solid rgba(128, 128, 128, 0.281);
 }
@@ -193,7 +193,7 @@ body{
   margin-top: 5px;
   margin-right: 5px;
   border-right:1px solid gray;
-  color: #8B9773;
+    color: #8B9773;
   padding-right: 5px;
   color: #191919;
 }
@@ -216,10 +216,10 @@ body{
   background-color: #F1F1F1;
 }
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell4{
-  background-color: #F1F1F1;
-  border: 0;
-  border-radius: 50%;
-  padding: 5px;
+    background-color: #F1F1F1;
+    border: 0;
+    border-radius: 50%;
+    padding: 5px;
 }
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell3{
   background-color: #8B9773;
@@ -343,10 +343,10 @@ body{
   width: 0px;
   height: 0px;
   margin: 25px 0;
-  color: #EE6452;
+  color: #EE6452;    
   border-right:11px solid transparent;
   border-left: 11px solid transparent;
-  border-bottom:8px  solid #EE6452;
+  border-bottom:8px  solid #EE6452;    
   transform: rotate(180deg);
 }
 #section .secound_se .top_re .star_all .star>li:before,
@@ -356,8 +356,8 @@ body{
   width: 0px;
   top: 0;
   height: 0px;
-  color: #EE6452;
-  left: -11px;
+  color: #EE6452;    
+  left: -11px;        
   border-right: 11px solid transparent;
   border-left: 11px solid transparent;
   border-bottom: 8px solid #EE6452;
@@ -376,8 +376,8 @@ body{
   width: 0px;
   top: 0;
   height: 0px;
-  color: #EE6452;
-  left: -11px;
+  color: #EE6452;    
+  left: -11px;        
   border-right: 11px solid transparent;
   border-left: 11px solid transparent;
   border-bottom: 8px solid #EE6452;
@@ -491,3 +491,4 @@ body{
   display: block;
   color: #191919;
 }
+

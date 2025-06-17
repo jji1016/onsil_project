@@ -12,12 +12,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class SearchDto {
-    private String category;
-    private String keyword;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    private String searchInfo;
+    private String searchYear;
+    private int currentPage;
+    private int itemsPerPage;
 }
