@@ -36,6 +36,9 @@ public class  Subscribe {
     @Column(nullable = false)
     private Period period;
 
+    @Column(name = "SUBSCRIBENAME")
+    private String subscribeName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID", nullable = false)
     private Product product;
@@ -54,4 +57,5 @@ public class  Subscribe {
         // endDate를 startDate 기준으로 1달 후로 설정
         this.endDate = this.startDate.plusMonths(1);
     }
+
 }
