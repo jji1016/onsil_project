@@ -114,6 +114,7 @@
                     <div class="subscript">
                         <div class="search_box">
                             <input name="orderListSearch" id="orderListSearch" class="search_txt" type="text"/>
+                            <button class="search_btn" type="button"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #b5b5b5;"></i></button>
                         </div>
                         <div class="list_box">
                             <select name="orderListYear" id="orderListYear" class="year_select">
@@ -310,7 +311,7 @@
 
         <div class="l_btn">
             <button type="button" class="l_btnn"><a href="#">1:1 문의하기</a></button>
-            <button type="button" class="l_btnn"><a href="#">로그아웃</a></button>
+            <button type="button" class="l_btnn"><a href="/member/logout">로그아웃</a></button>
         </div>
     </div>
 </div>
@@ -434,17 +435,17 @@
     // 회원 탈퇴
     deleteAccountBtn.addEventListener("click", (e) => {
         //회원 탈퇴버튼 클릭시 confirm
-        if (confirm("정말로 계정을 삭제하시겠습니까?")) {
+        if (confirm("정말로 회원 탈퇴하시겠습니까?")) {
             fetch("/mypage/delete/" + deleteAccountBtn.dataset.id)
                 .then(response => response.json())
                 .then(json => {
                     if (json.isDelete == "true") {
-                        alert("삭제가 완료되었습니다.");
+                        alert("탈퇴가 완료되었습니다.");
                         location.href = "/member/logout";
                     }
                 })
         } else {
-            alert("삭제가 취소되었습니다.");
+            alert("탈퇴가 취소되었습니다.");
         }
     })
 
