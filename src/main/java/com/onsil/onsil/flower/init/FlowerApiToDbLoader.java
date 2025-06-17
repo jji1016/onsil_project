@@ -20,8 +20,19 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor
 public class FlowerApiToDbLoader {
+
     private final FlowerRepository flowerRepository;
     private final String serviceKey = "HjWN57F2fgCJmRiid1d76b2X6HS6Jn9E0tTy0VXnq0R7t5u6TeGOR2aQKNsHuy4G4Jhwmbmds67XG1wY2KQHlg==";
+
+    // 꽃 번호에 대응하는 영어 파일명 Map (예시)
+    // 실제로는 외부 파일, DB, 또는 코드 상에 전체 목록을 관리해야 함
+    private static final Map<Integer, String> DATA_NO_TO_ENG_FILE = new HashMap<>();
+    static {
+        // 예시: 1번 꽃은 "00101_hyangnamu.jpg", 2번 꽃은 "00102_rose.jpg" 등
+        DATA_NO_TO_ENG_FILE.put(153, "00153_gladiolus.jpg");
+        DATA_NO_TO_ENG_FILE.put(154, "00154_rose.jpg");
+        // ... 전체 꽃 번호와 영어 파일명을 모두 추가해야 함
+    }
 
     @PostConstruct
     public void loadFromApi() {
@@ -34,7 +45,9 @@ public class FlowerApiToDbLoader {
                 if (isValidProduct(product)) {
                     addToMonthMap(monthMap, product);
                 }
-            } catch (Exception e) { /* 에러 로깅 */ }
+            } catch (Exception e) {
+                // 에러 로깅
+            }
             sleep(90000);
         }
         saveProducts(monthMap);
@@ -61,21 +74,21 @@ public class FlowerApiToDbLoader {
         if (codeList.getLength() == 0 || !"1".equals(resultCode)) {
             return null;
         }
+
         NodeList items = doc.getElementsByTagName("result");
         if (items.getLength() == 0) return null;
-        Element e = (Element) items.item(0);
 
-        String flowerName = getTagValue("flowNm", e);
-        // 이미지 경로를 dataNo와 꽃이름 조합으로 생성
-        String imagePath = null;
-        if (flowerName != null) {
-            imagePath = String.format("%05d_%s.png", dataNo, flowerName);
-        }
+        Element e = (Element) items.item(0);
+        String flowerNameKor = getTagValue("flowNm", e); // 한글 이름
+
+        // 이미 영어 파일명을 관리하고 있다면, 그 값을 가져와서 사용
+        String imagePath = DATA_NO_TO_ENG_FILE.get(dataNo); // 예: "00153_gladiolus.jpg"
+        // 만약 Map을 쓰지 않고, 외부에서 영어 파일명을 받아오는 구조라면 그 값을 imagePath에 할당
 
         return Product.builder()
-                .dataNo(safeParseInt(getTagValue("dataNo", e))) // Integer 사용으로 변경
+                .dataNo(safeParseInt(getTagValue("dataNo", e)))
                 .fMonth(safeParseInt(getTagValue("fMonth", e)))
-                .flowerName(flowerName)
+                .flowerName(flowerNameKor)
                 .flowLang(getTagValue("flowLang", e))
                 .flowerInfo(getTagValue("fContent", e))
                 .fUse(getTagValue("fUse", e))
@@ -86,7 +99,6 @@ public class FlowerApiToDbLoader {
                 .build();
     }
 
-    // Null-safe 파싱 메서드(Integer) - safeParseInteger 제거됨
     private Integer safeParseInt(String value) {
         try {
             return value != null ? Integer.parseInt(value.trim()) : null;
@@ -120,7 +132,6 @@ public class FlowerApiToDbLoader {
         catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
     }
 
-    // XML 태그 값 추출 메서드
     private String getTagValue(String tag, Element e) {
         NodeList nl = e.getElementsByTagName(tag);
         if (nl.getLength() == 0) return null;

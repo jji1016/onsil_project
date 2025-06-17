@@ -5,8 +5,9 @@ import lombok.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class FlowerDto {
+
     private Integer productId;
-    private Integer dataNo; // Integer → Integer 변경
+    private Integer dataNo;
     private Integer fMonth;
     private String flowerName;
     private String flowLang;
@@ -21,7 +22,7 @@ public class FlowerDto {
     // Entity에서 DTO로 변환하는 생성자
     public FlowerDto(Product product) {
         this.productId = product.getProductId();
-        this.dataNo = product.getDataNo(); // Integer 타입으로 변경
+        this.dataNo = product.getDataNo();
         this.fMonth = product.getFMonth();
         this.flowerName = product.getFlowerName();
         this.flowLang = product.getFlowLang();
@@ -32,12 +33,11 @@ public class FlowerDto {
         this.price = product.getPrice();
         this.image = product.getImage();
 
-        // 이미지 URL 생성 (Integer dataNo 사용)
-        if (product.getDataNo() != null && product.getFlowerName() != null) {
-            this.imageUrl = String.format("/images/flower/%05d_%s.png",
-                    product.getDataNo(), product.getFlowerName());
+        // image 컬럼 값(영어 파일명, 확장자 포함)을 그대로 사용
+        if (product.getImage() != null && !product.getImage().isEmpty()) {
+            this.imageUrl = "/images/flower/" + product.getImage();
         } else {
-            this.imageUrl = "/images/flower/default.png";
+            this.imageUrl = "/images/flower/default.jpg";
         }
     }
 }
