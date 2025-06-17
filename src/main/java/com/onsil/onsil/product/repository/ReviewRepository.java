@@ -12,4 +12,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     boolean existsByMemberAndProduct(Member member, Product product);
 
     List<Review> findAllBySubscribe(Subscribe subscribe);
+
+    List<Review> findAllByProduct(Product product);
 }

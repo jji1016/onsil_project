@@ -1,7 +1,10 @@
 package com.onsil.onsil.product.controller;
 
+import com.onsil.onsil.entity.Product;
+import com.onsil.onsil.entity.Review;
 import com.onsil.onsil.product.dto.ProductDto;
 import com.onsil.onsil.product.repository.ProductRepository;
+import com.onsil.onsil.product.repository.ReviewRepository;
 import com.onsil.onsil.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,9 +20,9 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final ReviewRepository reviewRepository;
 
-    @Value("${file.path}")
-    private String upload;  // 여기서 주입
+
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -34,9 +37,11 @@ public class ProductController {
         if (flower == null) {
             return "error/404";
         }
+        Product product = productRepository.findById(flower.getId()).orElse(null);
 
+        List<Review> reviews = reviewRepository.findAllByProduct(product);
         model.addAttribute("flower", flower);
-
+        model.addAttribute("reviews", reviews);
         return "product/detail";
     }
 

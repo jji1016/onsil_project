@@ -220,7 +220,9 @@
         <ul class="plant-row">
             <li th:each="flower,iterStat : ${flowers}">
                 <a th:if="${iterStat.index < 4}" th:href="@{'/product/detail/' + ${flower.id}}">
-                    <div class="'prod_img2' + ${iterStat.index + 1}" th:style="'background-image:url(' + @{${flower.image}} + ')'"></div>
+                    <div th:class="'prod_img2' + ${iterStat.index + 1}"
+                         th:style="'background-image: url(\'/upload/products/' + ${flower.image} + '\')'">
+                    </div>
                     <p class="p_name" th:text="${flower.flowerName}">로맨틱 핑크 바스켓</p>
                     <del th:text="${#numbers.formatDecimal(flower.price, 0, 'COMMA', 0, 'POINT')} + '원'">169,000원</del>
                     <p class="p_price"><span>25%</span>
@@ -231,7 +233,9 @@
         <ul class="plant-row">
             <li th:each="flower,iterStat : ${flowers}">
                 <a th:if="${iterStat.index >= 4}" th:href="@{'/product/detail/' + ${flower.id}}">
-                    <div class="'prod_img2' + ${iterStat.index + 1}" th:style="'background-image:url(' + @{${flower.image}} + ')'"></div>
+                    <div th:class="'prod_img2' + ${iterStat.index + 1}"
+                         th:style="'background-image: url(\'/upload/products/' + ${flower.image} + '\')'">
+                    </div>
                     <p class="p_name" th:text="${flower.flowerName}">로맨틱 핑크 바스켓</p>
                     <del th:text="${#numbers.formatDecimal(flower.price, 0, 'COMMA', 0, 'POINT')} + '원'">169,000원</del>
                     <p class="p_price"><span>25%</span>

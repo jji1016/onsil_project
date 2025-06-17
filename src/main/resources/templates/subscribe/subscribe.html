@@ -89,7 +89,9 @@
                 th:if="${iterStat.index} < 3">
                 <a th:href="@{'/subscribe/particular/' + ${sub.id}}">
                     <p class="sale_subs">최대 25% 할인 구독자 모집</p>
-                    <div class="sale_img" th:style="'background-image:url(' + ${sub.productImage} + ')'"></div>
+                    <div class="sale_img"
+                         th:style="'background-image: url(\'/upload/products/' + ${sub.productImage} + '\')'">
+                    </div>
                     <h2 th:text="${sub.productName} + ' 구독'"></h2>
                     <p class="cc_price">
                         <del th:text="${#numbers.formatInteger(sub.price, 0, 'COMMA')} + '원'">36,200원</del>
@@ -107,7 +109,9 @@
                 th:if="${iterStat.index} >= 3 and ${iterStat.index} < 6">
                 <a th:href="@{'/subscribe/particular/' + ${sub.id}}">
                     <p class="sale_subs">최대 25% 할인 구독자 모집</p>
-                    <div class="sale_img" th:style="'background-image:url(' + ${sub.productImage} + ')'"></div>
+                    <div class="sale_img"
+                         th:style="'background-image: url(\'/upload/products/' + ${sub.productImage} + '\')'">
+                    </div>
                     <h2 th:text="${sub.productName} + ' 구독'"></h2>
                     <p class="cc_price">
                         <del th:text="${#numbers.formatInteger(sub.price, 0, 'COMMA')} + '원'">36,200원</del>
