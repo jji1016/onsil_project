@@ -37,18 +37,26 @@
 </head>
 <body>
 <div id="header">
-    <h1 class="h_logo"><img src="images/header/onsil_logo.png" alt="logo"></h1>
+    <h1 class="h_logo"><a href="#"><img src="/images/header/onsil_logo.png" alt="logo"></a></h1>
     <ul class="gnb">
         <li>
             <button type="button" class="login">로그인</button>
         </li>
-        <li><i class="fa-solid fa-bag-shopping"></i></li>
-        <li><i class="fa-solid fa-user"></i></li>
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-bag-shopping"></i>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-user"></i>
+            </a>
+        </li>
     </ul>
     <ul class="nav">
         <li><a href="#">꽃 정기구독</a></li>
         <li><a href="#">꽃 노트</a></li>
-        <li><a href="#">꽃.식물</a></li>
+        <li><a href="#">꽃 · 식물</a></li>
         <li><a href="#">클래스</a></li>
         <li><a href="#">기업제휴</a></li>
         <li><a href="#">고객센터</a></li>
@@ -82,11 +90,11 @@
         <h1>마이페이지</h1>
         <ul class="list1">
             <li class="l_on">주문내역 / 배송조회<span>&gt;</span></li>
-            <li>취소 / 교환 / 환불 내역<span>&gt;</span></li>
+            <li>내 정보 관리<span>&gt;</span></li>
             <li>나의 정기구독 관리<span>&gt;</span></li>
         </ul>
         <ul class="list2">
-            <li>내 정보 관리<span>&gt;</span></li>
+            <li>취소 / 교환 / 환불 내역<span>&gt;</span></li>
             <li>기념일 관리<span>&gt;</span></li>
             <li>회원등급 안내<span>&gt;</span></li>
             <li>쿠폰 / 포인트<span>&gt;</span></li>
@@ -121,65 +129,32 @@
                         <button type="button" class="btn_search">조회</button>
                     </div>
                 </div>
-                <form action="">
-                    <table class="order_table">
-                        <thead>
-                        <tr>
-                            <th>주문일자</th>
-                            <th>이미지</th>
-                            <th>상품정보</th>
-                            <th>수량</th>
-                            <th>상품금액</th>
-                            <th>주문처리상태</th>
-                        </tr>
-                        </thead>
-                        <tbody id="orderListRap">
-                        <!-- 주문내역 들어가는 자리 -->
-                        </tbody>
-                    </table>
+                <table class="order_table">
+                    <thead>
+                    <tr>
+                        <th>주문일자</th>
+                        <th>이미지</th>
+                        <th>상품정보</th>
+                        <th>수량</th>
+                        <th>상품금액</th>
+                        <th>주문상태</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="orderListRap">
+                    <!-- 주문내역 들어가는 자리 -->
+                    </tbody>
+                </table>
 
-                    <table class="page_btn">
-                        <tbody>
-                        <tr id="orderListPagination">
+                <table class="page_btn">
+                    <tbody>
+                    <tr id="orderListPagination">
 
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="content"></div>
-            <div class="content">
-                <h2>나의 정기구독 관리</h2>
-                <ul class="request_detail">
-                    <li class="detail_on">신청내역(<span id="number1">1</span>)</li>
-                    <li>해지내역(<span id="number2">0</span>)</li>
-                </ul>
-                <form action="">
-                    <table class="order_table">
-                        <thead>
-                        <tr>
-                            <th>주문일자</th>
-                            <th>이미지</th>
-                            <th>상품정보</th>
-                            <th>상품금액</th>
-                            <th>배송주기</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody id="subscribeRap">
-                            <!-- 구독내역 들어가는 자리 -->
-                        </tbody>
-                    </table>
 
-                    <table class="page_btn">
-                        <tbody>
-                        <tr id="subscribePagination">
-
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </div>
             <div class="content">
                 <h2>개인정보 수정</h2>
                 <table class="personal_info">
@@ -209,52 +184,75 @@
                     </tr>
                     <tr>
                         <td>이메일</td>
-                        <td><span id="userEmail" data-field="userEmail"></span></td>
-                    </tr>
-                    <tr>
-                        <td>이메일 변경</td>
                         <td>
-                            <input type="text" data-field="newEmail">
+                            <input type="text" id="userEmail" data-field="userEmail">
                             <button type="button" class="email_btn">인증하기</button>
                         </td>
                     </tr>
                     <tr>
-                        <td>기본주소지</td>
+                        <td>배송지</td>
                         <td>
-                            <span id="zipcode" data-field="zipcode"></span><br>
-                            <span id="address01" data-field="address01"></span><br>
-                            <span id="address02" data-field="address02"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>주소지 변경</td>
-                        <td>
-                            <input type="text" placeholder="우편번호" class="ad_num" data-field="newZipcode" id="newZipcode" readonly>
-                            <button type="button" class="ad_search" onclick="execDaumPostcode()">주소검색</button>
-                            <br>
-                            <input type="text" placeholder="기본주소" class="address" data-field="newAddress01" id="newAddress01" readonly><br>
-                            <input type="text" placeholder="상세주소" class="address" data-field="newAddress02" id="newAddress02">
+                            <input type="text" class="ad_num" id="zipcode" data-field="zipcode" readonly>
+                            <button type="button" class="ad_search" onclick="execDaumPostcode()">주소검색</button><br>
+                            <input type="text" class="address" id="address01" data-field="address01" readonly><br>
+                            <input type="text" class="address" id="address02" data-field="address02">
                         </td>
                     </tr>
                     <tr>
                         <td>휴대전화</td>
-                        <td><span id="tel" data-field="tel">010 - 0000 - 0000</span></td>
-                    </tr>
-                    <tr>
-                        <td>휴대전화 변경</td>
                         <td>
-                            <input type="text" maxlength="11" class="p_num" data-field="newTel">
+                            <select class="p_num_s" id="tel1" data-field="tel1">
+                                <option value="010">010</option>
+                                <option value="011">011</option>
+                            </select>
+                            -
+                            <input type="text" maxlength="4" class="p_num" id="tel2" data-field="tel2">
+                            -
+                            <input type="text" maxlength="4" class="p_num" id="tel3" data-field="tel3">
                         </td>
                     </tr>
                 </table>
-
-
+                <span class="cus_edit2">회원탈퇴하기</span>
                 <div class="cus_btn">
                     <button type="button" class="cus_edit">수정하기</button>
-                    <button type="button" class="cus_edit2">회원탈퇴</button>
                 </div>
+            </div>
+
+            <div class="content">
+                <h2>나의 정기구독 관리</h2>
+                <ul class="request_detail">
+                    <li class="detail_on">신청내역(<span id="number1">1</span>)</li>
+                </ul>
+                    <table class="order_table">
+                        <thead>
+                        <tr>
+                            <th>주문일자</th>
+                            <th>이미지</th>
+                            <th>상품정보</th>
+                            <th>상품금액</th>
+                            <th>배송주기</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="subscribeRap">
+                        <!-- 구독내역 들어가는 자리 -->
+                        </tbody>
+                    </table>
+
+                    <table class="page_btn">
+                        <tbody>
+                        <tr id="subscribePagination">
+
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+
+            <div class="content">
 
             </div>
+
             <div class="content">
                 <h2>기념일 관리</h2>
                 <p>기념일을 등록하시면 5일전에 문자로 알려드립니다.</p>
@@ -320,7 +318,11 @@
 
 <div id="footer">
     <div class="f_cont">
-        <h1 class="f_logo"><img src="images/footer/logo_white.png" alt="logo"></h1>
+        <h1 class="f_logo">
+            <a href="#">
+                <img src="/images/footer/logo_white.png" alt="logo">
+            </a>
+        </h1>
         <ul class="f_info">
             <li>온실 플라워스튜디오</li>
             <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
@@ -335,9 +337,9 @@
         new daum.Postcode({
             oncomplete: function (data) {
                 console.log(data);
-                document.getElementById('newZipcode').value = data.zonecode;
-                document.getElementById('newAddress01').value = data.address;
-                document.getElementById('newAddress02').focus();
+                document.getElementById('zipcode').value = data.zonecode;
+                document.getElementById('address01').value = data.address;
+                document.getElementById('address02').focus();
             }
         }).open();
     }
@@ -359,13 +361,21 @@
                     zipcode: json.zipcode,
                     address01: json.address01,
                     address02: json.address02,
-                    tel: json.tel,
+                    tel1: json.tel.substring(0, 3),
+                    tel2: json.tel.substring(3, 7),
+                    tel3: json.tel.substring(7, 11),
                 };
+                console.log(responseData);
 
                 Object.entries(responseData).forEach(([key, value]) => {
                     const el = document.querySelector(`[data-field="${key}"]`);
                     if (!el) return;
-                    el.textContent = value;
+
+                    if (el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA") {
+                        el.value = value;
+                    } else {
+                        el.textContent = value;
+                    }
                 });
                 deleteAccountBtn.setAttribute("data-id", json.id);
             })
@@ -379,14 +389,25 @@
     // 회원 정보 수정
     modifyInfoBtn.addEventListener("click", (e) => {
         if (!confirm("수정하시겠습니까?")) return;
+
         const data = {};
-        const inputFields = document.querySelectorAll('input[data-field]');
+        const inputFields = document.querySelectorAll('input[data-field], select[data-field]');
 
         inputFields.forEach(field => {
             const key = field.dataset.field;
             data[key] = field.value;
-
         });
+
+        if (!/^\d{3,4}$/.test(data.tel2) || !/^\d{4}$/.test(data.tel3)) {
+            alert("전화번호 형식이 올바르지 않습니다.");
+            return;
+        }
+
+        data.tel = data.tel1 + data.tel2 + data.tel3;
+        delete data.tel1;
+        delete data.tel2;
+        delete data.tel3;
+
         console.log(data);
 
         fetch("/mypage/modify", {
@@ -402,9 +423,9 @@
                     alert("수정이 완료되었습니다.");
                     lookupMemberInfo();
                     inputFields.forEach(field => {
-                        field.value="";
+                        field.value = "";
                     });
-                }else{
+                } else {
                     alert(json.error);
                 }
             })
@@ -456,6 +477,8 @@
         })
             .then(response => response.json())
             .then(json => {
+                console.log("리뷰작성에 넣을 productID 있는지 확인필요");
+                console.log(json);
                 const orders = json.orders; // 주문 목록
                 const pageDto = json.pageDto; // 페이징 정보
                 orderListRap.innerHTML = "";
@@ -464,12 +487,17 @@
                     const tr = document.createElement("tr");
 
                     tr.innerHTML = `
-                        <td>${order.orderTime.substring(0, 10)}</td>
+                        <td>${order.orderTime.substring(0, 10)}<br>${order.orderTime.substring(11, 16)}</td>
                         <td><img class="mypageImg" src="/upload/products/${order.image}"></td>
                         <td>${order.flowerName}</td>
                         <td>${order.quantity}</td>
                         <td>${order.price}</td>
                         <td>${order.status}</td>
+                        <td>
+                            <button type="button" class="review-btn" data-productID="${order.productID}">
+                                <a href="#">리뷰작성</a>
+                            </button>
+                        </td>
                     `;
                     orderListRap.appendChild(tr);
                 });
@@ -507,6 +535,7 @@
         })
             .then(response => response.json())
             .then(json => {
+                console.log("리뷰작성에 넣을 subscriptID 있는지 확인필요");
                 console.log(json);
                 const subscribes = json.subscribes; // 구독 목록
                 const pageDto = json.pageDto; // 페이징 정보
@@ -523,6 +552,11 @@
                         <td>${subscribes.period}</td>
                         <td>
                             <button class="cancel_btn calcelSubscribe" data-page="${pageDto.currentPage}" data-id="${subscribes.subscribeID}">구독 취소</button>
+                        </td>
+                        <td>
+                            <button type="button" class="review-btn" data-subscribeID="${subscribes.subscribeID}">
+                                <a href="#">리뷰작성</a>
+                            </button>
                         </td>
                     `;
                     subscribeRap.appendChild(tr);
@@ -580,7 +614,7 @@
             prevBtn.addEventListener("click", () => {
                 if (category === "order") {
                     lookupOrderList(currentOrderPage - 1);
-                } else if(category == "subscribe"){
+                } else if (category == "subscribe") {
                     lookupSubscribeList(currentSubscribePage - 1);
                 }
             });
@@ -617,7 +651,7 @@
             nextBtn.addEventListener("click", () => {
                 if (category === "order") {
                     lookupOrderList(currentOrderPage + 1);
-                } else if(category == "subscribe"){
+                } else if (category == "subscribe") {
                     lookupSubscribeList(currentSubscribePage + 1);
                 }
             });

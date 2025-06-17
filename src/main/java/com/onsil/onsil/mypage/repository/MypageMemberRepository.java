@@ -28,7 +28,7 @@ public interface MypageMemberRepository extends JpaRepository<Member,Integer> {
 
     //주문내역 조회(상품 이름, 연도 기준 검색 가능)
     @Query(value = "SELECT * FROM ( " +
-            "SELECT o.quantity, o.status, o.orderTime, p.flowerName, p.price, p.image, ROW_NUMBER() OVER (ORDER BY o.ORDERTIME DESC) rn " +
+            "SELECT p.productID, o.quantity, o.status, o.orderTime, p.flowerName, p.price, p.image, ROW_NUMBER() OVER (ORDER BY o.ORDERTIME DESC) rn " +
             "FROM ORDERLIST o " +
             "JOIN MEMBER m ON o.MEMBERID = m.MEMBERID " +
             "JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID " +
