@@ -2,9 +2,7 @@ package com.onsil.onsil.mypage;
 
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.member.dto.MemberDto;
-import com.onsil.onsil.mypage.dto.MypageOrderListDto;
-import com.onsil.onsil.mypage.dto.MypageSubscribeDto;
-import com.onsil.onsil.mypage.dto.SearchDto;
+import com.onsil.onsil.mypage.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,77 +24,90 @@ public class MypageController {
     private final MypageService mypageService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/home")
-    public String home(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+    @GetMapping("/mypage")
+    public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
         String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
-
-        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
-        model.addAttribute("loggedMemberDto", loggedMemberDto);
-
-        Integer loggedMemberID = loggedMemberDto.getId(); //Member 테이블의 기본키
-        List<MypageOrderListDto> mypageOrderListDto = mypageService.findOrderList(loggedMemberID); //로그인한 사람의 주문내역
-        log.info("mypageOrderListDto: {}", mypageOrderListDto);
-        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
-
-        return "mypage/home";
-    }
-
-    @GetMapping("/info") //회원 상세 정보 페이지
-    public String info(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
+        Integer loggedMemberID = customUserDetails.getLoggedMember().getId(); //member테이블 PK(memberID)
         MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
         log.info("loggedMemberDto: {}", loggedMemberDto);
+
+        StatusCountDto statusCountDto = mypageService.statusCount(loggedMemberID);
+        log.info("statusCountDto: {}", statusCountDto);
+
         model.addAttribute("loggedMemberDto", loggedMemberDto);
-        return "mypage/info";
+        model.addAttribute("statusCountDto", statusCountDto);
+        return "mypage/mypage";
     }
 
-    @PostMapping("/modify") //회원 정보 수정
-    public String modify(@ModelAttribute MemberDto memberDto, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        if (memberDto.getUserPW() == null || memberDto.getUserPW().isEmpty()) { //비밀번호 수정 안할시
-            memberDto.setUserPW(customUserDetails.getPassword());
-        }else{ //비밀번호 수정시 받아서 암호화
-            String userPW = memberDto.getUserPW();
-            String encodeUserPW = bCryptPasswordEncoder.encode(userPW);
-            log.info("encodeUserPW: {}", encodeUserPW);
-            memberDto.setUserPW(encodeUserPW);
-        }
-        mypageService.updateInfo(memberDto);
-        return "redirect:/mypage/info";
-    }
-
-    @PostMapping("/delete") //회원 탈퇴
-    public String deleteAccount(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
-        int isDelete = mypageService.deleteAccount(id);
-
-        if (isDelete == 1) {
-            redirectAttributes.addFlashAttribute("message", "삭제가 완료되었습니다.");
-        }
-        return "redirect:/member/logout";
-    }
-
-    @GetMapping("/orderList") //주문내역 조회
-    public String orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                            @ModelAttribute SearchDto searchDto,
-                            Model model) {
-        log.info("searchDto: {}", searchDto);
+    @PostMapping("/orderList") //주문내역 조회 및 검색
+    @ResponseBody
+    public Map<String, Object> orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                            @RequestBody SearchDto searchDto) {
         Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
-        log.info("orderlist-loggedMemberID: {}", loggedMemberID);
 
-        List<MypageOrderListDto> mypageOrderListDto = mypageService.findSearchOrderList(loggedMemberID,searchDto); //로그인한 사람의 주문내역
-        log.info("orderlist-mypageOrderListDto: {}", mypageOrderListDto);
-        model.addAttribute("mypageOrderListDto", mypageOrderListDto);
+        // 주문내역 전체 개수
+        int totalItems = mypageService.countSearchOrderList(loggedMemberID, searchDto);
 
-        return "mypage/orderList";
+        int currentPage = searchDto.getCurrentPage() == 0 ? 1 : searchDto.getCurrentPage();
+        int itemsPerPage = searchDto.getItemsPerPage() == 0 ? 5 : searchDto.getItemsPerPage();
+
+        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+
+        PageDto pageDto = PageDto.builder()
+                .totalItems(totalItems)
+                .currentPage(currentPage)
+                .totalPages(totalPages)
+                .itemsPerPage(itemsPerPage)
+                .build();
+
+        List<MypageOrderListDto> orders  = mypageService.findSearchOrderList(loggedMemberID,searchDto, currentPage, itemsPerPage); //로그인한 사람의 주문내역
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("orders", orders);
+        map.put("pageDto", pageDto);
+
+        return map;
     }
 
-    @GetMapping("/subscribe") //정기배송 신청내역 조회
-    public String subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+    @PostMapping("/subscribe") //정기배송 신청내역 조회
+    @ResponseBody
+    public  Map<String, Object> subscribe(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                          @RequestBody SearchDto searchDto) {
         Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
-        List<MypageSubscribeDto> mypageSubscribeDtoList = mypageService.findSubscribe(loggedMemberID);
+
+        int totalItems = mypageService.countSubscribeList(loggedMemberID);
+        int itemsPerPage = searchDto.getItemsPerPage() == 0 ? 5 : searchDto.getItemsPerPage();
+        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+        //받아온 현재 페이지가 총 페이지수보다 클 경우 1
+        int currentPage = searchDto.getCurrentPage() > totalPages ? 1 : searchDto.getCurrentPage();
+
+        List<MypageSubscribeDto> mypageSubscribeDtoList = mypageService.findSubscribe(loggedMemberID,currentPage,itemsPerPage);
         log.info("mypageSubscribeDtoList: {}", mypageSubscribeDtoList);
-        model.addAttribute("mypageSubscribeDtoList", mypageSubscribeDtoList);
 
-        return "mypage/subscribe";
+        PageDto pageDto = PageDto.builder()
+                .totalItems(totalItems)
+                .currentPage(currentPage)
+                .totalPages(totalPages)
+                .itemsPerPage(itemsPerPage)
+                .build();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("subscribes", mypageSubscribeDtoList);
+        map.put("pageDto", pageDto);
+
+        return map;
+    }
+
+    @GetMapping("/delete/{id}") //회원 탈퇴
+    @ResponseBody
+    public Map<String,String> deleteAccount(@PathVariable("id") Integer id) {
+        int result = mypageService.deleteAccount(id);
+
+        Map<String,String> map = new HashMap<>();
+        if (result == 1) {
+            map.put("isDelete", "true");
+        }
+        return map;
     }
 
     @GetMapping("/cancelSubscribe/{id}") //정기배송 구독 취소
@@ -108,5 +119,68 @@ public class MypageController {
         map.put("isdelete", "true");
         return map;
     }
+
+    @PostMapping("/info") //회원 정보 조회
+    @ResponseBody
+    public MemberDto info(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        String userID = customUserDetails.getUsername(); //로그인한 유저의 아이디
+        MemberDto loggedMemberDto = mypageService.findByUserID(userID); //로그인한 유저의 정보들
+
+        return loggedMemberDto;
+    }
+
+    @PostMapping("/modify")
+    @ResponseBody
+    public Map<String, String> modify(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                      @RequestBody Map<String, String> data) {
+        Map<String, String> result = new HashMap<>();
+
+        String currentPassword = data.get("currentPassword");
+        String password = data.get("password"); // 새 비밀번호
+        String password2 = data.get("password2"); // 새 비밀번호 확인
+        String newEmail = data.get("newEmail");
+        String newZipcode = data.get("newZipcode");
+        String newAddress01 = data.get("newAddress01");
+        String newAddress02 = data.get("newAddress02");
+        String newTel = data.get("newTel");
+
+        String userID = customUserDetails.getUsername();
+        MemberDto loggedMemberDto = mypageService.findByUserID(userID);
+
+        log.info("loggedMemberDto: {}", loggedMemberDto);
+        // 비밀번호 검증
+        if (password != null && !password.isBlank()) {
+            if (!password.equals(password2)) {
+                result.put("isModify", "false");
+                result.put("error", "비밀번호 확인이 일치하지 않습니다.");
+                return result;
+            }
+
+            log.info("customUserDetails.getPassword(): {}", customUserDetails.getPassword());
+            if (!bCryptPasswordEncoder.matches(currentPassword, customUserDetails.getPassword())) {
+                result.put("isModify", "false");
+                result.put("error", "현재 비밀번호가 올바르지 않습니다.");
+                return result;
+            }
+
+            String encodeUserPW = bCryptPasswordEncoder.encode(password);
+            loggedMemberDto.setUserPW(encodeUserPW);
+        } else {
+            // 비밀번호 변경 안 하는 경우 기존 비밀번호 유지
+            loggedMemberDto.setUserPW(customUserDetails.getPassword());
+        }
+
+        if (newEmail != null) loggedMemberDto.setUserEmail(newEmail);
+        if (newTel != null) loggedMemberDto.setTel(newTel);
+        if (newZipcode != null) loggedMemberDto.setZipcode(newZipcode);
+        if (newAddress01 != null) loggedMemberDto.setAddress01(newAddress01);
+        if (newAddress02 != null) loggedMemberDto.setAddress02(newAddress02);
+        log.info("modify_loggedMemberDto: {}", loggedMemberDto);
+        mypageService.updateInfo(loggedMemberDto);
+
+        result.put("isModify", "true");
+        return result;
+    }
+
 
 }
