@@ -167,14 +167,14 @@
                         </tr>
                         </thead>
                         <tbody id="subscribeRap">
-
+                            <!-- 구독내역 들어가는 자리 -->
                         </tbody>
                     </table>
 
                     <table class="page_btn">
                         <tbody>
                         <tr id="subscribePagination">
-                            <!-- 구독내역 들어가는 자리 -->
+
                         </tr>
                         </tbody>
                     </table>
@@ -427,6 +427,9 @@
         }
     })
 
+    let currentOrderPage = 1; //주문내역 현재페이지
+    let currentSubscribePage = 1; //구독내역 현재페이지
+
     const searchOrderListBtn = document.querySelector(".btn_search");
     const orderListSearch = document.querySelector("#orderListSearch");
     const orderListYear = document.querySelector("#orderListYear");
@@ -434,6 +437,7 @@
 
     // 주문내역 검색 및 페이징
     function lookupOrderList(page = 1) {
+        currentOrderPage = page;
         const searchInfo = orderListSearch.value;
         const searchYear = orderListYear.value;
         const itemsPerPage = 5;
@@ -461,7 +465,7 @@
 
                     tr.innerHTML = `
                         <td>${order.orderTime.substring(0, 10)}</td>
-                        <td><img src="/upload/products/${order.image}"></td>
+                        <td><img class="mypageImg" src="/upload/products/${order.image}"></td>
                         <td>${order.flowerName}</td>
                         <td>${order.quantity}</td>
                         <td>${order.price}</td>
@@ -488,6 +492,7 @@
 
     //구독 내역 조회 및 페이징
     function lookupSubscribeList(page = 1) {
+        currentSubscribePage = page;
         const itemsPerPage = 5;
 
         fetch("/mypage/subscribe", {
@@ -502,6 +507,7 @@
         })
             .then(response => response.json())
             .then(json => {
+                console.log(json);
                 const subscribes = json.subscribes; // 구독 목록
                 const pageDto = json.pageDto; // 페이징 정보
                 subscribeRap.innerHTML = "";
@@ -511,7 +517,7 @@
 
                     tr.innerHTML = `
                         <td>${subscribes.startDate.substring(0, 10)}</td>
-                        <td><img src="/upload/products/${subscribes.image}"></td>
+                        <td><img class="mypageImg" src="/upload/products/${subscribes.image}"></td>
                         <td>${subscribes.flowerName}</td>
                         <td>${subscribes.price}</td>
                         <td>${subscribes.period}</td>
@@ -566,12 +572,33 @@
         }
         paginationRap.innerHTML = "";
 
+        // 이전 버튼
+        if (pageDto.currentPage > 1) {
+            const prevBtn = document.createElement("td");
+            prevBtn.textContent = "<";
+            prevBtn.style.cursor = "pointer";
+            prevBtn.addEventListener("click", () => {
+                if (category === "order") {
+                    lookupOrderList(currentOrderPage - 1);
+                } else if(category == "subscribe"){
+                    lookupSubscribeList(currentSubscribePage - 1);
+                }
+            });
+            paginationRap.appendChild(prevBtn);
+        }
+
         for (let i = 1; i <= pageDto.totalPages; i++) {
             const btn = document.createElement("td");
             btn.textContent = i;
             btn.style.padding = "0px 10px";
+            btn.style.cursor = "pointer";
+
+            if (i === pageDto.currentPage) {
+                btn.style.fontWeight = "bold";
+            }
 
             btn.addEventListener("click", () => {
+                console.log(pageDto.currentPage);
                 if (category == "order") {
                     lookupOrderList(i);
                 } else if (category == "subscribe") {
@@ -580,6 +607,21 @@
 
             });
             paginationRap.appendChild(btn);
+        }
+
+        // 다음 버튼
+        if (pageDto.currentPage < pageDto.totalPages) {
+            const nextBtn = document.createElement("td");
+            nextBtn.textContent = ">";
+            nextBtn.style.cursor = "pointer";
+            nextBtn.addEventListener("click", () => {
+                if (category === "order") {
+                    lookupOrderList(currentOrderPage + 1);
+                } else if(category == "subscribe"){
+                    lookupSubscribeList(currentSubscribePage + 1);
+                }
+            });
+            paginationRap.appendChild(nextBtn);
         }
     }
 
