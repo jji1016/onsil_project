@@ -92,11 +92,11 @@
       <h1>마이페이지</h1>
         <ul class="list1">
           <li class="l_on">주문내역 / 배송조회<span>&gt;</span></li>
-          <li>취소 / 교환 / 환불 내역<span>&gt;</span></li>
+          <li>내 정보 관리<span>&gt;</span></li>
           <li>나의 정기구독 관리<span>&gt;</span></li>
         </ul>
         <ul class="list2">
-          <li>내 정보 관리<span>&gt;</span></li>
+          <li>취소 / 교환 / 환불 내역<span>&gt;</span></li>
           <li>기념일 관리<span>&gt;</span></li>
           <li>회원등급 안내<span>&gt;</span></li>
           <li>쿠폰 / 포인트<span>&gt;</span></li>
@@ -233,7 +233,86 @@
             </table>
           </form>
         </div>
-        <div class="content"></div>
+        <div class="content">
+          <h2>개인정보 수정</h2>
+          <form action="">
+            <table class="personal_info">
+              <tr>
+                <td>이름</td>
+                <td><span id="username">아무개</span></td>
+              </tr>
+              <tr>
+                <td>아이디</td>
+                <td><span id="userid">goyang12</span></td>
+              </tr>
+              <tr>
+                <td>닉네임</td>
+                <td><span id="usernickname">고양이</span></td>
+              </tr>
+              <tr>
+                <td>현재 비밀번호</td>
+                <td><input type="password"></td>
+              </tr>
+              <tr>
+                <td>새 비밀번호</td>
+                <td><input type="password"></td>
+              </tr>
+              <tr>
+                <td>비밀번호 확인</td>
+                <td><input type="password"></td>
+              </tr>
+              <tr>
+                <td>이메일</td>
+                <td><span id="useremail">goyang12@naver.com</span></td>
+              </tr>
+              <tr>
+                <td>이메일 변경</td>
+                <td>
+                  <input type="text">
+                  <button type="button" class="email_btn">인증하기</button>
+                </td>
+              </tr>
+              <tr>
+                <td>기본주소지</td>
+                <td>
+                  <span id="ad_num">10554</span><br>
+                  <span id="basic_ad">서울시 강북구 00동</span><br>
+                  <span id="better_ad">17-2 00빌라 201호</span>
+                </td>
+              </tr>
+              <tr>
+                <td>주소지 변경</td>
+                <td>
+                  <input type="text" value="우편번호" class="ad_num">
+                  <button type="button" class="ad_search">주소검색</button><br>
+                  <input type="text" value="기본주소" class="address"><br>
+                  <input type="text" value="상세주소" class="address">
+                </td>
+              </tr>
+              <tr>
+                <td>휴대전화</td>
+                <td><span id="phone_num">010 - 0000 - 0000</span></td>
+              </tr>
+              <tr>
+                <td>휴대전화 변경</td>
+                <td>
+                  <select name="" id="" class="p_num_s">
+                    <option value="">010</option>
+                    <option value="">011</option>
+                  </select>
+                  -
+                  <input type="text" maxlength="4" class="p_num">
+                  -
+                  <input type="text" maxlength="4" class="p_num">
+                </td>
+              </tr>
+            </table>
+          </form>
+          <div class="cus_btn">
+          <button type="button" class="cus_edit">수정하기</button>
+          <button type="button" class="cus_edit2">회원탈퇴</button>
+          </div>
+        </div>
         <div class="content">
           <h2>나의 정기구독 관리</h2>
           <ul class="request_detail">
@@ -333,84 +412,7 @@
           </form>
         </div>
         <div class="content">
-          <h2>개인정보 수정</h2>
-          <form action="">
-            <table class="personal_info">
-              <tr>
-                <td>이름</td>
-                <td><span id="username">아무개</span></td>
-              </tr>
-              <tr>
-                <td>아이디</td>
-                <td><span id="userid">goyang12</span></td>
-              </tr>
-              <tr>
-                <td>닉네임</td>
-                <td><span id="usernickname">고양이</span></td>
-              </tr>
-              <tr>
-                <td>현재 비밀번호</td>
-                <td><input type="password"></td>
-              </tr>
-              <tr>
-                <td>새 비밀번호</td>
-                <td><input type="password"></td>
-              </tr>
-              <tr>
-                <td>비밀번호 확인</td>
-                <td><input type="password"></td>
-              </tr>
-              <tr>
-                <td>이메일</td>
-                <td><span id="useremail">goyang12@naver.com</span></td>
-              </tr>
-              <tr>
-                <td>이메일 변경</td>
-                <td>
-                  <input type="text">
-                  <button type="button" class="email_btn">인증하기</button>
-                </td>
-              </tr>
-              <tr>
-                <td>기본주소지</td>
-                <td>
-                  <span id="ad_num">10554</span><br>
-                  <span id="basic_ad">서울시 강북구 00동</span><br>
-                  <span id="better_ad">17-2 00빌라 201호</span>
-                </td>
-              </tr>
-              <tr>
-                <td>주소지 변경</td>
-                <td>
-                  <input type="text" value="우편번호" class="ad_num">
-                  <button type="button" class="ad_search">주소검색</button><br>
-                  <input type="text" value="기본주소" class="address"><br>
-                  <input type="text" value="상세주소" class="address">
-                </td>
-              </tr>
-              <tr>
-                <td>휴대전화</td>
-                <td><span id="phone_num">010 - 0000 - 0000</span></td>
-              </tr>
-              <tr>
-                <td>휴대전화 변경</td>
-                <td>
-                  <select name="" id="" class="p_num_s">
-                    <option value="">010</option>
-                    <option value="">011</option>
-                  </select>
-                  -
-                  <input type="text" maxlength="4" class="p_num">
-                  -
-                  <input type="text" maxlength="4" class="p_num">
-                </td>
-              </tr>
-            </table>
-          </form>
-          <div class="cus_btn">
-          <button type="button" class="cus_edit">수정하기</button>
-          <button type="button" class="cus_edit2">회원탈퇴</button>
-          </div>
+          
         </div>
         <div class="content">
           <h2>기념일 관리</h2>
