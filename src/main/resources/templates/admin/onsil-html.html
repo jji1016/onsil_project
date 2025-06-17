@@ -980,7 +980,6 @@
     const orderLists = /*[[${orderLists}]]*/ [];
     const subscribeLists = /*[[${subscribeLists}]]*/ [];
     const memberLists = /*[[${memberList}]]*/ [];
-
     // Thymeleaf가 JSON으로 넣어줘야 함
 
     function paginate(dataList, itemsPerPage, maxPageButtons, tbodyEl, paginationEl, renderRowFn, rowBuilderFn) {
@@ -1072,6 +1071,21 @@
     }
 
 
+    document.querySelectorAll(".admin_btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const userId = this.dataset.userid;
+
+            // ✅ 필터링
+            const userOrders = orderLists.filter(order => order.userID === userId);
+            const userSubscribes = subscribeLists.filter(sub => sub.userID === userId);
+
+            // ✅ 데이터 갱신
+            orderPaginator.dataList = userOrders;
+            subscribePaginator.dataList = userSubscribes;
+
+            // ❌ renderPage(1) 따로 안 해도 돼 (dataList 세터가 내부적으로 해줌)
+        });
+    });
 
     const subscribePaginator = paginate(
         [], // 초기엔 빈 배열
@@ -1195,7 +1209,7 @@
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("admin_btn")) {
             const row = e.target.closest(".member-row");
-            console.log("userID === " + row.dataset.userId)
+            // console.log("userID === " + row.dataset.userId)
 
             if (!row) return;
             const userID = row.dataset.userId;

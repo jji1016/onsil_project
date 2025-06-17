@@ -681,6 +681,13 @@ body{
 
 
 /* 주문내역 모달창 테이블 */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order{
+    display: flex;
+}
+
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order button{
+    width: 15px;
+}
 #section #member #mem-modal .wrap-all .wrap-cont #mem-order table{
     border: 1px solid  #D2D2D2;
     margin: 20px;
@@ -690,7 +697,7 @@ body{
 }
 #section #member #mem-modal .wrap-all .wrap-cont #mem-order table td{
     padding: 10px;
-    height: 60px;
+    height: 40px;
 }
 #section #member #mem-modal .wrap-all .wrap-cont #mem-order table tr:nth-child(even){
     background-color: #F5F5ED;
@@ -718,6 +725,14 @@ body{
 
 
 /* 주문내역 모달창 테이블 */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-subscribe{
+    display: flex;
+}
+
+#section #member #mem-modal .wrap-all .wrap-cont #mem-subscribe button{
+    width: 15px;
+}
+
 #section #member #mem-modal .wrap-all .wrap-cont #mem-subscribe table{
     border: 1px solid  #D2D2D2;
     margin: 20px;
@@ -727,7 +742,7 @@ body{
 }
 #section #member #mem-modal .wrap-all .wrap-cont #mem-subscribe table td{
     padding: 10px;
-    height: 60px;
+    height: 40px;
 }
 #section #member #mem-modal .wrap-all .wrap-cont #mem-subscribe table tr:nth-child(even){
     background-color: #F5F5ED;
