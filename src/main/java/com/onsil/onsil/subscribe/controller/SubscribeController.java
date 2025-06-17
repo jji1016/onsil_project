@@ -8,6 +8,7 @@ import com.onsil.onsil.product.dto.ProductDto;
 import com.onsil.onsil.product.repository.ReviewRepository;
 import com.onsil.onsil.subscribe.dao.SubscribeDao;
 import com.onsil.onsil.subscribe.dto.SubscribeDto;
+import com.onsil.onsil.subscribe.repository.SubscribeRepository;
 import com.onsil.onsil.subscribe.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +26,7 @@ import java.util.List;
 public class SubscribeController {
     private final ReviewRepository reviewRepository;
     private final SubscribeService subscribeService;
-    private final SubscribeDao subscribeDao;
+    private final SubscribeRepository subscribeRepository;
 
 
     @GetMapping("/subscribe")
@@ -43,9 +44,10 @@ public class SubscribeController {
 
         List<Review> reviews = reviewRepository.findAllBySubscribe(subscribe);
 
-        model.addAttribute("subscribe",subscribeDto);
+        model.addAttribute("subscribe", subscribeDto);
 
         model.addAttribute("reviews", reviews);
         return "subscribe/particular";
+
     }
 }

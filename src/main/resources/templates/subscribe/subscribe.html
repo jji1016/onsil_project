@@ -40,7 +40,7 @@
         <li><i class="fa-solid fa-user"></i></li>
     </ul>
     <ul class="nav">
-        <li><a href="#">꽃 정기구독</a></li>
+        <li><a th:href="@{/subscribe/subscribe}">꽃 정기구독</a></li>
         <li><a href="#">꽃 노트</a></li>
         <li><a href="#">꽃.식물</a></li>
         <li><a href="#">클래스</a></li>
@@ -105,7 +105,7 @@
         <ul class="line_up">
             <li class="scroll_item" th:each="sub, iterStat : ${subscribes}"
                 th:if="${iterStat.index} >= 3 and ${iterStat.index} < 6">
-                <a th:href="@{'/subscribe/detail/' + ${sub.productId}}">
+                <a th:href="@{'/subscribe/particular/' + ${sub.id}}">
                     <p class="sale_subs">최대 25% 할인 구독자 모집</p>
                     <div class="sale_img" th:style="'background-image:url(' + ${sub.productImage} + ')'"></div>
                     <h2 th:text="${sub.productName} + ' 구독'"></h2>
