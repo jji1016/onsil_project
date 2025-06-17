@@ -2,6 +2,7 @@ package com.onsil.onsil.admin.repository;
 
 import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.dto.SalesByMonthDto;
+import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.entity.Subscribe;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,4 +40,7 @@ public interface AdminSubscribeRepository extends JpaRepository<Subscribe, Integ
             "GROUP BY TO_CHAR(s.startdate, 'YYYY-MM') " +
             "ORDER BY month", nativeQuery = true)
     List<SalesByMonthDto> findMonthlySales();
+
+    @Query("SELECT s FROM Subscribe s JOIN FETCH s.member JOIN FETCH s.product")
+    List<Subscribe> findAllWithMemberAndProduct();
 }

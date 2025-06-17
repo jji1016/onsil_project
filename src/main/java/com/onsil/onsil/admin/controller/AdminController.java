@@ -45,7 +45,7 @@ public class AdminController {
         // orderLists
         List<AdminOrderListDto> orderLists = adminService.getAllOrderLists();
         // subscribeLists
-        List<SubscribeDto> subscribeDtos = adminService.getAllLists();
+        List<SubscribeDto> subscribeList = adminService.getAllLists();
 
         // 오늘 주문건
         SubscribeSumDto todaySubscribe = adminService.subscribeToday();
@@ -64,7 +64,7 @@ public class AdminController {
         model.addAttribute("inOneWeekReview", inOneWeekReview);
         model.addAttribute("statusSummary", statusSummary);
         model.addAttribute("orderLists", orderLists);
-        model.addAttribute("subscribeLists", subscribeDtos);
+        model.addAttribute("subscribeLists", subscribeList);
 
 
         return "admin/onsil-html";

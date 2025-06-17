@@ -39,7 +39,6 @@
             });
 
 
-
             //상품등록 모달창
             $(".add_btn").click(function () {
                 $("#items_modal").stop().fadeIn(300);
@@ -249,7 +248,7 @@
                         <!--                                <option value="주문일">주문일</option>-->
                         <!--                            </select>-->
                         <!--                            <input type="date">~<input type="date">-->
-<!--                        <p>가입일</p>-->
+                        <!--                        <p>가입일</p>-->
                         <input type="date" id="start-date" placeholder="시작일">
                         <input type="date" id="end-date" placeholder="종료일">
                         <button>오늘</button>
@@ -313,8 +312,8 @@
                 <!--                    </td>-->
                 <!--                </tr>-->
                 </tbody>
-                <div id="pagination" style="margin-top: 20px;"></div>
             </table>
+            <div id="member-pagination" style="margin-top: 20px;"></div>
 
             <div id="mem-modal" style="display: none;">
                 <div class="wrap-all">
@@ -338,45 +337,51 @@
                                     <tr>
                                         <td>닉네임</td>
                                         <td>
-                                            <input type="text" name="nickName" id="input-nickname" placeholder="" value="">
+                                            <input type="text" name="nickName" id="input-nickname" placeholder=""
+                                                   value="">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>이메일</td>
                                         <td>
-                                            <input type="text" name="userEmail" id="input-email" placeholder="" value="">
+                                            <input type="text" name="userEmail" id="input-email" placeholder=""
+                                                   value="">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>우편번호</td>
                                         <td>
-                                            <input type="text" name="zipcode" id="input-zipcode" placeholder="" value="">
+                                            <input type="text" name="zipcode" id="input-zipcode" placeholder=""
+                                                   value="">
                                             <input type="button" id="btn-zipcode" value="우편번호">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>주소1</td>
                                         <td>
-                                            <input type="text" name="address01" id="input-address01" placeholder="" value="">
+                                            <input type="text" name="address01" id="input-address01" placeholder=""
+                                                   value="">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>주소2</td>
                                         <td>
-                                            <input type="text" name="address02" id="input-address02" placeholder="" value="">
+                                            <input type="text" name="address02" id="input-address02" placeholder=""
+                                                   value="">
                                         </td>
-                                    </tr><tr>
-                                    <td>휴대전화</td>
-                                    <td>
-                                        <select name="phone" id="">
-                                            <option value="선택">선택</option>
-                                            <option value="010">010</option>
-                                            <option value="011">011</option>
-                                            <option value="017">017</option>
-                                        </select>-
-                                        <input type="text" name="tel" id="input-tel" placeholder="" value="">
-                                    </td>
-                                </tr>
+                                    </tr>
+                                    <tr>
+                                        <td>휴대전화</td>
+                                        <td>
+                                            <select name="phone" id="">
+                                                <option value="선택">선택</option>
+                                                <option value="010">010</option>
+                                                <option value="011">011</option>
+                                                <option value="017">017</option>
+                                            </select>-
+                                            <input type="text" name="tel" id="input-tel" placeholder="" value="">
+                                        </td>
+                                    </tr>
                                 </table>
                                 <div class="mem-btn">
                                     <button type="submit" class="save">저장</button>
@@ -397,9 +402,11 @@
                                     <th>총주문금액</th>
                                 </tr>
                                 </thead>
-                                <tbody id="mem-order-body"></tbody>
-                            </table>
+                                <tbody id="mem-order-body">
 
+                                </tbody>
+                            </table>
+                            <div id="orderList-pagination" class="pagination"></div>
                             <div class="mem-btn">
                                 <button type="button" class="close">닫기</button>
                             </div>
@@ -416,9 +423,11 @@
                                     <th>총주문금액</th>
                                 </tr>
                                 </thead>
-                                <tbody id="mem-subscribe-body"></tbody>
-                            </table>
+                                <tbody id="mem-subscribe-body">
 
+                                </tbody>
+                            </table>
+                            <div id="subscribe-pagination" class="pagination"></div>
                             <div class="mem-btn">
                                 <button type="button" class="close">닫기</button>
                             </div>
@@ -965,68 +974,211 @@
         </ul>
     </div>
 </div>
+
 <script th:inline="javascript">
 
-    const orderLists = /*[[${orderLists}]]*/ []; // Thymeleaf가 JSON으로 넣어줘야 함
-    const subscribeLists = /*[[${subscribeLists}]]*/ []; // Thymeleaf가 JSON으로 넣어줘야 함
+    const orderLists = /*[[${orderLists}]]*/ [];
+    const subscribeLists = /*[[${subscribeLists}]]*/ [];
+    const memberLists = /*[[${memberList}]]*/ [];
 
-    function renderSubscribeList(userID) {
-        const tbody = document.getElementById('mem-subscribe-body');
-        tbody.innerHTML = ''; // 기존 내용 비우기
+    // Thymeleaf가 JSON으로 넣어줘야 함
 
-        const userSubscribes = subscribeLists.filter(sub => sub.userID === userID);
+    function paginate(dataList, itemsPerPage, maxPageButtons, tbodyEl, paginationEl, renderRowFn, rowBuilderFn) {
+        let currentPage = 1;
+        let internalDataList = dataList;
 
-        if (userSubscribes.length === 0) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td colspan="6" style="text-align:center;">구독 내역이 없습니다.</td>`;
-            tbody.appendChild(tr);
-            return;
+        function renderPage(page) {
+            tbodyEl.innerHTML = '';
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageItems = internalDataList.slice(start, end);
+
+            pageItems.forEach((item, index) => {
+                const tr = rowBuilderFn
+                    ? rowBuilderFn(item, start + index)
+                    : (() => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = renderRowFn(item, start + index);
+                        return tr;
+                    })();
+                tbodyEl.appendChild(tr);
+            });
         }
 
-        userSubscribes.forEach((sub, index) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${sub.startDate}</td>
-            <td>${sub.orderNumber}</td>
-            <td>${sub.productName}</td>
-            <td>${sub.period}</td>
-            <td>${sub.productPrice.toLocaleString()}원</td>
-        `;
-            tbody.appendChild(tr);
-        });
+        function renderPagination(page) {
+            const totalPages = Math.ceil(internalDataList.length / itemsPerPage);
+            const currentGroup = Math.floor((page - 1) / maxPageButtons);
+            const startPage = currentGroup * maxPageButtons + 1;
+            const endPage = Math.min(startPage + maxPageButtons - 1, totalPages);
+
+            paginationEl.innerHTML = '';
+
+            if (startPage > 1) {
+                const prev = document.createElement('button');
+                prev.textContent = '이전';
+                prev.onclick = () => {
+                    currentPage = startPage - 1;
+                    renderPage(currentPage);
+                    renderPagination(currentPage);
+                };
+                paginationEl.appendChild(prev);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.style.margin = '0 3px';
+                btn.onclick = () => {
+                    currentPage = i;
+                    renderPage(currentPage);
+                    renderPagination(currentPage);
+                };
+                if (i === page) {
+                    btn.style.backgroundColor = '#007bff';
+                    btn.style.color = '#fff';
+                }
+                paginationEl.appendChild(btn);
+            }
+
+            if (endPage < totalPages) {
+                const next = document.createElement('button');
+                next.textContent = '다음';
+                next.onclick = () => {
+                    currentPage = endPage + 1;
+                    renderPage(currentPage);
+                    renderPagination(currentPage);
+                };
+                paginationEl.appendChild(next);
+            }
+        }
+
+
+        renderPage(currentPage);
+        renderPagination(currentPage);
+
+        return {
+            renderPage,
+            renderPagination,
+            get dataList() {
+                return internalDataList;
+            },
+            set dataList(newList) {
+                internalDataList = newList;
+                currentPage = 1;
+                renderPage(currentPage);
+                renderPagination(currentPage);
+            }
+        };
     }
+
+
+
+    const subscribePaginator = paginate(
+        [], // 초기엔 빈 배열
+        5,
+        5,
+        document.getElementById("mem-subscribe-body"),
+        document.getElementById("subscribe-pagination"),
+        (sub, index) => `
+        <td>${index + 1}</td>
+        <td>${sub.startDate}</td>
+        <td>${sub.orderNumber}</td>
+        <td>${sub.productName}</td>
+        <td>${sub.period}</td>
+        <td>${sub.productPrice.toLocaleString()}원</td>
+    `
+    );
+
+    const orderPaginator = paginate(
+        [], // 초기엔 빈 배열
+        5,
+        5,
+        document.getElementById("mem-order-body"),
+        document.getElementById("orderList-pagination"),
+        (order, index) => `
+        <td>${index + 1}</td>
+        <td>${order.orderTime}</td>
+        <td>${order.orderNum}</td>
+        <td>${order.flowerName}</td>
+        <td>${order.quantity}</td>
+        <td>${order.status}</td>
+        <td>${order.price}원</td>
+    `
+    );
+
+
+    const memberPaginator = paginate(
+        memberLists,
+        5,
+        5,
+        document.getElementById("member-body"),
+        document.getElementById("member-pagination"),
+        (member, index) => `
+        <td>${index + 1}</td>
+        <td>${member.userID}</td>
+        <td>${member.nickName}</td>
+        <td>${member.userName}</td>
+        <td>${member.userEmail}</td>
+        <td>${member.regDate}</td>
+        <td>${member.address01}</td>
+        <td>${member.address02}</td>
+        <td>${member.tel}</td>
+        <td><button class="admin_btn">수정</button></td>
+    `,
+        (member, index) => {
+            const tr = document.createElement("tr");
+            tr.classList.add("member-row");
+            tr.dataset.userId = member.userID;
+            tr.dataset.nickname = member.nickName || '';
+            tr.dataset.email = member.userEmail || '';
+            tr.dataset.zipcode = member.zipcode || '';
+            tr.dataset.address01 = member.address01 || '';
+            tr.dataset.address02 = member.address02 || '';
+            tr.innerHTML = memberPaginatorRow(member, index);
+            return tr;
+        }
+    );
+
+    function memberPaginatorRow(member, index) {
+        return `
+        <td>${index + 1}</td>
+        <td>${member.userID}</td>
+        <td>${member.nickName}</td>
+        <td>${member.userName}</td>
+        <td>${member.userEmail}</td>
+        <td>${member.regDate}</td>
+        <td>${member.address01}</td>
+        <td>${member.address02}</td>
+        <td>${member.tel}</td>
+        <td><button class="admin_btn">수정</button></td>
+    `;
+    }
+
 
 
     function renderOrderList(userID) {
-        const tbody = document.getElementById('mem-order-body');
-        tbody.innerHTML = ''; // 이전 내용 비우기
-
         const userOrders = orderLists.filter(order => order.userID === userID);
-
         if (userOrders.length === 0) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td colspan="6" style="text-align:center;">주문내역이 없습니다.</td>`;
-            tbody.appendChild(tr);
+            document.getElementById("mem-order-body").innerHTML = `
+            <tr><td colspan="7" style="text-align:center;">주문내역이 없습니다.</td></tr>
+        `;
+            document.getElementById("orderList-pagination").innerHTML = '';
             return;
         }
-
-        userOrders.forEach((order, index) => {
-            const tr = document.createElement('tr');
-            tbody.appendChild(tr);
-            tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${order.startDate} ~ ${order.endDate}</td>
-            <td>${order.orderNumber}</td>
-            <td>${order.productName}</td>
-            <td>${order.period}</td>
-            <td>${order.quantity}</td>
-            <td>${order.productPrice.toLocaleString()}원</td>
-        `;
-        });
+        orderPaginator.dataList = userOrders;
     }
 
-
+    function renderSubscribeList(userID) {
+        const userSubscribes = subscribeLists.filter(sub => sub.userID === userID);
+        if (userSubscribes.length === 0) {
+            document.getElementById("mem-subscribe-body").innerHTML = `
+            <tr><td colspan="6" style="text-align:center;">구독내역이 없습니다.</td></tr>
+        `;
+            document.getElementById("subscribe-pagination").innerHTML = '';
+            return;
+        }
+        subscribePaginator.dataList = userSubscribes;
+    }
 
     // 모달창 유저정보
     document.getElementById("member-update-form").addEventListener("submit", function (e) {
@@ -1039,10 +1191,13 @@
         });
     });
 
+
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("admin_btn")) {
             const row = e.target.closest(".member-row");
+            console.log("userID === " + row.dataset.userId)
 
+            if (!row) return;
             const userID = row.dataset.userId;
             const nickname = row.dataset.nickname;
             const email = row.dataset.email;
@@ -1078,103 +1233,6 @@
             document.querySelector("#member-update-form").action = `/admin/member-modify/${userID}`;
         }
     });
-
-
-
-    // 페이지네이션
-    const memberList = /*[[${memberList}]]*/ [];
-
-    const itemsPerPage = 4;
-    const maxPageButtons = 5;
-    const tbody = document.getElementById('member-body');
-    const pagination = document.getElementById('pagination');
-    let currentPage = 1;
-
-    function renderTablePage(page) {
-        tbody.innerHTML = '';
-        const start = (page - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const currentPageItems = memberList.slice(start, end);
-
-        currentPageItems.forEach((member, index) => {
-            const tr = document.createElement('tr');
-            tr.classList.add("member-row"); // JS용 selector
-            tr.dataset.userId = member.userID;
-            tr.dataset.nickname = member.nickName;
-            tr.dataset.email = member.userEmail;
-            tr.dataset.zipcode = member.zipcode;
-            tr.dataset.address01 = member.address01;
-            tr.dataset.address02 = member.address02;
-            tr.innerHTML = `
-        <td>${start + index + 1}</td>
-        <td>${member.userID}</td>
-        <td>${member.nickName}</td>
-        <td>${member.userName}</td>
-        <td>${member.userEmail}</td>
-        <td>${member.regDate}</td>
-        <td>${member.address01}</td>
-        <td>${member.address02}</td>
-        <td>${member.tel}</td>
-        <td><button class="admin_btn">수정</button></td>
-      `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    function renderPagination(page) {
-        const totalPages = Math.ceil(memberList.length / itemsPerPage);
-        const currentGroup = Math.floor((page - 1) / maxPageButtons);
-        const startPage = currentGroup * maxPageButtons + 1;
-        const endPage = Math.min(startPage + maxPageButtons - 1, totalPages);
-
-        pagination.innerHTML = '';
-
-        // 이전 그룹
-        if (startPage > 1) {
-            const prevBtn = document.createElement('button');
-            prevBtn.textContent = '이전';
-            prevBtn.onclick = () => {
-                currentPage = startPage - 1;
-                renderTablePage(currentPage);
-                renderPagination(currentPage);
-            };
-            pagination.appendChild(prevBtn);
-        }
-
-        // 페이지 버튼들
-        for (let i = startPage; i <= endPage; i++) {
-            const btn = document.createElement('button');
-            btn.textContent = i;
-            btn.style.margin = '0 3px';
-            btn.onclick = () => {
-                currentPage = i;
-                renderTablePage(currentPage);
-                renderPagination(currentPage);
-            };
-            if (i === page) {
-                btn.style.backgroundColor = '#007bff';
-                btn.style.color = '#fff';
-            }
-            pagination.appendChild(btn);
-        }
-
-        // 다음 그룹
-        if (endPage < totalPages) {
-            const nextBtn = document.createElement('button');
-            nextBtn.textContent = '다음';
-            nextBtn.onclick = () => {
-                currentPage = endPage + 1;
-                renderTablePage(currentPage);
-                renderPagination(currentPage);
-            };
-            pagination.appendChild(nextBtn);
-        }
-    }
-
-
-    // 초기 실행
-    renderTablePage(currentPage);
-    renderPagination(currentPage);
 
     // 검색
     document.addEventListener('DOMContentLoaded', function () {
@@ -1218,22 +1276,29 @@
 
                     data.forEach((member, index) => {
                         const row = document.createElement('tr');
+                        row.classList.add('member-row');
+                        row.dataset.userId = member.userId;
+                        row.dataset.nickname = member.nickName || '';
+                        row.dataset.email = member.userEmail || '';
+                        row.dataset.zipcode = member.zipcode || '';
+                        row.dataset.address01 = member.address01 || '';
+                        row.dataset.address02 = member.address02 || '';
+
                         row.innerHTML = `
-                            <td>${index + 1}</td>
-                            <td>${member.userID}</td>
-                            <td>${member.nickName}</td>
-                            <td>${member.userName}</td>
-                            <td>${member.userEmail}</td>
-                            <td>${member.regDate}</td>
-                            <td>${member.address01}</td>
-                            <td>${member.address02 ?? ''}</td>
-                            <td>${member.tel}</td>
-                            <td>
-                                <button class="admin_btn">수정</button>
-                            </td>
-                        `;
+                        <td>${index + 1}</td>
+                        <td>${member.userId}</td>
+                        <td>${member.nickName}</td>
+                        <td>${member.userName}</td>
+                        <td>${member.userEmail}</td>
+                        <td>${member.regDate}</td>
+                        <td>${member.address01}</td>
+                        <td>${member.address02 ?? ''}</td>
+                        <td>${member.tel}</td>
+                        <td><button class="admin_btn">수정</button></td>
+                       `;
                         tableBody.appendChild(row);
                     });
+
                 })
                 .catch(error => {
                     alert("검색 중 오류 발생: " + error.message);

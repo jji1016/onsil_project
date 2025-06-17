@@ -71,11 +71,21 @@ public class AdminDao {
         return subscribeRepository.findMonthlySales();
     }
 
-    public List<OrderList> getAllOrderLists() {
-        return orderListRepository.findAll();
-    }
+//    public List<OrderList> getAllOrderLists() {
+//        return orderListRepository.findAll();
+//    }
+//
+//    public List<Subscribe> getAllLists() {
+//        return subscribeRepository.findAll();
+//    }
 
     public List<Subscribe> getAllLists() {
-        return subscribeRepository.findAll();
+        return subscribeRepository.findAllWithMemberAndProduct(); // JPQL fetch join
     }
+
+    public List<OrderList> getAllOrderLists() {
+        return orderListRepository.findAllWithMemberAndProduct(); // JPQL fetch join
+    }
+
+
 }

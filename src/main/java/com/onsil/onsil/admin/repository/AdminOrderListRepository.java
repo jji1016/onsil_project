@@ -20,4 +20,7 @@ public interface AdminOrderListRepository extends JpaRepository<OrderList, Integ
     FROM orderList s
 """, nativeQuery = true)
     DeliveryStatusDto countDeliveryStatuses();
+
+    @Query("SELECT o FROM OrderList o JOIN FETCH o.member JOIN FETCH o.product")
+    List<OrderList> findAllWithMemberAndProduct();
 }
