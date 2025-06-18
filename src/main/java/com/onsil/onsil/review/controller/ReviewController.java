@@ -1,8 +1,9 @@
-package com.onsil.onsil.product.controller;
+package com.onsil.onsil.review.controller;
 
-import com.onsil.onsil.product.service.ReviewService;
+import com.onsil.onsil.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -45,5 +46,10 @@ public class ReviewController {
             redirectAttributes.addFlashAttribute("errorMessage", "리뷰 삭제 중 오류가 발생했습니다.");
         }
         return "redirect:/product/detail/" + productId;
+    }
+    @GetMapping("/review/{id}")
+    public String writeReview(@PathVariable int id, Model model, Principal principal) {
+        model.addAttribute("productId", id);
+        return "review/review";
     }
 }

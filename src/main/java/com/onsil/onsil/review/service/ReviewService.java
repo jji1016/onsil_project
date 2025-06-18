@@ -1,4 +1,4 @@
-package com.onsil.onsil.product.service;
+package com.onsil.onsil.review.service;
 
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.entity.Member;
@@ -6,7 +6,7 @@ import com.onsil.onsil.entity.Product;
 import com.onsil.onsil.entity.Review;
 import com.onsil.onsil.member.repository.MemberRepository;
 import com.onsil.onsil.product.repository.ProductRepository;
-import com.onsil.onsil.product.repository.ReviewRepository;
+import com.onsil.onsil.review.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 

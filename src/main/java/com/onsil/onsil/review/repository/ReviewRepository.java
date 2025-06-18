@@ -1,4 +1,4 @@
-package com.onsil.onsil.product.repository;
+package com.onsil.onsil.review.repository;
 
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Product;

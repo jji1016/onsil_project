@@ -2,7 +2,7 @@ package com.onsil.onsil.product.dao;
 
 import com.onsil.onsil.entity.Product;
 import com.onsil.onsil.product.dto.ProductDto;
-import com.onsil.onsil.product.dto.ReviewDto;
+import com.onsil.onsil.review.dto.ReviewDto;
 import com.onsil.onsil.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -494,9 +494,7 @@
                         <td>${order.price}</td>
                         <td>${order.status}</td>
                         <td>
-                            <button type="button" class="review-btn" data-productID="${order.productID}">
-                                <a href="#">리뷰작성</a>
-                            </button>
+                            <a href="/review/review/${order.productId}" class="review-btn">리뷰작성</a>
                         </td>
                     `;
                     orderListRap.appendChild(tr);
