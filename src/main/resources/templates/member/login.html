@@ -119,16 +119,28 @@
 
 <body>
 <div id="header">
-  <h1 class="h_logo"><img src="../images/header/onsil_logo.png" alt="logo"></h1>
+  <h1 class="h_logo"><img src="/images/header/onsil_logo.png" alt="logo"></h1>
   <ul class="gnb">
-    <li><button type="button" class="login">로그인</button></li>
+    <!-- 로그인 버튼: 로그인하지 않은 사용자에게만 보임 -->
+    <li sec:authorize="!isAuthenticated()">
+      <button type="button" class="login" th:onclick="|location.href='@{/member/login}'|">로그인</button>
+    </li>
+
+    <!-- 로그아웃 / 프로필: 로그인한 사용자에게만 보임 -->
+    <li sec:authorize="isAuthenticated()">
+      <span sec:authentication="name">사용자</span> 님 |
+      <form th:action="@{/member/logout}" method="post">
+        <button type="submit" class="login">로그아웃</button>
+      </form>
+    </li>
+
     <li><i class="fa-solid fa-bag-shopping"></i></li>
     <li><i class="fa-solid fa-user"></i></li>
   </ul>
   <ul class="nav">
-    <li><a href="#">꽃 정기구독</a></li>
+    <li><a th:href="@{/subscribe/subscribe}">꽃 정기구독</a></li>
     <li><a href="#">꽃 노트</a></li>
-    <li><a href="#">꽃.식물</a></li>
+    <li><a th:href="@{/product/list}">꽃.식물</a></li>
     <li><a href="#">클래스</a></li>
     <li><a href="#">기업제휴</a></li>
     <li><a href="#">고객센터</a></li>
@@ -171,7 +183,7 @@
 
 <div id="footer">
   <div class="f_cont">
-    <h1 class="f_logo"><img src="../images/subsc/onsil_logo.png" alt="logo"></h1>
+      <h1 class="f_logo"><a href="index.html"><img src="/images/footer/logo_white.png" alt="logo"></a></h1>
     <ul class="f_info">
       <li>온실 플라워스튜디오</li>
       <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>

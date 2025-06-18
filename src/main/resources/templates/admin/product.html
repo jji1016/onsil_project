@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>onsil flower studio admin system</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
-  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="/css/admin.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -45,7 +45,7 @@
 <div id="header">
   <div class="wrap_hd">
     <div class="wrap_logo">
-      <h1 class="logo"><a href="#"><img src="../images/admin/logo.png" alt="logo"></a></h1>
+      <h1 class="logo"><a href="#"><img src="/images/admin/logo.png" alt="logo"></a></h1>
       <span>ADMIN</span>
     </div>
     <ul class="gnb">
@@ -95,35 +95,35 @@
       <ul class="overview">
         <li>
           <a href="#">
-            <img src="../images/admin/icon_over_member.png" alt="회원아이콘">
+            <img src="/images/admin/icon_over_member.png" alt="회원아이콘">
             <h3>신규 가입자</h3>
             <p>32<span>명</span></p>
           </a>
         </li>
         <li>
           <a href="#">
-            <img src="../images/admin/icon_over_member.png" alt="전체회원아이콘">
+            <img src="/images/admin/icon_over_member.png" alt="전체회원아이콘">
             <h3>전체 가입자</h3>
             <p>345<span>명</span></p>
           </a>
         </li>
         <li>
           <a href="#">
-            <img src="../images/admin/icon_over_deli.png" alt="배송아이콘">
+            <img src="/images/admin/icon_over_deli.png" alt="배송아이콘">
             <h3>신규 주문</h3>
             <p>57<span>건</span></p>
           </a>
         </li>
         <li>
           <a href="#">
-            <img src="../images/admin/icon_over_qna.png" alt="문의아이콘">
+            <img src="/images/admin/icon_over_qna.png" alt="문의아이콘">
             <h3>신규 문의</h3>
             <p>17<span>건</span></p>
           </a>
         </li>
         <li>
           <a href="#">
-            <img src="../images/admin/icon_over_review.png" alt="리뷰아이콘">
+            <img src="/images/admin/icon_over_review.png" alt="리뷰아이콘">
             <h3>신규 리뷰</h3>
             <p>24<span>건</span></p>
           </a>
@@ -131,16 +131,16 @@
       </ul>
       <div class="admin">
         <div class="ad_info">
-          <img src="../images/admin/admin.png" alt="관리자이미지">
+          <img src="/images/admin/admin.png" alt="관리자이미지">
           <h3>사용자 이름</h3>
           <p>전체 관리자</p>
         </div>
         <ul class="setting">
           <li>
-            <img src="../images/admin/icon_setting.png" alt="수정">수정
+            <img src="/images/admin/icon_setting.png" alt="수정">수정
           </li>
           <li>
-            <img src="../images/admin/icon_logout.png" alt="로그아웃">로그아웃
+            <img src="/images/admin/icon_logout.png" alt="로그아웃">로그아웃
           </li>
         </ul>
       </div>
@@ -644,22 +644,22 @@
   <div id="sales" class="tab">
     <ul class="sales_info">
       <li>
-        <img src="../images/admin/icon_sales_big.png" alt="매출아이콘">
+        <img src="/images/admin/icon_sales_big.png" alt="매출아이콘">
         <h3>오늘의 매출</h3>
         <p>2,867,500<span>원</span></p>
       </li>
       <li>
-        <img src="../images/admin/icon_sales_big.png" alt="매출아이콘">
+        <img src="/images/admin/icon_sales_big.png" alt="매출아이콘">
         <h3>이번달 매출</h3>
         <p>18,524,700<span>원</span></p>
       </li>
       <li>
-        <img src="../images/admin/icon_over_deli.png" alt="매출아이콘">
+        <img src="/images/admin/icon_over_deli.png" alt="매출아이콘">
         <h3>이번달 주문수</h3>
         <p>146<span>건</span></p>
       </li>
       <li>
-        <img src="../images/admin/icon_average.png" alt="평균아이콘">
+        <img src="/images/admin/icon_average.png" alt="평균아이콘">
         <h3>평균 객단가</h3>
         <p>126,880<span>원</span></p>
       </li>
@@ -889,22 +889,6 @@
               <td><!-- 버튼 또는 기능 영역 --></td>
             </tr>
             </tbody>
-            <div class="pagination">
-              <ul>
-                <li th:if="${currentPage > 0}">
-                  <a th:href="@{'/admin/product?page=' + ${currentPage - 1}}">이전</a>
-                </li>
-                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                  <a th:href="@{'/admin/product?page=' + ${i}}"
-                     th:text="${i + 1}"
-                     th:classappend="${i == currentPage} ? 'active' : ''">
-                  </a>
-                </li>
-                <li th:if="${currentPage < totalPages - 1}">
-                  <a th:href="@{'/admin/product?page=' + ${currentPage + 1}}">다음</a>
-                </li>
-              </ul>
-            </div>
           </table>
           <div id="items_modal">
             <div class="modal_con">
@@ -985,6 +969,6 @@
 </div>
 
 
-<script src="../js/admin.js"></script>
+<script src="/js/admin.js"></script>
 </body>
 </html>

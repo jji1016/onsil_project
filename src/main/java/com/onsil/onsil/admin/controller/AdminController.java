@@ -142,14 +142,8 @@ public class AdminController {
     }
 
     @GetMapping("/product")
-    public String product(@RequestParam(defaultValue = "0") int page, Model model) {
-        Pageable pageable = PageRequest.of(page, 7, Sort.by(Sort.Direction.DESC, "id"));
-        Page<Product> productPage = productRepository.findAll(pageable);
+    public String product( Model model) {
 
-        model.addAttribute("products", productPage.getContent());
-        model.addAttribute("productCount", productPage.getTotalElements());
-        model.addAttribute("totalPages", productPage.getTotalPages());
-        model.addAttribute("currentPage", page);
         return "admin/product";
     }
 

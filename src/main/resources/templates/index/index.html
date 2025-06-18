@@ -9,9 +9,9 @@
     <title>project_onsil</title>
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <script src="https://kit.fontawesome.com/a6d4db907a.js" crossorigin="anonymous"></script>
     <link href="https://fonts.cdnfonts.com/css/rage-italic" rel="stylesheet">
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
@@ -29,7 +29,7 @@
 </head>
 <body>
 <div id="header">
-    <h1 class="h_logo"><img src="../images/header/onsil_logo.png" alt="logo"></h1>
+    <h1 class="h_logo"><img src="/images/header/onsil_logo.png" alt="logo"></h1>
     <ul class="gnb">
         <!-- 로그인 버튼: 로그인하지 않은 사용자에게만 보임 -->
         <li sec:authorize="!isAuthenticated()">
@@ -89,7 +89,7 @@
                 <div class="swiper-slide" th:each="sub : ${subscribes}">
                     <ul>
                         <li><a th:href="@{'/subscribe/particular/' + ${sub.id}}">
-                            <img th:src="@{${sub.productImage}}" th:alt="${sub.productName} + ' 이미지'"/>
+                            <img th:src="@{/upload/products/{filename}(filename=${sub.productImage})}" th:alt="${sub.productName} + ' 이미지'"/>
                         </a></li>
                         <li class="c1_txt" th:text="${sub.productName} + ' 구독'"></li>
                         <li>
@@ -108,7 +108,7 @@
     </div>
 
     <div class="cont_plus">
-        <h1><img src="../images/header/onsil_logo.png" alt="logo"></h1>
+        <h1><img src="/images/header/onsil_logo.png" alt="logo"></h1>
         <p>
             꽃이 머무는 공간이
             곧 온실이 되는 것처럼,<br>
@@ -117,7 +117,7 @@
         <div class="bottom_li">
             <ul>
                 <li>
-                    <img src="../images/index/cplus1.png" alt="cp1">
+                    <img src="/images/index/cplus1.png" alt="cp1">
                     <div>
                         <h4>유럽 감성 기반의 프리미엄 스타일링</h4>
                         <p>
@@ -128,7 +128,7 @@
                     </div>
                 </li>
                 <li>
-                    <img src="../images/index/cplus2.png" alt="cp2">
+                    <img src="/images/index/cplus2.png" alt="cp2">
                     <div>
                         <h4>고객 맞춤형 공간 연출 경험</h4>
                         <p>
@@ -139,7 +139,7 @@
                     </div>
                 </li>
                 <li>
-                    <img src="../images/index/cplus3.png" alt="cp3">
+                    <img src="/images/index/cplus3.png" alt="cp3">
                     <div>
                         <h4>정기구독을 넘어선 감성 큐레이션</h4>
                         <p>
@@ -181,19 +181,19 @@
             <div class="swiper cont4-swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <img src="../images/index/cont4-1.png" alt="s1">
+                        <img src="/images/index/cont4-1.png" alt="s1">
                     </div>
                     <div class="swiper-slide">
-                        <img src="../images/index/cont4-2.png" alt="s2">
+                        <img src="/images/index/cont4-2.png" alt="s2">
                     </div>
                     <div class="swiper-slide">
-                        <img src="../images/index/cont4-3.png" alt="s3">
+                        <img src="/images/index/cont4-3.png" alt="s3">
                     </div>
                     <div class="swiper-slide">
-                        <img src="../images/index/cont4-4.png" alt="s4">
+                        <img src="/images/index/cont4-4.png" alt="s4">
                     </div>
                     <div class="swiper-slide">
-                        <img src="../images/index/cont4-5.png" alt="s5">
+                        <img src="/images/index/cont4-5.png" alt="s5">
                     </div>
                 </div>
             </div>
@@ -204,7 +204,9 @@
 
 <div id="footer">
     <div class="f_cont">
-        <h1 class="f_logo"><img src="../images/footer/logo_white.png" alt="logo"></h1>
+        <h1 class="f_logo"><a href="index.html">
+            <img src="/images/footer/logo_white.png" alt="logo">
+        </a></h1>
         <ul class="f_info">
             <li>온실 플라워스튜디오</li>
             <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
