@@ -183,13 +183,14 @@ body {
   font-weight: 600;
 }
 #section .my_list .content_wrap .content .order{
-  margin-top:60px;
+  margin-top:37px;
   display: flex;
   justify-content: space-between;
   position: relative;
   width: 100%;
   /* background-color: salmon; */
 }
+
 
 #section .my_list .content_wrap .content .order>h2{
   font-size: 25px;
@@ -290,8 +291,8 @@ body {
   background-color: #f5f5ed;
 }
 #section .my_list .content_wrap .content .order_table>tbody tr td .mypageImg{
-  width: 60px;
-  aspect-ratio: 1 / 1.3;
+  height: 66px;
+  aspect-ratio: 0.7 / 1;
   object-fit: cover;
   padding: 7px 0px;
 }
@@ -306,14 +307,15 @@ body {
 
 
 #section .my_list .content_wrap .content .request_detail{
-  width:800px; height: 50px;
+  width: 800px;
+  height: 50px;
   background-color: #e5e0d8;
   display: flex;
   border-radius: 50px;
   line-height: 50px;
   overflow: hidden;
-  margin-top:40px;
-  margin-bottom:30px;
+  margin-top: 46px;
+  margin-bottom: 30px;
 }
 #section .my_list .content_wrap .content .request_detail>li{
   padding:0 15px;
@@ -333,6 +335,10 @@ body {
   color:white;
   transition: all 0.3s;
   cursor: pointer;
+  margin-left: 4px;
+}
+#section .my_list .content_wrap .content .order_table>#subscribeRap>tr>td:last-child {
+  width: 177px;
 }
 #section .my_list .content_wrap .content .order_table>tbody>tr .review-btn a{
   color: white;
@@ -376,6 +382,7 @@ body {
   border: none;
   background-color: #8b9773;
   color: white;
+  cursor: pointer;
 }
 #section .my_list .content_wrap .content .personal_info td .ad_num{
   width:115px;
