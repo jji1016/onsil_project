@@ -7,6 +7,7 @@ import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
 import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.mypage.dto.MypageOrderListDto;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -73,6 +74,57 @@ public class AdminController {
         model.addAttribute("monthlyData", revenue.values());
 
         return "admin/admin";
+    }
+
+    @GetMapping("/home")
+    private String adminHome(Model model, HttpServletRequest request) {
+        // 총 멤버수
+        int countedMember = adminService.countAllMembers();
+        // 한달이내 가입자 수(중복제거)
+        int inOneMonthSubscribeMember = adminService.countOneMonth();
+        // 일주일 내 리뷰 수
+        int inOneWeekReview = adminService.inOneWeekReview();
+
+        // 인기상품 리스트
+        List<PopularCountDto> popularSubscribe = adminService.popularSubscribe();
+
+        // 오늘 주문건
+        SubscribeSumDto todaySubscribe = adminService.subscribeToday();
+        // 한달이내 주문건수
+        SubscribeSumDto recentSubscribes = adminService.subscribeInOneMonth();
+        // 배송현황
+        DeliveryStatusDto statusSummary = adminService.getDeliveryStatusSummary();
+        // 매출합계
+        Map<String, BigDecimal> revenue = adminService.getMergedMonthlyRevenue();
+
+        model.addAttribute("allSubscribeMember", countedMember);
+        model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
+        model.addAttribute("popularSubscribe", popularSubscribe);
+        model.addAttribute("recentSubscribes", recentSubscribes.getList());
+        model.addAttribute("todaySubscribe",todaySubscribe.getList());
+        model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
+        model.addAttribute("inOneWeekReview", inOneWeekReview);
+        model.addAttribute("statusSummary", statusSummary);
+        model.addAttribute("monthlyLabels", revenue.keySet());
+        model.addAttribute("monthlyData", revenue.values());
+
+        return "admin/home"; // 전체 페이지 렌더
+    }
+
+    @GetMapping("member")
+    public String adminMember(Model model, HttpServletRequest request) {
+        // 멤버리스트
+        List<MemberDto> memberList = adminService.getAllMembers();
+        // orderLists
+        List<AdminOrderListDto> orderLists = adminService.getAllOrderLists();
+        // subscribeLists
+        List<SubscribeDto> subscribeList = adminService.getAllLists();
+
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("orderLists", orderLists);
+        model.addAttribute("subscribeLists", subscribeList);
+
+        return "admin/member"; // 전체 페이지 렌더
     }
 
     @GetMapping("/api/sales/monthly")

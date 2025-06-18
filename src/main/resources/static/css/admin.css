@@ -182,9 +182,9 @@ body {
     left: 18%;
 }
 
-#section > .tab {
-    display: none;
-}
+/*#section > .tab {*/
+/*    display: none;*/
+/*}*/
 
 /* overview / admin info 영역------------------------------------------- */
 
