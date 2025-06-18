@@ -98,7 +98,7 @@ body{
     color: rgb(210, 231, 132);
     text-align: center;
     line-height: 30px;
-    font-size: 18px;
+    font-size: 15px;
 }
 .sale_img {
     width: 100%;
@@ -115,43 +115,38 @@ body{
 #section .sec3 .line_up .sale_img1{
     width: 100%; height: 500px;
     background-image: url(../images/subsc/lineup01.png);
-    background-size: cover;
-    background-position: center;
+    background-size: cover;    background-position: center;
 }
 #section .sec3 .line_up .sale_img2{
     width: 100%; height: 500px;
     background-image: url(../images/subsc/lineup02.png);
-    background-size: cover;
-    background-position: center;
+    background-size: cover;    background-position: center;
 }
 #section .sec3 .line_up .sale_img3{
     width: 100%; height: 500px;
     background-image: url(../images/subsc/lineup03.png);
-    background-size: cover;
-    background-position: center;
+    background-size: cover;    background-position: center;
 }
 #section .sec3 .line_up .sale_img4{
     width: 100%; height: 500px;
     background-image: url(../images/subsc/lineup04.png);
-    background-size: cover;
-    background-position: center;
+    background-size: cover;    background-position: center;
 }
 #section .sec3 .line_up .sale_img5{
     width: 100%; height: 500px;
     background-image: url(../images/subsc/lineup05.png);
-    background-size: cover;
-    background-position: center;
+    background-size: cover;    background-position: center;
 }
 #section .sec3 .line_up .sale_img6{
     width: 100%; height: 500px;
     background-image: url(../images/subsc/lineup06.png);
-    background-size: cover;
-    background-position: center;
+    background-size: cover;     background-position: center;
 }
 
 #section .sec3 .line_up>li h2{
     margin: 20px 0;
     font-size: 1.5em;
+    color: #191919;
 }
 #section .sec3 .line_up>li .cc_price{
     font-size: 14px;
@@ -190,8 +185,6 @@ body{
 #section .sec4 .desc4>li .desc_heading{
     font-weight: normal;
     color: #2B3E34;
-
-
 }
 #section .sec4 .desc4>li .pt2_4{
     margin-top: 50px;
@@ -214,18 +207,29 @@ body{
 #section .sec4 .desc4 li:last-child img{
     width: 100%;
     border-radius: 50px;
-    transition: all 0.3s ease;
 }
 
 /* ----------------sec55555555555555-------------------- */
 #section .sec5{
-    margin-bottom: 150px;
+    width: 100%; height: auto;
+    padding: 100px 0;
+    margin-top: -100px;
 }
 #section .sec5 .howto{
-    width: 42%; margin: 0 auto;
+    width: 31.5%; margin: 0 auto;
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
+}
+#section .sec5 .howto>li:last-child{
+    line-height: 35px;
+}
+#section .sec5 .howto>li:last-child h3{
+    color: #8B9773;
+}
+#section .sec5 .howto>li:last-child p{
+    font-size: 16px;
+    color: #191919;
 }
 *.material-symbols-outlined{
     margin-top: 15px;
@@ -236,9 +240,13 @@ body{
     padding-top: 8px;
     box-sizing: border-box;
     background-color: #8B9773;
+    color: white;
+    font-weight: 200;
 }
 #section .sec5 .howto>li:last-child{
     width: 90%;
     text-align: left;
     font-size: 1.3em;
 }
+
+/* ---반응형----------------------------------------------------------------------- */
