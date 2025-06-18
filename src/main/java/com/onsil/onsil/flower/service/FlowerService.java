@@ -106,7 +106,7 @@ public class FlowerService {
      * 꽃 상세정보 조회
      */
     public FlowerDto getFlowerDetail(Integer productId) {
-        Optional<Product> productOpt = flowerRepository.findByProductId(productId);
+        Optional<Product> productOpt = flowerRepository.findById(productId);
         if (productOpt.isPresent()) {
             return new FlowerDto(productOpt.get());
         }

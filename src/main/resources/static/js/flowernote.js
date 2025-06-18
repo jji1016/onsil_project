@@ -118,6 +118,8 @@ function performSearch(keyword) {
     fetch(`/api/flowers/search?keyword=${encodeURIComponent(keyword.trim())}`)
         .then(response => response.json())
         .then(data => {
+            console.log("검색 결과 리스트 확인");
+            console.log(data)
             currentSearchResults = data;
             isSearchMode = true;
             showSearchResults(data);
