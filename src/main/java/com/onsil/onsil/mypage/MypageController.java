@@ -3,6 +3,7 @@ package com.onsil.onsil.mypage;
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.member.dto.MemberDto;
 import com.onsil.onsil.mypage.dto.*;
+import com.onsil.onsil.mypage.dto.MypageOrderListDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
