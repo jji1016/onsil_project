@@ -21,7 +21,7 @@ public class FlowerDto {
 
     // Entity에서 DTO로 변환하는 생성자
     public FlowerDto(Product product) {
-        this.productId = product.getProductId();
+        this.productId = product.getId();
         this.dataNo = product.getDataNo();
         this.fMonth = product.getFMonth();
         this.flowerName = product.getFlowerName();

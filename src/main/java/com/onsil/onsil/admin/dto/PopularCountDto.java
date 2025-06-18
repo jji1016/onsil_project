@@ -11,12 +11,6 @@ public class PopularCountDto {
 
     private Integer productId;
     private String flowerName;
-    private Integer subscribeCount;
+    private long subscribeCount;
 
-    // Long 타입의 count를 Integer로 변환하는 생성자 추가
-    public PopularCountDto(Integer productId, String flowerName, Long subscribeCount) {
-        this.productId = productId;
-        this.flowerName = flowerName;
-        this.subscribeCount = subscribeCount != null ? subscribeCount.intValue() : 0;
-    }
 }

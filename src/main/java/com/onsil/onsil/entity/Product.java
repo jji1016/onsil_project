@@ -1,23 +1,17 @@
 package com.onsil.onsil.entity;
-
+import java.util.List;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "PRODUCT")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Product {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq_gen")
+    @SequenceGenerator(name = "product_seq_gen", sequenceName = "PRODUCT_SEQ", allocationSize = 1)
     @Column(name = "PRODUCTID")
-    private Integer productId;
+    private Integer id;
 
     @Column(name = "DATANO")
     private Integer dataNo;
@@ -43,13 +37,25 @@ public class Product {
     @Column(name = "F_TYPE", length = 1000)
     private String fType;
 
-    @Column(name = "PRICE", nullable = false)
-    private Integer price;
+    @Column(nullable = false)
+    private int price;
 
-    @Column(name = "IMAGE", length = 255)
+    @Column(name = "IMAGE")
     private String image;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Review> reviewList = new ArrayList<>();
-}
+    private List<Review> reviewList;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<OrderList> orderLists;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Stock> stockList;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Input> inputList;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Output> outputList;
+
+}

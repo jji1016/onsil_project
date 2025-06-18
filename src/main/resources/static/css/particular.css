@@ -5,26 +5,24 @@ ul{list-style: none;}
 a{color: black; text-decoration: none;}
 img{vertical-align: none; border: 0;}
 body{
-  font-family: 'Pretendard-Regular';
-  background-color: #E5E0D8;
-  color: #191919;
+    font-family: 'Pretendard-Regular';
+    background-color: #E5E0D8;
+      color: #191919;
 }
 
 
 
 
 #section .frist_se{
-  width: 70%; height: 800px;
+  width: 1500px; height: 800px;
   margin: 0 auto;
   display: flex;
-  border: 1px solid rgba(128, 128, 128, 0.5);
-  justify-content: space-around;
+  justify-content: center;
 }
 
 #section .frist_se .left_img{
-  padding-top: 50px;
-  padding-right: 52px;
-  border-right: 1px solid rgba(128, 128, 128, 0.5);
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  padding: 50px 40px;
 }
 #section .frist_se .left_img img{
   width: 547px; height: 620px;
@@ -43,7 +41,12 @@ body{
 }
 
 #section .frist_se .right_text{
-  margin-top: 5px;
+  height: 800px;
+  box-sizing: border-box;
+  padding: 0px 79px;
+  padding-left: 80px;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+    border-left: none;
 }
 #section .frist_se .right_text .product_na h2{
   font-size: 35px;
@@ -62,7 +65,7 @@ body{
   font-size: 25px;
   margin-left: 305px;
   margin-bottom: 10px;
-  color: #8B9773;
+    color: #8B9773;
 }
 #section .frist_se .right_text .product_na h4 span{
   font-size: 17px;
@@ -71,34 +74,24 @@ body{
 }
 #section .frist_se .right_text .product_na h4 span:nth-child(2){
   color: #8B9773;
-  font-size: 20px;
+    font-size: 20px;
 }
-#section .frist_se .right_text .product_na .review_write{
-  display: flex;
-}
-#section .frist_se .right_text .product_na .review_write .reviwe_btn{
-  border: 0;
-  background-color: #F1F1F1;
-  cursor: pointer;
-  padding: 5px 10px;
-  font-size: 14px;
-  border-radius: 40px;
-}
-#section .frist_se .right_text .product_na .review_write p{
-  margin-left: 227px;
+
+#section .frist_se .right_text .product_na p{
+  margin-left: 295px;
   font-size: 14px;
 }
 
 #section .frist_se .right_text .line{
-  width: 450px;
-  margin-top: 20px;
+  width: 450px; 
+  margin-top: 25px;
   border: 1px solid rgba(128, 128, 128, 0.281);
 }
 #section .frist_se .right_text .deliver .de_me{
   width: 450px;
   display: flex;
   border: 1px solid rgba(128, 128, 128, 0.322);
-  margin-top: 20px;
+  margin-top: 25px;
   box-sizing: border-box;
   margin-bottom: 20px;
   background-color: #f5f5f5;
@@ -146,13 +139,15 @@ body{
   bottom: 4px;
 }
 
-
+#section .frist_se .right_text .de_memo{
+  margin-top:10px;
+}
 #section .frist_se .right_text .de_memo .de_tex{
   width: 450px; height: 40px;
   border: 1px solid #D2D2D2;
   font-size: 14px;
-  padding: 5px;
-  margin: 10px 0px;
+  padding:10px;
+  margin: 15px 0px;
   box-sizing: border-box;
   outline: none;
   color: #949494;
@@ -168,14 +163,15 @@ body{
 }
 
 #section .frist_se .right_text .text_arr p{
-  font-size: 11px;
-  margin-top: 8px;
+  font-size: 13px;
+  margin-top: 10px;
   margin-bottom: 5px;
 }
 #section .frist_se .right_text .text_arr2{
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
 #section .frist_se .right_text .text_arr2 .amount_all{
   color: #191919;
@@ -193,7 +189,7 @@ body{
   margin-top: 5px;
   margin-right: 5px;
   border-right:1px solid gray;
-  color: #8B9773;
+    color: #8B9773;
   padding-right: 5px;
   color: #191919;
 }
@@ -201,7 +197,8 @@ body{
 #section .frist_se .right_text .sell_txt .se_txt{
   display: flex;
   justify-content: space-around;
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-left: -10px;
 }
 
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell,
@@ -216,10 +213,10 @@ body{
   background-color: #F1F1F1;
 }
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell4{
-  background-color: #F1F1F1;
-  border: 0;
-  border-radius: 50%;
-  padding: 5px;
+    background-color: #F1F1F1;
+    border: 0;
+    border-radius: 50%;
+    padding: 5px;
 }
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell3{
   background-color: #8B9773;
@@ -242,7 +239,12 @@ body{
 
 
 #section .secound_se{
-  margin-top: 100px;
+  width: 1280px;
+  margin: 100px auto;
+}
+#section .secound_se h1{
+  margin-left: 15px;
+  color: #8B9773;
 }
 #section .secound_se .reviwe_more{
   padding: 8px 16px;
@@ -343,10 +345,10 @@ body{
   width: 0px;
   height: 0px;
   margin: 25px 0;
-  color: #EE6452;
+  color: #EE6452;    
   border-right:11px solid transparent;
   border-left: 11px solid transparent;
-  border-bottom:8px  solid #EE6452;
+  border-bottom:8px  solid #EE6452;    
   transform: rotate(180deg);
 }
 #section .secound_se .top_re .star_all .star>li:before,
@@ -356,8 +358,8 @@ body{
   width: 0px;
   top: 0;
   height: 0px;
-  color: #EE6452;
-  left: -11px;
+  color: #EE6452;    
+  left: -11px;        
   border-right: 11px solid transparent;
   border-left: 11px solid transparent;
   border-bottom: 8px solid #EE6452;
@@ -376,8 +378,8 @@ body{
   width: 0px;
   top: 0;
   height: 0px;
-  color: #EE6452;
-  left: -11px;
+  color: #EE6452;    
+  left: -11px;        
   border-right: 11px solid transparent;
   border-left: 11px solid transparent;
   border-bottom: 8px solid #EE6452;
@@ -491,3 +493,4 @@ body{
   display: block;
   color: #191919;
 }
+

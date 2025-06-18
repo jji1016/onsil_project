@@ -27,13 +27,12 @@ body{
     justify-content: space-between;
 }
 
-#footer .f_cont .f_logo img {
-    width: 184px !important;
-    height: 90px !important;
-    object-fit: contain;
+#footer .f_cont .f_logo a img{
+    width:184px; height: 90px;
 }
 #footer .f_cont .f_info{
     text-align: right;
+    /* border:1px solid red; */
 }
 #footer .f_cont .f_info>li{
     line-height: 40px;

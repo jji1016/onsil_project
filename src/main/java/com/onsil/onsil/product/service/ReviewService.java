@@ -9,6 +9,8 @@ import com.onsil.onsil.product.repository.ProductRepository;
 import com.onsil.onsil.product.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,8 +32,10 @@ public class ReviewService {
     @Value("${file.path}reviews/")
     String reviewsPath;
 
-    public void writeReview(Integer productId, int rating, String content, MultipartFile imageFile) throws IOException {
+    public void writeReview(int productId, int rating, String content, MultipartFile imageFile) throws IOException {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         if (!(principal instanceof CustomUserDetails)) {
             throw new RuntimeException("인증된 사용자가 아닙니다.");
         }
@@ -53,49 +57,34 @@ public class ReviewService {
         Review review = new Review();
         review.setProduct(product);
         review.setMember(member);
-        review.setRating(rating); // int → Integer 자동 변환
+        review.setRating(rating);
         review.setContent(content);
 
         if (imageFile != null && !imageFile.isEmpty()) {
             String originalFilename = imageFile.getOriginalFilename();
-            if (originalFilename != null && originalFilename.contains(".")) {
-                String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-                String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
-                String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-                String storedFileName = baseName + "_" + timestamp + extension;
-                String savePath = reviewsPath + storedFileName;
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
+            String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String storedFileName = baseName + "_" + timestamp + extension;
 
-                File saveDir = new File(reviewsPath);
-                if (!saveDir.exists()) {
-                    saveDir.mkdirs();
-                }
+            String savePath = reviewsPath + storedFileName;
 
-                imageFile.transferTo(new File(savePath));
-                review.setImage(storedFileName);
+            File saveDir = new File(reviewsPath);
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
             }
+
+            imageFile.transferTo(new File(savePath));
+            review.setImage(storedFileName);
         }
 
         reviewRepository.save(review);
     }
 
     @Transactional
-    public void delete(Integer reviewId) throws IllegalAccessException {
+    public void delete(int reviewId) throws IllegalAccessException {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(principal instanceof CustomUserDetails)) {
-            throw new IllegalAccessException("인증된 사용자가 아닙니다.");
-        }
-
-        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
-        String loginId = customUserDetails.getUsername();
-
-        // Member의 userID는 String이므로 직접 비교 가능
-        if (!review.getMember().getUserID().equals(loginId)) {
-            throw new IllegalAccessException("본인이 작성한 리뷰만 삭제할 수 있습니다.");
-        }
-
         reviewRepository.delete(review);
     }
 }

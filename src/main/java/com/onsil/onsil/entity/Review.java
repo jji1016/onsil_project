@@ -2,46 +2,48 @@ package com.onsil.onsil.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Check;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "REVIEW")
-@Getter
 @Setter
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Review {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "REVIEWID")
-    private Integer reviewId;
+    @SequenceGenerator(name = "review_seq_gen", sequenceName = "REVIEW_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "reviewID")
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCTID")
+    @JoinColumn(name = "productID", nullable = false)
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBERID")
+    @JoinColumn(name = "subscribeID", nullable = false)
+    private Subscribe subscribe;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberID", nullable = false)
     private Member member;
 
-    @Column(name = "CONTENT", nullable = false)
+    @Column(nullable = false, length = 1000)
     private String content;
 
-    @Column(name = "RATING", nullable = false)
-    private Integer rating;
+    @Column(nullable = false)
+    @Check(constraints = "rating BETWEEN 1 AND 5")
+    private int rating;
 
-    @Column(name = "REGDATE", nullable = false, updatable = false)
+    @CreatedDate
     private LocalDateTime regDate;
 
-    @Column(name = "IMAGE")
     private String image;
 
-    // 리뷰 등록 시 자동으로 현재 시간이 regDate에 저장됩니다.
-    @PrePersist
-    public void prePersist() {
-        this.regDate = LocalDateTime.now();
-    }
+
 }

@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 public class ProductDao {
     private final ProductRepository productRepository;
 
-    public ProductDto findByDtoId(Integer id) { // Integer 타입 유지
+    public ProductDto findByDtoId(int id) {
         Optional<Product> findedProduct = productRepository.findById(id);
         if (findedProduct.isPresent()) {
             Product product = findedProduct.get();
 
             List<ReviewDto> reviewDtoList = product.getReviewList().stream()
                     .map(review -> new ReviewDto(
-                            review.getReviewId(), // Review의 ID는 Integer
-                            review.getProduct().getProductId(), // Product의 ID는 Integer
-                            Integer.valueOf(review.getMember().getId()), // Integer → Integer 변환
+                            review.getId(),
+                            review.getProduct().getId(),
+                            review.getMember().getId(),
                             review.getMember().getUserID(),
                             review.getMember().getUserName(),
                             review.getMember().getNickName(),
@@ -37,7 +37,7 @@ public class ProductDao {
                     .collect(Collectors.toList());
 
             ProductDto productDto = ProductDto.builder()
-                    .id(product.getProductId()) // Product의 ID는 Integer
+                    .id(product.getId())
                     .flowerName(product.getFlowerName())
                     .flowerInfo(product.getFlowerInfo())
                     .price(product.getPrice())
@@ -52,15 +52,15 @@ public class ProductDao {
 
     public List<ProductDto> findAll() {
         List<Product> productList = productRepository.findAll();
-        return productList.stream()
-                .map(product -> ProductDto.builder()
-                        .id(product.getProductId())
+        List<ProductDto> productDtoList = productList.stream().map(
+                product -> ProductDto.builder()
+                        .id(product.getId())
                         .flowerName(product.getFlowerName())
                         .flowerInfo(product.getFlowerInfo())
                         .price(product.getPrice())
                         .image(product.getImage())
                         .build()
-                )
-                .collect(Collectors.toList());
+        ).toList();
+        return productDtoList;
     }
 }

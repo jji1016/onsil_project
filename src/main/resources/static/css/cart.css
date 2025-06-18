@@ -4,9 +4,9 @@ ul{list-style: none;}
 a{color: black; text-decoration: none;}
 img{vertical-align: none; border: 0;}
 body{
-  font-family: 'Pretendard-Regular';
-  background-color: #E5E0D8;
-  color: #191919;
+    font-family: 'Pretendard-Regular';
+    background-color: #E5E0D8;
+      color: #191919;
 }
 
 
@@ -47,7 +47,7 @@ body{
   margin-top: 15px;
   box-sizing: border-box;
   border-bottom: 1px solid #9a9a9a62;
-}
+} 
 #all{
   width: 25px; height: 25px;
   margin-right: 20px;
@@ -194,8 +194,8 @@ body{
   border: 0px;
   color: white;
   background-color: #8B9773;
-  margin-left: 1295px;
-  border-radius: 50px;
+    margin-left: 1295px;
+    border-radius: 50px;
 }
 
 
@@ -215,3 +215,5 @@ body{
 #section .notandum .notandum_txt>li{
   list-style: disc;
 }
+
+

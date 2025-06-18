@@ -9,14 +9,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${file.path}")
-    String upload;
+    @Value("${file.path}products/")
+    String productsPath;
+
+    @Value("${file.path}reviews/")
+    String reviewsPath;
 
     // 기존 파일 업로드 리소스 매핑
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/upload/**")
-                .addResourceLocations("file:///" + upload);
+        registry.addResourceHandler("/upload/products/**")
+                .addResourceLocations("file:///" + productsPath);
+        registry.addResourceHandler("/upload/reviews/**")
+                .addResourceLocations("file:///" + reviewsPath);
     }
 
     // ★ 장바구니/결제 페이지 연동을 위한 CORS 설정 추가
