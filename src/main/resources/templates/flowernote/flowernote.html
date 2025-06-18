@@ -6,68 +6,40 @@
   <title>온실 플라워 스튜디오 - 꽃노트</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <script src="https://kit.fontawesome.com/a6d4db907a.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-  <link rel="stylesheet" href="css/header.css">
-  <link rel="stylesheet" href="css/footer.css">
-  <link rel="stylesheet" href="css/flowernote.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/flowernote.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script>
-    $(document).ready(function(){
-        //검색창 모달
-        $(".search-result").click(function(){
-            $(".modal").stop().fadeIn(300);
-        });
-        $(".close").click(function(){
-            $(".modal").stop().fadeOut(300);
-        });
-
-
-        //이달의 꽃 모달
-        $(".m-flower-list").click(function(){
-            $(".modal").stop().fadeIn(300);
-        });
-        $(".close").click(function(){
-            $(".modal").stop().fadeOut(300);
-        });
-  });
-  </script>
 </head>
 <body>
 
   <!-- header영역--------------------------------------------------------------- -->
   <div id="header">
-        <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
-        <ul class="gnb">
-            <li>
-                <button type="button" class="login">
-                    <a href="login.html">로그인</a>
-                </button>
-            </li>
-            <li>
-                <a href="cart.html">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                </a>
-            </li>
-            <li>
-                <a href="mypage.html">
-                    <i class="fa-solid fa-user"></i>
-                </a>
-            </li>
-        </ul>
-        <ul class="nav">
-            <li><a href="subsc.html">꽃 정기구독</a></li>
-            <li><a href="flowernote.html">꽃 노트</a></li>
-            <li><a href="products.html">꽃 · 식물</a></li>
-            <li><a href="#">클래스</a></li>
-            <li><a href="corporate.html">기업제휴</a></li>
-            <li><a href="onsilfaq.html">고객센터</a></li>
-        </ul>
-    </div>
+      <h1 class="h_logo">
+        <a href="#">
+          <img src="/images/header/onsil_logo.png" alt="logo">
+        </a>
+      </h1>
+      <ul class="gnb">
+          <li><button type="button" class="login">로그인</button></li>
+          <li><i class="fa-solid fa-bag-shopping"></i></li>
+          <li><i class="fa-solid fa-user"></i></li>
+      </ul>
+      <ul class="nav">
+          <li><a href="#">꽃 정기구독</a></li>
+          <li><a href="#">꽃 노트</a></li>
+          <li><a href="#">꽃.식물</a></li>
+          <li><a href="#">클래스</a></li>
+          <li><a href="#">기업제휴</a></li>
+          <li><a href="#">고객센터</a></li>
+      </ul>
+  </div>
 
 
 
@@ -99,35 +71,26 @@
           </li>
           <li class="tag">
             <span class="tag-title">인기검색어</span>
-            <span>작약</span>
+            <span>미인</span>
             <span>감사</span>
-            <span>진심</span>
-            <span>수국</span>
-            <span>변치않는 사랑</span>
+            <span>친절</span>
+            <span>행운</span>
+            <span>나무</span>
           </li>
-          
+
         </ul>
         <!-- 검색결과 영역 -->
-        <div class="search-result">
-          <div class="img-area"></div>
-          <div class="flower-name">
-            <p class="name-txt">작약</p>
+        <div class="search-result" style="cursor:pointer;">
+          <div class="img-area">
           </div>
-        </div>
+          <div class="flower-name">
+            <p class="name-txt"></p>
+          </div>
+      </div>
       </div>
     </div>
 
 
-    <!-- 모달창 -->
-    <div class="modal">
-      <div class="wrap-modal-cont">
-        <h3 class="top-bar"><p>상세 설명</p><span class="close">닫기</span></h3>
-        <div class="modal-cont">
-
-        </div>
-      </div>
-
-    </div>
 
     <!-- 이달의 꽃 영역 -->
     <div class="wrap-month-flower">
@@ -379,37 +342,37 @@
           </li>
         </ul>
         <ul id="june" class="m-flower-list">
-          <li class="list1">
+          <li>
             <div class="flower-image"></div>
             <div class="flower-name">
               <p class="name-txt">꽃창포</p>
             </div>
           </li>
-          <li class="list2">
+          <li>
             <div class="flower-image"></div>
             <div class="flower-name">
               <p class="name-txt">꼬리조팝나무</p>
             </div>
           </li>
-          <li class="list3">
+          <li>
             <div class="flower-image"></div>
             <div class="flower-name">
               <p class="name-txt">섬말나리</p>
             </div>
           </li>
-          <li class="list4">
+          <li>
             <div class="flower-image"></div>
             <div class="flower-name">
               <p class="name-txt">도깨비부채</p>
             </div>
           </li>
-          <li class="list5">
+          <li>
             <div class="flower-image"></div>
             <div class="flower-name">
               <p class="name-txt">이팝나무</p>
             </div>
           </li>
-          <li class="list6">
+          <li>
             <div class="flower-image"></div>
             <div class="flower-name">
               <p class="name-txt">글라디올러스</p>
@@ -658,21 +621,21 @@
 
   <!-- footer 영역----------------------------------------------------------------- -->
   <div id="footer">
-        <div class="f_cont">
-            <h1 class="f_logo">
-                <a href="index.html">
-                    <img src="images/footer/logo_white.png" alt="logo">
-                </a>
-            </h1>
-            <ul class="f_info">
-                <li>온실 플라워스튜디오</li>
-                <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
-                <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
-                <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
-            </ul>
-        </div>
-    </div>
+      <div class="f_cont">
+        <h1 class="f_logo">
+          <a href="#">
+            <img src="/images/footer/logo_white.png" alt="logo">
+          </a>
+        </h1>
+          <ul class="f_info">
+              <li>온실 플라워스튜디오</li>
+              <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+              <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
+              <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+          </ul>
+      </div>
+  </div>
 
-  <script src="js/flowernote.js"></script>
+  <script src="/js/flowernote.js"></script>
 </body>
 </html>

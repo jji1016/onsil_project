@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class MypageOrderListDto {
-
+    private Integer productID;
     private int quantity;
     private String status;
     private LocalDateTime orderTime;
