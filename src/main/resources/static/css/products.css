@@ -4,7 +4,7 @@ ul{list-style: none;}
 a{color:#000; text-decoration: none;}
 img{border:0; vertical-align: top;}
 body{
-    font-family: 'Pretendard';
+    font-family: 'Pretendard Variable', sans-serif;
     background-color: #E5E0D8;
 }
 
@@ -23,6 +23,7 @@ body{
 #section .sec1 .mainheading,
 #section .sec1 .subheading{
     font-size: 20px;
+    font-weight: 200;
 }
 #section .sec1 .subheading{
     line-height: 28px;
@@ -31,6 +32,7 @@ body{
     font-size: 38px;
     margin-top: 20px;
     margin-bottom: 20px;
+    font-weight: 500;
 }
 #section .sub_heading{
     text-align: center;
@@ -73,6 +75,7 @@ body{
     color: red;
     font-size: 15px;
 }
+#footer{margin-top: 100px;}
 
 
 #section .sec3 .prod_img05{width: 350px;height: 350px;background-image: url(../images/product/vivid02.jpg); background-size: cover; background-position: center;}
