@@ -87,7 +87,7 @@ body {
     transition:all 0.3s;
     font-weight: 400;
 }
-#header .nav>li.active>a {
+#header .nav>li:nth-child(1)>a{
     color:#8B9773;
     font-weight: 600;
 }
