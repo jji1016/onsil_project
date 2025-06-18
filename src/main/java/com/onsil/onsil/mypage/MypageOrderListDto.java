@@ -1,5 +1,6 @@
-package com.onsil.onsil.mypage.dto;
+package com.onsil.onsil.mypage;
 
+import com.onsil.onsil.config.OrderStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,11 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class MypageOrderListDto {
-    private Integer productID;
     private int quantity;
     private String status;
     private LocalDateTime orderTime;
     private String flowerName;
     private int price;
-    private String image;
 }

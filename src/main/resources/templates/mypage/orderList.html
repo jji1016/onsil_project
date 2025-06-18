@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지 주문내역</title>
+</head>
+<body>
+<h1>mypage/orderList</h1>
+
+<form method="get" action="/mypage/orderList">
+  <label for="category">검색어</label>
+  <select id="category" name="category">
+    <option value="" selected>:::</option>
+    <option value="flowerName">상품이름</option>
+    <option value="status">주문상태</option>
+  </select>
+  <input type="text" name="keyword">
+
+  <label>주문일자</label>
+  <input type="date" name="startDate">
+  <input type="date" name="endDate">
+
+  <div>
+    <button>검색</button>
+  </div>
+</form>
+
+<th:block th:each="orderlist : ${mypageOrderListDto}">
+  <div th:text="${orderlist.quantity}"></div>
+  <div th:text="${orderlist.status}"></div>
+  <div th:text="${#temporals.format(orderlist.orderTime,'yyyy-MM-dd')}"></div>
+  <div th:text="${orderlist.flowerName}"></div>
+  <div th:text="${orderlist.price}"></div>
+  <div th:src="@{'/upload/products/' + ${orderlist.image}}"></div>
+  <hr>
+</th:block>
+</body>
+</html>

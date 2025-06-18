@@ -23,21 +23,21 @@ body {
 
 
 #section .my_top{
-  width:1700px;
+  width:1500px;
   margin:0 auto;
   display: flex;
   margin-top:80px;
   justify-content: space-between;
 }
 #section .my_top .top_left{
-  width:620px;
+  width:600px;
 }
 #section .my_top .top_left>p{
   font-size: 30px;
   padding-left:50px;
 }
 #section .my_top .top_left .left_txt{
-  width:620px; height:150px;
+  width:600px; height:150px;
   background-color: white;
   margin-top:40px;
   display: flex;
@@ -55,7 +55,7 @@ body {
 }
 
 #section .my_top .top_right{
-  width:900px;
+  width:800px;
   background-color: white;
   display: flex;
 }
@@ -104,22 +104,26 @@ body {
 #section .my_list>h1{
   font-size: 38px;
   padding-top:100px;
-  margin-left:80px;
+  margin-left:200px;
 }
 #section .my_list>ul{
-  margin-left:80px;
+  margin-left:200px;
 }
 #section .my_list .list1{
   margin-top:60px;
-  cursor: pointer;
 }
 #section .my_list .list2{
   margin-top:30px;
+}
+#section .my_list .list1 > li,
+#section .my_list .list2 > li{
   cursor: pointer;
+  color: #4B4A45;
 }
 #section .my_list .list1 .l_on,
 #section .my_list .list2 .l_on{
   font-weight: 600;
+  color: #191919;
 }
 #section .my_list>ul>li{
   width: 610px; height: 70px;
@@ -138,10 +142,10 @@ body {
 
 
 #section .my_list .content_wrap .content{
-  width: 900px;
+  width: 800px;
   padding-top:210px;
   position: absolute;
-  top:0; right:100px;
+  top:0; left:900px;
   display: none;
 }
 #section .my_list .content_wrap .content:nth-child(1){
@@ -149,6 +153,7 @@ body {
 }
 #section .my_list .content_wrap .content>h2{
   font-size: 25px;
+  color: #4B4A45;
   /* margin-left:30px; */
 }
 #section .my_list .content_wrap .content>h2>span{
@@ -158,7 +163,7 @@ body {
   margin-left:10px;
 }
 #section .my_list .content_wrap .content .delivery_status{
-  width:900px; height: 150px;
+  width:100%; height: 150px;
   display: flex;
   background-color: #e5e0d8;
   margin-top:30px;
@@ -188,6 +193,8 @@ body {
 
 #section .my_list .content_wrap .content .order>h2{
   font-size: 25px;
+  color: #4B4A45;
+  margin-top: 10px;
   /* margin-left:30px; */
 }
 #section .my_list .content_wrap .content .order .subscript{
@@ -261,7 +268,7 @@ body {
   background-color: #616756;
 }
 #section .my_list .content_wrap .content .order_table{
-  width: 900px;
+  width: 100%;
   border-collapse: separate;
   border-spacing:0;
   border:1px solid rgb(218, 218, 218);
@@ -288,9 +295,8 @@ body {
   object-fit: cover;
   padding: 7px 0px;
 }
-
 #section .my_list .content_wrap .content .page_btn{
-  margin-left: 360px;
+  margin-left: 310px;
   margin-top: 30px;
 }
 #section .my_list .content_wrap .content .page_btn tbody tr td a{
@@ -300,7 +306,7 @@ body {
 
 
 #section .my_list .content_wrap .content .request_detail{
-  width:900px; height: 50px;
+  width:800px; height: 50px;
   background-color: #e5e0d8;
   display: flex;
   border-radius: 50px;
@@ -318,6 +324,7 @@ body {
   background-color: #8b9773;
   color:white;
 }
+#section .my_list .content_wrap .content .order_table>tbody>tr .review-btn,
 #section .my_list .content_wrap .content .order_table>tbody>tr .cancel_btn{
   width:70px; height: 35px;
   border:1px solid #8b9773;
@@ -325,38 +332,50 @@ body {
   background-color: #8b9773;
   color:white;
   transition: all 0.3s;
+  cursor: pointer;
 }
-#section .my_list .content_wrap .content .order_table>tbody>tr .cancel_btn:hover{
+#section .my_list .content_wrap .content .order_table>tbody>tr .review-btn a{
+  color: white;
+  display: block;
+}
+/* #section .my_list .content_wrap .content .order_table>tbody>tr .cancel_btn:hover{
   background-color: #616756;
-}
+} */
 
 #section .my_list .content_wrap .content .personal_info{
-  width:900px;
+  width:70%;
   margin-top:30px;
   border-collapse: collapse;
-  border:1px solid #a4a4a4;
 }
 #section .my_list .content_wrap .content .personal_info td{
-  border:1px solid #a4a4a4;
-  padding:8px;
+  border-bottom:1px solid #d2d2d2;
+  padding: 19.5px 0;
   box-sizing: border-box;
 }
 #section .my_list .content_wrap .content .personal_info td:first-child{
-  width:180px;
-  background-color: #d9d9d96c;
+  width:25%;
+  /* background-color: #d9d9d96c; */
   padding-left:20px;
+  font-weight: 600;
 }
 #section .my_list .content_wrap .content .personal_info td>input{
   width:200px; height: 25px;
   border:1px solid #a4a4a450;
   outline:none;
 }
+#section .my_list .content_wrap .content .personal_info td>input[type="text"]{
+  padding: 0 10px;
+}
+#section .my_list .content_wrap .content .personal_info td>input[type="text"]::placeholder{
+  color: #191919;
+}
 #section .my_list .content_wrap .content .personal_info td .email_btn,
 #section .my_list .content_wrap .content .personal_info td .ad_search{
   width:70px; height: 26px;
   margin-left:5px;
-  border:1px solid #a4a4a4;
-  background-color: #efebe2;
+  border: none;
+  background-color: #8b9773;
+  color: white;
 }
 #section .my_list .content_wrap .content .personal_info td .ad_num{
   width:115px;
@@ -378,25 +397,31 @@ body {
   width:64px;
 }
 #section .my_list .content_wrap .cus_btn {
-  display: flex;
-  justify-content: center;
+  /* display: flex;
+  justify-content: left; */
 }
-#section .my_list .content_wrap .content .cus_edit,
-#section .my_list .content_wrap .content .cus_edit2
-{
-  width:200px; height: 45px;
-  margin-left:20px;
-  margin-top:60px;
+#section .my_list .content_wrap .content .cus_edit{
+  width:70%; 
+  height: 45px;
+  margin-top:20px;
   border:1px solid #8b9773;
-  background-color: #8b9773;
-  color:white;
+  background-color: white;
+  color: #8b9773;
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s;
 }
 #section .my_list .content_wrap .content .cus_edit:hover{
-  background-color: white;
-  color: #8b9773;
+  border:1px solid #8b9773;
+  background-color: #8b9773;
+  color:white;
+}
+#section .my_list .content_wrap .content .cus_edit2{
+  color: rgb(182, 182, 182);
+  font-size: 12px;
+  line-height: 2;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 #section .my_list .content_wrap .content>p{
@@ -569,7 +594,7 @@ body {
 
 #section .my_list .l_btn{
   width:610px;
-  margin-left:80px;
+  margin-left:200px;
   margin-top:60px;
   display: flex;
   justify-content: space-between;
