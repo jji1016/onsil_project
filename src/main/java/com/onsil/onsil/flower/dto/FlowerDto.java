@@ -5,7 +5,8 @@ import lombok.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class FlowerDto {
-    private Integer id;
+
+    private Integer productId;
     private Integer dataNo;
     private Integer fMonth;
     private String flowerName;
@@ -14,12 +15,13 @@ public class FlowerDto {
     private String fUse;
     private String fGrow;
     private String fType;
-    private int price;
+    private Integer price;
     private String image;
-    private final String publishOrg = "농촌진흥청 국립원예특작과학원";
+    private String imageUrl; // 실제 이미지 URL
 
+    // Entity에서 DTO로 변환하는 생성자
     public FlowerDto(Product product) {
-        this.id = product.getId();
+        this.productId = product.getId();
         this.dataNo = product.getDataNo();
         this.fMonth = product.getFMonth();
         this.flowerName = product.getFlowerName();
@@ -30,5 +32,12 @@ public class FlowerDto {
         this.fType = product.getFType();
         this.price = product.getPrice();
         this.image = product.getImage();
+
+        // image 컬럼 값(영어 파일명, 확장자 포함)을 그대로 사용
+        if (product.getImage() != null && !product.getImage().isEmpty()) {
+            this.imageUrl = "/upload/products/" + product.getImage();
+        } else {
+            this.imageUrl = "/upload/products/default.jpg";
+        }
     }
 }

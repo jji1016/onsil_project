@@ -20,8 +20,17 @@ body{
   background-size: cover;
   background-position: center;
   box-sizing: border-box;
+  text-align: center;
   color: white;
   margin-top: 50px;
+}
+#section .banner h1{
+  font-size: 45px;
+  padding: 250px 0;
+}
+#section .banner h3{
+  margin-top: -210px;
+  font-size: 20px;
 }
 
 
