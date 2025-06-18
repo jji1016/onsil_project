@@ -81,10 +81,4 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-    @Transactional
-    public void delete(int reviewId) throws IllegalAccessException {
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
-        reviewRepository.delete(review);
-    }
 }

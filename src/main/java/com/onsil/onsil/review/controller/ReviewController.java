@@ -1,7 +1,17 @@
 package com.onsil.onsil.review.controller;
 
+import com.onsil.onsil.communal.dto.CustomUserDetails;
+import com.onsil.onsil.entity.Member;
+import com.onsil.onsil.member.dao.MemberDao;
+import com.onsil.onsil.member.repository.MemberRepository;
+import com.onsil.onsil.member.service.MemberService;
+import com.onsil.onsil.product.dto.ProductDto;
+import com.onsil.onsil.product.service.ProductService;
 import com.onsil.onsil.review.service.ReviewService;
+import com.onsil.onsil.subscribe.dto.SubscribeDto;
+import com.onsil.onsil.subscribe.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,8 +26,41 @@ import java.security.Principal;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final SubscribeService subscribeService;
+    private final ProductService productService;
+    private final MemberService memberService;
+    private final MemberDao memberDao;
+    private final MemberRepository memberRepository;
 
-    @PostMapping("/write")
+    @GetMapping("/subscribe/{id}")
+    public String writeSubscribeReview(@PathVariable int id, Model model,
+                                       @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        SubscribeDto subscribe = subscribeService.getSubscribe(id);
+        String username = customUserDetails.getUsername();
+        Member member = memberRepository.findByUserID(username)
+                .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+
+        model.addAttribute("subscribeId", id);
+        model.addAttribute("productId",subscribe.getProductId());
+        model.addAttribute("productName",subscribe.getProductName());
+        model.addAttribute("memberNickName",member.getNickName());
+        return "review/subscribereview";
+    }
+    @GetMapping("/product/{id}")
+    public String writeProductReview(@PathVariable int id, Model model,
+                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        ProductDto product = productService.getProductById(id);
+        String username = customUserDetails.getUsername();
+        Member member = memberRepository.findByUserID(username)
+                .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+
+
+        model.addAttribute("productId", id);
+        model.addAttribute("productName", product.getFlowerName());
+        model.addAttribute("memberNickName", member.getNickName());
+        return "review/productreview";
+    }
+    @PostMapping("subscribe/write")
     public String writeReview(@RequestParam("productId") int productId,
                               @RequestParam("rating") int rating,
                               @RequestParam("content") String content,
@@ -29,27 +71,8 @@ public class ReviewController {
         } catch (RuntimeException e) {
 
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/product/detail/" + productId;
+            return "redirect:/mypage/mypage/";
         }
-        return "redirect:/product/detail/" + productId;
-    }
-    @PostMapping("/delete")
-    public String deleteReview(@RequestParam int reviewId,
-                               @RequestParam int productId,
-                               Principal principal,
-                               RedirectAttributes redirectAttributes) {
-        try {
-            reviewService.delete(reviewId);
-        } catch (IllegalAccessException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "본인 리뷰만 삭제할 수 있습니다.");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "리뷰 삭제 중 오류가 발생했습니다.");
-        }
-        return "redirect:/product/detail/" + productId;
-    }
-    @GetMapping("/review/{id}")
-    public String writeReview(@PathVariable int id, Model model, Principal principal) {
-        model.addAttribute("productId", id);
-        return "review/review";
+        return "redirect:/mypage";
     }
 }

@@ -53,4 +53,5 @@ public class MemberService {
         return memberDao.findByUserID(userID)
                 .orElseThrow(() -> new RuntimeException("해당 userID의 회원을 찾을 수 없습니다: " + userID));
     }
+
 }
