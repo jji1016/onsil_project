@@ -699,7 +699,7 @@ body{
 }
 #section .thrid_se .detailed .tab_content .return_txt tr{
   background-color: #EFEBE2;
-  border: 1px solid gray;
+  border: 1px solid #d2d2d2;
   /* height: 30px; */
 }
 #section .thrid_se .detailed .tab_content .return_txt tr td:nth-child(2){
@@ -709,6 +709,7 @@ body{
   width: 100px;
   padding: 20px 20px;
   font-size: 16px;
+    border: 1px solid #d2d2d2;
 }
 #section .thrid_se .detailed .tab_content .return_txt .re_sub{
   font-size: 15px;
