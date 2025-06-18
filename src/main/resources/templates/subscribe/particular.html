@@ -165,6 +165,10 @@
                         <span th:text="${review.content}">리뷰 내용</span>
                     </h5>
                 </div>
+                <!-- css수정해야함 -->
+                <div class="review_img">
+                    <img th:if="${review.image != null}" th:src="@{'/upload/reviews/' + ${review.image}}" alt="리뷰 이미지">
+                </div>
             </div>
         </div>
     </div>

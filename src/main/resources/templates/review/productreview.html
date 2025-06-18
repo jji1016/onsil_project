@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -73,43 +72,45 @@
                 <table>
                     <tr>
                         <td>주문상품명</td>
-                        <td id="item-name">${productName}</td>
+                        <td id="item-name" th:text="${productName}"></td>
                     </tr>
                     <tr>
                         <td>닉네임</td>
-                        <td id="user-name">${memberNickName}</td>
+                        <td id="user-name" th:text="${memberNickName}"></td>
                     </tr>
                 </table>
             </div>
 
             <div class="review-write">
                 <h2>리뷰작성</h2>
-                <form action="/review/write" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="productId" value="${productId}" />
+                <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="productId" th:value="${productId}" />
+                    <input type="hidden" name="subscribeId" th:value="${subscribeId}" />
                     <ul>
                         <li class="asterion">
                             <h3>상품만족도</h3>
                             <div class="vote">
-                                <div class="star"></div>
-                                <div class="star"></div>
-                                <div class="star"></div>
-                                <div class="star"></div>
-                                <div class="star"></div>
+                                <div class="star" data-value="1"></div>
+                                <div class="star" data-value="2"></div>
+                                <div class="star" data-value="3"></div>
+                                <div class="star" data-value="4"></div>
+                                <div class="star" data-value="5"></div>
                             </div>
                         </li>
                         <li class="review-txt">
                             <h3>어떤점이 좋으셨어요?</h3>
-                            <textarea name="" class="review-box" placeholder="최소 10자 이상 입력해주세요."></textarea>
+                            <textarea name="content" class="review-box" placeholder="최소 10자 이상 입력해주세요."></textarea>
                         </li>
                     </ul>
                     <div class="photo">
                         <label for="photo-upload" class="btn-upload">📷<br>사진 올리기</label>
-                        <input type="file" id="photo-upload" accept="image/*" multiple style="display:none;">
+                        <input type="file" id="photo-upload" name="imageFile" accept="image/*" multiple style="display:none;">
                     </div>
                     <div class="btn">
                         <button type="submit">등록</button>
                         <button type="button"><a href="mypage.html">취소</a></button>
                     </div>
+                    <input type="hidden" name="rating" id="rating" value="0">
                 </form>
             </div>
         </div>
@@ -137,16 +138,25 @@
 
 
 <script>
-    document.querySelectorAll('.star').forEach(($star) => {
-        $star.addEventListener('click', ({ target }) => {
-            // 모든 .star에서 .active 삭제
-            document.querySelectorAll('.star').forEach(($star) => {
-                $star.classList.remove('active');
-            });
+    document.querySelectorAll('.star').forEach(function(star, idx) {
+        star.addEventListener('click', function() {
+            const ratingValue = this.dataset.value;
+            document.getElementById('rating').value = ratingValue;
 
-            // 클릭한 .star에 .active 추가
-            target.classList.add('active');
+            // 별 색상 반영 (예: 활성화된 별은 .active 클래스 추가)
+            document.querySelectorAll('.star').forEach((s, i) => {
+                s.classList.toggle('active', i < ratingValue);
+            });
         });
+    });
+</script>
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const rating = document.getElementById('rating').value;
+        if (parseInt(rating) === 0) {
+            alert("별점을 선택해주세요.");
+            e.preventDefault();
+        }
     });
 </script>
 </body>

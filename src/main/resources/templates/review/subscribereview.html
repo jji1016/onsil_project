@@ -83,7 +83,8 @@
 
       <div class="review-write">
         <h2>리뷰작성</h2>
-        <form th:action="@{/review/subscribe/write}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="subscribeId" th:value="${subscribeId}" />
           <input type="hidden" name="productId" th:value="${productId}" />
           <ul>
             <li class="asterion">

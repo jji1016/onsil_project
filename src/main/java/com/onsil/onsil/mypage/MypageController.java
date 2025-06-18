@@ -61,7 +61,7 @@ public class MypageController {
                 .build();
 
         List<MypageOrderListDto> orders  = mypageService.findSearchOrderList(loggedMemberID,searchDto, currentPage, itemsPerPage); //로그인한 사람의 주문내역
-
+        log.info("mypageOrderListDtoList: {}", orders);
         Map<String, Object> map = new HashMap<>();
         map.put("orders", orders);
         map.put("pageDto", pageDto);

@@ -11,6 +11,7 @@ import com.onsil.onsil.review.service.ReviewService;
 import com.onsil.onsil.subscribe.dto.SubscribeDto;
 import com.onsil.onsil.subscribe.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import java.io.IOException;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/review")
+@Slf4j
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -60,19 +62,24 @@ public class ReviewController {
         model.addAttribute("memberNickName", member.getNickName());
         return "review/productreview";
     }
-    @PostMapping("subscribe/write")
-    public String writeReview(@RequestParam("productId") int productId,
+    @PostMapping("/write")
+    public String writeReview(@RequestParam("productId") Integer productId,
+                              @RequestParam(value = "subscribeId", required = false) Integer subscribeId,
                               @RequestParam("rating") int rating,
                               @RequestParam("content") String content,
                               @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
                               RedirectAttributes redirectAttributes) throws IOException {
         try {
-            reviewService.writeReview(productId, rating, content, imageFile);
-        } catch (RuntimeException e) {
+            if (subscribeId == null) {
+                subscribeId = 17;
+            } reviewService.writeReview(productId,subscribeId, rating, content, imageFile);
+        }
+            catch (RuntimeException e) {
 
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/mypage/mypage/";
+            return "redirect:/mypage/mypage";
         }
-        return "redirect:/mypage";
+        return "redirect:/mypage/mypage";
     }
+
 }
