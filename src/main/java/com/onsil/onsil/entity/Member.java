@@ -102,6 +102,7 @@ public class Member {
         return MemberDto.builder()
                 .id(this.getId())
                 .userID(this.getUserID())
+                .userPW(this.getUserPW())
                 .userName(this.getUserName())
                 .userEmail(this.getUserEmail())
                 .nickName(this.getNickName())

@@ -138,11 +138,11 @@ public class MypageController {
         String currentPassword = data.get("currentPassword");
         String password = data.get("password"); // 새 비밀번호
         String password2 = data.get("password2"); // 새 비밀번호 확인
-        String newEmail = data.get("newEmail");
-        String newZipcode = data.get("newZipcode");
-        String newAddress01 = data.get("newAddress01");
-        String newAddress02 = data.get("newAddress02");
-        String newTel = data.get("newTel");
+        String newEmail = data.get("userEmail");
+        String newZipcode = data.get("zipcode");
+        String newAddress01 = data.get("address01");
+        String newAddress02 = data.get("address02");
+        String newTel = data.get("tel");
 
         String userID = customUserDetails.getUsername();
         MemberDto loggedMemberDto = mypageService.findByUserID(userID);
@@ -150,16 +150,15 @@ public class MypageController {
         log.info("loggedMemberDto: {}", loggedMemberDto);
         // 비밀번호 검증
         if (password != null && !password.isBlank()) {
-            if (!password.equals(password2)) {
+            if (!bCryptPasswordEncoder.matches(currentPassword, loggedMemberDto.getUserPW())) {
                 result.put("isModify", "false");
-                result.put("error", "비밀번호 확인이 일치하지 않습니다.");
+                result.put("error", "현재 비밀번호가 올바르지 않습니다.");
                 return result;
             }
 
-            log.info("customUserDetails.getPassword(): {}", customUserDetails.getPassword());
-            if (!bCryptPasswordEncoder.matches(currentPassword, customUserDetails.getPassword())) {
+            if (!password.equals(password2)) {
                 result.put("isModify", "false");
-                result.put("error", "현재 비밀번호가 올바르지 않습니다.");
+                result.put("error", "비밀번호 확인이 일치하지 않습니다.");
                 return result;
             }
 
@@ -177,7 +176,6 @@ public class MypageController {
         if (newAddress02 != null) loggedMemberDto.setAddress02(newAddress02);
         log.info("modify_loggedMemberDto: {}", loggedMemberDto);
         mypageService.updateInfo(loggedMemberDto);
-
         result.put("isModify", "true");
         return result;
     }
