@@ -42,7 +42,6 @@ body{
     justify-content: space-between;
 }
 
-
 #section .prod_img01{width: 350px;height: 350px;background-image: url(../images/product/pinkbasket01.jpg); background-size: cover; background-position: center;}
 #section .prod_img02{width: 350px;height: 350px;background-image: url(../images/product/bluefrench01.jpg); background-size: cover; background-position: center;}
 #section .prod_img03{width: 350px;height: 350px;background-image: url(../images/product/yellbasket01.jpg); background-size: cover; background-position: center;}

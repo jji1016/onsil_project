@@ -36,7 +36,7 @@
     <ul class="nav">
         <li><a th:href="@{/subscribe/subscribe}">꽃 정기구독</a></li>
         <li><a href="#">꽃 노트</a></li>
-        <li><a href="#">꽃.식물</a></li>
+        <li><a th:href="@{/product/list}">꽃.식물</a></li>
         <li><a href="#">클래스</a></li>
         <li><a href="#">기업제휴</a></li>
         <li><a href="#">고객센터</a></li>
@@ -217,7 +217,7 @@
     </div>
     <div class="sec5">
         <h3 class="sub_heading">식물</h3>
-        <ul class="plant-row">
+        <ul class="plant1">
             <li th:each="flower,iterStat : ${flowers}">
                 <a th:if="${iterStat.index < 4}" th:href="@{'/product/detail/' + ${flower.id}}">
                     <div th:class="'prod_img2' + ${iterStat.index + 1}"
@@ -230,7 +230,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="plant-row">
+        <ul class="plant2">
             <li th:each="flower,iterStat : ${flowers}">
                 <a th:if="${iterStat.index >= 4}" th:href="@{'/product/detail/' + ${flower.id}}">
                     <div th:class="'prod_img2' + ${iterStat.index + 1}"
