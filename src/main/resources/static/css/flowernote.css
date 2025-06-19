@@ -239,26 +239,35 @@ body{
   margin-top: 15px;
   font-weight: 300;
 }
+#section .modal .wrap-modal-cont .modal-cont .contents .season-price div .tit-txt{
+  width: 23%;
+}
   
 
 /* 나머지 꽃 정보영역 */
 
 #section .modal .wrap-modal-cont .modal-cont .contents .season-price{
   display: flex;
+  margin-top: 25px;
 }
 #section .modal .wrap-modal-cont .modal-cont .contents .season-price div{
+  width: 100%;
   display: flex;
+  justify-content: space-between;
 }
-
 #section .modal .wrap-modal-cont .modal-cont .contents .tit-txt{
+  width: 10%;
   color: #8b9773;
   font-weight: 600;
   font-size: 18px;
 }
 #section .modal .wrap-modal-cont .modal-cont .contents .sub-txt{
+  width: 90%;
   color: #3d3d3d;
   font-weight: 400;
 }
+
+
 
 
 
