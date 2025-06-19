@@ -10,7 +10,7 @@ import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.entity.Subscribe;
-import com.onsil.onsil.product.repository.ReviewRepository;
+import com.onsil.onsil.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +28,7 @@ public class AdminDao {
     private final AdminMemberRepository memberRepository;
     private final AdminOrderListRepository orderListRepository;
     private final AdminSubscribeRepository subscribeRepository;
-    private final ReviewRepository reviewRepository;
+    private final com.onsil.onsil.review.repository.ReviewRepository reviewRepository;
     private final AdminProductRepository productRepository;
 
     public List<Member> getAllMembers() {

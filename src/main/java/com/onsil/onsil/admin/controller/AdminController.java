@@ -5,18 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
-<<<<<<< HEAD
 import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.mypage.dto.MypageOrderListDto;
 import jakarta.servlet.http.HttpServletRequest;
-=======
 import com.onsil.onsil.constant.Period;
 import com.onsil.onsil.entity.Product;
 import com.onsil.onsil.entity.Subscribe;
 import com.onsil.onsil.product.repository.ProductRepository;
 import com.onsil.onsil.product.service.ProductService;
 import com.onsil.onsil.subscribe.repository.SubscribeRepository;
->>>>>>> a85f349370c2b9b43f2ed0881c14f9d0786375ed
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,13 +27,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-<<<<<<< HEAD
 import java.math.BigDecimal;
-=======
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
->>>>>>> a85f349370c2b9b43f2ed0881c14f9d0786375ed
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -51,16 +45,13 @@ import java.util.Map;
 public class AdminController {
 
     private final AdminService adminService;
-<<<<<<< HEAD
     private final AdminOutputService adminOutputService;
-=======
     private final SubscribeRepository subscribeRepository;
     private final ProductService productService;
     private final ProductRepository productRepository;
 
     @Value("${file.path}products/")
     String productsPath;  // 여기서 주입
->>>>>>> a85f349370c2b9b43f2ed0881c14f9d0786375ed
 
     @GetMapping("/admin")
     public String onsilHtml(Model model) throws JsonProcessingException {
