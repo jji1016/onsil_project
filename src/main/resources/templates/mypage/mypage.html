@@ -488,14 +488,16 @@
                     tr.innerHTML = `
                         <td>${order.orderTime.substring(0, 10)}<br>${order.orderTime.substring(11, 16)}</td>
                         <td><img class="mypageImg" src="/upload/products/${order.image}"></td>
-                        <td>${order.flowerName}</td>
+                        <td><a href="/product/detail/${order.productId}">${order.flowerName}</a></td>
                         <td>${order.quantity}</td>
                         <td>${order.price}</td>
                         <td>${order.status}</td>
                         <td>
-                            <button type="button" class="review-btn"">
-                                <a href="/review/product/${order.productId}">리뷰작성</a>
-                            </button>
+                            ${order.status === "배송 완료" ? `
+                                <button type="button" class="review-btn">
+                                    <a href="/review/product/${order.productId}">리뷰작성</a>
+                                </button>
+                            ` : ""}
                         </td>
                     `;
                     orderListRap.appendChild(tr);
@@ -544,7 +546,7 @@
                     tr.innerHTML = `
                         <td>${subscribes.startDate.substring(0, 10)}<br>${subscribes.startDate.substring(11, 16)}</td>
                         <td><img class="mypageImg" src="/upload/products/${subscribes.image}"></td>
-                        <td>${subscribes.flowerName}</td>
+                        <td><a href="/subscribe/particular/${subscribes.subscribeID}">${subscribes.flowerName}</a></td>
                         <td>${subscribes.price}</td>
                         <td>${subscribes.period}</td>
                         <td>
