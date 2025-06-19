@@ -1,12 +1,14 @@
-package com.onsil.onsil.product.service;
+package com.onsil.onsil.review.service;
 
 import com.onsil.onsil.communal.dto.CustomUserDetails;
 import com.onsil.onsil.entity.Member;
 import com.onsil.onsil.entity.Product;
 import com.onsil.onsil.entity.Review;
+import com.onsil.onsil.entity.Subscribe;
 import com.onsil.onsil.member.repository.MemberRepository;
 import com.onsil.onsil.product.repository.ProductRepository;
-import com.onsil.onsil.product.repository.ReviewRepository;
+import com.onsil.onsil.review.repository.ReviewRepository;
+import com.onsil.onsil.subscribe.repository.SubscribeRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -28,12 +30,12 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
+    private final SubscribeRepository subscribeRepository;
 
     @Value("${file.path}reviews/")
     String reviewsPath;
 
-    public void writeReview(int productId, int rating, String content, MultipartFile imageFile) throws IOException {
-
+    public void writeReview(Integer productId, Integer subscribeId, int rating, String content, MultipartFile imageFile) throws IOException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (!(principal instanceof CustomUserDetails)) {
@@ -49,6 +51,13 @@ public class ReviewService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
 
+        Subscribe subscribe = null;
+        if (subscribeId != null) {
+            subscribe = subscribeRepository.findById(subscribeId)
+                    .orElseThrow(() -> new RuntimeException("구독 정보를 찾을 수 없습니다."));
+        }
+
+        // 이미 리뷰 작성 여부 확인
         boolean exists = reviewRepository.existsByMemberAndProduct(member, product);
         if (exists) {
             throw new RuntimeException("이미 작성한 리뷰가 있습니다.");
@@ -56,6 +65,7 @@ public class ReviewService {
 
         Review review = new Review();
         review.setProduct(product);
+        review.setSubscribe(subscribe); // null 가능
         review.setMember(member);
         review.setRating(rating);
         review.setContent(content);
@@ -67,24 +77,16 @@ public class ReviewService {
             String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             String storedFileName = baseName + "_" + timestamp + extension;
 
-            String savePath = reviewsPath + storedFileName;
-
             File saveDir = new File(reviewsPath);
             if (!saveDir.exists()) {
                 saveDir.mkdirs();
             }
 
-            imageFile.transferTo(new File(savePath));
+            imageFile.transferTo(new File(reviewsPath + storedFileName));
             review.setImage(storedFileName);
         }
 
         reviewRepository.save(review);
     }
 
-    @Transactional
-    public void delete(int reviewId) throws IllegalAccessException {
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
-        reviewRepository.delete(review);
-    }
 }

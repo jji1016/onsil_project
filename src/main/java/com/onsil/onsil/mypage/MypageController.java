@@ -42,7 +42,7 @@ public class MypageController {
     @PostMapping("/orderList") //주문내역 조회 및 검색
     @ResponseBody
     public Map<String, Object> orderList(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                            @RequestBody SearchDto searchDto) {
+                                         @RequestBody SearchDto searchDto) {
         Integer loggedMemberID = customUserDetails.getLoggedMember().getId();
 
         // 주문내역 전체 개수
@@ -61,7 +61,7 @@ public class MypageController {
                 .build();
 
         List<MypageOrderListDto> orders  = mypageService.findSearchOrderList(loggedMemberID,searchDto, currentPage, itemsPerPage); //로그인한 사람의 주문내역
-
+        log.info("mypageOrderListDtoList: {}", orders);
         Map<String, Object> map = new HashMap<>();
         map.put("orders", orders);
         map.put("pageDto", pageDto);

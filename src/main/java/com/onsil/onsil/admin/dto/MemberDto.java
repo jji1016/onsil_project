@@ -1,6 +1,5 @@
 package com.onsil.onsil.admin.dto;
 
-import com.onsil.onsil.constant.Role;
 import lombok.*;
 
 import java.time.LocalDateTime;

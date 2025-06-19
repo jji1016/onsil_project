@@ -240,13 +240,13 @@
                         </tbody>
                     </table>
 
-                    <table class="page_btn">
-                        <tbody>
-                        <tr id="subscribePagination">
+                <table class="page_btn">
+                    <tbody>
+                    <tr id="subscribePagination">
 
-                        </tr>
-                        </tbody>
-                    </table>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="content">
@@ -493,8 +493,8 @@
                         <td>${order.price}</td>
                         <td>${order.status}</td>
                         <td>
-                            <button type="button" class="review-btn" data-productID="${order.productID}">
-                                <a href="/">리뷰작성</a>
+                            <button type="button" class="review-btn"">
+                                <a href="/review/product/${order.productId}">리뷰작성</a>
                             </button>
                         </td>
                     `;
@@ -534,7 +534,6 @@
         })
             .then(response => response.json())
             .then(json => {
-                console.log(json);
                 const subscribes = json.subscribes; // 구독 목록
                 const pageDto = json.pageDto; // 페이징 정보
                 subscribeRap.innerHTML = "";
@@ -551,7 +550,7 @@
                         <td>
                             <button class="cancel_btn calcelSubscribe" data-page="${pageDto.currentPage}" data-id="${subscribes.subscribeID}">구독 취소</button>
                             <button type="button" class="review-btn" data-subscribeID="${subscribes.subscribeID}">
-                                <a href="#">리뷰작성</a>
+                                <a href="/review/subscribe/${subscribes.subscribeID}">리뷰작성</a>
                             </button>
                         </td>
                     `;
@@ -616,7 +615,7 @@
                     lookupSubscribeList(currentSubscribePage - 1);
                 }
             });
-
+            paginationRap.appendChild(prevBtn);
         }
 
         for (let i = 1; i <= pageDto.totalPages; i++) {
