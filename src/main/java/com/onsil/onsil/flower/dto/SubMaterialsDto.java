@@ -1,7 +1,7 @@
 package com.onsil.onsil.flower.dto;
 
 import com.onsil.onsil.entity.SubMaterials;
-import com.onsil.onsil.product.dto.ReviewDto;
+import com.onsil.onsil.review.dto.ReviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
