@@ -3,81 +3,13 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>onsil flower studio - particular</title>
-    <link rel="stylesheet" href="/css/particular.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/footer.css">
-    <script src="https://kit.fontawesome.com/f982cc5938.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-
-            $(".btn_sell").click(function(){
-                alert("장바구니에 담겼습니다.")
-            });
-
-            $(".btn_sell4").click(function(){
-                alert("찜목록에 담겨졌습니다.")
-            });
-
-            $(".deta_gnb>li").click(function(e){
-                e.preventDefault()
-                let list = $(this).index();
-                $(".deta_gnb>li").removeClass("active");
-                $(".deta_gnb>li").eq(list).addClass("active");
-            });
-
-            $(".deta_txt>p:nth-child(1)").click(function(){
-                $(".detailed_img").css({"height" : "2672px"});
-            });
-            $(".deta_txt>p:nth-child(2)").click(function(){
-                $(".detailed_img").css({"height" : "340px"});
-            });
-            $(".deta_txt>p:nth-child(1)").click(function(){
-                $(".deta_txt>p:nth-child(1)").removeClass("on");
-                $(".deta_txt>p:nth-child(2)").addClass("on");
-            });
-            $(".deta_txt>p:nth-child(2)").click(function(){
-                $(".deta_txt>p:nth-child(2)").removeClass("on")
-                $(".deta_txt>p:nth-child(1)").addClass("on")
-            });
-        });
-    </script>
-</head>
+<head th:replace="fragments/mainPageHead :: commonHead(
+  '상품상세',
+  ${{'/css/detail.css'}},
+null
+)"></head>
 <body>
-<div id="header">
-    <h1 class="h_logo"><img src="/images/header/onsil_logo.png" alt="logo"></h1>
-    <ul class="gnb">
-        <!-- 로그인 버튼: 로그인하지 않은 사용자에게만 보임 -->
-        <li sec:authorize="!isAuthenticated()">
-            <button type="button" class="login" th:onclick="|location.href='@{/member/login}'|">로그인</button>
-        </li>
-
-        <!-- 로그아웃 / 프로필: 로그인한 사용자에게만 보임 -->
-        <li sec:authorize="isAuthenticated()">
-            <span sec:authentication="name">사용자</span> 님 |
-            <form th:action="@{/member/logout}" method="post">
-                <button type="submit" class="login">로그아웃</button>
-            </form>
-        </li>
-
-        <li><i class="fa-solid fa-bag-shopping"></i></li>
-        <li><a th:href="@{/mypage/mypage}"><i class="fa-solid fa-user"></i></a></li>
-    </ul>
-    <ul class="nav">
-        <li><a th:href="@{/subscribe/subscribe}">꽃 정기구독</a></li>
-        <li><a href="#">꽃 노트</a></li>
-        <li><a th:href="@{/product/list}">꽃.식물</a></li>
-        <li><a href="#">클래스</a></li>
-        <li><a href="#">기업제휴</a></li>
-        <li><a href="#">고객센터</a></li>
-    </ul>
-</div>
-
-
+<header class="header" th:replace="~{fragments/mainPageHeader}"></header>
 <div id="section">
     <div class="frist_se">
         <div class="left_img">
@@ -95,7 +27,9 @@
             <div class="product_na">
                 <h2 th:text="${flower.flowerName}"></h2>
                 <h5 th:text="${#numbers.formatInteger(flower.price, 0, 'COMMA')} + '원'">36,200원</h5>
-                <h4><span>25%</span><span style="font-size: 30px;" th:text="${#numbers.formatInteger(flower.price * 0.75, 0, 'COMMA')} + '원'">원</span></h4>
+                <h4><span>25%</span><span style="font-size: 30px;"
+                                          th:text="${#numbers.formatInteger(flower.price * 0.75, 0, 'COMMA')} + '원'">원</span>
+                </h4>
                 <div class="review_write">
                     <p>무이자할부 카드 자세히보기</p>
                 </div>
@@ -127,16 +61,26 @@
                 <p>정기구독 회차별 결제금액은 할인률에 따라 현재금액과 다를수 있습니다.<br></p>
             </div>
             <div class="text_arr2">
-                <h5 class="amount_all">총 상품금액</h5> <h5 class="amount"><p>총 수량 1개</p>
-                <span th:text="${#numbers.formatInteger(flower.price * 0.75, 0, 'COMMA')} + '원'"></span></h5>
+                <h5 class="amount_all">총 상품금액</h5>
+                <h5 class="amount"><p>총 수량 1개</p>
+                    <span th:text="${#numbers.formatInteger(flower.price * 0.75, 0, 'COMMA')} + '원'"></span></h5>
             </div>
 
             <div class="sell_txt">
                 <ul class="se_txt">
-                    <li><button type="submit" class="btn_sell4" value="찜목록"><img src="/images/particular/Group 78.png" alt=""></button></li>
-                    <li><button type="submit" class="btn_sell" value="장바구니">장바구니</button></li>
-                    <li><button type="submit" class="btn_sell2" value="선물하기">선물하기</button></li>
-                    <li><a href="payment.html"><button type="submit" class="btn_sell3" value="구매하기">구매하기</button></a></li>
+                    <li>
+                        <button type="submit" class="btn_sell4" value="찜목록"><img src="/images/particular/Group 78.png"
+                                                                                 alt=""></button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn_sell" value="장바구니">장바구니</button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn_sell2" value="선물하기">선물하기</button>
+                    </li>
+                    <li><a href="payment.html">
+                        <button type="submit" class="btn_sell3" value="구매하기">구매하기</button>
+                    </a></li>
                 </ul>
             </div>
         </div>
@@ -147,12 +91,16 @@
             <div class="reviwe">
                 <div class="star_all">
                     <ul class="star">
-                        <li></li><li></li><li></li><li></li><li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
                     </ul>
                     <p th:text="${review.rating}">5</p>
                 </div>
                 <div class="reviwe_txt">
-                    <h4> <span th:text="${#strings.substring(review.member.userID, 0, 2)} + '****'"></span> ·
+                    <h4><span th:text="${#strings.substring(review.member.userID, 0, 2)} + '****'"></span> ·
                         <span th:text="${#temporals.format(review.regDate, 'yy,MM,dd')}"></span>
                     </h4>
                     <h5>
@@ -193,21 +141,6 @@
         </div>
     </div>
 </div>
-
-<div id="footer">
-    <div class="f_cont">
-        <h1 class="f_logo">
-            <a href="index.html">
-                <img src="/images/footer/logo_white.png" alt="logo">
-            </a>
-        </h1>
-        <ul class="f_info">
-            <li>온실 플라워스튜디오</li>
-            <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
-            <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
-            <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
-        </ul>
-    </div>
-</div>
+<footer class="footer" th:replace="~{fragments/mainPageFooter}"></footer>
 </body>
 </html>
