@@ -8,7 +8,7 @@ input:focus {outline: none;}
 
 body{
   background-color: #E5E0D8;
-  font-family: 'Pretendard Variable', sans-serif;   
+  font-family: 'Pretendard Variable', sans-serif;
   color: #191919;
 }
 #section{
@@ -156,7 +156,7 @@ body{
 }
 
 #section .modal .wrap-modal-cont{
-  width: 500px;
+  width: 700px;
   height: 700px;
   margin: 0 auto;
   background-color: #E5E0D8;
@@ -187,11 +187,81 @@ body{
   cursor: pointer;
 }
 
-/* 컨텐츠 영역 */
+/* 컨텐츠 영역---------------------- */
 #section .modal .wrap-modal-cont .modal-cont{
   width: 100%;
   height: 95.3%;
   overflow-y: auto;
+  padding: 30px 50px;
+  box-sizing: border-box;
+}
+
+/* 타이틀영역 */
+#section .modal .wrap-modal-cont .modal-cont .title{
+  color: #8b9773;
+  text-align: center;
+}
+#section .modal .wrap-modal-cont .modal-cont .title h2{
+  font-size: 22px;
+  font-weight: 600;
+}
+#section .modal .wrap-modal-cont .modal-cont .title p{
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1;
+  margin-top: 10px;
+  font-family: "League Script", cursive;
+}
+
+/* 이미지 영역 */
+#section .modal .wrap-modal-cont .modal-cont .contents .img-area{
+  background-color: rgb(196, 199, 201);
+  width: 300px;
+  height: 300px;
+  margin: 30px auto;
+}
+
+
+/* 꽃이름, 꽃말  */
+#section .modal .wrap-modal-cont .modal-cont .contents .name-language{
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ffffff;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .name-language h2{
+  color: #8b9773;
+  font-size: 30px;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .name-language p{
+  color: #4B4A45;
+  font-size: 20px;
+  margin-top: 15px;
+  font-weight: 300;
+}
+
+
+/* 나머지 꽃 정보영역 */
+
+#section .modal .wrap-modal-cont .modal-cont .contents .season-price{
+  display: flex;
+  margin-top: 25px;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .season-price div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .tit-txt{
+  width: 10%;
+  color: #8b9773;
+  font-weight: 600;
+  font-size: 18px;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .sub-txt{
+  width: 90%;
+  color: #3d3d3d;
+  font-weight: 400;
 }
 
 
