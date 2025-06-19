@@ -1,59 +1,15 @@
 <!DOCTYPE html>
+<html lang="en">
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>온실 플라워 스튜디오 - 리뷰</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script src="https://kit.fontawesome.com/a6d4db907a.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/review.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</head>
-
-
+<head th:replace="fragments/mainPageHead :: commonHead(
+  '상품 리뷰',
+  ${{'/css/review.css'}},
+null
+)"></head>
 <body>
-<div id="header">
-    <h1 class="h_logo"><img src="/images/header/onsil_logo.png" alt="logo"></h1>
-    <ul class="gnb">
-        <!-- 로그인 버튼: 로그인하지 않은 사용자에게만 보임 -->
-        <li sec:authorize="!isAuthenticated()">
-            <button type="button" class="login" th:onclick="|location.href='@{/member/login}'|">로그인</button>
-        </li>
-
-        <!-- 로그아웃 / 프로필: 로그인한 사용자에게만 보임 -->
-        <li sec:authorize="isAuthenticated()">
-            <span sec:authentication="name">사용자</span> 님 |
-            <form th:action="@{/member/logout}" method="post">
-                <button type="submit" class="login">로그아웃</button>
-            </form>
-        </li>
-
-        <li><i class="fa-solid fa-bag-shopping"></i></li>
-        <li><a th:href="@{/mypage/mypage}"><i class="fa-solid fa-user"></i></a></li>
-    </ul>
-    <ul class="nav">
-        <li><a th:href="@{/subscribe/subscribe}">꽃 정기구독</a></li>
-        <li><a href="#">꽃 노트</a></li>
-        <li><a th:href="@{/product/list}">꽃.식물</a></li>
-        <li><a href="#">클래스</a></li>
-        <li><a href="#">기업제휴</a></li>
-        <li><a href="#">고객센터</a></li>
-    </ul>
-</div>
-
-
-
-<!-- 섹션영역 -->
-
+<header class="header" th:replace="~{fragments/mainPageHeader}"></header>
 <div id="section">
     <div class="top-title">
         <div class="txt">
@@ -84,8 +40,8 @@
             <div class="review-write">
                 <h2>리뷰작성</h2>
                 <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="productId" th:value="${productId}" />
-                    <input type="hidden" name="subscribeId" th:value="${subscribeId}" />
+                    <input type="hidden" name="productId" th:value="${productId}"/>
+                    <input type="hidden" name="subscribeId" th:value="${subscribeId}"/>
                     <ul>
                         <li class="asterion">
                             <h3>상품만족도</h3>
@@ -104,7 +60,8 @@
                     </ul>
                     <div class="photo">
                         <label for="photo-upload" class="btn-upload">📷<br>사진 올리기</label>
-                        <input type="file" id="photo-upload" name="imageFile" accept="image/*" multiple style="display:none;">
+                        <input type="file" id="photo-upload" name="imageFile" accept="image/*" multiple
+                               style="display:none;">
                     </div>
                     <div class="btn">
                         <button type="submit">등록</button>
@@ -117,29 +74,10 @@
     </div>
 
 </div>
-
-
-<div id="footer">
-    <div class="f_cont">
-        <h1 class="f_logo">
-            <a href="index.html">
-                <img src="/images/footer/logo_white.png" alt="logo">
-            </a>
-        </h1>
-        <ul class="f_info">
-            <li>온실 플라워스튜디오</li>
-            <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
-            <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
-            <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
-        </ul>
-    </div>
-</div>
-
-
-
+<footer class="footer" th:replace="~{fragments/mainPageFooter}"></footer>
 <script>
-    document.querySelectorAll('.star').forEach(function(star, idx) {
-        star.addEventListener('click', function() {
+    document.querySelectorAll('.star').forEach(function (star, idx) {
+        star.addEventListener('click', function () {
             const ratingValue = this.dataset.value;
             document.getElementById('rating').value = ratingValue;
 
@@ -151,7 +89,7 @@
     });
 </script>
 <script>
-    document.querySelector('form').addEventListener('submit', function(e) {
+    document.querySelector('form').addEventListener('submit', function (e) {
         const rating = document.getElementById('rating').value;
         if (parseInt(rating) === 0) {
             alert("별점을 선택해주세요.");

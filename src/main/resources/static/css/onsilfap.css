@@ -8,7 +8,8 @@ img{border: 0; vertical-align: top;}
   content: ""; display: block; clear: both;
 }
 body{
-  font-family: 'Pretendard-Regular';
+  font-family: 'Pretendard', sans-serif;    
+  background-color: #E5E0D8;
   color: #191919;
 }
 
@@ -18,7 +19,7 @@ body{
 }
 #section .frist_se .banner{
   width: 100%; height: 600px;
-  background-image: url(../images/particular/상단타이틀_faq.png);
+  background-image: url(../images/particular/faq_bg.png);
   background-repeat: no-repeat;
   text-align: center;
   background-size: cover;
@@ -26,15 +27,19 @@ body{
   box-sizing: border-box;
   text-align: center;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
 }
 #section .banner h1{
-  font-size: 35px;
-  padding: 250px 0;
+  font-size: 38px;
+  font-weight: 500;
+  margin: 20px 0;
 }
 #section .banner h3{
-  margin-top: -210px;
-  font-size: 30px;
+  font-size: 20px;
+  font-weight: 200;
 }
 
 #section .frist_se .question{
@@ -46,6 +51,7 @@ body{
 }  
 #section .frist_se .question h4{
   color: #8B9773;
+  font-weight: 500;
   margin-bottom: 30px;
 }
 #section .frist_se .question .search_txt{
@@ -90,13 +96,13 @@ body{
 }
 
 #section .second_se{
-  margin-bottom: 150px;
+  padding: 150px 0;
+  background-color: #fff;
 }
 #section .second_se .qna_box{
   width: 1200px;
    /* height: 500px; */
   margin: 0 auto;
-  margin-top: 150px;
   border: 1px solid rgb(231, 231, 231);
   border-collapse: collapse;
 }

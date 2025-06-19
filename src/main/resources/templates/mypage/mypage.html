@@ -1,69 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>project_onsil_mypage</title>
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/mypage.css">
-    <link rel="stylesheet" href="/css/footer.css">
-    <script src="https://kit.fontawesome.com/a6d4db907a.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-        $(document).ready(function () {
-            $(".list1>li").removeClass("l_on");
-            $(".list2>li").removeClass("l_on");
-            $(".list1>li").eq(0).addClass("l_on");
-
-            $(".list1>li, .list2>li").click(function () {
-                $(".list1>li, .list2>li").removeClass("l_on");
-                $(this).addClass("l_on");
-            });
-
-            $(".list1>li").click(function () {
-                let index = $(this).index();
-                $(".content").hide();
-                $(".content").eq(index).show();
-            });
-
-            $(".list2>li").click(function () {
-                let index = $(this).index();
-                $(".content").hide();
-                $(".content").eq(index + 3).show();
-            });
-        });
-    </script>
-</head>
+<head th:replace="fragments/mainPageHead :: commonHead(
+  '마이페이지',
+  ${{'/css/mypage.css'}},
+  ${{'/js/mypage.js'}}
+)"></head>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
-<div id="header">
-    <h1 class="h_logo"><a href="#"><img src="/images/header/onsil_logo.png" alt="logo"></a></h1>
-    <ul class="gnb">
-        <li>
-            <button type="button" class="login">로그인</button>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa-solid fa-bag-shopping"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa-solid fa-user"></i>
-            </a>
-        </li>
-    </ul>
-    <ul class="nav">
-        <li><a href="#">꽃 정기구독</a></li>
-        <li><a href="#">꽃 노트</a></li>
-        <li><a href="#">꽃 · 식물</a></li>
-        <li><a href="#">클래스</a></li>
-        <li><a href="#">기업제휴</a></li>
-        <li><a href="#">고객센터</a></li>
-    </ul>
-</div>
-
-
+<header class="header" th:replace="~{fragments/mainPageHeader}"></header>
 <div id="section">
     <div class="my_top">
         <div class="top_left">
@@ -314,22 +258,7 @@
         </div>
     </div>
 </div>
-
-<div id="footer">
-    <div class="f_cont">
-        <h1 class="f_logo">
-            <a href="#">
-                <img src="/images/footer/logo_white.png" alt="logo">
-            </a>
-        </h1>
-        <ul class="f_info">
-            <li>온실 플라워스튜디오</li>
-            <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
-            <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
-            <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
-        </ul>
-    </div>
-</div>
+<footer class="footer" th:replace="~{fragments/mainPageFooter}"></footer>
 <script>
     // 주소 검색
     function execDaumPostcode() {
