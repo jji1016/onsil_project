@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div id="header">
-    <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
+    <h1 class="h_logo"><img src="/images/header/onsil_logo.png" alt="logo"></h1>
     <ul class="gnb">
-        <li>
-            <button type="button" class="login">
-                <a href="login.html">로그인</a>
-            </button>
+        <!-- 로그인 버튼: 로그인하지 않은 사용자에게만 보임 -->
+        <li sec:authorize="!isAuthenticated()">
+            <button type="button" class="login" th:onclick="|location.href='@{/member/login}'|">로그인</button>
         </li>
-        <li>
-            <a href="cart.html">
-                <i class="fa-solid fa-bag-shopping"></i>
-            </a>
+
+        <!-- 로그아웃 / 프로필: 로그인한 사용자에게만 보임 -->
+        <li sec:authorize="isAuthenticated()">
+            <span sec:authentication="name">사용자</span> 님
+            <form th:action="@{/member/logout}" method="post">
+                <button type="submit" class="login">로그아웃</button>
+            </form>
         </li>
-        <li>
-            <a href="mypage.html">
-                <i class="fa-solid fa-user"></i>
-            </a>
-        </li>
+
+        <li><i class="fa-solid fa-bag-shopping"></i></li>
+        <li><a th:href="@{/mypage/mypage}"><i class="fa-solid fa-user"></i></a></li>
     </ul>
     <ul class="nav">
-        <li><a href="subsc.html">꽃 정기구독</a></li>
-        <li><a href="flowernote.html">꽃 노트</a></li>
-        <li><a href="products.html">꽃 · 식물</a></li>
-        <li><a href="#">클래스</a></li>
-        <li><a href="corporate.html">기업제휴</a></li>
-        <li><a href="onsilfaq.html">고객센터</a></li>
+        <li><a th:href="@{/subscribe/subscribe}">꽃 구독하기</a></li>
+        <li><a href="#" th:href="@{/flowers}">꽃 노트</a></li>
+            <li><a th:href="@{/product/list}">꽃</a></li>
+        <li><a href="#" th:href="@{/subscribe/subscribe}">클래스</a></li>
+        <li><a href="#" th:href="@{/corporate.html}">기업제휴</a></li>
+        <li><a href="#" th:href="@{/onsilfaq.html}">고객센터</a></li>
     </ul>
 </div>
 
