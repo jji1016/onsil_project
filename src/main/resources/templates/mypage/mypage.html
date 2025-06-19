@@ -224,30 +224,30 @@
                 <ul class="request_detail">
                     <li class="detail_on">신청내역(<span id="number1">1</span>)</li>
                 </ul>
-                    <table class="order_table">
-                        <thead>
-                        <tr>
-                            <th>주문일자</th>
-                            <th>이미지</th>
-                            <th>상품정보</th>
-                            <th>상품금액</th>
-                            <th>배송주기</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody id="subscribeRap">
-                        <!-- 구독내역 들어가는 자리 -->
-                        </tbody>
-                    </table>
+                <table class="order_table">
+                    <thead>
+                    <tr>
+                        <th>주문일자</th>
+                        <th>이미지</th>
+                        <th>상품정보</th>
+                        <th>상품금액</th>
+                        <th>배송주기</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="subscribeRap">
+                    <!-- 구독내역 들어가는 자리 -->
+                    </tbody>
+                </table>
 
-                    <table class="page_btn">
-                        <tbody>
-                        <tr id="subscribePagination">
+                <table class="page_btn">
+                    <tbody>
+                    <tr id="subscribePagination">
 
-                        </tr>
-                        </tbody>
-                    </table>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="content">
@@ -494,9 +494,7 @@
                         <td>${order.price}</td>
                         <td>${order.status}</td>
                         <td>
-                            <button type="button" class="review-btn" data-productID="${order.productID}">
-                                <a href="#">리뷰작성</a>
-                            </button>
+                            <a href="/review/product/${order.productId}" class="review-btn">리뷰작성</a>
                         </td>
                     `;
                     orderListRap.appendChild(tr);
@@ -552,9 +550,7 @@
                             <button class="cancel_btn calcelSubscribe" data-page="${pageDto.currentPage}" data-id="${subscribes.subscribeID}">구독 취소</button>
                         </td>
                         <td>
-                            <button type="button" class="review-btn" data-subscribeID="${subscribes.subscribeID}">
-                                <a href="#">리뷰작성</a>
-                            </button>
+                            <a href="/review/subscribe/${subscribes.subscribeID}" class="review-btn">리뷰작성</a>
                         </td>
                     `;
                     subscribeRap.appendChild(tr);

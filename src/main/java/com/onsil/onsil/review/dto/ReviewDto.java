@@ -1,4 +1,4 @@
-package com.onsil.onsil.product.dto;
+package com.onsil.onsil.review.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

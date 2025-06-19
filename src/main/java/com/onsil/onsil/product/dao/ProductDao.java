@@ -2,11 +2,12 @@ package com.onsil.onsil.product.dao;
 
 import com.onsil.onsil.entity.Product;
 import com.onsil.onsil.product.dto.ProductDto;
-import com.onsil.onsil.product.dto.ReviewDto;
+import com.onsil.onsil.review.dto.ReviewDto;
 import com.onsil.onsil.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,5 +63,21 @@ public class ProductDao {
                         .build()
         ).toList();
         return productDtoList;
+    }
+
+    public List<ProductDto> findRandom8() {
+        List<Product> productList = productRepository.findAll();
+        Collections.shuffle(productList); // 리스트 무작위 섞기
+        List<Product> subList = productList.size() > 8 ? productList.subList(0, 8) : productList;
+
+        return subList.stream().map(
+                product -> ProductDto.builder()
+                        .id(product.getId())
+                        .flowerName(product.getFlowerName())
+                        .flowerInfo(product.getFlowerInfo())
+                        .price(product.getPrice())
+                        .image(product.getImage())
+                        .build()
+        ).collect(Collectors.toList());
     }
 }

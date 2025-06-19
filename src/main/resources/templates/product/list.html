@@ -1,57 +1,264 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>꽃 상품 리스트</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .product-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .product {
-            border: 1px solid #ddd;
-            padding: 15px;
-            width: 200px;
-            text-align: center;
-            border-radius: 8px;
-        }
-        .product img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-        .product-name {
-            font-size: 16px;
-            margin: 10px 0;
-            font-weight: bold;
-        }
-        .price {
-            color: green;
-            font-weight: bold;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/products.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <script src="https://kit.fontawesome.com/4a5790af4d.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<div id="header">
+    <h1 class="h_logo"><img src="/images/header/onsil_logo.png" alt="logo"></h1>
+    <ul class="gnb">
+        <!-- 로그인 버튼: 로그인하지 않은 사용자에게만 보임 -->
+        <li sec:authorize="!isAuthenticated()">
+            <button type="button" class="login" th:onclick="|location.href='@{/member/login}'|">로그인</button>
+        </li>
 
-<h1>🌸 꽃 상품 리스트</h1>
+        <!-- 로그아웃 / 프로필: 로그인한 사용자에게만 보임 -->
+        <li sec:authorize="isAuthenticated()">
+            <span sec:authentication="name">사용자</span> 님 |
+            <form th:action="@{/member/logout}" method="post">
+                <button type="submit" class="login">로그아웃</button>
+            </form>
+        </li>
 
-<div class="product-list">
-    <div class="product" th:each="flower : ${flowers}">
-        <a th:href="@{'/product/detail/' + ${flower.id}}">
-            <img th:src="@{'/upload/products/' + ${flower.image}}" th:alt="${flower.flowerName}">
-        </a>
-        <a th:href="@{'/product/detail/' + ${flower.id}}">
-        <div class="product-name" th:text="${flower.flowerName}"></div>
-        </a>
-        <div class="price" th:text="|₩${flower.price}|"></div>
-    </div>
+        <li><i class="fa-solid fa-bag-shopping"></i></li>
+        <li><a th:href="@{/mypage/mypage}"><i class="fa-solid fa-user"></i></a></li>
+    </ul>
+    <ul class="nav">
+        <li><a th:href="@{/subscribe/subscribe}">꽃 정기구독</a></li>
+        <li><a href="#">꽃 노트</a></li>
+        <li><a th:href="@{/product/list}">꽃.식물</a></li>
+        <li><a href="#">클래스</a></li>
+        <li><a href="#">기업제휴</a></li>
+        <li><a href="#">고객센터</a></li>
+    </ul>
 </div>
 
+<div id="section">
+    <div class="sec1">
+        <p class="mainheading">ONSIL FLOWER STUDIO PRODUCTS</p>
+        <h3>꽃에 마음을 가득 담아, 대신 전해드릴게요</h3>
+        <p class="subheading">
+            정성껏 엮은 계절의 꽃으로, 당신의 마음을 대신 전하는 선물 <br>
+            지금, 가장 예쁜 순간을 준비해보세요.</p>
+    </div>
+    <div class="sec2">
+        <h3 class="sub_heading">Best items</h3>
+        <ul class="bestitems">
+            <li>
+                <a href="#">
+                    <div class="prod_img01"></div>
+                    <p class="p_name">로맨틱 핑크 바스켓</p>
+                    <del>169,000원</del>
+                    <p class="p_price"><span>25%　</span>126,000원</p>
+                </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img02"></div>
+                <p class="p_name">블루밍 꽃다발</p>
+                <del>78,000원</del>
+                <p class="p_price"><span>25%　</span>59,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img03"></div>
+                <p class="p_name">피치옐로우 바스켓</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img04"></div>
+                <p class="p_name">베이비핑크 프로프즈 꽃다발</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+        </ul>
+    </div>
+    <div class="sec3">
+        <h3 class="sub_heading">꽃다발</h3>
+        <ul class="bunch1">
+            <li>
+                <a href="#">
+                    <div class="prod_img05"></div>
+                    <p class="p_name">로맨틱 핑크 바스켓</p>
+                    <del>169,000원</del>
+                    <p class="p_price"><span>25%　</span>126,000원</p>
+                </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img06"></div>
+                <p class="p_name">블루밍 꽃다발</p>
+                <del>78,000원</del>
+                <p class="p_price"><span>25%　</span>59,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img07"></div>
+                <p class="p_name">피치옐로우 바스켓</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img08"></div>
+                <p class="p_name">베이비핑크 프로프즈 꽃다발</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+        </ul>
+        <ul class="bunch2">
+            <li>
+                <a href="#">
+                    <div class="prod_img09"></div>
+                    <p class="p_name">로맨틱 핑크 바스켓</p>
+                    <del>169,000원</del>
+                    <p class="p_price"><span>25%　</span>126,000원</p>
+                </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img10"></div>
+                <p class="p_name">블루밍 꽃다발</p>
+                <del>78,000원</del>
+                <p class="p_price"><span>25%　</span>59,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img11"></div>
+                <p class="p_name">피치옐로우 바스켓</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img12"></div>
+                <p class="p_name">베이비핑크 프로프즈 꽃다발</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+        </ul>
+    </div>
+    <div class="sec4">
+        <h3 class="sub_heading">꽃바구니</h3>
+        <ul class="basket1">
+            <li>
+                <a href="#">
+                    <div class="prod_img13"></div>
+                    <p class="p_name">로맨틱 핑크 바스켓</p>
+                    <del>169,000원</del>
+                    <p class="p_price"><span>25%　</span>126,000원</p>
+                </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img14"></div>
+                <p class="p_name">블루밍 꽃다발</p>
+                <del>78,000원</del>
+                <p class="p_price"><span>25%　</span>59,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img15"></div>
+                <p class="p_name">피치옐로우 바스켓</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img16"></div>
+                <p class="p_name">베이비핑크 프로프즈 꽃다발</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+        </ul>
+        <ul class="basket2">
+            <li>
+                <a href="#">
+                    <div class="prod_img17"></div>
+                    <p class="p_name">로맨틱 핑크 바스켓</p>
+                    <del>169,000원</del>
+                    <p class="p_price"><span>25%　</span>126,000원</p>
+                </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img18"></div>
+                <p class="p_name">블루밍 꽃다발</p>
+                <del>78,000원</del>
+                <p class="p_price"><span>25%　</span>59,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img19"></div>
+                <p class="p_name">피치옐로우 바스켓</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+            <li><a href="#">
+                <div class="prod_img20"></div>
+                <p class="p_name">베이비핑크 프로프즈 꽃다발</p>
+                <del>169,000원</del>
+                <p class="p_price"><span>25%　</span>126,000원</p>
+            </a>
+            </li>
+        </ul>
+    </div>
+    <div class="sec5">
+        <h3 class="sub_heading">식물</h3>
+        <ul class="plant1">
+            <li th:each="flower,iterStat : ${flowers}">
+                <a th:if="${iterStat.index < 4}" th:href="@{'/product/detail/' + ${flower.id}}">
+                    <div th:class="'prod_img2' + ${iterStat.index + 1}"
+                         th:style="'background-image: url(\'/upload/products/' + ${flower.image} + '\')'">
+                    </div>
+                    <p class="p_name" th:text="${flower.flowerName}">로맨틱 핑크 바스켓</p>
+                    <del th:text="${#numbers.formatDecimal(flower.price, 0, 'COMMA', 0, 'POINT')} + '원'">169,000원</del>
+                    <p class="p_price"><span>25%</span>
+                        <span th:text="${#numbers.formatDecimal(flower.price * 0.75, 0, 'COMMA', 0, 'POINT')} + '원'">126,000원</span></p>
+                </a>
+            </li>
+        </ul>
+        <ul class="plant2">
+            <li th:each="flower,iterStat : ${flowers}">
+                <a th:if="${iterStat.index >= 4}" th:href="@{'/product/detail/' + ${flower.id}}">
+                    <div th:class="'prod_img2' + ${iterStat.index + 1}"
+                         th:style="'background-image: url(\'/upload/products/' + ${flower.image} + '\')'">
+                    </div>
+                    <p class="p_name" th:text="${flower.flowerName}">로맨틱 핑크 바스켓</p>
+                    <del th:text="${#numbers.formatDecimal(flower.price, 0, 'COMMA', 0, 'POINT')} + '원'">169,000원</del>
+                    <p class="p_price"><span>25%</span>
+                        <span th:text="${#numbers.formatDecimal(flower.price * 0.75, 0, 'COMMA', 0, 'POINT')} + '원'">126,000원</span></p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="footer">
+    <div class="f_cont">
+        <h1 class="f_logo">
+            <a href="index.html">
+                <img src="/images/footer/logo_white.png" alt="logo">
+            </a>
+        </h1>
+        <ul class="f_info">
+            <li>온실 플라워스튜디오</li>
+            <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+            <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
+            <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
