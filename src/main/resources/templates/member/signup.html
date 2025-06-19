@@ -6,9 +6,10 @@
 <head th:replace="fragments/mainPageHead :: commonHead(
   '회원가입',
   ${{'/css/signup.css'}},
-  ${{'/js/signup.js'}}
+  null
 )"></head>
 <body>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <header class="header" th:replace="~{fragments/mainPageHeader}"></header>
 <div id="section">
     <div class="page_join">
@@ -353,5 +354,6 @@
     //memberdto에 적어둔 @Pattern 제한조건 충족못할시 message alert로 출력
     alert('[[${errors[0].defaultMessage}]]');
 </script>
+<script src="/js/signup.js"></script>
 </body>
 </html>

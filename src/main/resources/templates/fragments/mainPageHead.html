@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="commonHead(title, cssList, jsList)">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${title}">기본 제목</title>
@@ -31,5 +32,6 @@
     <th:block th:if="${jsList != null}" th:each="js : ${jsList}">
         <script th:src="@{${js}}"></script>
     </th:block>
+
 </head>
 </html>
