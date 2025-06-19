@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온실 플라워 스튜디오 - 관리자</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"/>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function () {
+            //주문내역 모달창
+            $(".order_btn").click(function () {
+                $("#order_modal").stop().fadeIn(300);
+            });
+            $(".close").click(function () {
+                $("#order_modal").stop().fadeOut(300);
+            });
+
+            //구독내역 모달창
+            $(".subscribe_btn").click(function () {
+                $("#subscribe_modal").stop().fadeIn(300);
+            });
+            $(".close").click(function () {
+                $("#subscribe").stop().fadeOut(300);
+            });
+
+            //회원관리 수정 모달창
+            $(document).on("click", ".admin_btn", function () {
+                $("#mem-modal").stop().fadeIn(300);
+            });
+            //$("item-btn>.close").click(function()
+            $(document).on("click", ".mem-btn>.close", function () {
+                $("#mem-modal").stop().fadeOut(300);
+            });
+        });
+    </script>
+</head>
+<body>
+<header class="header" th:replace="~{fragments/adminHeader}"></header>
+<div id="section">
+    <div id="member" class="tab">
+        <div class="search">
+            <h2>회원관리</h2>
+            <table>
+                <tr>
+                    <td>회원검색</td>
+                    <td>
+                        <select name="type" id="search-category">
+                            <option value="userID">아이디</option>
+                            <option value="nickName">닉네임</option>
+                            <option value="userName">이름</option>
+                        </select>
+                        <input type="text" id="search-input" placeholder="검색어 입력">
+                    </td>
+                </tr>
+                <tr>
+                    <td>기간검색</td>
+                    <td>
+                        <!--                            <select name="day">-->
+                        <!--                                <option value="가입일">가입일</option>-->
+                        <!--                                <option value="주문일">주문일</option>-->
+                        <!--                            </select>-->
+                        <!--                            <input type="date">~<input type="date">-->
+                        <!--                            <button>오늘</button>-->
+                        <!--                            <button>일주일</button>-->
+                        <!--                            <button>1개월</button>-->
+                        <input type="date" id="start-date" placeholder="시작일">
+                        <input type="date" id="end-date" placeholder="종료일">
+                        <button>오늘</button>
+                        <button>일주일</button>
+                        <button>1개월</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>회원등급</td>
+                    <td>
+                        <input type="checkbox" value="전체"> 전체
+                        <input type="checkbox" value="비기너"> 비기너
+                        <input type="checkbox" value="실버"> 실버
+                        <input type="checkbox" value="골드"> 골드
+                        <input type="checkbox" value="구독회원"> 구독회원
+                    </td>
+                </tr>
+            </table>
+            <div class="btn">
+                <button class="btn1" id="search-btn">검색</button>
+                <button class="btn2" id="reset-btn">초기화</button>
+            </div>
+        </div>
+        <div class="wrap_list">
+            <ul class="btn_count">
+                <li>
+                    <button>엑셀저장</button>
+                </li>
+                <li>
+                    <p>총 회원수 : <span class="mem_count" th:text="${memberList.stream().count()}">345</span>명</p>
+                </li>
+            </ul>
+            <table class="mem_list">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>아이디</th>
+                    <th>닉네임</th>
+                    <th>회원명</th>
+                    <th>이메일</th>
+                    <th>가입일</th>
+                    <th>주소1</th>
+                    <th>주소2</th>
+                    <th>연락처</th>
+                    <th>　</th>
+                </tr>
+                </thead>
+                <tbody id="member-body">
+
+                </tbody>
+            </table>
+            <div id="member-pagination" class="pagination"></div>
+
+            <div id="mem-modal">
+                <div class="wrap-all">
+                    <div class="de_title">
+                        <h1>회원정보관리</h1>
+                    </div>
+                    <ul class="tab-btn">
+                        <li onclick="openPage('mem-info',this);">회원정보</li>
+                        <li onclick="openPage('mem-order',this)">주문내역</li>
+                        <li onclick="openPage('mem-subscribe', this);">구독내역</li>
+                    </ul>
+                    <ul class="wrap-cont">
+                        <li id="mem-info" class="tab-cont">
+                            <form id="member-update-form" method="post">
+                                <input type="hidden" name="userID" id="input-user-id">
+                                <table>
+                                    <tr>
+                                        <td>아이디</td>
+                                        <td><p id="view-user-id"></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>닉네임</td>
+                                        <td>
+                                            <input type="text" name="nickName" id="input-nickname" placeholder=""
+                                                   value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>이메일</td>
+                                        <td>
+                                            <input type="text" name="userEmail" id="input-email" placeholder=""
+                                                   value="">
+                                            <input type="checkbox" name="수신동의" id=""> 이메일 수신동의
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>우편번호</td>
+                                        <td>
+                                            <input type="text" name="zipcode" id="input-zipcode" placeholder=""
+                                                   value="">
+                                            <input type="button" id="btn-zipcode" value="우편번호">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>주소1</td>
+                                        <td>
+                                            <input type="text" name="address01" id="input-address01" placeholder=""
+                                                   value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>주소2</td>
+                                        <td>
+                                            <input type="text" name="address02" id="input-address02" placeholder=""
+                                                   value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>휴대전화</td>
+                                        <td>
+                                            <select name="phone" id="">
+                                                <option value="선택">선택</option>
+                                                <option value="010">010</option>
+                                                <option value="011">011</option>
+                                                <option value="017">017</option>
+                                            </select>-
+                                            <input type="text">-
+                                            <input type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>생년월일</td>
+                                        <td>
+                                            <input type="text"> 년
+                                            <input type="text"> 월
+                                            <input type="text"> 일
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="mem-btn">
+                                    <button type="submit" class="save">저장</button>
+                                    <button type="button" class="close">닫기</button>
+                                </div>
+                            </form>
+                        </li>
+                        <li id="mem-order" class="tab-cont">
+                            <table class="mem-order-list">
+                                <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>주문일시</th>
+                                    <th>주문번호</th>
+                                    <th>상품</th>
+                                    <th>주문상태</th>
+                                    <th>총주문금액</th>
+                                </tr>
+                                </thead>
+                                <tbody id="mem-order-body">
+
+                                </tbody>
+                            </table>
+
+                            <div id="orderList-pagination" class="pagination"></div>
+                            <div class="mem-btn">
+                                <button type="button" class="close">닫기</button>
+                            </div>
+                        </li>
+
+                        <li id="mem-subscribe" class="tab-cont">
+                            <table class="mem-subscribe-list">
+                                <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>주문일시</th>
+                                    <th>주문번호</th>
+                                    <th>상품</th>
+                                    <th>주간/월간</th>
+                                    <th>총주문금액</th>
+                                </tr>
+                                </thead>
+                                <tbody id="mem-subscribe-body">
+
+                                </tbody>
+                            </table>
+                            <div id="subscribe-pagination" class="pagination"></div>
+                            <div class="mem-btn">
+                                <button type="button" class="close">닫기</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script th:inline="javascript">
+
+    const orderLists = /*[[${orderLists}]]*/ [];
+    const subscribeLists = /*[[${subscribeLists}]]*/ [];
+    const memberLists = /*[[${memberList}]]*/ [];
+    // Thymeleaf가 JSON으로 넣어줘야 함
+
+    // 페이지네이션 함수
+    function paginate(dataList, itemsPerPage, maxPageButtons, tbodyEl, paginationEl, renderRowFn, rowBuilderFn) {
+        let currentPage = 1;
+        let internalDataList = dataList;
+
+        function renderPage(page) {
+            tbodyEl.innerHTML = '';
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageItems = internalDataList.slice(start, end);
+            const totalCount = internalDataList.length;
+
+            pageItems.forEach((item, index) => {
+                const globalIndex = start + index;
+                const reverseIndex = totalCount - globalIndex;
+
+                const tr = rowBuilderFn
+                    ? rowBuilderFn(item, reverseIndex) // ✅ 여기 변경
+                    : (() => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = renderRowFn(item, reverseIndex); // ✅ 여기 변경
+                        return tr;
+                    })();
+                tbodyEl.appendChild(tr);
+            });
+        }
+
+
+        function renderPagination(page) {
+            const totalPages = Math.ceil(internalDataList.length / itemsPerPage);
+            const currentGroup = Math.floor((page - 1) / maxPageButtons);
+            const startPage = currentGroup * maxPageButtons + 1;
+            const endPage = Math.min(startPage + maxPageButtons - 1, totalPages);
+
+            paginationEl.innerHTML = '';
+
+            if (startPage > 1) {
+                const prev = document.createElement('button');
+                prev.textContent = '이전';
+                prev.onclick = () => {
+                    currentPage = startPage - 1;
+                    renderPage(currentPage);
+                    renderPagination(currentPage);
+                };
+                paginationEl.appendChild(prev);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.style.margin = '0 3px';
+                btn.onclick = () => {
+                    currentPage = i;
+                    renderPage(currentPage);
+                    renderPagination(currentPage);
+                };
+                if (i === page) {
+                    btn.style.backgroundColor = '#007bff';
+                    btn.style.color = '#fff';
+                }
+                paginationEl.appendChild(btn);
+            }
+
+            if (endPage < totalPages) {
+                const next = document.createElement('button');
+                next.textContent = '다음';
+                next.onclick = () => {
+                    currentPage = endPage + 1;
+                    renderPage(currentPage);
+                    renderPagination(currentPage);
+                };
+                paginationEl.appendChild(next);
+            }
+        }
+
+
+        renderPage(currentPage);
+        renderPagination(currentPage);
+
+        return {
+            renderPage,
+            renderPagination,
+            get dataList() {
+                return internalDataList;
+            },
+            set dataList(newList) {
+                internalDataList = newList;
+                currentPage = 1;
+                renderPage(currentPage);
+                renderPagination(currentPage);
+            }
+        };
+    }
+
+    // 모달에 정보넣기
+    document.querySelectorAll(".admin_btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const userId = this.dataset.userid;
+
+            // ✅ 필터링
+            const userOrders = orderLists.filter(order => order.userID === userId);
+            const userSubscribes = subscribeLists.filter(sub => sub.userID === userId);
+
+            // ✅ 데이터 갱신
+            orderPaginator.dataList = userOrders;
+            subscribePaginator.dataList = userSubscribes;
+
+            // ❌ renderPage(1) 따로 안 해도 돼 (dataList 세터가 내부적으로 해줌)
+        });
+    });
+
+    // 구독내역 페이지네이션
+    const subscribePaginator = paginate(
+        [], // 초기엔 빈 배열
+        5,
+        5,
+        document.getElementById("mem-subscribe-body"),
+        document.getElementById("subscribe-pagination"),
+        (sub, index) => `
+        <td>${index}</td>
+        <td>${sub.startDate}</td>
+        <td>${sub.orderNumber}</td>
+        <td>${sub.productName}</td>
+        <td>${sub.period}</td>
+        <td>${sub.productPrice.toLocaleString()}원</td>
+    `
+    );
+
+    // 주문내역 페이지네이션
+    const orderPaginator = paginate(
+        [], // 초기엔 빈 배열
+        5,
+        5,
+        document.getElementById("mem-order-body"),
+        document.getElementById("orderList-pagination"),
+        (order, index) => `
+        <td>${index}</td>
+        <td>${order.orderTime}</td>
+        <td>${order.orderNum}</td>
+        <td>${order.flowerName}</td>
+        <td>${order.quantity}</td>
+        <td>${order.status}</td>
+        <td>${order.price}원</td>
+    `
+    );
+
+    // 멤버 페이지네이션
+    const memberPaginator = paginate(
+        memberLists,
+        7,
+        5,
+        document.getElementById("member-body"),
+        document.getElementById("member-pagination"),
+        (member, index) => `
+        <td>${index + 1}</td>
+        <td>${member.userID}</td>
+        <td>${member.nickName}</td>
+        <td>${member.userName}</td>
+        <td>${member.userEmail}</td>
+        <td>${member.regDate}</td>
+        <td>${member.address01}</td>
+        <td>${member.address02}</td>
+        <td>${member.tel}</td>
+        <td><button class="admin_btn">수정</button></td>
+    `,
+        (member, index) => {
+            const tr = document.createElement("tr");
+            tr.classList.add("member-row");
+            tr.dataset.userId = member.userID;
+            tr.dataset.nickname = member.nickName || '';
+            tr.dataset.email = member.userEmail || '';
+            tr.dataset.zipcode = member.zipcode || '';
+            tr.dataset.address01 = member.address01 || '';
+            tr.dataset.address02 = member.address02 || '';
+            tr.innerHTML = memberPaginatorRow(member, index);
+            return tr;
+        }
+    );
+
+    function memberPaginatorRow(member, index) {
+        return `
+        <td>${index}</td> <!-- ✅ 역순 인덱스 그대로 표시 -->
+        <td>${member.userID}</td>
+        <td>${member.nickName}</td>
+        <td>${member.userName}</td>
+        <td>${member.userEmail}</td>
+        <td>${member.regDate}</td>
+        <td>${member.address01}</td>
+        <td>${member.address02}</td>
+        <td>${member.tel}</td>
+        <td><button class="admin_btn">수정</button></td>
+    `;
+    }
+
+
+    function renderOrderList(userID) {
+        const userOrders = orderLists.filter(order => order.userID === userID);
+        if (userOrders.length === 0) {
+            document.getElementById("mem-order-body").innerHTML = `
+            <tr><td colspan="7" style="text-align:center;">주문내역이 없습니다.</td></tr>
+        `;
+            document.getElementById("orderList-pagination").innerHTML = '';
+            return;
+        }
+        orderPaginator.dataList = userOrders;
+    }
+
+    function renderSubscribeList(userID) {
+        const userSubscribes = subscribeLists.filter(sub => sub.userID === userID);
+        if (userSubscribes.length === 0) {
+            document.getElementById("mem-subscribe-body").innerHTML = `
+            <tr><td colspan="6" style="text-align:center;">구독내역이 없습니다.</td></tr>
+        `;
+            document.getElementById("subscribe-pagination").innerHTML = '';
+            return;
+        }
+        subscribePaginator.dataList = userSubscribes;
+    }
+
+    // 모달창 유저정보
+    document.getElementById("member-update-form").addEventListener("submit", function (e) {
+        const fields = ["nickname", "email", "zipcode", "address01", "address02"];
+        fields.forEach(field => {
+            const input = document.querySelector(`#input-${field}`);
+            if (!input.value) {
+                input.value = input.placeholder; // 입력값이 없으면 placeholder를 값으로 사용
+            }
+        });
+    });
+
+    // 수정버튼 이벤트 >> 모달창 값 넣기
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("admin_btn")) {
+            const row = e.target.closest(".member-row");
+            // console.log("userID === " + row.dataset.userId)
+
+            if (!row) return;
+            const userID = row.dataset.userId;
+            const nickname = row.dataset.nickname;
+            const email = row.dataset.email;
+            const zipcode = row.dataset.zipcode;
+            const address01 = row.dataset.address01;
+            const address02 = row.dataset.address02;
+
+            // 모달 열기
+            document.querySelector("#mem-modal").style.display = "block";
+
+            // 사용자 정보 세팅
+            document.querySelector("#view-user-id").innerText = userID;
+            document.querySelector("#input-user-id").value = userID;
+
+            // placeholder 설정
+            document.querySelector("#input-nickname").placeholder = nickname || '';
+            document.querySelector("#input-email").placeholder = email || '';
+            document.querySelector("#input-zipcode").placeholder = zipcode || '';
+            document.querySelector("#input-address01").placeholder = address01 || '';
+            document.querySelector("#input-address02").placeholder = address02 || '';
+
+            // 이전 값 비우기
+            document.querySelector("#input-nickname").value = '';
+            document.querySelector("#input-email").value = '';
+            document.querySelector("#input-zipcode").value = '';
+            document.querySelector("#input-address01").value = '';
+            document.querySelector("#input-address02").value = '';
+
+            renderOrderList(userID);
+            renderSubscribeList(userID);
+
+            // action 설정
+            document.querySelector("#member-update-form").action = `/admin/member-modify/${userID}`;
+        }
+    });
+
+    // 회원 검색
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const searchBtn = document.getElementById('search-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const input = document.getElementById('search-input');
+        const categorySelect = document.getElementById('search-category');
+        const startDateInput = document.getElementById('start-date');
+        const endDateInput = document.getElementById('end-date');
+        const tableBody = document.getElementById('member-body');
+
+        searchBtn.addEventListener('click', function () {
+
+            const keyword = input.value.trim();
+            const category = categorySelect.value;
+            const startDate = startDateInput.value;
+            const endDate = endDateInput.value;
+
+            const params = new URLSearchParams();
+
+            if (keyword) {
+                params.append('keyword', keyword);
+                params.append('category', category);
+            }
+            if (startDate) params.append('startDate', startDate);
+            if (endDate) params.append('endDate', endDate);
+
+            if (keyword === null || keyword === ""){
+                alert("검색어를 입력해주세요")
+            }else{
+                fetch(`/admin/member-search?${params.toString()}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("서버 응답 오류");
+                        return response.json();
+                    })
+                    .then(data => {
+                        tableBody.innerHTML = "";
+
+                        if (data.length === 0) {
+                            tableBody.innerHTML = '<tr><td colspan="11">검색 결과 없음</td></tr>';
+                            return;
+                        }
+
+                        data.forEach((member, index) => {
+                            const row = document.createElement('tr');
+                            row.classList.add('member-row');
+                            row.dataset.userId = member.userId;
+                            row.dataset.nickname = member.nickName || '';
+                            row.dataset.email = member.userEmail || '';
+                            row.dataset.zipcode = member.zipcode || '';
+                            row.dataset.address01 = member.address01 || '';
+                            row.dataset.address02 = member.address02 || '';
+
+                            row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${member.userId}</td>
+                        <td>${member.nickName}</td>
+                        <td>${member.userName}</td>
+                        <td>${member.userEmail}</td>
+                        <td>${member.regDate}</td>
+                        <td>${member.address01}</td>
+                        <td>${member.address02 ?? ''}</td>
+                        <td>${member.tel}</td>
+                        <td><button class="admin_btn">수정</button></td>
+                       `;
+                            tableBody.appendChild(row);
+                        });
+
+                    })
+                    .catch(error => {
+                        alert("검색 중 오류 발생: " + error.message);
+                    });
+            }
+
+        });
+
+        resetBtn.addEventListener('click', function () {
+            location.reload();
+        });
+    });
+
+    // 회원 휴면변경
+    document.querySelectorAll(".btn-delete")
+        .forEach(btn => {
+            btn.addEventListener("click", () => {
+
+                const confirmDelete = confirm("계정을 비활성화 하시겠습니까?");
+                if (!confirmDelete) {
+                    return; // 취소 누르면 아무 일도 안 함
+                }
+
+                const userID = btn.dataset.userId;
+                fetch(`/admin/member-list/delete/${userID}`, {
+                    method: "post"
+                })
+                    .then(res => res.json())
+                    .then(json => {
+                        console.log(json);
+                        window.location.href = "/admin/member-list";
+                    })
+            })
+        })
+
+    function openPage(tabName, btn){
+
+        let tabs = document.getElementsByClassName('tab-cont');
+        for(let i = 0; i < tabs.length; i++){
+            tabs[i].style.display = "none";
+        }
+
+        let menus = document.querySelectorAll(".wrap-cont li");
+        menus.forEach(list => list.classList.remove("activeM"));
+
+        let buttons = document.querySelectorAll(".tab-btn>li");
+        buttons.forEach(b => b.classList.remove("activeM"));
+
+        document.getElementById(tabName).style.display = "block";
+        if(btn){
+            btn.classList.add("activeM");
+        }
+
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        let firstBtn = document.querySelector(".wrap-cont li");
+        openPage("mem-info", firstBtn);
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let firstBtn = document.querySelector(".tab-btn li");
+        openPage("mem-info", firstBtn);
+    });
+
+</script>
+<script src="/js/adminMember.js"></script>
+</body>
+</html>

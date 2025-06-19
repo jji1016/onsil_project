@@ -1,6 +1,4 @@
-
-
-//gnb tab 메뉴---------------------------------------------------
+// gnb tab 메뉴---------------------------------------------------
 function openTab(tabName, btn){
 
     let tabs = document.getElementsByClassName('tab');
@@ -22,304 +20,386 @@ document.addEventListener("DOMContentLoaded", function(){
     openTab("home", firstBtn);
 });
 
+/*
+document.addEventListener("DOMContentLoaded", function () {
+    const tabContent = document.getElementById("tab-content");
+    const tabs = document.querySelectorAll(".gnb li");
+
+    function loadTab(tabName, button) {
+        // UI 업데이트
+        tabs.forEach(tab => tab.classList.remove("active"));
+        button.classList.add("active");
+
+        // Ajax로 HTML fragment 요청
+        fetch(`/admin/${tabName}`)
+            .then(response => {
+                if (!response.ok) throw new Error("탭 데이터를 불러오지 못했습니다.");
+                return response.text();
+            })
+            .then(html => {
+                tabContent.innerHTML = html;
+            })
+            .catch(error => {
+                tabContent.innerHTML = `<p style="color:red;">탭 로딩 실패</p>`;
+                console.error(error);
+            });
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", function () {
+            const tabName = this.dataset.tab;
+            loadTab(tabName, this);
+        });
+    });
+
+    // 첫 탭 자동 로딩
+    const firstTab = tabs[0];
+    if (firstTab) {
+        loadTab(firstTab.dataset.tab, firstTab);
+    }
+});
+*/
 
 
 
-
-//홈화면 매출요약 차트
+function renderSalesChart(labels, data) {
     const ctx = document.getElementById('homeSales').getContext('2d');
-    const sales = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: [
-        '2024-01','2024-02', '2024-03', '2024-04', '2024-05', '2024-06', '2024-07',
-        '2024-08', '2024-09', '2024-10', '2024-11', '2024-12',
-        '2025-01', '2025-02', '2025-03', '2025-04', '2025-05'
-        ],
-        datasets: [{
-        label: '월별 매출',
-        data: [34, 45, 30, 55, 65, 45, 25, 42, 35, 38, 28, 60, 35, 65, 58, 50, 80],
-        backgroundColor: '#A6BFA4',
-        borderRadius: 4,
-        barThickness: 30
-        }]
-    },
-    options: {
-        responsive: true,
-        animations: false,
-        // {
-            
-        //     x: {
-        //         duration: 0
-        //     },
-        //     y: {
-        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-        //         delay: ctx => ctx.index * 100,
-        //         type: 'number',
-        //         easing: 'easeOutQuart'
-        //     }
-        // },
-        plugins: {
-        legend: {
-            display: false // label 숨기고 싶으면 true로 바꿔도 돼
+
+    if(window.salesChartInstance) {
+        window.salesChartInstance.destroy(); // 기존 차트가 있으면 삭제
+    }
+
+    window.salesChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '월별 매출',
+                data: data,
+                backgroundColor: '#A6BFA4',
+                borderRadius: 4,
+                barThickness: 30
+            }]
         },
-        tooltip: {
-            callbacks: {
-            label: function(context) {
-                return `${context.parsed.y}백만원`;
-            }
+        options: {
+            responsive: true,
+            animations: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: context => `${context.parsed.y} 원`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '매출 (백만원)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        maxRotation: 0,
+                        minRotation: 0
+                    }
+                }
             }
         }
-        },
-        scales: {
-        y: {
-            beginAtZero: true,
-            title: {
-            display: true,
-            text: '매출 (백만원)'
-            }
-        },
-        x: {
-            ticks: {
-            maxRotation: 0,
-            minRotation: 0
-            }
-        }
-        }
+    });
+}
+
+// 페이지가 다 로드된 후 실행
+document.addEventListener('DOMContentLoaded', () => {
+    if(typeof monthlyLabels !== 'undefined' && typeof monthlyData !== 'undefined') {
+        renderSalesChart(monthlyLabels, monthlyData);
     }
 });
 
 
-
-
-
+//홈화면 매출요약 차트
+//     const ctx = document.getElementById('homeSales').getContext('2d');
+//     const sales = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//         labels: [
+//         '2024-01','2024-02', '2024-03', '2024-04', '2024-05', '2024-06', '2024-07',
+//         '2024-08', '2024-09', '2024-10', '2024-11', '2024-12',
+//         '2025-01', '2025-02', '2025-03', '2025-04', '2025-05'
+//         ],
+//         datasets: [{
+//         label: '월별 매출',
+//         data: [34, 45, 30, 55, 65, 45, 25, 42, 35, 38, 28, 60, 35, 65, 58, 50, 80],
+//         backgroundColor: '#A6BFA4',
+//         borderRadius: 4,
+//         barThickness: 30
+//         }]
+//     },
+//     options: {
+//         responsive: true,
+//         animations: false,
+//         // {
+//
+//         //     x: {
+//         //         duration: 0
+//         //     },
+//         //     y: {
+//         //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+//         //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+//         //         delay: ctx => ctx.index * 100,
+//         //         type: 'number',
+//         //         easing: 'easeOutQuart'
+//         //     }
+//         // },
+//         plugins: {
+//         legend: {
+//             display: false // label 숨기고 싶으면 true로 바꿔도 돼
+//         },
+//         tooltip: {
+//             callbacks: {
+//             label: function(context) {
+//                 return `${context.parsed.y}백만원`;
+//             }
+//             }
+//         }
+//         },
+//         scales: {
+//         y: {
+//             beginAtZero: true,
+//             title: {
+//             display: true,
+//             text: '매출 (백만원)'
+//             }
+//         },
+//         x: {
+//             ticks: {
+//             maxRotation: 0,
+//             minRotation: 0
+//             }
+//         }
+//         }
+//     }
+// });
 
 //회원관리 페이지
-    const members = [
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 346,
-        name: "박보영",
-        id: "bboyoung",
-        grade: "일반회원",
-        phone: "010-5678-1234",
-        joined: "2025-05-01 10:12",
-        history: 2,
-        point: "1,500",
-        login: 8
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    },
-    {
-        no: 345,
-        name: "한지민",
-        id: "jiminpro",
-        grade: "구독회원",
-        phone: "010-1234-5678",
-        joined: "2025-04-27 16:34",
-        history: 3,
-        point: "2,000",
-        login: 5
-    }
-    ];
+//     const members = [
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 346,
+//         name: "박보영",
+//         id: "bboyoung",
+//         grade: "일반회원",
+//         phone: "010-5678-1234",
+//         joined: "2025-05-01 10:12",
+//         history: 2,
+//         point: "1,500",
+//         login: 8
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     },
+//     {
+//         no: 345,
+//         name: "한지민",
+//         id: "jiminpro",
+//         grade: "구독회원",
+//         phone: "010-1234-5678",
+//         joined: "2025-04-27 16:34",
+//         history: 3,
+//         point: "2,000",
+//         login: 5
+//     }
+//     ];
 
+// const rowsPerPage = 9;
+// let currentPage = 1;
+//
+// const tbody = document.getElementById("member-body"); // member-body를 가져와서 tbody 변수에 저장
+// const pager = document.getElementById("member-pagination");
+//
+// function renderTable(page = 1) { //renderTable 함수 , 기본값 1페이지
+//     currentPage = page; //현재 페이지 번호
+//     const start = (page - 1) * rowsPerPage; //몇번째 회원부터 보여줄지 계산
+//     const slice = members.slice(start, start + rowsPerPage); //회원 배열에서 보여줄 만큼 잘라서 slice에 저장함
+//
+//     tbody.innerHTML = slice.map(m => `
+//         <tr>
+//         <td>${m.no}</td>
+//         <td>${m.name}</td>
+//         <td>${m.id}</td>
+//         <td>${m.grade}</td>
+//         <td>${m.phone}</td>
+//         <td>${m.joined}</td>
+//         <td>${m.history}</td>
+//         <td>${m.point}</td>
+//         <td>${m.login}</td>
+//         <td>
+//             <button class="admin_btn">수정</button>
+//             <button class="del_btn">삭제</button>
+//         </td>
+//         </tr>
+//     `).join('');
+//     }
+//
+//     function renderPagination() {
+//     const totalPages = Math.ceil(members.length / rowsPerPage);
+//     pager.innerHTML = '';
+//
+//     pager.appendChild(makeBtn('◀', currentPage - 1, currentPage === 1));
+//
+//     for(let i = 1; i <= totalPages; i++) {
+//         pager.appendChild(makeBtn(i, i, false, i === currentPage));
+//     }
+//
+//     pager.appendChild(makeBtn('▶', currentPage + 1, currentPage === totalPages));
+//     }
+//
+//     function makeBtn(label, goPage, disabled, active) {
+//     const btn = document.createElement('button');
+//     btn.textContent = label;
+//     btn.disabled = disabled;
+//     if (active) btn.classList.add('active');
+//     btn.addEventListener('click', () => {
+//         renderTable(goPage);
+//         renderPagination();
+//     });
+//     return btn;
+//     }
+//
+//     window.onload = () => {
+//     renderTable();
+//     renderPagination();
+//     };
+//
+//     window.onload = () => {
+//         renderTable();
+//         renderPagination();
+//     };
 
-const rowsPerPage = 9;
-let currentPage = 1;
+//회원아이디 불러오기(모달창 주문내역 아이디 부분)
+// document.querySelectorAll('.admin_btn').forEach((btn, index) => {
+//     btn.addEventListener('click', () => {
+//         // 버튼이 눌린 row의 ID를 가져오기!
+//         const clickedId = members[index].id;
+//
+//         // <td class="view-user-id">에 넣기!
+//         document.querySelector('.view-user-id').textContent = clickedId;
+//     });
+//     });
 
-const tbody = document.getElementById("member-body"); // member-body를 가져와서 tbody 변수에 저장
-const pager = document.getElementById("member-pagination");
-
-function renderTable(page = 1) { //renderTable 함수 , 기본값 1페이지
-    currentPage = page; //현재 페이지 번호 
-    const start = (page - 1) * rowsPerPage; //몇번째 회원부터 보여줄지 계산
-    const slice = members.slice(start, start + rowsPerPage); //회원 배열에서 보여줄 만큼 잘라서 slice에 저장함
-
-    tbody.innerHTML = slice.map(m => `
-        <tr>
-        <td>${m.no}</td>
-        <td>${m.name}</td>
-        <td>${m.id}</td>
-        <td>${m.grade}</td>
-        <td>${m.phone}</td>
-        <td>${m.joined}</td>
-        <td>${m.history}</td>
-        <td>${m.point}</td>
-        <td>${m.login}</td>
-        <td>
-            <button class="admin_btn">수정</button>
-            <button class="del_btn">삭제</button>
-        </td>
-        </tr>
-    `).join('');
-    }
-
-    function renderPagination() { 
-    const totalPages = Math.ceil(members.length / rowsPerPage);
-    pager.innerHTML = '';
-
-    pager.appendChild(makeBtn('◀', currentPage - 1, currentPage === 1));
-
-    for(let i = 1; i <= totalPages; i++) {
-        pager.appendChild(makeBtn(i, i, false, i === currentPage));
-    }
-
-    pager.appendChild(makeBtn('▶', currentPage + 1, currentPage === totalPages));
-    }
-
-    function makeBtn(label, goPage, disabled, active) {
-    const btn = document.createElement('button');
-    btn.textContent = label;
-    btn.disabled = disabled;
-    if (active) btn.classList.add('active');
-    btn.addEventListener('click', () => {
-        renderTable(goPage);
-        renderPagination();
-    });
-    return btn;
-    }
-
-    window.onload = () => {
-    renderTable();
-    renderPagination();
-    };
-
-    window.onload = () => {
-        renderTable();
-        renderPagination();
-    };
-
-
-
-    
-    //회원아이디 불러오기(모달창 주문내역 아이디 부분)
-    document.querySelectorAll('.admin_btn').forEach((btn, index) => {
-        btn.addEventListener('click', () => {
-            // 버튼이 눌린 row의 ID를 가져오기!
-            const clickedId = members[index].id;
-
-            // <td class="view-user-id">에 넣기!
-            document.querySelector('.view-user-id').textContent = clickedId;
-        });
-        });
-
-
+//회원 숫자 세기
+// document.querySelector(".mem_count").textContent = members.length;
 
 
 
-    //회원 숫자 세기
-    document.querySelector(".mem_count").textContent = members.length;
-
-
-    
     //모달창 tab 메뉴---------------------------------------------------
     function openPage(tabName, btn){
 
@@ -352,41 +432,41 @@ function renderTable(page = 1) { //renderTable 함수 , 기본값 1페이지
 
 
     //회원별주문내역관리 페이지
-    const memOrders = [
-    {
-        no: 1,
-        date: "2025-06-09",
-        orderNo: "20250609007A",
-        product: "6월의 탄생화 장미 시리즈",
-        state: "결제완료",
-        price: "48,900"
-    },
-    {
-        no: 2,
-        date: "2025-06-09",
-        orderNo: "20250609007A",
-        product: "6월의 탄생화 장미 시리즈",
-        state: "결제완료",
-        price: "48,900"
-    }
-    ];
+    // const memOrders = [
+    // {
+    //     no: 1,
+    //     date: "2025-06-09",
+    //     orderNo: "20250609007A",
+    //     product: "6월의 탄생화 장미 시리즈",
+    //     state: "결제완료",
+    //     price: "48,900"
+    // },
+    // {
+    //     no: 2,
+    //     date: "2025-06-09",
+    //     orderNo: "20250609007A",
+    //     product: "6월의 탄생화 장미 시리즈",
+    //     state: "결제완료",
+    //     price: "48,900"
+    // }
+    // ];
 
-    const memOrderBody = document.getElementById("mem-order-body");
+    // const memOrderBody = document.getElementById("mem-order-body");
 
-    memOrders.forEach(order => {
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-        <td>${order.no}</td>
-        <td>${order.date}</td>
-        <td>${order.orderNo}</td>
-        <td>${order.product}</td>
-        <td>${order.state}</td>
-        <td>${order.price}</td>
-    `;
-
-    memOrderBody.appendChild(tr);
-    });
+    // memOrders.forEach(order => {
+    // const tr = document.createElement("tr");
+    //
+    // tr.innerHTML = `
+    //     <td>${order.no}</td>
+    //     <td>${order.date}</td>
+    //     <td>${order.orderNo}</td>
+    //     <td>${order.product}</td>
+    //     <td>${order.state}</td>
+    //     <td>${order.price}</td>
+    // `;
+    //
+    // memOrderBody.appendChild(tr);
+    // });
 
 
 
@@ -408,7 +488,7 @@ function changeTab(tabName, btn){
     for(let i = 0; i < stocks.length; i++){
         stocks[i].style.display = "none";
     }
-    
+
     let cont = document.querySelectorAll(".stock_btn>button");
     cont.forEach(list => list.classList.remove("btn_on"));
 
@@ -553,7 +633,6 @@ function renderStockTable(page = 1) {
     return btn;
     }
 
-    
 
 
 
@@ -563,7 +642,8 @@ function renderStockTable(page = 1) {
 
 
 
-    
+
+
     //입고------------------------
     const stocksIn = [
     {
@@ -647,7 +727,7 @@ function renderStockTable(page = 1) {
         renderStockInTable();
         renderStockInPagination();
     };
-    
+
 
 
 
@@ -744,18 +824,18 @@ function renderStockTable(page = 1) {
 
 //매출관리 매출요약 차트
 
-function openChart(chartName, btn){ 
+function openChart(chartName, btn){
     // 모든 차트 숨기기
-    let allCharts = document.querySelectorAll(".charts, .c_charts"); 
+    let allCharts = document.querySelectorAll(".charts, .c_charts");
     allCharts.forEach(chart => chart.style.display = "none");
 
     // 버튼 상태 초기화
-    let buttonAll = document.querySelectorAll(".sale_title button"); 
-    buttonAll.forEach(button => button.classList.remove("on")); 
+    let buttonAll = document.querySelectorAll(".sale_title button");
+    buttonAll.forEach(button => button.classList.remove("on"));
 
     // 선택된 차트 보여주기 (일반 + 카테고리)
-    document.getElementById(chartName).style.display = "block"; 
-    
+    document.getElementById(chartName).style.display = "block";
+
     let categoryChartName = "c_" + chartName; // 예: c_day_sales
     let categoryChart = document.getElementById(categoryChartName);
     if (categoryChart) {
@@ -763,14 +843,14 @@ function openChart(chartName, btn){
     }
 
     // 버튼 on 표시
-    if(btn){  
-        btn.classList.add("on"); 
+    if(btn){
+        btn.classList.add("on");
     }
 }
 
-document.addEventListener("DOMContentLoaded", function(){ 
-    let firstBtn = document.querySelector(".sale_title button"); 
-    openChart("day_sales", firstBtn); 
+document.addEventListener("DOMContentLoaded", function(){
+    let firstBtn = document.querySelector(".sale_title button");
+    openChart("day_sales", firstBtn);
 });
 
 
@@ -992,7 +1072,7 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     options: {
         responsive: true,
-        animations: false, 
+        animations: false,
         // {
         //     x: {
         //         duration: 0
@@ -1283,7 +1363,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 //주문내역 모달창  주문정보영역--------------
-    const orderD = [ 
+    const orderD = [
     {
         no: "2505230098",
         date: "2025-06-09 14:05",
@@ -1345,7 +1425,7 @@ orderD.forEach(order => {
 
 
 //주문내역 모달창  배송정보영역--------------
-    const delivery = [ 
+    const delivery = [
     {
         name: "한지민",
         phone: "010-1234-5678",
@@ -1391,7 +1471,7 @@ delivery.forEach(info => {
 
 // 상품관리 페이지--------------------------------
 
-    
+
     const items = [
     {
         no: "1",

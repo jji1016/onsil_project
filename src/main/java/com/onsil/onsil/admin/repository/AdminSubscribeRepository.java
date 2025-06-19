@@ -1,6 +1,8 @@
 package com.onsil.onsil.admin.repository;
 
 import com.onsil.onsil.admin.dto.PopularCountDto;
+import com.onsil.onsil.admin.dto.SalesByMonthDto;
+import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.entity.Subscribe;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,6 +33,21 @@ public interface AdminSubscribeRepository extends JpaRepository<Subscribe, Integ
     @Query("SELECT s FROM Subscribe s " +
             "WHERE s.startDate >= :oneMonthAgo " +
             "ORDER BY s.startDate DESC")
-    List<Subscribe> findRecentInMonth(@Param("oneMonthAgo") LocalDateTime oneMonthAgo, Pageable pageable);
+    List<Subscribe> findRecentInMonth(@Param("oneMonthAgo") LocalDateTime oneMonthAgo);
 
+    @Query(value = "SELECT TO_CHAR(s.startdate, 'YYYY-MM') AS month, SUM(p.price) AS amount " +
+            "FROM subscribe s JOIN product p ON s.productid = p.productid " +
+            "GROUP BY TO_CHAR(s.startdate, 'YYYY-MM') " +
+            "ORDER BY month", nativeQuery = true)
+    List<SalesByMonthDto> findMonthlySales();
+
+    @Query("SELECT s FROM Subscribe s JOIN FETCH s.member JOIN FETCH s.product")
+    List<Subscribe> findAllWithMemberAndProduct();
+
+    @Query(value = "SELECT TO_CHAR(o.startdate, 'YYYY-MM') AS month, SUM(p.PRICE) " +
+            "FROM subscribe o " +
+            "JOIN PRODUCT p ON o.PRODUCTID = p.PRODUCTID " +
+            "GROUP BY TO_CHAR(o.startdate, 'YYYY-MM') " +
+            "ORDER BY TO_CHAR(o.startdate, 'YYYY-MM')", nativeQuery = true)
+    List<Object[]> getMonthlySubscribeRevenue();
 }
