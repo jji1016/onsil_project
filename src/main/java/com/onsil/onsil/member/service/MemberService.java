@@ -20,12 +20,21 @@ public class MemberService {
 
 
     public void save(MemberDto memberDto) {
+
+        if (memberDto.getUserID() == null || memberDto.getUserID().trim().isEmpty()) {
+            throw new IllegalArgumentException("아이디는 필수 입력 사항입니다.");
+        }
+        if (memberDto.getUserPW() == null || memberDto.getUserPW().trim().isEmpty()) {
+            throw new IllegalArgumentException("비밀번호는 필수 입력 사항입니다.");
+        }
+
         String encodedPassword = bCryptPasswordEncoder.encode(memberDto.getUserPW());
         memberDto.setUserPW(encodedPassword);
         memberDto.setRole(Role.ROLE_USER);
         Member savedMember = memberDto.toMember();
         memberDao.save(savedMember);
     }
+
     //아이디 중복 검사
     public boolean isUserIDDuplicate(String userID) {
         return memberDao.existsByUserID(userID);
@@ -44,4 +53,5 @@ public class MemberService {
         return memberDao.findByUserID(userID)
                 .orElseThrow(() -> new RuntimeException("해당 userID의 회원을 찾을 수 없습니다: " + userID));
     }
+
 }

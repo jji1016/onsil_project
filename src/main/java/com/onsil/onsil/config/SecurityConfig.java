@@ -13,6 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
+
+
     //스프링 컨테이너에 등록되고 di할 수 있다..
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

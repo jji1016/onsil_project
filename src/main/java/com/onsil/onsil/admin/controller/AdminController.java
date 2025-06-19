@@ -5,20 +5,42 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
+<<<<<<< HEAD
 import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.mypage.dto.MypageOrderListDto;
 import jakarta.servlet.http.HttpServletRequest;
+=======
+import com.onsil.onsil.constant.Period;
+import com.onsil.onsil.entity.Product;
+import com.onsil.onsil.entity.Subscribe;
+import com.onsil.onsil.product.repository.ProductRepository;
+import com.onsil.onsil.product.service.ProductService;
+import com.onsil.onsil.subscribe.repository.SubscribeRepository;
+>>>>>>> a85f349370c2b9b43f2ed0881c14f9d0786375ed
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+<<<<<<< HEAD
 import java.math.BigDecimal;
+=======
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+>>>>>>> a85f349370c2b9b43f2ed0881c14f9d0786375ed
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +51,16 @@ import java.util.Map;
 public class AdminController {
 
     private final AdminService adminService;
+<<<<<<< HEAD
     private final AdminOutputService adminOutputService;
+=======
+    private final SubscribeRepository subscribeRepository;
+    private final ProductService productService;
+    private final ProductRepository productRepository;
+
+    @Value("${file.path}products/")
+    String productsPath;  // 여기서 주입
+>>>>>>> a85f349370c2b9b43f2ed0881c14f9d0786375ed
 
     @GetMapping("/admin")
     public String onsilHtml(Model model) throws JsonProcessingException {
@@ -178,7 +209,6 @@ public class AdminController {
 
 
 
-
     @GetMapping("/outputlist")
     public String list(Model model) {
 
@@ -188,4 +218,62 @@ public class AdminController {
         model.addAttribute("outputList", list);
         return "admin/output";
     }
+
+    @GetMapping("/product")
+    public String product( Model model) {
+
+        return "admin/product";
+    }
+
+    @PostMapping("/save")
+    public String saveProduct(
+            @RequestParam("f_month") int fMonth,
+            @RequestParam("flowerName") String flowerName,
+            @RequestParam("price") int price,
+            @RequestParam("flowerInfo") String flowerInfo,
+            @RequestParam("imageFile") MultipartFile imageFile,
+            @RequestParam("f_lang") String flowLang,
+            @RequestParam("f_use") String fUse,
+            @RequestParam("f_grow") String fGrow,
+            @RequestParam("f_type") String fType
+    ) throws IOException {
+
+        File saveDir = new File(productsPath);
+        if (!saveDir.exists()) {
+            saveDir.mkdirs();
+        }
+
+
+        String originalFilename = imageFile.getOriginalFilename();
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String storedFileName = baseName + "_" + timestamp + extension; // abc_20250605123045.jpg
+
+
+        String savePath = productsPath + storedFileName;
+
+
+        imageFile.transferTo(new File(savePath));
+
+
+        Product product = new Product();
+        product.setFMonth(fMonth);
+        product.setFlowerName(flowerName);
+        product.setImage(storedFileName);
+        product.setFlowLang(flowLang);
+        product.setFUse(fUse);
+        product.setFGrow(fGrow);
+        product.setFType(fType);
+        product.setFlowerInfo(flowerInfo);
+        product.setPrice(price);
+
+        productRepository.save(product);
+
+
+        return "redirect:/admin/product";
+    }
 }
+
+
+

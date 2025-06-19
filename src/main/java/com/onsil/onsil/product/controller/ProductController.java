@@ -1,10 +1,12 @@
 package com.onsil.onsil.product.controller;
 
+import com.onsil.onsil.entity.Product;
+import com.onsil.onsil.entity.Review;
 import com.onsil.onsil.product.dto.ProductDto;
 import com.onsil.onsil.product.repository.ProductRepository;
+import com.onsil.onsil.review.repository.ReviewRepository;
 import com.onsil.onsil.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +19,13 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final ReviewRepository reviewRepository;
 
-    @Value("${file.path}")
-    private String upload;  // 여기서 주입
+
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<ProductDto> flowers=productService.findAll();
+        List<ProductDto> flowers=productService.findRandom8();
         model.addAttribute("flowers", flowers);
         return "product/list";
     }
@@ -34,9 +36,11 @@ public class ProductController {
         if (flower == null) {
             return "error/404";
         }
+        Product product = productRepository.findById(flower.getId()).orElse(null);
 
+        List<Review> reviews = reviewRepository.findAllByProduct(product);
         model.addAttribute("flower", flower);
-
+        model.addAttribute("reviews", reviews);
         return "product/detail";
     }
 

@@ -1,5 +1,6 @@
 package com.onsil.onsil.product.dto;
 
+import com.onsil.onsil.review.dto.ReviewDto;
 import lombok.*;
 
 import java.util.List;

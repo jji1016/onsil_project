@@ -20,7 +20,10 @@ public class MemberDao {
         Optional<Member> optionalMember = memberRepository.findByUserID(ID);
         return optionalMember;
     }
-
+    public Optional<Member> findByNickName(String NickName) {
+        Optional<Member> optionalMember = memberRepository.findByNickName(NickName);
+        return optionalMember;
+    }
     public boolean existsByUserID(String ID) {
         return memberRepository.existsByUserID(ID);
     }
