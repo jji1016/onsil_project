@@ -78,6 +78,7 @@ public class AdminController {
 
     @GetMapping("/home")
     private String adminHome(Model model, HttpServletRequest request) {
+
         // 총 멤버수
         int countedMember = adminService.countAllMembers();
         // 한달이내 가입자 수(중복제거)
@@ -139,8 +140,6 @@ public class AdminController {
         return adminService.deleteByUserID(userID);
     }
 
-
-
     @GetMapping("/member-modify/{userID}")
     public String modifyMember(@PathVariable String userID, Model model) {
 
@@ -153,7 +152,7 @@ public class AdminController {
     @PostMapping("/member-modify/{userID}")
     public String modifyMember(@PathVariable String userID, @ModelAttribute MemberDto dto) {
         adminService.modifyMember(userID, dto);
-        return "redirect:admin/admin";
+        return "redirect:/admin/member";
     }
 
     @GetMapping("/order-list/{id}")

@@ -36,20 +36,11 @@
             $(document).on("click", ".mem-btn>.close", function () {
                 $("#mem-modal").stop().fadeOut(300);
             });
-
-
-            //상품등록 모달창
-            $(".add_btn").click(function () {
-                $("#items_modal").stop().fadeIn(300);
-            });
-            $(".close").click(function () {
-                $("#items_modal").stop().fadeOut(300);
-            });
         });
     </script>
 </head>
 <body>
-<header class="header" th:replace="~{fragments/header}"></header>
+<header class="header" th:replace="~{fragments/adminHeader}"></header>
 <div id="section">
     <div id="member" class="tab">
         <div class="search">
@@ -129,6 +120,7 @@
                 </tbody>
             </table>
             <div id="member-pagination" class="pagination"></div>
+
             <div id="mem-modal">
                 <div class="wrap-all">
                     <div class="de_title">
@@ -214,12 +206,6 @@
                             </form>
                         </li>
                         <li id="mem-order" class="tab-cont">
-                            <table class="user-id">
-                                <tr>
-                                    <td>회원아이디</td>
-                                    <td class="view-user-id"></td>
-                                </tr>
-                            </table>
                             <table class="mem-order-list">
                                 <thead>
                                 <tr>
@@ -277,9 +263,6 @@
     const memberLists = /*[[${memberList}]]*/ [];
     // Thymeleaf가 JSON으로 넣어줘야 함
 
-    const monthlyLabels = /*[[${monthlyLabels}]]*/ [];
-    const monthlyData = /*[[${monthlyData}]]*/ [];
-
     // 페이지네이션 함수
     function paginate(dataList, itemsPerPage, maxPageButtons, tbodyEl, paginationEl, renderRowFn, rowBuilderFn) {
         let currentPage = 1;
@@ -290,18 +273,23 @@
             const start = (page - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const pageItems = internalDataList.slice(start, end);
+            const totalCount = internalDataList.length;
 
             pageItems.forEach((item, index) => {
+                const globalIndex = start + index;
+                const reverseIndex = totalCount - globalIndex;
+
                 const tr = rowBuilderFn
-                    ? rowBuilderFn(item, start + index)
+                    ? rowBuilderFn(item, reverseIndex) // ✅ 여기 변경
                     : (() => {
                         const tr = document.createElement('tr');
-                        tr.innerHTML = renderRowFn(item, start + index);
+                        tr.innerHTML = renderRowFn(item, reverseIndex); // ✅ 여기 변경
                         return tr;
                     })();
                 tbodyEl.appendChild(tr);
             });
         }
+
 
         function renderPagination(page) {
             const totalPages = Math.ceil(internalDataList.length / itemsPerPage);
@@ -394,7 +382,7 @@
         document.getElementById("mem-subscribe-body"),
         document.getElementById("subscribe-pagination"),
         (sub, index) => `
-        <td>${index + 1}</td>
+        <td>${index}</td>
         <td>${sub.startDate}</td>
         <td>${sub.orderNumber}</td>
         <td>${sub.productName}</td>
@@ -411,7 +399,7 @@
         document.getElementById("mem-order-body"),
         document.getElementById("orderList-pagination"),
         (order, index) => `
-        <td>${index + 1}</td>
+        <td>${index}</td>
         <td>${order.orderTime}</td>
         <td>${order.orderNum}</td>
         <td>${order.flowerName}</td>
@@ -456,7 +444,7 @@
 
     function memberPaginatorRow(member, index) {
         return `
-        <td>${index + 1}</td>
+        <td>${index}</td> <!-- ✅ 역순 인덱스 그대로 표시 -->
         <td>${member.userID}</td>
         <td>${member.nickName}</td>
         <td>${member.userName}</td>
@@ -468,6 +456,7 @@
         <td><button class="admin_btn">수정</button></td>
     `;
     }
+
 
     function renderOrderList(userID) {
         const userOrders = orderLists.filter(order => order.userID === userID);
@@ -504,7 +493,7 @@
         });
     });
 
-    // 회원 정보 수정
+    // 수정버튼 이벤트 >> 모달창 값 넣기
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("admin_btn")) {
             const row = e.target.closest(".member-row");
@@ -574,30 +563,33 @@
             if (startDate) params.append('startDate', startDate);
             if (endDate) params.append('endDate', endDate);
 
-            fetch(`/admin/member-search?${params.toString()}`)
-                .then(response => {
-                    if (!response.ok) throw new Error("서버 응답 오류");
-                    return response.json();
-                })
-                .then(data => {
-                    tableBody.innerHTML = "";
+            if (keyword === null || keyword === ""){
+                alert("검색어를 입력해주세요")
+            }else{
+                fetch(`/admin/member-search?${params.toString()}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("서버 응답 오류");
+                        return response.json();
+                    })
+                    .then(data => {
+                        tableBody.innerHTML = "";
 
-                    if (data.length === 0) {
-                        tableBody.innerHTML = '<tr><td colspan="11">검색 결과 없음</td></tr>';
-                        return;
-                    }
+                        if (data.length === 0) {
+                            tableBody.innerHTML = '<tr><td colspan="11">검색 결과 없음</td></tr>';
+                            return;
+                        }
 
-                    data.forEach((member, index) => {
-                        const row = document.createElement('tr');
-                        row.classList.add('member-row');
-                        row.dataset.userId = member.userId;
-                        row.dataset.nickname = member.nickName || '';
-                        row.dataset.email = member.userEmail || '';
-                        row.dataset.zipcode = member.zipcode || '';
-                        row.dataset.address01 = member.address01 || '';
-                        row.dataset.address02 = member.address02 || '';
+                        data.forEach((member, index) => {
+                            const row = document.createElement('tr');
+                            row.classList.add('member-row');
+                            row.dataset.userId = member.userId;
+                            row.dataset.nickname = member.nickName || '';
+                            row.dataset.email = member.userEmail || '';
+                            row.dataset.zipcode = member.zipcode || '';
+                            row.dataset.address01 = member.address01 || '';
+                            row.dataset.address02 = member.address02 || '';
 
-                        row.innerHTML = `
+                            row.innerHTML = `
                         <td>${index + 1}</td>
                         <td>${member.userId}</td>
                         <td>${member.nickName}</td>
@@ -609,13 +601,15 @@
                         <td>${member.tel}</td>
                         <td><button class="admin_btn">수정</button></td>
                        `;
-                        tableBody.appendChild(row);
-                    });
+                            tableBody.appendChild(row);
+                        });
 
-                })
-                .catch(error => {
-                    alert("검색 중 오류 발생: " + error.message);
-                });
+                    })
+                    .catch(error => {
+                        alert("검색 중 오류 발생: " + error.message);
+                    });
+            }
+
         });
 
         resetBtn.addEventListener('click', function () {
@@ -645,6 +639,25 @@
             })
         })
 
+    function openPage(tabName, btn){
+
+        let tabs = document.getElementsByClassName('tab-cont');
+        for(let i = 0; i < tabs.length; i++){
+            tabs[i].style.display = "none";
+        }
+
+        let menus = document.querySelectorAll(".wrap-cont li");
+        menus.forEach(list => list.classList.remove("activeM"));
+
+        let buttons = document.querySelectorAll(".tab-btn>li");
+        buttons.forEach(b => b.classList.remove("activeM"));
+
+        document.getElementById(tabName).style.display = "block";
+        if(btn){
+            btn.classList.add("activeM");
+        }
+
+    }
     document.addEventListener("DOMContentLoaded", function () {
         let firstBtn = document.querySelector(".wrap-cont li");
         openPage("mem-info", firstBtn);

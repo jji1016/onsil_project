@@ -449,6 +449,10 @@ body {
     border-top: 1px solid #D2D2D2;
 }
 
+#section .search table tr:nth-child(2) td button {
+    width: auto;
+}
+
 #section .search table td:nth-child(3),
 #section .search table td:first-child {
     background-color: #F8F8F8;

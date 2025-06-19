@@ -14,6 +14,7 @@ import com.onsil.onsil.product.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class AdminDao {
     private final AdminProductRepository productRepository;
 
     public List<Member> getAllMembers() {
-        return memberRepository.findAll();
+        return memberRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     public Member findByUserID(String userID) {

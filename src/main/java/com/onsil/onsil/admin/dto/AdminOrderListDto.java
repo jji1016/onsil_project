@@ -23,6 +23,5 @@ public class AdminOrderListDto {
     private String flowerName;
     private int price;
     private String image;
-
     private String orderNum;
 }
