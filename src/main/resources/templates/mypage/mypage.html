@@ -224,22 +224,21 @@
                 <ul class="request_detail">
                     <li class="detail_on">신청내역(<span id="number1">1</span>)</li>
                 </ul>
-                <table class="order_table">
-                    <thead>
-                    <tr>
-                        <th>주문일자</th>
-                        <th>이미지</th>
-                        <th>상품정보</th>
-                        <th>상품금액</th>
-                        <th>배송주기</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="subscribeRap">
-                    <!-- 구독내역 들어가는 자리 -->
-                    </tbody>
-                </table>
+                    <table class="order_table">
+                        <thead>
+                        <tr>
+                            <th>주문일자</th>
+                            <th>이미지</th>
+                            <th>상품정보</th>
+                            <th>상품금액</th>
+                            <th>배송주기</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="subscribeRap">
+                        <!-- 구독내역 들어가는 자리 -->
+                        </tbody>
+                    </table>
 
                 <table class="page_btn">
                     <tbody>
@@ -461,7 +460,7 @@
         currentOrderPage = page;
         const searchInfo = orderListSearch.value;
         const searchYear = orderListYear.value;
-        const itemsPerPage = 5;
+        const itemsPerPage = 4;
 
         fetch("/mypage/orderList", {
             method: "POST",
@@ -494,7 +493,9 @@
                         <td>${order.price}</td>
                         <td>${order.status}</td>
                         <td>
-                            <a href="/review/product/${order.productId}" class="review-btn">리뷰작성</a>
+                            <button type="button" class="review-btn"">
+                                <a href="/review/product/${order.productId}">리뷰작성</a>
+                            </button>
                         </td>
                     `;
                     orderListRap.appendChild(tr);
@@ -519,7 +520,7 @@
     //구독 내역 조회 및 페이징
     function lookupSubscribeList(page = 1) {
         currentSubscribePage = page;
-        const itemsPerPage = 5;
+        const itemsPerPage = 6;
 
         fetch("/mypage/subscribe", {
             method: "POST",
@@ -541,16 +542,16 @@
                     const tr = document.createElement("tr");
 
                     tr.innerHTML = `
-                        <td>${subscribes.startDate.substring(0, 10)}</td>
+                        <td>${subscribes.startDate.substring(0, 10)}<br>${subscribes.startDate.substring(11, 16)}</td>
                         <td><img class="mypageImg" src="/upload/products/${subscribes.image}"></td>
                         <td>${subscribes.flowerName}</td>
                         <td>${subscribes.price}</td>
                         <td>${subscribes.period}</td>
                         <td>
                             <button class="cancel_btn calcelSubscribe" data-page="${pageDto.currentPage}" data-id="${subscribes.subscribeID}">구독 취소</button>
-                        </td>
-                        <td>
-                            <a href="/review/subscribe/${subscribes.subscribeID}" class="review-btn">리뷰작성</a>
+                            <button type="button" class="review-btn" data-subscribeID="${subscribes.subscribeID}">
+                                <a href="/review/subscribe/${subscribes.subscribeID}">리뷰작성</a>
+                            </button>
                         </td>
                     `;
                     subscribeRap.appendChild(tr);
@@ -601,9 +602,11 @@
         paginationRap.innerHTML = "";
 
         // 이전 버튼
+        const prevBtn = document.createElement("td");
+        prevBtn.textContent = "<";
+        prevBtn.style.padding = "0px 10px";
+        paginationRap.appendChild(prevBtn);
         if (pageDto.currentPage > 1) {
-            const prevBtn = document.createElement("td");
-            prevBtn.textContent = "<";
             prevBtn.style.cursor = "pointer";
             prevBtn.addEventListener("click", () => {
                 if (category === "order") {
@@ -637,9 +640,11 @@
         }
 
         // 다음 버튼
+        const nextBtn = document.createElement("td");
+        nextBtn.textContent = ">";
+        nextBtn.style.padding = "0px 10px";
+        paginationRap.appendChild(nextBtn);
         if (pageDto.currentPage < pageDto.totalPages) {
-            const nextBtn = document.createElement("td");
-            nextBtn.textContent = ">";
             nextBtn.style.cursor = "pointer";
             nextBtn.addEventListener("click", () => {
                 if (category === "order") {
@@ -648,7 +653,7 @@
                     lookupSubscribeList(currentSubscribePage + 1);
                 }
             });
-            paginationRap.appendChild(nextBtn);
+
         }
     }
 
