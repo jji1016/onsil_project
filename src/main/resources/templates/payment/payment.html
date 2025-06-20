@@ -8,6 +8,7 @@
   ${{'/css/payment.css'}},
 null
 )"></head>
+<header class="header" th:replace="~{fragments/mainPageHeader}"></header>
 <body>
 <div id="section">
     <h1>결제하기</h1>
@@ -136,25 +137,27 @@ null
             <div class="buy">
                 <button type="submit" value="결제하기" class="buy_bt" id="buy_button" disabled>결제하기</button>
             </div>
+        </div>
+    </div>
+</div>
 
-            <script>
-                document.querySelectorAll('input[name="pay"]').forEach(function (radio) {
-                    radio.addEventListener('change', function () {
-                        const selectedValue = this.value;
+<script>
+    document.querySelectorAll('input[name="pay"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            const selectedValue = this.value;
 
-                        // 모든 pay_sub의 li를 숨김
-                        document.querySelectorAll('.pay_sub li').forEach(function (li) {
-                            li.style.display = 'none';
-                        });
+            // 모든 pay_sub의 li를 숨김
+            document.querySelectorAll('.pay_sub li').forEach(function (li) {
+                li.style.display = 'none';
+            });
 
-                        // 선택된 값과 일치하는 data-type만 표시
-                        document.querySelectorAll(`.pay_sub li[data-type="${selectedValue}"]`).forEach(function (li) {
-                            li.style.display = 'block';
-                        });
-                    });
-                });
-
-
-            </script>
+            // 선택된 값과 일치하는 data-type만 표시
+            document.querySelectorAll(`.pay_sub li[data-type="${selectedValue}"]`).forEach(function (li) {
+                li.style.display = 'block';
+            });
+        });
+    });
+</script>
 </body>
 </html>
+<footer class="footer" th:replace="~{fragments/mainPageFooter}"></footer>
