@@ -1,0 +1,108 @@
+@charset "utf-8";
+*{margin: 0; padding:0;}
+ul{list-style: none;}
+a{color:#000; text-decoration: none;}
+img{border:0; vertical-align: top;}
+body{
+    font-family: 'Pretendard Variable', sans-serif;
+    background-color: #E5E0D8;
+}
+
+#section .sec1{
+    width: 100%;height: 610px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url('../images/product/nengii.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    color: white;
+    box-sizing: border-box;
+    padding-top: 250px;
+}
+#section .sec1 .mainheading,
+#section .sec1 .subheading{
+    font-size: 20px;
+    font-weight: 200;
+}
+#section .sec1 .subheading{
+    line-height: 28px;
+}
+#section .sec1 h3{
+    font-size: 38px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+#section .sub_heading{
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    color: #191919;
+    font-size: 32px;
+    font-weight: normal;
+}
+#section ul{
+    width: 1500px; margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+#section .prod_img01{width: 350px;height: 350px;background-image: url(../images/product/dahong_basket01.jpg); background-size: cover; background-position: center;}
+#section .prod_img02{width: 350px;height: 350px;background-image: url(../images/product/bluefrench01.jpg); background-size: cover; background-position: center;}
+#section .prod_img03{width: 350px;height: 350px;background-image: url(../images/product/yellbasket01.jpg); background-size: cover; background-position: center;}
+#section .prod_img04{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+
+
+#section .sec2{
+    width: 100%; height: auto;
+}
+#section .p_name{
+    font-size: 1.35em;
+    margin: 20px 0;
+    font-weight: 600;
+    color: #191919;
+}
+#section del{
+    font-size: 14px;
+}
+#section .p_price{
+    font-size: 1.3em;
+    margin-bottom: 50px;
+    color: #8B9773;
+    font-weight: bold;
+}
+#section .p_price span{
+    color: red;
+    font-size: 15px;
+}
+#footer{margin-top: 100px;}
+
+
+#section .sec3 .prod_img05{width: 350px;height: 350px;background-image: url(../images/product/vivid02.jpg); background-size: cover; background-position: center;}
+#section .sec3 .prod_img06{width: 350px;height: 350px;background-image: url(../images/product/whitebunch02.jpg); background-size: cover; background-position: center;}
+#section .sec3 .prod_img07{width: 350px;height: 350px;background-image: url(../images/product/tulip03.jpg); background-size: cover; background-position: center;}
+#section .sec3 .prod_img08{width: 350px;height: 350px;background-image: url(../images/product/bluefrench01.jpg); background-size: cover; background-position: center;}
+#section .sec3 .prod_img09{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+#section .sec3 .prod_img10{width: 350px;height: 350px;background-image: url(../images/product/tulip2.jpg); background-size: cover; background-position: center;}
+#section .sec3 .prod_img11{width: 350px;height: 350px;background-image: url(../images/product/blackpack01.jpg); background-size: cover; background-position: center;}
+#section .sec3 .prod_img12{width: 350px;height: 350px;background-image: url(../images/product/romantic01.jpg); background-size: cover; background-position: center;}
+
+
+#section .sec4 .prod_img13{width: 350px;height: 350px;background-image: url(../images/product/hotpink01.jpg); background-size: cover; background-position: center;}
+#section .sec4 .prod_img14{width: 350px;height: 350px;background-image: url(../images/product/white_basket02.jpg); background-size: cover; background-position: center;}
+#section .sec4 .prod_img15{width: 350px;height: 350px;background-image: url(../images/product/mini_basket01.jpg); background-size: cover; background-position: center;}
+#section .sec4 .prod_img16{width: 350px;height: 350px;background-image: url(../images/product/redbasket07.jpg); background-size: cover; background-position: center;}
+#section .sec4 .prod_img17{width: 350px;height: 350px;background-image: url(../images/product/pinkbasket01.jpg); background-size: cover; background-position: center;}
+#section .sec4 .prod_img18{width: 350px;height: 350px;background-image: url(../images/product/blue02.jpeg); background-size: cover; background-position: center;}
+#section .sec4 .prod_img19{width: 350px;height: 350px;background-image: url(../images/product/dahong_basket01.jpg); background-size: cover; background-position: center;}
+#section .sec4 .prod_img20{width: 350px;height: 350px;background-image: url(../images/product/yellbasket01.jpg); background-size: cover; background-position: center;}
+
+
+#section .sec5 .prod_img21{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+#section .sec5 .prod_img22{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+#section .sec5 .prod_img23{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+#section .sec5 .prod_img24{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+#section .sec5 .prod_img25{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+#section .sec5 .prod_img26{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+#section .sec5 .prod_img27{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}
+#section .sec5 .prod_img28{width: 350px;height: 350px;background-image: url(../images/product/pinkbunch04.jpg); background-size: cover; background-position: center;}

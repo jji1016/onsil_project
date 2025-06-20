@@ -85,6 +85,15 @@ public class Member {
         this.address02 = address02;
     }
 
+    public void updateInfo(String userPW, String userEmail, String tel, String zipcode, String address01, String address02) {
+        this.userPW = userPW;
+        this.userEmail = userEmail;
+        this.tel = tel;
+        this.zipcode = zipcode;
+        this.address01 = address01;
+        this.address02 = address02;
+    }
+
     public void markAsDeleted() {
         this.deleteStatus = true;
     }
@@ -93,6 +102,7 @@ public class Member {
         return MemberDto.builder()
                 .id(this.getId())
                 .userID(this.getUserID())
+                .userPW(this.getUserPW())
                 .userName(this.getUserName())
                 .userEmail(this.getUserEmail())
                 .nickName(this.getNickName())
@@ -101,7 +111,6 @@ public class Member {
                 .address02(this.getAddress02())
                 .zipcode(this.getZipcode())
                 .regDate(this.getRegdate())
-                .modifyDate(this.getRegdate())
                 .role(this.role)
                 .build();
     }

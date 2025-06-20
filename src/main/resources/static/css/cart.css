@@ -104,8 +104,8 @@ body{
   width: 200px;
 }
 #section .sel_item .item_sel>li:nth-child(1) .sell_it{
-  width: 30px; height: 30px;
-  margin-top: 45px;
+  width: 20px; height: 20px;
+  margin-top: 50px;
   margin-left: 85px;
 }
 #section .sel_item .item_sel>li:nth-child(2){
@@ -207,7 +207,8 @@ body{
 }
 #section .notandum .notandum_txt{
   margin-left: 22px;
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 1.5;
   font-weight: normal;
   color: rgba(128, 128, 128, 0.678);
 }

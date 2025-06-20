@@ -7,6 +7,7 @@ import lombok.*;
 @Table(name = "PRODUCT")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Product {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq_gen")
     @SequenceGenerator(name = "product_seq_gen", sequenceName = "PRODUCT_SEQ", allocationSize = 1)

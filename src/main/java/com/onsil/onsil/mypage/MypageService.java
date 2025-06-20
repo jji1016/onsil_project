@@ -61,11 +61,12 @@ public class MypageService {
         List<MypageOrderListDto> mypageSearchOrderListDtos = ObjectSearchOrderList.stream()
                 .map(index -> new MypageOrderListDto(
                         ((Number) index[0]).intValue(),
-                        Status.valueOf((String) index[1]).getLabel(),
-                        ((Timestamp) index[2]).toLocalDateTime(),
-                        (String) index[3],
-                        ((Number) index[4]).intValue(),
-                        (String) index[5]
+                        ((Number) index[1]).intValue(),
+                        Status.valueOf((String) index[2]).getLabel(),
+                        ((Timestamp) index[3]).toLocalDateTime(),
+                        (String) index[4],
+                        ((Number) index[5]).intValue(),
+                        (String) index[6]
                 ))
                 .collect(Collectors.toList());
 
@@ -90,9 +91,19 @@ public class MypageService {
         return mypageSubscribeDtoList;
     }
 
+
     public void updateInfo(MemberDto memberDto) {
-        Member member = memberDto.toMember();
-        mypageDao.save(member);
+        Member member = mypageDao.findById(memberDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("회원 없음"));
+
+        member.updateInfo(
+                memberDto.getUserPW(),
+                memberDto.getUserEmail(),
+                memberDto.getTel(),
+                memberDto.getZipcode(),
+                memberDto.getAddress01(),
+                memberDto.getAddress02()
+        );
     }
 
     public int deleteAccount(Integer id) {

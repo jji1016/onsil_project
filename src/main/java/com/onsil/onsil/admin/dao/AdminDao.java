@@ -1,16 +1,23 @@
 package com.onsil.onsil.admin.dao;
 
+import com.onsil.onsil.admin.dto.DeliveryStatusDto;
 import com.onsil.onsil.admin.dto.PopularCountDto;
+import com.onsil.onsil.admin.dto.SalesByMonthDto;
 import com.onsil.onsil.admin.repository.AdminMemberRepository;
 import com.onsil.onsil.admin.repository.AdminOrderListRepository;
+import com.onsil.onsil.admin.repository.AdminProductRepository;
 import com.onsil.onsil.admin.repository.AdminSubscribeRepository;
 import com.onsil.onsil.entity.Member;
+import com.onsil.onsil.entity.OrderList;
 import com.onsil.onsil.entity.Subscribe;
+import com.onsil.onsil.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,9 +28,11 @@ public class AdminDao {
     private final AdminMemberRepository memberRepository;
     private final AdminOrderListRepository orderListRepository;
     private final AdminSubscribeRepository subscribeRepository;
+    private final com.onsil.onsil.review.repository.ReviewRepository reviewRepository;
+    private final AdminProductRepository productRepository;
 
     public List<Member> getAllMembers() {
-        return memberRepository.findAll();
+        return memberRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     public Member findByUserID(String userID) {
@@ -34,9 +43,6 @@ public class AdminDao {
         return subscribeRepository.findByMember_id(id);
     }
 
-    //    public List<Member> searchMembers(String keyword, String category, LocalDateTime startDate, LocalDateTime endDate) {
-//        return memberRepository.searchMembers(keyword, category, startDate,endDate);
-//    }
     public List<Member> searchMembers() {
         return memberRepository.findAll();
     }
@@ -49,11 +55,49 @@ public class AdminDao {
         return subscribeRepository.countOneMonthMember(todayDate);
     }
 
-    public List<PopularCountDto> popularSubscribe() {
-        return subscribeRepository.popularSubscribe(PageRequest.of(0, 5));
+    public List<PopularCountDto> getPopularProducts() {
+        List<Object[]> rows = productRepository.findPopularProducts();
+        return rows.stream()
+                .map(row -> new PopularCountDto(
+                        ((Number) row[0]).intValue(),    // productId
+                        (String) row[1],                 // flowerName
+                        ((Number) row[2]).longValue()    // totalCount
+                ))
+                .toList();
     }
 
-    public List<Subscribe> findRecentInMonth(LocalDateTime oneMonthAgo, Pageable topFive) {
-        return  subscribeRepository.findRecentInMonth(oneMonthAgo, topFive);
+
+    public List<Subscribe> findRecentInMonth(LocalDateTime oneMonthAgo) {
+        return subscribeRepository.findRecentInMonth(oneMonthAgo);
     }
+
+    public int inOneWeekReview(LocalDateTime oneWeekAgo) {
+        return reviewRepository.countOneWeekReview(oneWeekAgo);
+    }
+
+    public DeliveryStatusDto countDeliveryStatuses() {
+        return orderListRepository.countDeliveryStatuses();
+    }
+
+    public List<SalesByMonthDto> findMonthlySales() {
+        return subscribeRepository.findMonthlySales();
+    }
+
+    public List<Subscribe> getAllLists() {
+        return subscribeRepository.findAllWithMemberAndProduct(); // JPQL fetch join
+    }
+
+    public List<OrderList> getAllOrderLists() {
+        return orderListRepository.findAllWithMemberAndProduct(); // JPQL fetch join
+    }
+
+    public List<Object[]> getMonthlyOrderRevenue() {
+        return orderListRepository.getMonthlyOrderRevenue();
+    }
+
+    public List<Object[]> getMonthlySubscribeRevenue() {
+        return subscribeRepository.getMonthlySubscribeRevenue();
+    }
+
+
 }

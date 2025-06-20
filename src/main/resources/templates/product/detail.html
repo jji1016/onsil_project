@@ -1,149 +1,146 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${flower.flowerName} + ' - 상세페이지'">꽃 상세페이지</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .product-detail {
-            display: flex;
-            gap: 30px;
-            max-width: 800px;
-            margin: 0 auto;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-        }
-        .product-detail img {
-            width: 300px;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .details {
-            flex: 1;
-        }
-        .product-name {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .price {
-            color: green;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .description {
-            font-size: 16px;
-            line-height: 1.5;
-            color: #333;
-        }
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #007BFF;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        .review {
-            border-top: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .review img {
-            max-width: 200px;
-            margin-top: 10px;
-            border-radius: 6px;
-            display: block;
-        }
-    </style>
-</head>
+<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/mainPageHead :: commonHead(
+  '상품상세',
+  ${{'/css/detail.css'}},
+null
+)"></head>
 <body>
-
-<h1>🌸 꽃 상세 페이지</h1>
-
-<div class="product-detail">
-    <img th:src="@{'/images/products/' + ${flower.image}}" th:alt="${flower.flowerName}">
-    <div class="details">
-        <div class="product-name" th:text="${flower.flowerName}">꽃 이름</div>
-        <div class="price" th:text="|₩${flower.price}|">₩0</div>
-        <div class="description" th:text="${flower.flowerInfo}">여기에 꽃 설명이 들어갑니다.</div>
-        <a class="back-link" th:href="@{/product/list}">← 상품 목록으로 돌아가기</a>
-    </div>
-</div>
-
-<div class="reviews">
-    <h3>📝 리뷰</h3>
-    <div th:if="${#lists.isEmpty(flower.reviews)}">
-        <p>등록된 리뷰가 없습니다.</p>
-    </div>
-    <div th:each="review : ${flower.reviews}" class="review">
-        <div class="author" th:text="${review.memberNickName}">작성자닉네임</div>
-        <div class="rating">⭐ <span th:text="${review.rating}">5</span>/5</div>
-        <div class="content" th:text="${review.content}">리뷰 내용</div>
-
-        <div th:if="${review.image != null}">
-            <img th:src="@{'/upload/reviews/' + ${review.image}}" alt="리뷰 이미지">
+<header class="header" th:replace="~{fragments/mainPageHeader}"></header>
+<div id="section">
+    <div class="frist_se">
+        <div class="left_img">
+            <img th:src="@{${'/upload/products/'+flower.image}}" alt="">
+            <div class="sub_img">
+                <ul class="sub">
+                    <li><img src="/images/particular/lineup01.png" alt=""></li>
+                    <li><img src="/images/particular/fl_img.png" alt=""></li>
+                    <li><img src="/images/particular/fl_img2.png" alt=""></li>
+                </ul>
+            </div>
         </div>
 
-        <form th:if="${#authentication.name == review.userId}"
-              th:action="@{/review/delete}" method="post" style="margin-top: 10px;">
-            <input type="hidden" name="reviewId" th:value="${review.id}" />
-            <input type="hidden" name="productId" th:value="${flower.id}" />
-            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">🗑️ 삭제</button>
+        <div class="right_text">
+            <div class="product_na">
+                <h2 th:text="${flower.flowerName}"></h2>
+                <h5 th:text="${#numbers.formatInteger(flower.price, 0, 'COMMA')} + '원'">36,200원</h5>
+                <h4><span>25%</span><span style="font-size: 30px;"
+                                          th:text="${#numbers.formatInteger(flower.price * 0.75, 0, 'COMMA')} + '원'">원</span>
+                </h4>
+                <div class="review_write">
+                    <p>무이자할부 카드 자세히보기</p>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="deliver">
+                <ul class="de_me">
+                    <li><img src="/images/particular/icon_delivery.png" alt=""></li>
+                    <li><p>
+                        오늘출발 11:00 마감<br>
+                        <span>지금 주문시 내일 5/30(금)에 발송됩니다.</span>
+                    </p></li>
+                </ul>
+            </div>
 
-        </form>
+            <div class="de_acc">
+                <p>
+                    택배배송 3,000원(주문시 결제 / 정기구독 시 회차별 부과) · 우체국택배<br>
+                    13,000원 이상 구매 시 무료 / 제주,도서지역 추가 3,000원
+                </p>
+                <span>배송비 절약상품 보기</span>
+            </div>
+            <div class="line"></div>
+
+            <ul class="de_memo">
+                <li><input type="text" class="de_tex" value="" placeholder="배송메시지를 입력해주세요"></li>
+            </ul>
+            <div class="text_arr">
+                <p>정기구독 회차별 결제금액은 할인률에 따라 현재금액과 다를수 있습니다.<br></p>
+            </div>
+            <div class="text_arr2">
+                <h5 class="amount_all">총 상품금액</h5>
+                <h5 class="amount"><p>총 수량 1개</p>
+                    <span th:text="${#numbers.formatInteger(flower.price * 0.75, 0, 'COMMA')} + '원'"></span></h5>
+            </div>
+
+            <div class="sell_txt">
+                <ul class="se_txt">
+                    <li>
+                        <button type="submit" class="btn_sell4" value="찜목록"><img src="/images/particular/Group 78.png"
+                                                                                 alt=""></button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn_sell" value="장바구니">장바구니</button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn_sell2" value="선물하기">선물하기</button>
+                    </li>
+                    <li><a href="payment.html">
+                        <button type="submit" class="btn_sell3" value="구매하기">구매하기</button>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="secound_se">
+        <div class="top_re" th:each="review : ${reviews}">
+            <div class="reviwe">
+                <div class="star_all">
+                    <ul class="star">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <p th:text="${review.rating}">5</p>
+                </div>
+                <div class="reviwe_txt">
+                    <h4><span th:text="${#strings.substring(review.member.userID, 0, 2)} + '****'"></span> ·
+                        <span th:text="${#temporals.format(review.regDate, 'yy,MM,dd')}"></span>
+                    </h4>
+                    <h5>
+
+                        <span th:text="${review.content}">리뷰 내용</span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="thrid_se">
+        <div class="detailed">
+            <ul class="deta_gnb">
+                <li class="active"><a href="#">상세정보</a></li>
+                <li><a href="#">리뷰1,434</a></li>
+                <li><a href="#">Q&A</a></li>
+                <li><a href="#">반품/교환정보</a></li>
+            </ul>
+            <div class="arrival_date">
+                <p><span>오늘출발 11:00 마감</span> 모레 5/31(토) 도착확률91%</p>
+            </div>
+            <div class="arrival_date2">
+                <p>
+                    이 상품의 배송기간<br>
+                    평균 배송기간 2일이내의 상품입니다.<br>
+                    <span>배송기간은 주말/공휴일을 제외한 영업일기준</span>
+                </p>
+            </div>
+            <div class="detailed_img">
+                <img src="/images/particular/71824725596656797_1856458095.jpg" alt="">
+            </div>
+            <div class="deta_txt">
+                <p class="on">상세내용 펼쳐보기</p>
+                <p>상세내용 접기</p>
+            </div>
+        </div>
     </div>
 </div>
-
-<div class="review-form" style="margin-top: 40px;">
-    <h3>✍️ 리뷰 작성</h3>
-
-    <div th:if="${#authorization.expression('isAuthenticated()')}">
-        <div th:if="${myReview != null}">
-            <p>이미 리뷰를 작성하셨습니다.</p>
-            <form th:action="@{/review/edit}" method="get">
-                <input type="hidden" name="reviewId" th:value="${myReview.id}" />
-                <button type="submit">✏️ 리뷰 수정하기</button>
-            </form>
-        </div>
-        <div th:if="${myReview == null}">
-        <form th:action="@{/review/write}" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="productId" th:value="${flower.id}">
-            <div>
-                <label for="rating">평점 (1~5): </label>
-                <input type="number" id="rating" name="rating" min="1" max="5" required>
-            </div>
-            <div>
-                <label for="content">리뷰 내용:</label><br>
-                <textarea id="content" name="content" rows="4" cols="50" required></textarea>
-            </div>
-            <div>
-                <label for="image">리뷰 이미지:</label><br>
-                <input type="file" id="image" name="imageFile" accept="image/*">
-            </div>
-            <button type="submit">리뷰 작성</button>
-        </form>
-        </div>
-    </div>
-
-    <div th:unless="${#authorization.expression('isAuthenticated()')}">
-        <button onclick="promptLogin()">리뷰 작성하려면 로그인하세요</button>
-    </div>
-</div>
-
-<script>
-    function promptLogin() {
-        alert("리뷰를 작성하려면 로그인해야 합니다.");
-        window.location.href = "/member/login";
-    }
-</script>
-
-
+<footer class="footer" th:replace="~{fragments/mainPageFooter}"></footer>
 </body>
 </html>

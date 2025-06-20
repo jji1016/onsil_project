@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온실 플라워 스튜디오 - 홈화면</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"/>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header class="header" th:replace="~{fragments/adminHeader}"></header>
+<div id="section">
+    <div id="home" class="tab">
+        <div class="home_top">
+            <ul class="overview">
+                <li>
+                    <a href="#">
+                        <img src="../../static/images/admin/icon_over_member.png" alt="회원아이콘">
+                        <h3>신규 가입자</h3>
+                        <p th:text="${inOneMonthSubscribeMember}">32<span>명</span></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../../static/images/admin/icon_over_member.png" alt="전체회원아이콘">
+                        <h3>전체 가입자</h3>
+                        <p th:text="${allSubscribeMember}">345<span>명</span></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../../static/images/admin/icon_over_deli.png" alt="배송아이콘">
+                        <h3>신규 주문</h3>
+                        <p th:text="${todaySubscribe.size()}">57<span>건</span></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../../static/images/admin/icon_over_qna.png" alt="문의아이콘">
+                        <h3>신규 문의</h3>
+                        <p>17<span>건</span></p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../../static/images/admin/icon_over_review.png" alt="리뷰아이콘">
+                        <h3>신규 리뷰</h3>
+                        <p th:text="${inOneWeekReview}">24<span>건</span></p>
+                    </a>
+                </li>
+            </ul>
+            <div class="admin">
+                <div class="ad_info">
+                    <img src="../../static/images/admin/admin.png" alt="관리자이미지">
+                    <h3>사용자 이름</h3>
+                    <p>전체 관리자</p>
+                </div>
+                <ul class="setting">
+                    <li>
+                        <img src="../../static/images/admin/icon_setting.png" alt="수정">수정
+                    </li>
+                    <li>
+                        <img src="../../static/images/admin/icon_logout.png" alt="로그아웃">로그아웃
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="sale_chart">
+            <h2 class="title_txt">월별 매출 요약</h2>
+            <div class="h_chart_area">
+                <canvas id="homeSales" width="620" height="110"></canvas>
+            </div>
+        </div>
+        <ul class="home_bt">
+            <li class="best_item">
+                <h2>인기상품</h2>
+                <div class="cont_area">
+                    <!--                    <table>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>1.</td>-->
+                    <!--                            <td><span>5월 카네이션 패키지</span></td>-->
+                    <!--                        </tr>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>2.</td>-->
+                    <!--                            <td><span>2만원대로 유럽피언 꽃 구독(S)</span></td>-->
+                    <!--                        </tr>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>3.</td>-->
+                    <!--                            <td><span>4만원대로 유럽피언 꽃 구독(M)</span></td>-->
+                    <!--                        </tr>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>4.</td>-->
+                    <!--                            <td><span>마법같은 행복, 페어리 가든 꽃다발(M)</span></td>-->
+                    <!--                        </tr>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>5.</td>-->
+                    <!--                            <td><span>[6월의 탄생화] 사랑을 담은 수국 패키지</span></td>-->
+                    <!--                        </tr>-->
+                    <!--                    </table>-->
+                    <table>
+                        <tr th:each="subscribe, stat : ${popularSubscribe}">
+                            <td th:text="${stat.index + 1} + '.'"></td>
+                            <td><span th:text="${subscribe.flowerName}"></span></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </li>
+            <li class="today_order">
+                <h2>최근 한 달 주문</h2>
+                <div class="cont_area">
+                    <table>
+                        <tr>
+                            <th>총 주문 건수</th>
+                            <th>총 주문금액</th>
+                        </tr>
+                        <tr>
+                            <td><span th:text="${recentSubscribes.size()}">0</span></td>
+                            <td><span th:text="${totalPrice}">0</span></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>입금대기</th>
+                            <th>결제완료</th>
+                        </tr>
+                        <tr>
+                            <td><span>2</span></td>
+                            <td><span>22</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li class="ship">
+                <h2>배송현황</h2>
+                <div class="cont_area">
+                    <table>
+                        <tr>
+                            <th>배송준비중</th>
+                            <th>배송중</th>
+                        </tr>
+                        <tr>
+                            <td><span th:text="${statusSummary.getOrdered()}">28</span></td>
+                            <td><span th:text="${statusSummary.getDelivering()}">14</span></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>배송완료</th>
+                        </tr>
+                        <tr>
+                            <td><span th:text="${statusSummary.getShipped()}">32</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script th:inline="javascript">
+    const monthlyLabels = /*[[${monthlyLabels}]]*/ [];
+    const monthlyData = /*[[${monthlyData}]]*/ [];
+
+    console.log("monthlyLabels === ", monthlyLabels)
+    console.log("monthlyData === ", monthlyData)
+
+    function renderSalesChart(labels, data) {
+        const ctx = document.getElementById('homeSales').getContext('2d');
+
+        if (window.salesChartInstance) {
+            window.salesChartInstance.destroy(); // 기존 차트가 있으면 삭제
+        }
+
+        window.salesChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '월별 매출',
+                    data: data,
+                    backgroundColor: '#A6BFA4',
+                    borderRadius: 4,
+                    barThickness: 30
+                }]
+            },
+            options: {
+                responsive: true,
+                animations: false,
+                plugins: {
+                    legend: {display: false},
+                    tooltip: {
+                        callbacks: {
+                            label: context => `${context.parsed.y} 원`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '매출 (백만원)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            maxRotation: 0,
+                            minRotation: 0
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // 페이지가 다 로드된 후 실행
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof monthlyLabels !== 'undefined' && typeof monthlyData !== 'undefined') {
+            renderSalesChart(monthlyLabels, monthlyData);
+        }
+    });
+</script>
+</body>
+</html>

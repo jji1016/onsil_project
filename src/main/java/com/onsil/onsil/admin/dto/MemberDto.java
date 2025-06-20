@@ -1,5 +1,6 @@
 package com.onsil.onsil.admin.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.onsil.onsil.constant.Role;
 import lombok.*;
 
@@ -24,6 +25,8 @@ public class MemberDto {
     private String address02;
     private String tel;
     private String role;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime regDate;
     private boolean deleteStatus;
 }

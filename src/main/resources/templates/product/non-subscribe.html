@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/mainPageHead :: commonHead(
+  '상품상세',
+  ${{'/css/non-subscribe.css'}},
+null
+)"></head>
+<body>
+
+<h1>🌸 꽃 상품 리스트</h1>
+
+<div class="product-list">
+    <div class="product" th:each="flower : ${flowerList}">
+        <a th:href="@{'/product/detail/' + ${flower.getDataNo()}}">
+            <img th:src="@{'/upload/products/' + ${flower.getFType()}}" th:alt="${flower.getFlowNm()}">
+        </a>
+        <a th:href="@{'/product/detail/' + ${flower.getDataNo()}}">
+            <div class="product-name" th:text="${flower.getFlowNm()}"></div>
+        </a>
+        <div class="price" th:text="|₩${flower.price}|"></div>
+    </div>
+</div>
+
+</body>
+</html>

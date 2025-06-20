@@ -1,5 +1,8 @@
 package com.onsil.onsil.admin.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.service.*;
 import com.onsil.onsil.admin.dto.AdminOutputDto;
@@ -8,65 +11,161 @@ import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.dto.SubscribeDto;
 import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
+import com.onsil.onsil.entity.OrderList;
+import com.onsil.onsil.mypage.dto.MypageOrderListDto;
+import jakarta.servlet.http.HttpServletRequest;
+import com.onsil.onsil.constant.Period;
+import com.onsil.onsil.entity.Product;
+import com.onsil.onsil.entity.Subscribe;
+import com.onsil.onsil.product.repository.ProductRepository;
+import com.onsil.onsil.product.service.ProductService;
+import com.onsil.onsil.subscribe.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-@Controller
 @RequestMapping("/admin")
+@Controller
 @RequiredArgsConstructor
 @Slf4j
 public class AdminController {
 
     private final AdminService adminService;
+    private final AdminOutputService adminOutputService;
+    private final SubscribeRepository subscribeRepository;
+    private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    @GetMapping("/dashboard")
-    public String index(Model model) {
+    @Value("${file.path}products/")
+    String productsPath;  // 여기서 주입
 
+    @GetMapping("/admin")
+    public String onsilHtml(Model model) throws JsonProcessingException {
+
+        // 총 멤버수
         int countedMember = adminService.countAllMembers();
+        // 한달이내 가입자 수(중복제거)
         int inOneMonthSubscribeMember = adminService.countOneMonth();
+        // 일주일 내 리뷰 수
+        int inOneWeekReview = adminService.inOneWeekReview();
+
+        // 인기상품 리스트
         List<PopularCountDto> popularSubscribe = adminService.popularSubscribe();
-        List<SubscribeDto> recentSubscribes = adminService.findRecentSubscribeInOneMonth();
+        // 멤버리스트
+        List<MemberDto> memberList = adminService.getAllMembers();
+        // orderLists
+        List<AdminOrderListDto> orderLists = adminService.getAllOrderLists();
+        // subscribeLists
+        List<SubscribeDto> subscribeList = adminService.getAllLists();
+
+        // 오늘 주문건
+        SubscribeSumDto todaySubscribe = adminService.subscribeToday();
+        // 한달이내 주문건수
+        SubscribeSumDto recentSubscribes = adminService.subscribeInOneMonth();
+        // 배송현황
+        DeliveryStatusDto statusSummary = adminService.getDeliveryStatusSummary();
+        // 매출합계
+        Map<String, BigDecimal> revenue = adminService.getMergedMonthlyRevenue();
 
         model.addAttribute("allSubscribeMember", countedMember);
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
         model.addAttribute("popularSubscribe", popularSubscribe);
-        model.addAttribute("recentSubscribes", recentSubscribes);
+        model.addAttribute("recentSubscribes", recentSubscribes.getList());
+        model.addAttribute("todaySubscribe",todaySubscribe.getList());
+        model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("inOneWeekReview", inOneWeekReview);
+        model.addAttribute("statusSummary", statusSummary);
+        model.addAttribute("orderLists", orderLists);
+        model.addAttribute("subscribeLists", subscribeList);
+        model.addAttribute("monthlyLabels", revenue.keySet());
+        model.addAttribute("monthlyData", revenue.values());
 
-
-        return "admin/dashboard";
+        return "admin/admin";
     }
 
-    @GetMapping("/member-list")
-    public String memberList(Model model) {
+    @GetMapping("/home")
+    private String adminHome(Model model, HttpServletRequest request) {
 
+        // 총 멤버수
+        int countedMember = adminService.countAllMembers();
+        // 한달이내 가입자 수(중복제거)
+        int inOneMonthSubscribeMember = adminService.countOneMonth();
+        // 일주일 내 리뷰 수
+        int inOneWeekReview = adminService.inOneWeekReview();
+
+        // 인기상품 리스트
+        List<PopularCountDto> popularSubscribe = adminService.popularSubscribe();
+
+        // 오늘 주문건
+        SubscribeSumDto todaySubscribe = adminService.subscribeToday();
+        // 한달이내 주문건수
+        SubscribeSumDto recentSubscribes = adminService.subscribeInOneMonth();
+        // 배송현황
+        DeliveryStatusDto statusSummary = adminService.getDeliveryStatusSummary();
+        // 매출합계
+        Map<String, BigDecimal> revenue = adminService.getMergedMonthlyRevenue();
+
+        model.addAttribute("allSubscribeMember", countedMember);
+        model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
+        model.addAttribute("popularSubscribe", popularSubscribe);
+        model.addAttribute("recentSubscribes", recentSubscribes.getList());
+        model.addAttribute("todaySubscribe",todaySubscribe.getList());
+        model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
+        model.addAttribute("inOneWeekReview", inOneWeekReview);
+        model.addAttribute("statusSummary", statusSummary);
+        model.addAttribute("monthlyLabels", revenue.keySet());
+        model.addAttribute("monthlyData", revenue.values());
+
+        return "admin/home"; // 전체 페이지 렌더
+    }
+
+    @GetMapping("member")
+    public String adminMember(Model model, HttpServletRequest request) {
+        // 멤버리스트
         List<MemberDto> memberList = adminService.getAllMembers();
-        model.addAttribute("memberList", memberList);
+        // orderLists
+        List<AdminOrderListDto> orderLists = adminService.getAllOrderLists();
+        // subscribeLists
+        List<SubscribeDto> subscribeList = adminService.getAllLists();
 
-        return "admin/member-list";
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("orderLists", orderLists);
+        model.addAttribute("subscribeLists", subscribeList);
+
+        return "admin/member"; // 전체 페이지 렌더
+    }
+
+    @GetMapping("/api/sales/monthly")
+    @ResponseBody
+    public List<SalesByMonthDto> getSalesData() {
+        return adminService.getMonthlySales();
     }
 
     @PostMapping("/member-list/delete/{userID}")
     @ResponseBody
     public MemberDto delete(@PathVariable String userID) {
         return adminService.deleteByUserID(userID);
-    }
-
-    @GetMapping("/member-detail/{userID}")
-    public String memberDetail(@PathVariable String userID, Model model) {
-
-        MemberDto memberDetail = adminService.findByUserID(userID);
-        model.addAttribute("memberDetail", memberDetail);
-
-        return "admin/member-detail";
     }
 
     @GetMapping("/member-modify/{userID}")
@@ -81,15 +180,12 @@ public class AdminController {
     @PostMapping("/member-modify/{userID}")
     public String modifyMember(@PathVariable String userID, @ModelAttribute MemberDto dto) {
         adminService.modifyMember(userID, dto);
-        return "redirect:/admin/member-list";
+        return "redirect:/admin/member";
     }
-
 
     @GetMapping("/order-list/{id}")
     public String orderList(@PathVariable int id, Model model) {
 
-        List<SubscribeDto> orderLists = adminService.findByMemberID(id);
-        model.addAttribute("orderLists", orderLists);
 
         return "admin/order-list";
     }
@@ -255,6 +351,30 @@ public class AdminController {
         return "admin/order02";
     }
 
+    @GetMapping("/product")
+    public String product( Model model) {
+
+        return "admin/product";
+    }
+
+    @PostMapping("/save")
+    public String saveProduct(
+            @RequestParam("f_month") int fMonth,
+            @RequestParam("flowerName") String flowerName,
+            @RequestParam("price") int price,
+            @RequestParam("flowerInfo") String flowerInfo,
+            @RequestParam("imageFile") MultipartFile imageFile,
+            @RequestParam("f_lang") String flowLang,
+            @RequestParam("f_use") String fUse,
+            @RequestParam("f_grow") String fGrow,
+            @RequestParam("f_type") String fType
+    ) throws IOException {
+
+        File saveDir = new File(productsPath);
+        if (!saveDir.exists()) {
+            saveDir.mkdirs();
+        }
+
     //상품내역 검색 기능
     @GetMapping("/productlist")
     public String productList(
@@ -297,4 +417,39 @@ public class AdminController {
     }
 
 }
+
+
+
+        String originalFilename = imageFile.getOriginalFilename();
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String storedFileName = baseName + "_" + timestamp + extension; // abc_20250605123045.jpg
+
+
+        String savePath = productsPath + storedFileName;
+
+
+        imageFile.transferTo(new File(savePath));
+
+
+        Product product = new Product();
+        product.setFMonth(fMonth);
+        product.setFlowerName(flowerName);
+        product.setImage(storedFileName);
+        product.setFlowLang(flowLang);
+        product.setFUse(fUse);
+        product.setFGrow(fGrow);
+        product.setFType(fType);
+        product.setFlowerInfo(flowerInfo);
+        product.setPrice(price);
+
+        productRepository.save(product);
+
+
+        return "redirect:/admin/product";
+    }
+}
+
+
 

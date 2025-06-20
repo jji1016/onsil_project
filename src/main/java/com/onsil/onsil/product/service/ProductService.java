@@ -19,4 +19,8 @@ public class ProductService {
     public List<ProductDto> findAll() {
         return productDao.findAll();
     }
+
+    public List<ProductDto> findRandom8() {
+        return productDao.findRandom8();
+    }
 }

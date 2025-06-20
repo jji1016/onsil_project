@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/mainPageHead :: commonHead(
+  '할인/이벤트',
+  ${{'/css/particular.css'}},
+null
+)"></head>
+<body>
+<header class="header" th:replace="~{fragments/mainPageHeader}"></header>
+<div id="section">
+    <div class="frist_se">
+        <div class="left_img">
+            <img th:src="@{${'/upload/products/'+subscribe.productImage}}" alt="">
+            <div class="sub_img">
+                <ul class="sub">
+                    <li><img src="/images/particular/lineup01.png" alt=""></li>
+                    <li><img src="/images/particular/fl_img.png" alt=""></li>
+                    <li><img src="/images/particular/fl_img2.png" alt=""></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right_text">
+            <div class="product_na">
+                <h2 th:text="${subscribe.getProductName()}"></h2>
+                <h5 th:text="${#numbers.formatInteger(subscribe.price, 0, 'COMMA')} + '원'">36,200원</h5>
+                <h4><span>25%</span><span style="font-size: 30px;"
+                                          th:text="${#numbers.formatInteger(subscribe.price * 0.75, 0, 'COMMA')} + '원'">원</span>
+                </h4>
+                <div class="review_write">
+                    <p>무이자할부 카드 자세히보기</p>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="deliver">
+                <ul class="de_me">
+                    <li><img src="/images/particular/icon_delivery.png" alt=""></li>
+                    <li><p>
+                        오늘출발 11:00 마감<br>
+                        <span>지금 주문시 내일 5/30(금)에 발송됩니다.</span>
+                    </p></li>
+                </ul>
+            </div>
+
+            <div class="de_acc">
+                <p>
+                    택배배송 3,000원(주문시 결제 / 정기구독 시 회차별 부과) · 우체국택배<br>
+                    13,000원 이상 구매 시 무료 / 제주,도서지역 추가 3,000원
+                </p>
+                <span>배송비 절약상품 보기</span>
+            </div>
+            <div class="line"></div>
+
+            <ul class="de_memo">
+                <li>
+                    <select name="de_tex" id="del_tex">
+                        <option value="de_tex">배송방법</option>
+                        <option value="de_tex">정기구독</option>
+                    </select>
+                </li>
+            </ul>
+            <div class="text_arr">
+                <p>정기구독 회차별 결제금액은 할인률에 따라 현재금액과 다를수 있습니다.<br></p>
+            </div>
+            <div class="text_arr2">
+                <h5 class="amount_all">총 상품금액</h5>
+                <h5 class="amount"><p>총 수량 1개</p>
+                    <span th:text="${#numbers.formatInteger(subscribe.price * 0.75, 0, 'COMMA')} + '원'"></span></h5>
+            </div>
+
+            <div class="sell_txt">
+                <ul class="se_txt">
+                    <li>
+                        <button type="submit" class="btn_sell4" value="찜목록"><img src="/images/particular/Group 78.png"
+                                                                                 alt=""></button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn_sell" value="장바구니">장바구니</button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn_sell2" value="선물하기">선물하기</button>
+                    </li>
+                    <li><a href="payment.html">
+                        <button type="submit" class="btn_sell3" value="구매하기">구매하기</button>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="secound_se">
+        <div class="top_re" th:each="review : ${reviews}">
+            <div class="reviwe">
+                <div class="star_all">
+                    <ul class="star">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <p th:text="${review.rating}">5</p>
+                </div>
+                <div class="reviwe_txt">
+                    <h4><span th:text="${#strings.substring(review.member.userID, 0, 2)} + '****'"></span> ·
+                        <span th:text="${#temporals.format(review.regDate, 'yy,MM,dd')}"></span>
+                        배송방법: 정기구독</h4>
+                    <h5>
+                        <p>정기구독</p>
+                        <span th:text="${review.content}">리뷰 내용</span>
+                    </h5>
+                </div>
+                <!-- css수정해야함 -->
+                <div class="review_img">
+                    <img th:if="${review.image != null}" th:src="@{'/upload/reviews/' + ${review.image}}" alt="리뷰 이미지">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="thrid_se">
+        <div class="detailed">
+            <ul class="deta_gnb">
+                <li class="active"><a href="#">상세정보</a></li>
+                <li><a href="#">리뷰1,434</a></li>
+                <li><a href="#">Q&A</a></li>
+                <li><a href="#">반품/교환정보</a></li>
+            </ul>
+            <div class="arrival_date">
+                <p><span>오늘출발 11:00 마감</span> 모레 5/31(토) 도착확률91%</p>
+            </div>
+            <div class="arrival_date2">
+                <p>
+                    이 상품의 배송기간<br>
+                    평균 배송기간 2일이내의 상품입니다.<br>
+                    <span>배송기간은 주말/공휴일을 제외한 영업일기준</span>
+                </p>
+            </div>
+            <div class="detailed_img">
+                <img src="/images/particular/71824725596656797_1856458095.jpg" alt="">
+            </div>
+            <div class="deta_txt">
+                <p class="on">상세내용 펼쳐보기</p>
+                <p>상세내용 접기</p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer" th:replace="~{fragments/mainPageFooter}"></footer>
+</body>
+</html>

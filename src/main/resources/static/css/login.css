@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+img {
+    border: 0;
+    vertical-align: top;
+}
+
+body {
+    font-family: 'Pretendard';
+}
+
+#section {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 100px;
+    color: rgb(139, 139, 139)
+}
+
+#section h1 {
+    margin-bottom: 50px;
+    color: #191919;
+}
+
+#section #user-id,
+#section #user-pw {
+    width: 500px;
+    height: 50px;
+    border: none;
+    border-bottom: 1px solid rgb(177, 177, 177);
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+#section #autoLogin {
+    margin: 10px 0;
+    margin-left: -400px;
+}
+
+#section .login {
+    width: 500px;
+    margin: 20px auto;
+    height: 50px;
+    border: none;
+    background-color: #8B9773;
+    color: white;
+    font-size: 17px;
+    transition: all 0.3s;
+}
+
+#section .login:hover {
+    background-color: #000;
+}
+
+#section .find_mine {
+    width: 350px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+#section .find_mine > li a span:hover {
+    color: #191919;
+}
+
+#section .find_mine > li a {
+    color: rgb(139, 139, 139);
+}
+
+#section .join_wrap {
+    width: 500px;
+    margin: 0 auto;
+    height: 300px;
+    border: 1px solid #8B9773;
+    box-sizing: border-box;
+    margin-top: 50px;
+}
+
+#section .join_wrap p {
+    padding-top: 50px;
+    font-size: 15px;
+    color: rgb(139, 139, 139);
+}
+
+#section .join_wrap p span {
+    font-size: 18px;
+    color: #191919;
+}
+
+#section .join_wrap .joinin {
+    width: 200px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid #8B9773;
+    color: #8B9773;
+    margin: 50px;
+    transition: all 0.3s;
+}
+
+#section .join_wrap .joinin:hover {
+    background-color: #8B9773;
+    color: white;
+}
+
+#section .sns_txt {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0px;
+    font-weight: 500;
+}
+
+#section .sns_txt li:nth-child(1),
+#section .sns_txt li:nth-child(3) {
+    width: 150px;
+    height: 8px;
+    border-bottom: 1px solid rgb(177, 177, 177);
+}
+
+#section .sns_login {
+    width: 250px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 150px;
+}

@@ -55,16 +55,16 @@ public String saveProduct(
     String savePath = productsPath+ storedFileName;
 
 
-    imageFile.transferTo(new File(savePath));
+        imageFile.transferTo(new File(savePath));
 
 
-    Product product = new Product();
-    product.setFlowerName(flowerName);
-    product.setPrice(price);
-    product.setFlowerInfo(flowerInfo);
-    product.setImage(storedFileName);
-    productRepository.save(product);
-    return "redirect:/product/list";
-}
+        Product product = new Product();
+        product.setFlowerName(flowerName);
+        product.setPrice(price);
+        product.setFlowerInfo(flowerInfo);
+        product.setImage(storedFileName);
+        productRepository.save(product);
+        return "redirect:/product/list";
+    }
 
 }
