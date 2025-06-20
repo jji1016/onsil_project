@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온실 플라워 스튜디오 - 관리자</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function(){
+            //주문내역 모달창
+            $(".order_btn").click(function(){
+                $("#order_modal").stop().fadeIn(300);
+            });
+            $(".close").click(function(){
+                $("#order_modal").stop().fadeOut(300);
+            });
+
+
+            //상품등록 모달창
+            $(".add_btn").click(function(){
+                $("#items_modal").stop().fadeIn(300);
+            });
+            $(".close").click(function(){
+                $("#items_modal").stop().fadeOut(300);
+            });
+
+            //회원관리 수정 모달창
+            $(document).on("click",".admin_btn",function(){
+                $("#mem-modal").stop().fadeIn(300);
+            });
+            //$("item-btn>.close").click(function()
+            $(document).on("click",".mem-btn>.close",function(){
+                $("#mem-modal").stop().fadeOut(300);
+            });
+
+        });
+    </script>
+    
+
+</head>
+<body>
+    <div id="header">
+        <div class="wrap_hd">
+            <div class="wrap_logo">
+                <h1 class="logo"><a href="#"><img src="/images/admin/logo.png" alt="logo"></a></h1>
+                <span>ADMIN</span>
+            </div>
+            <ul class="gnb">
+                <li>
+                    <a href="admin/dashboard">
+                        <span class="icon_area ico1"></span>
+                        홈화면
+                    </a>
+                </li>
+                <li>
+                    <a href="admin/member-list">
+                        <span class="icon_area ico2"></span>
+                        회원관리
+                    </a>
+                </li>
+                <li>
+                    <a href="admin/stocklist">
+                        <span class="icon_area ico3"></span>
+                        입출고 및 재고현황
+                    </a>
+                </li>
+                <li>
+                    <a href="admin/sales">
+                        <span class="icon_area ico4"></span>
+                        매출관리
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon_area"></span>
+                        주문내역관리
+                    </a>
+                </li>
+                <li onclick="openTab('items',this);">
+                    <a href="#">
+                        <span class="icon_area"></span>
+                        상품관리
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <div id="section">
+
+
+        <div id="sales" class="tab">
+            <ul class="sales_info">
+                <li>
+                    <img src="/images/admin/icon_sales_big.png" alt="매출아이콘">
+                    <h3>오늘의 매출</h3>
+                    <p>2,867,500<span>원</span></p>
+                </li>
+                <li>
+                    <img src="/images/admin/icon_sales_big.png" alt="매출아이콘">
+                    <h3>이번달 매출</h3>
+                    <p>18,524,700<span>원</span></p>
+                </li>
+                <li>
+                    <img src="/images/admin/icon_over_deli.png" alt="매출아이콘">
+                    <h3>이번달 주문수</h3>
+                    <p>146<span>건</span></p>
+                </li>
+                <li>
+                    <img src="/images/admin/icon_average.png" alt="평균아이콘">
+                    <h3>평균 객단가</h3>
+                    <p>126,880<span>원</span></p>
+                </li>
+            </ul>
+            
+            <div class="sale_chart">
+                <div class="sale_title">
+                    <h2>기간별 매출</h2>
+                    <button onclick="loadSales('day')" class="day">일별</button>
+                    <button onclick="loadSales('month')" class="month">월별</button>
+                    <button onclick="loadSales('year')" class="month">년별</button>
+                </div>
+                <div class="chart_area">
+                    <canvas id="periodSalesChart"  class="charts" width="780" height="110"></canvas>
+                </div>
+            </div>
+            <div class="category_chart">
+                <h2>카테고리별 매출 비중</h2>
+                <div class="c_chart_area">
+                    <canvas id="categorySalesChart"  class="charts" width="780" height="110"></canvas>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            let periodChart, categoryChart;
+
+            function getMonthStartEnd(year, month) {
+                const date = new Date(year, month - 1, 1);
+                const start = date.toISOString().split('T')[0];
+                const end = new Date(year, month, 0).toISOString().split('T')[0];
+                return { start, end };
+            }
+
+            function loadSales(type) {
+                const today = new Date();
+                let xLabels = [];
+                let fetchUrl = `/admin/sales/dashboard?type=${type}`;
+                // 일별: 1일~31일까지 날짜 생성
+                if (type === 'day') {
+                    const year = today.getFullYear();
+                    const month = today.getMonth() + 1;
+                    const { start, end } = getMonthStartEnd(year, month);
+                    fetchUrl += `&startDate=${start}&endDate=${end}`;
+                    // x축 라벨(2025-05-01 ~ 2025-05-31)
+                    for (let day = 1; day <= 31; day++) {
+                        const d = String(day).padStart(2, '0');
+                        xLabels.push(`${year}-${String(month).padStart(2, '0')}-${d}`);
+                    }
+                }
+                // 월별: 2025-01 ~ 2025-12 라벨 생성
+                else if (type === 'month') {
+                    const year = today.getFullYear();
+                    for (let month = 1; month <= 12; month++) {
+                        const m = String(month).padStart(2, '0');
+                        xLabels.push(`${year}-${m}`);
+                    }
+                }
+                // 년별: 2018~2025년 라벨 생성
+                else if (type === 'year') {
+                    for (let year = 2018; year <= 2025; year++) {
+                        xLabels.push(String(year));
+                    }
+                }
+                // 데이터 요청 및 차트 그리기
+                fetch(fetchUrl)
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log("날짜확인");
+                        console.log(data);
+                        // 매출 데이터 매칭 (없으면 0)
+                        const salesMap = {};
+                        data.periodSales.forEach(item => {
+                            salesMap[item.label] = item.amount;
+                        });
+                        const yData = xLabels.map(label => salesMap[label] || 0);
+                        // 기간별 매출 그래프
+                        if (periodChart) periodChart.destroy();
+                        periodChart = new Chart(document.getElementById('periodSalesChart'), {
+                            type: 'bar',
+                            data: {
+                                labels: xLabels,
+                                datasets: [
+                                    {
+                                        label: '매출(원)',
+                                        data: yData,
+                                        backgroundColor: '#A6BFA4',
+                                        borderRadius: 4,
+                                        barThickness: 30
+                                    }
+                                ],
+
+                            },
+                            options: {
+                                responsive: true,
+                                animations: false,
+
+                                plugins: {
+                                    legend: {
+                                        display: false // label 숨기고 싶으면 true로 바꿔도 돼
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                return `${context.parsed.y}만원`;
+                                            }
+                                        }
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        title: {
+                                            display: true,
+                                            text: '매출 (만원)'
+                                        }
+                                    },
+                                    x: {
+                                        ticks: {
+                                            maxRotation: 0,
+                                            minRotation: 0,
+                                            autoSkip: false
+                                        }
+                                    }
+                                }
+                            }
+
+                        });
+                        // 카테고리별 매출 그래프
+                        const categoryLabels = data.categorySales.map(d => d.label);
+                        const categoryData = data.categorySales.map(d => d.amount);
+                        if (categoryChart) categoryChart.destroy();
+                        categoryChart = new Chart(document.getElementById('categorySalesChart'), {
+                            type: 'bar',
+                            data: {
+                                labels: categoryLabels,
+                                datasets: [
+                                    {
+                                        label: '카테고리별 매출(원)',
+                                        data: categoryData ,
+                                        backgroundColor: '#A6BFA4',
+                                        borderRadius: 4,
+                                        barThickness: 30
+                                    }
+                                ],
+                                options: {
+                                    responsive: true,
+                                    animations: false,
+
+                                    plugins: {
+                                        legend: {
+                                            display: false // label 숨기고 싶으면 true로 바꿔도 돼
+                                        },
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function(context) {
+                                                    return `${context.parsed.y}만원`;
+                                                }
+                                            }
+                                        }
+                                    },
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            title: {
+                                                display: true,
+                                                text: '매출 (만원)'
+                                            }
+                                        },
+                                        x: {
+                                            ticks: {
+                                                maxRotation: 0,
+                                                minRotation: 0,
+                                                autoSkip: false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    });
+            }
+            window.onload = function() {
+                loadSales('day');
+            }
+        </script>
+
+
+
+
+
+
+    </div>
+
+
+<!--<script src="js/admin.js"></script>-->
+</body>
+</html>

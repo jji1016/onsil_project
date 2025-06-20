@@ -15,7 +15,9 @@ import java.util.List;
 public class AdminOutputDao {
     private final AdminOutputRepository adminOutputRepository;
 
-    public List<Object[]> searchOutputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
-        return adminOutputRepository.searchOutputs(category, keyword, startDate, endDate);
+    public List<Object[]> searchOutputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate, int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        return adminOutputRepository.searchOutputs(category, keyword, startDate, endDate, startRow, endRow);
     }
 }

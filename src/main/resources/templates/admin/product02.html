@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온실 플라워 스튜디오 - 관리자</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+    <div id="section">
+
+        <div id="items" class="tab">
+<!--            <div class="stock_btn">-->
+<!--                <button onclick="changeTab('desc_stock',this)">재고현황</button>-->
+<!--                <button onclick="changeTab('desc_in',this)">입고현황</button>-->
+<!--                <button onclick="changeTab('desc_out',this)">출고현황</button>-->
+<!--            </div>-->
+<!--            <div class="stock_btn">-->
+<!--                <a href="../admin/stocklist">재고현황</a>-->
+<!--                <a href="../admin/inputlist">입고현황</a>-->
+<!--                <a href="../admin/outputlist">출고현황</a>-->
+<!--            </div>-->
+            <ul class="items_cont">
+                <li class="desc_item it_tab">
+                    <div class="search">
+                        <h2>상품관리</h2>
+                        <form id="searchForm" th:action="@{/admin/productlist}" method="get">
+                            <table>
+                                <tr>
+                                    <td>검색어</td>
+                                    <td colspan="3">
+                                        <select name="category">
+                                            <option value="productId" th:selected="${category == 'productId'}">품목코드</option>
+                                            <option value="flowerName" th:selected="${category == 'flowerName'}">상품명</option>
+                                        </select>
+                                        <input type="text" name="keyword" th:value="${keyword}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>가격검색</td>
+                                    <td>
+                                        <select name="price">
+                                            <option value="판매가">공급가</option>
+                                            <option value="할인가">판매가</option>
+                                        </select>
+                                        <input type="number" name="minPrice" placeholder="최소" th:value="${minPrice}">원
+                                        이상~<input type="number" name="maxPrice" placeholder="최대" th:value="${maxPrice}">원 이하
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="btn">
+                                <button class="btn1" type="submit">검색</button>
+                                <button type="button" onclick="resetForm()">초기화</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="wrap_list">
+                        <table class="items_list">
+                            <thead>
+                            <tr>
+                                <th>품목코드</th>
+                                <th>상품명</th>
+                                <th>공급가</th>
+                                <th>판매가</th>
+                                <th>카테고리</th>
+                            </tr>
+                            </thead>
+                            <tbody id="stock-body">
+                            <tr th:each="product : ${productList}">
+                                <td th:text="${product.productId}"></td>
+                                <td th:text="${product.flowerName}"></td>
+                                <td th:text="${product.price}"></td>
+                                <td th:text="${product.sellPrice}"></td>
+                                <td th:text="${product.category}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div id="stock-pagination" class="pagination">
+                            <button th:classappend="${page == 1} ? 'disabled' : ''">
+                                <a th:if="${page != 1}"
+                                   th:href="@{/admin/productlist(
+                                page=${page - 1},
+                                pageSize=${pageSize},
+                                category=${category},
+                                keyword=${keyword},
+                                minPrice=${minPrice},
+                                maxPrice=${maxPrice}
+                            )}">◀</a>
+                            </button>
+                            <button th:each="i : ${#numbers.sequence(1, (totalCount + pageSize - 1) / pageSize)}"
+                                    th:classappend="${i == page} ? 'active' : ''">
+                                <a th:href="@{/admin/productlist(
+                                page=${i},
+                                pageSize=${pageSize},
+                                category=${category},
+                                keyword=${keyword},
+                                minPrice=${minPrice},
+                                maxPrice=${maxPrice}
+                            )}" th:text="${i}"></a>
+                            </button>
+                            <button th:classappend="${page == (totalCount + pageSize - 1) / pageSize ? 'disabled' : ''}">
+                                <a th:if="${page != (totalCount + pageSize - 1) / pageSize}"
+                                   th:href="@{/admin/inputlist(
+                                page=${page + 1},
+                                pageSize=${pageSize},
+                                category=${category},
+                                keyword=${keyword},
+                                startDate=${startDate},
+                                endDate=${endDate}
+                            )}">▶</a>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+<!--            <ul>-->
+<!--                <li><a href="../admin/productlist?page=1&pageSize=10">1</a></li>-->
+<!--                <li><a href="../admin/productlist?page=11&pageSize=20">2</a></li>-->
+<!--                <li><a href="../admin/productlist?page=21&pageSize=30">3</a></li>-->
+<!--                <li><a href="../admin/productlist?page=31&pageSize=40">4</a></li>-->
+<!--                <li><a href="../admin/productlist?page=41&pageSize=50">5</a></li>-->
+<!--                <li><a href="../admin/productlist?page=51&pageSize=60">6</a></li>-->
+<!--            </ul>-->
+        </div>
+
+    </div>
+
+
+
+<!--<script src="js/admin.js"></script>-->
+    <script>
+        function resetForm() {
+            document.getElementById('searchForm').reset(); // 입력란 초기화
+            location.href = '/admin/productlist'; // 검색조건 없이 전체 리스트로 이동
+        }
+    </script>
+</body>
+</html>

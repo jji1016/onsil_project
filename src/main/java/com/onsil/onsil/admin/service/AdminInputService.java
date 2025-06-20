@@ -19,21 +19,28 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AdminInputService {
 
-    private final AdminInputDao adminInputDao;
+    private final AdminInputRepository adminInputRepository;
     //private final AdminInputRepository adminInputRepository;
 
-    public List<AdminInputDto> searchInputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<AdminInputDto> searchInputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate, int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        List<Object[]> results = adminInputRepository.searchInputs(category, keyword, startDate, endDate, startRow, endRow);
 
-        List<Object[]> results = adminInputDao.searchInputs(category,keyword,startDate,endDate);
-
-        log.info("results: {}", results);
         return results.stream().map(obj -> AdminInputDto.builder()
-                .regDate(((java.sql.Timestamp)obj[0]).toLocalDateTime())
-                .inputId(((Number)obj[1]).intValue())
-                .productId(((Number)obj[2]).intValue())
-                .flowerName((String)obj[3])
-                .amount(((Number)obj[4]).intValue())
-                .build()).collect(Collectors.toList());
+                        .regDate(((java.sql.Timestamp) obj[0]).toLocalDateTime())
+                        .inputId(((Number) obj[1]).intValue())
+                        .productId(((Number) obj[2]).intValue())
+                        .flowerName((String) obj[3])
+                        .amount(((Number) obj[4]).intValue())
+                        .supplier("온실본사")
+                        .manager("유정환")
+                        .build())
+                .collect(Collectors.toList());
     }
+
+    public int countInputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        return adminInputRepository.countInputs(category, keyword, startDate, endDate);
     }
+}
 

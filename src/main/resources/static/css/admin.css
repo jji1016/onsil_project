@@ -31,7 +31,7 @@ input[type="date"]{
 
 body{
     background-color: #E5E0D8;
-    font-family: 'Pretendard Variable', sans-serif;   
+    font-family: 'Pretendard Variable', sans-serif;
     color: #4B4A45;
 }
 #header{
@@ -145,7 +145,7 @@ body{
 }
 
 #section > .tab{
-    display: none;
+    /*display: none;*/
 }
 /* overview / admin info 영역------------------------------------------- */
 
@@ -510,18 +510,21 @@ body{
     transition: background-color 0.3s ease;
     }
 
-    .pagination button:disabled {
-    cursor: not-allowed;
+    .pagination button.disabled {
+    cursor: none;
     color: #aaa;
     border-color: #eee;
     }
 
     .pagination button.active {
     background-color: #8B9773;
-    color: white;
     border-color: #8B9773;
-    font-weight: bold;
     }
+
+.pagination button.active a{
+    color: white;
+    font-weight: bold;
+}
 
 
 
@@ -585,7 +588,7 @@ body{
 #section #member #mem-modal .wrap-all .tab-btn>li.activeM{
     background-color: #8B9773;
     color: white;
-    
+
 }
 #section #member #mem-modal .wrap-all .tab-btn>li:nth-child(2){
     margin-left: 10px;
@@ -765,6 +768,7 @@ body{
 /* 입출고 및 재고현황-------------------------------------------------------------------------- */
 
 #section #stock{
+    display: block !important;
     width: 93%;
     height: 88.5%;
     position: absolute;
@@ -776,7 +780,8 @@ body{
     width: 100%;
     height: 6%;
 }
-#section #stock .stock_btn > button{
+#section #stock .stock_btn > button, #section #stock .stock_btn > a{
+    display: inline-block;
     width: 100px;
     height: 40px;
     border-radius: 10px;
@@ -964,7 +969,7 @@ body{
     border-radius: 20px;
     padding: 35px 20px;
     box-sizing: border-box;
-} 
+}
 
 
 

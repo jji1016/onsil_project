@@ -13,4 +13,6 @@ public class AdminStockDto {
     private String flowerName;      // 품목명
     private int price;              // 품목가격
     private int quantity;           // 재고수량
+    private String set;
+    private String storage;
 }

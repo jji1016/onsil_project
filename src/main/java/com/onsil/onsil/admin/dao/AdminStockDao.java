@@ -18,10 +18,12 @@ public class AdminStockDao {
     public List<Object[]> searchStocks(
             String category, String keyword,
             Integer minQuantity, Integer maxQuantity,
-            Integer minPrice, Integer maxPrice
+            Integer minPrice, Integer maxPrice, int page, int pageSize
     ) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
         return adminStockRepository.searchStocks(
-                category, keyword, minQuantity, maxQuantity, minPrice, maxPrice
+                category, keyword, minQuantity, maxQuantity, minPrice, maxPrice, startRow, endRow
         );
     }
 }

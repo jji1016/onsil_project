@@ -849,11 +849,11 @@ document.addEventListener("DOMContentLoaded", function(){
         '4월5주', '5월1주', '5월2주', '5월3주', '5월4주', '5월5주','6월1주'
         ],
         datasets: [{
-        label: '주별 매출',
-        data: [34, 45, 30, 55, 65, 45, 25, 42, 35, 38, 28, 60, 35, 65, 58, 50, 80],
-        backgroundColor: '#A6BFA4',
-        borderRadius: 4,
-        barThickness: 30
+            label: '주별 매출',
+            data: [34, 45, 30, 55, 65, 45, 25, 42, 35, 38, 28, 60, 35, 65, 58, 50, 80],
+            backgroundColor: '#A6BFA4',
+            borderRadius: 4,
+            barThickness: 30
         }]
     },
     options: {

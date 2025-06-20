@@ -21,18 +21,26 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AdminOutputService {
 
-    private final AdminOutputDao adminOutputDao;
-//    private final AdminOutputRepository adminOutputRepository;
+    //private final AdminOutputDao adminOutputDao;
+    private final AdminOutputRepository adminOutputRepository;
 
-    public List<AdminOutputDto> searchOutputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
-        List<Object[]> results = adminOutputDao.searchOutputs(category, keyword, startDate, endDate);
+    public List<AdminOutputDto> searchOutputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate,  int page, int pageSize) {
+        int startRow = (page - 1) * pageSize;
+        int endRow = page * pageSize;
+        List<Object[]> results = adminOutputRepository.searchOutputs(category, keyword, startDate, endDate, startRow, endRow);
         return results.stream().map(obj -> AdminOutputDto.builder()
                 .regDate(((Timestamp)obj[0]).toLocalDateTime())
                 .outputId(((Number)obj[1]).intValue())
                 .productId(((Number)obj[2]).intValue())
                 .flowerName((String)obj[3])
                 .amount(((Number)obj[4]).intValue())
+                .implier("포레스트화원")
+                .manager("김의진")
                 .build()).collect(Collectors.toList());
+    }
+
+    public int countOutputs(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        return adminOutputRepository.countOutputs(category, keyword, startDate, endDate);
     }
 }
 
