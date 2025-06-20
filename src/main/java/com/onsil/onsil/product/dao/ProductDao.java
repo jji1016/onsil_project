@@ -1,10 +1,13 @@
 package com.onsil.onsil.product.dao;
 
 import com.onsil.onsil.entity.Product;
+import com.onsil.onsil.entity.Subscribe;
 import com.onsil.onsil.product.dto.ProductDto;
 import com.onsil.onsil.review.dto.ReviewDto;
 import com.onsil.onsil.product.repository.ProductRepository;
+import com.onsil.onsil.subscribe.dto.SubscribeDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -79,5 +82,19 @@ public class ProductDao {
                         .image(product.getImage())
                         .build()
         ).collect(Collectors.toList());
+    }
+
+    public List<ProductDto> findRandom6Subscribes() {
+
+        List<Product> productList = productRepository.findRandom6Subscribes(PageRequest.of(0, 6));
+
+        return productList.stream().map(s -> ProductDto.builder()
+                .id(s.getId())
+//                .memberId(s.getMember().getId())
+                .productName(s.getFlowerName())  // product 꽃이름
+                .productImage(s.getImage())     // product 이미지
+                .price(s.getPrice())            // product 가격
+                .build()
+        ).toList();
     }
 }

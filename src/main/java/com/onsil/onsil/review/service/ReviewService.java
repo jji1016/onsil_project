@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
@@ -35,7 +37,8 @@ public class ReviewService {
     @Value("${file.path}reviews/")
     String reviewsPath;
 
-    public void writeReview(Integer productId, Integer subscribeId, int rating, String content, MultipartFile imageFile) throws IOException {
+    public void writeReview(Integer productId, Integer subscribeId,
+                            int rating, String content, MultipartFile imageFile) throws IOException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (!(principal instanceof CustomUserDetails)) {
@@ -60,7 +63,7 @@ public class ReviewService {
         // 이미 리뷰 작성 여부 확인
         boolean exists = reviewRepository.existsByMemberAndProduct(member, product);
         if (exists) {
-            throw new RuntimeException("이미 작성한 리뷰가 있습니다.");
+            log.info("이미 작성한 리뷰가 있습니다.");
         }
 
         Review review = new Review();

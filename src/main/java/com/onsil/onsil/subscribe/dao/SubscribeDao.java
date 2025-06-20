@@ -27,9 +27,6 @@ public class SubscribeDao {
                 .id(s.getId())
                 .memberId(s.getMember().getId())
                 .productId(s.getProduct().getId())
-                .period(s.getPeriod())
-                .startDate(s.getStartDate())
-                .endDate(s.getEndDate())
                 .productName(s.getProduct().getFlowerName())  // product 꽃이름
                 .productImage(s.getProduct().getImage())     // product 이미지
                 .price(s.getProduct().getPrice())            // product 가격
