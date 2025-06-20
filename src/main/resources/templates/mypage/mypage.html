@@ -290,8 +290,8 @@
                     address01: json.address01,
                     address02: json.address02,
                     tel1: json.tel.substring(0, 3),
-                    tel2: json.tel.substring(3, 7),
-                    tel3: json.tel.substring(7, 11),
+                    tel2: json.tel.substring(4, 8),
+                    tel3: json.tel.substring(9, 13),
                 };
                 console.log(responseData);
 
@@ -325,13 +325,14 @@
             const key = field.dataset.field;
             data[key] = field.value;
         });
+        console.log(data)
 
         if (!/^\d{3,4}$/.test(data.tel2) || !/^\d{4}$/.test(data.tel3)) {
             alert("전화번호 형식이 올바르지 않습니다.");
             return;
         }
 
-        data.tel = data.tel1 + data.tel2 + data.tel3;
+        data.tel = data.tel1 + "-" + data.tel2 + "-" + data.tel3;
         delete data.tel1;
         delete data.tel2;
         delete data.tel3;

@@ -40,7 +40,7 @@ null
             <div class="swiper-wrapper c1_cont">
                 <div class="swiper-slide" th:each="sub : ${subscribes}">
                     <ul>
-                        <li><a th:href="@{'/subscribe/particular/' + ${sub.id}}">
+                        <li><a th:href="@{'/product/detail/' + ${sub.id}}">
                             <img th:src="@{/upload/products/{filename}(filename=${sub.productImage})}" th:alt="${sub.productName} + ' 이미지'"/>
                         </a></li>
                         <li class="c1_txt" th:text="${sub.productName} + ' 구독'"></li>

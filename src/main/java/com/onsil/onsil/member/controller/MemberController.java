@@ -65,7 +65,8 @@ public class MemberController {
     // 아이디 중복 체크
     @GetMapping("/checkUserID")
     @ResponseBody
-    public ResponseEntity<Boolean> checkUserID(@RequestParam String userID) {
+    public ResponseEntity<Boolean> checkUserID(@RequestParam String userID)  {
+        log.info("userID : {}" , userID);
         boolean isDuplicate = memberService.isUserIDDuplicate(userID);
         return ResponseEntity.ok(isDuplicate);
     }

@@ -20,16 +20,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, CustomLoginSuccessHandler customLoginSuccessHandler) throws Exception {
         httpSecurity.authorizeHttpRequests(
                         (auth) ->auth.requestMatchers(
-//                                            "/",
-//                                            "/index/index",
-//                                            "/member/login",
-//                                            "/member/signup",
+                                            "/",
+                                            "/index/index",
+                                            "/member/**",
+                                            "/subscribe/**",
+                                            "/product/**",
+                                            "/flowers",
+                                            "/corporate",
+                                            "/onsilfaq",
 //                                            "/api/**",
-//                                            "/css/**",
-//                                            "/images/**",
-//                                            "/js/**"),
-//                                            "/html/**"
-                                "/**") //작업 편하게 하기 위해 임시로 모든 경로 보안 허용
+                                            "/css/**",
+                                            "/images/**",
+                                            "/js/**",
+                                            "/html/**",
+                                            "/upload/**"
+                ) //작업 편하게 하기 위해 임시로 모든 경로 보안 허용
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
@@ -52,7 +57,7 @@ public class SecurityConfig {
                                     .deleteCookies("JSESSIONID")
                                     .permitAll()
                 )
-                .csrf((csrf)->csrf.disable()); //끝나고 찾아보기
+                .csrf((csrf)->csrf.disable());
         return httpSecurity.build();
     }
 }
