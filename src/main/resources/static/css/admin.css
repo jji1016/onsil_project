@@ -625,16 +625,41 @@ body {
     width: 50px;
 }
 
-#orderList-pagination button:disabled {
-    cursor: not-allowed;
+#orderList-pagination button.active {
+    background-color: #8B9773;
+    border-color: #8B9773;
+}
+
+.pagination{
+    text-align: center;
+    margin: 10px 0;
+}
+
+.pagination button {
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 0px 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 50px;
+}
+
+.pagination button.disabled {
+    cursor: none;
     color: #aaa;
     border-color: #eee;
 }
 
-#orderList-pagination button.active {
+.pagination button.active {
     background-color: #8B9773;
-    color: white;
     border-color: #8B9773;
+}
+
+.pagination button.active a {
+    color: white;
     font-weight: bold;
 }
 
@@ -983,7 +1008,8 @@ body {
     height: 6%;
 }
 
-#section #stock .stock_btn > button {
+#section #stock .stock_btn > a {
+    display: inline-block;
     width: 100px;
     height: 40px;
     border-radius: 10px;
@@ -992,13 +1018,17 @@ body {
     font-weight: 500;
     color: #4B4A45;
     background-color: #fff;
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
 }
-
-#section #stock .stock_btn > button.btn_on,
-#section #stock .stock_btn > button:hover {
+#section #stock .stock_btn > a.btn_on,
+#section #stock .stock_btn > a:hover {
     background-color: #8B9773;
     color: white;
 }
+
 
 #section #stock .stock_cont {
     width: 100%;

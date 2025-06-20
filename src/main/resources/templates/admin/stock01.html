@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온실 플라워 스튜디오 - 관리자</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"/>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div id="section">
+
+    <div id="stock" class="tab">
+<!--                    <div class="stock_btn">-->
+<!--                        <button onclick="changeTab('desc_stock',this)">재고현황</button>-->
+<!--                        <button onclick="changeTab('desc_in',this)">입고현황</button>-->
+<!--                        <button onclick="changeTab('desc_out',this)">출고현황</button>-->
+<!--                    </div>-->
+        <div class="stock_btn">
+            <a href="../admin/stocklist" class="btn_on">재고현황</a>
+            <a href="../admin/inputlist">입고현황</a>
+            <a href="../admin/outputlist">출고현황</a>
+        </div>
+        <ul class="stock_cont">
+            <li class="desc_stock st_tab">
+                <div class="search">
+                    <h2>재고관리</h2>
+                    <form id="searchForm" th:action="@{/admin/stocklist}" method="get">
+                        <table>
+                            <tr>
+                                <td>검색어</td>
+                                <td colspan="3">
+                                    <select name="category">
+                                        <option value="flowerName" th:selected="${category == 'flowerName'}">품목명
+                                        </option>
+                                        <option value="productId" th:selected="${category == 'productId'}">품목코드</option>
+                                    </select>
+                                    <input type="text" name="keyword" th:value="${keyword}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>상품재고</td>
+                                <td>
+                                    <select name="stock">
+                                        <option value="재고수량">재고수량</option>
+                                    </select>
+                                    <input type="number" name="minQuantity" placeholder="최소" th:value="${minQuantity}">개
+                                    이상~<input type="number" name="maxQuantity" placeholder="최대"
+                                              th:value="${maxQuantity}">개 이하
+                                </td>
+                                <td>상품가격</td>
+                                <td>
+                                    <select name="price">
+                                        <option value="판매가">판매가</option>
+                                        <option value="할인가">할인가</option>
+                                    </select>
+                                    <input type="number" name="minPrice" placeholder="최소" th:value="${minPrice}">원
+                                    이상~<input type="number" name="maxPrice" placeholder="최대" th:value="${maxPrice}">원 이하
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>판매여부</td>
+                                <td>
+                                    <input type="radio" name="sale1" value="전체"> 전체
+                                    <input type="radio" name="sale1" value="진열"> 진열
+                                    <input type="radio" name="sale1" value="품절"> 품절
+                                    <input type="radio" name="sale1" value="단종"> 단종
+                                    <input type="radio" name="sale1" value="중지"> 중지
+                                </td>
+                                <td>필수옵션</td>
+                                <td>
+                                    <input type="radio" name="option" value="사용"> 사용
+                                    <input type="radio" name="option" value="미사용"> 미사용
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="btn">
+                            <button class="btn1" type="submit">검색</button>
+                            <button type="button" onclick="resetForm()">초기화</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="wrap_list">
+                    <table class="stock_list">
+                        <thead>
+                        <tr>
+                            <th>품목코드</th>
+                            <th>품목명</th>
+                            <th>가격</th>
+                            <th>재고</th>
+                            <th>품목단위</th>
+                            <th>보관창고</th>
+                        </tr>
+                        </thead>
+                        <tbody id="stock-body">
+                        <tr th:each="stock : ${stockList}">
+                            <td th:text="${stock.productId}"></td>
+                            <td th:text="${stock.flowerName}"></td>
+                            <td th:text="${stock.price}"></td>
+                            <td th:text="${stock.quantity}"></td>
+                            <td th:text="${stock.set}"></td>
+                            <td th:text="${stock.storage}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div id="stock-pagination" class="pagination" th:if="${totalCount > 0}">
+                        <button th:classappend="${page == 1} ? 'disabled' : ''">
+                            <a th:if="${page != 1}"
+                                th:href="@{/admin/stocklist(
+                                page=${page - 1},
+                                pageSize=${pageSize},
+                                category=${category},
+                                keyword=${keyword},
+                                minQuantity=${minQuantity},
+                                maxQuantity=${maxQuantity},
+                                minPrice=${minPrice},
+                                maxPrice=${maxPrice}
+                            )}">◀</a>
+                        </button>
+                        <button th:each="i : ${#numbers.sequence(1, (totalCount + pageSize - 1) / pageSize)}"
+                                th:classappend="${i == page} ? 'active' : ''">
+                            <a th:href="@{/admin/stocklist(
+                                page=${i},
+                                pageSize=${pageSize},
+                                category=${category},
+                                keyword=${keyword},
+                                minQuantity=${minQuantity},
+                                maxQuantity=${maxQuantity},
+                                minPrice=${minPrice},
+                                maxPrice=${maxPrice}
+                            )}" th:text="${i}"></a>
+                        </button>
+                        <button th:classappend="${page == (totalCount + pageSize - 1) / pageSize ? 'disabled' : ''}">
+                            <a th:if="${page != (totalCount + pageSize - 1) / pageSize}"
+                                th:href="@{/admin/stocklist(
+                                page=${page + 1},
+                                pageSize=${pageSize},
+                                category=${category},
+                                keyword=${keyword},
+                                minQuantity=${minQuantity},
+                                maxQuantity=${maxQuantity},
+                                minPrice=${minPrice},
+                                maxPrice=${maxPrice}
+                            )}">▶</a>
+                        </button>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+<!--<script src="/js/admin.js"></script>-->
+<script>
+    function resetForm() {
+        document.getElementById('searchForm').reset(); // 입력란 초기화
+        location.href = '/admin/stocklist'; // 검색조건 없이 전체 리스트로 이동
+    }
+
+    //입,출,재고 버튼 클릭시 클래스명 부여
+    document.addEventListener('DOMContentLoaded', function() {
+        // 초기 활성화
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.stock_btn > a').forEach(a => {
+            if (a.getAttribute('href') === currentPath) {
+                a.classList.add('btn_on');
+            }
+        });
+
+        // 클릭 이벤트
+        document.querySelectorAll('.stock_btn > a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 페이지 이동 방지 (테스트용)
+                // e.preventDefault();
+
+                // 모든 a 태그에서 btn_on 클래스 제거
+                document.querySelectorAll('.stock_btn > a').forEach(a => {
+                    a.classList.remove('btn_on');
+                });
+                // 현재 클릭한 a 태그에 btn_on 클래스 추가
+                console.log(this);
+                this.classList.add('btn_on');
+            });
+        });
+    });
+</script>
+</body>
+</html>
