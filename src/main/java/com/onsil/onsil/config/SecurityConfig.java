@@ -17,7 +17,7 @@ public class SecurityConfig {
 
     //스프링 컨테이너에 등록되고 di할 수 있다..
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, CustomLoginSuccessHandler customLoginSuccessHandler) throws Exception {
         httpSecurity.authorizeHttpRequests(
                         (auth) ->auth.requestMatchers(
 //                                            "/",
@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 .usernameParameter("userID")
                                 .passwordParameter("userPW")
                                 .loginProcessingUrl("/member/login")
-                                .defaultSuccessUrl("/index/index",true)
+                                .successHandler(customLoginSuccessHandler)
                                 .failureUrl("/member/login?error") //redirect로 넘어간다.
                                 .permitAll()
                 )

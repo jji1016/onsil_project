@@ -1,8 +1,6 @@
 package com.onsil.onsil.admin.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.dto.*;
 import com.onsil.onsil.admin.service.*;
 import com.onsil.onsil.admin.dto.AdminOutputDto;
@@ -11,22 +9,14 @@ import com.onsil.onsil.admin.dto.PopularCountDto;
 import com.onsil.onsil.admin.dto.SubscribeDto;
 import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
-import com.onsil.onsil.entity.OrderList;
-import com.onsil.onsil.mypage.dto.MypageOrderListDto;
 import jakarta.servlet.http.HttpServletRequest;
-import com.onsil.onsil.constant.Period;
 import com.onsil.onsil.entity.Product;
-import com.onsil.onsil.entity.Subscribe;
 import com.onsil.onsil.product.repository.ProductRepository;
 import com.onsil.onsil.product.service.ProductService;
 import com.onsil.onsil.subscribe.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -240,7 +230,7 @@ public class AdminController {
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
 
-        return "admin/input01";
+        return "admin/input";
     }
 
 //    @GetMapping("/inputlistjson")
@@ -288,7 +278,7 @@ public class AdminController {
         model.addAttribute("endDate", endDate);
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
-        return "admin/output01";
+        return "admin/output";
     }
 
     //재고 검색 기능
@@ -323,7 +313,7 @@ public class AdminController {
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
 
-        return "admin/stock01";
+        return "admin/stock";
     }
 
     //주문내역 검색 기능
@@ -348,14 +338,14 @@ public class AdminController {
         model.addAttribute("endDate", endDate);
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
-        return "admin/order02";
+        return "admin/order";
     }
 
-    @GetMapping("/product")
-    public String product(Model model) {
-
-        return "admin/product";
-    }
+//    @GetMapping("/product")
+//    public String product(Model model) {
+//
+//        return "admin/product";
+//    }
 
     @PostMapping("/save")
     public String saveProduct(
@@ -428,13 +418,13 @@ public class AdminController {
         model.addAttribute("maxPrice", maxPrice);
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
-        return "admin/product02";
+        return "admin/product";
     }
 
     // 매출관리 페이지 진입
     @GetMapping("/sales")
     public String salesPage() {
-        return "admin/sales01";
+        return "admin/sales";
     }
 
     // 통합 응답 (기간별+카테고리별)

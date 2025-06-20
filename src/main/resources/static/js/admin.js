@@ -854,198 +854,198 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 
-//day chart
-    const ddd = document.getElementById('day_sales').getContext('2d');
-    const daySales = new Chart(ddd, {
-    type: 'bar',
-    data: {
-        labels: [
-        '2025-05-12', '2025-05-13', '2025-05-14', '2025-05-15', '2025-05-16',
-        '2025-05-17', '2025-05-18', '2025-05-19', '2025-05-20', '2025-05-21','2025-05-22', '2025-05-23', '2025-05-24', '2025-05-25', '2025-05-26',
-        '2025-05-27', '2025-05-28', '2025-05-29', '2025-05-30', '2025-05-31'
-        ],
-        datasets: [{
-        label: '일별 매출',
-        data: [180, 201, 196, 212, 232, 134, 145, 130, 155, 165, 145, 225, 142, 235, 238, 218, 160, 235, 265, 258],
-        backgroundColor: '#A6BFA4',
-        borderRadius: 4,
-        barThickness: 30
-        }]
-    },
-    options: {
-        responsive: true,
-        animations: false,
-        // {
-        //     x: {
-        //         duration: 0
-        //     },
-        //     y: {
-        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-        //         delay: ctx => ctx.index * 100,
-        //         type: 'number',
-        //         easing: 'easeOutQuart'
-        //     }
-        // },
-        plugins: {
-        legend: {
-            display: false // label 숨기고 싶으면 true로 바꿔도 돼
-        },
-        tooltip: {
-            callbacks: {
-            label: function(context) {
-                return `${context.parsed.y}만원`;
-            }
-            }
-        }
-        },
-        scales: {
-        y: {
-            beginAtZero: true,
-            title: {
-            display: true,
-            text: '매출 (만원)'
-            }
-        },
-        x: {
-            ticks: {
-            maxRotation: 0,
-            minRotation: 0,
-            autoSkip: false
-            }
-        }
-        }
-    }
-});
+// //day chart
+//     const ddd = document.getElementById('day_sales').getContext('2d');
+//     const daySales = new Chart(ddd, {
+//     type: 'bar',
+//     data: {
+//         labels: [
+//         '2025-05-12', '2025-05-13', '2025-05-14', '2025-05-15', '2025-05-16',
+//         '2025-05-17', '2025-05-18', '2025-05-19', '2025-05-20', '2025-05-21','2025-05-22', '2025-05-23', '2025-05-24', '2025-05-25', '2025-05-26',
+//         '2025-05-27', '2025-05-28', '2025-05-29', '2025-05-30', '2025-05-31'
+//         ],
+//         datasets: [{
+//         label: '일별 매출',
+//         data: [180, 201, 196, 212, 232, 134, 145, 130, 155, 165, 145, 225, 142, 235, 238, 218, 160, 235, 265, 258],
+//         backgroundColor: '#A6BFA4',
+//         borderRadius: 4,
+//         barThickness: 30
+//         }]
+//     },
+//     options: {
+//         responsive: true,
+//         animations: false,
+//         // {
+//         //     x: {
+//         //         duration: 0
+//         //     },
+//         //     y: {
+//         //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+//         //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+//         //         delay: ctx => ctx.index * 100,
+//         //         type: 'number',
+//         //         easing: 'easeOutQuart'
+//         //     }
+//         // },
+//         plugins: {
+//         legend: {
+//             display: false // label 숨기고 싶으면 true로 바꿔도 돼
+//         },
+//         tooltip: {
+//             callbacks: {
+//             label: function(context) {
+//                 return `${context.parsed.y}만원`;
+//             }
+//             }
+//         }
+//         },
+//         scales: {
+//         y: {
+//             beginAtZero: true,
+//             title: {
+//             display: true,
+//             text: '매출 (만원)'
+//             }
+//         },
+//         x: {
+//             ticks: {
+//             maxRotation: 0,
+//             minRotation: 0,
+//             autoSkip: false
+//             }
+//         }
+//         }
+//     }
+// });
 
-// week 차트
-    const www = document.getElementById('week_sales').getContext('2d');
-    const weekSales = new Chart(www, {
-    type: 'bar',
-    data: {
-        labels: [
-        '2월3주','2월4주', '2월5주', '3월1주', '3월2주', '3월3주', '3월4주',
-        '3월5주', '4월1주', '4월2주', '4월3주', '4월4주',
-        '4월5주', '5월1주', '5월2주', '5월3주', '5월4주', '5월5주','6월1주'
-        ],
-        datasets: [{
-            label: '주별 매출',
-            data: [34, 45, 30, 55, 65, 45, 25, 42, 35, 38, 28, 60, 35, 65, 58, 50, 80],
-            backgroundColor: '#A6BFA4',
-            borderRadius: 4,
-            barThickness: 30
-        }]
-    },
-    options: {
-        responsive: true,
-        animations: false,
-        // {
-        //     x: {
-        //         duration: 0
-        //     },
-        //     y: {
-        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-        //         delay: ctx => ctx.index * 100,
-        //         type: 'number',
-        //         easing: 'easeOutQuart'
-        //     }
-        // },
-        plugins: {
-        legend: {
-            display: false // label 숨기고 싶으면 true로 바꿔도 돼
-        },
-        tooltip: {
-            callbacks: {
-            label: function(context) {
-                return `${context.parsed.y}백만원`;
-            }
-            }
-        }
-        },
-        scales: {
-        y: {
-            beginAtZero: true,
-            title: {
-            display: true,
-            text: '매출 (백만원)'
-            }
-        },
-        x: {
-            ticks: {
-            maxRotation: 0,
-            minRotation: 0
-            }
-        }
-        }
-    }
-});
-
-
+// // week 차트
+//     const www = document.getElementById('week_sales').getContext('2d');
+//     const weekSales = new Chart(www, {
+//     type: 'bar',
+//     data: {
+//         labels: [
+//         '2월3주','2월4주', '2월5주', '3월1주', '3월2주', '3월3주', '3월4주',
+//         '3월5주', '4월1주', '4월2주', '4월3주', '4월4주',
+//         '4월5주', '5월1주', '5월2주', '5월3주', '5월4주', '5월5주','6월1주'
+//         ],
+//         datasets: [{
+//             label: '주별 매출',
+//             data: [34, 45, 30, 55, 65, 45, 25, 42, 35, 38, 28, 60, 35, 65, 58, 50, 80],
+//             backgroundColor: '#A6BFA4',
+//             borderRadius: 4,
+//             barThickness: 30
+//         }]
+//     },
+//     options: {
+//         responsive: true,
+//         animations: false,
+//         // {
+//         //     x: {
+//         //         duration: 0
+//         //     },
+//         //     y: {
+//         //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+//         //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+//         //         delay: ctx => ctx.index * 100,
+//         //         type: 'number',
+//         //         easing: 'easeOutQuart'
+//         //     }
+//         // },
+//         plugins: {
+//         legend: {
+//             display: false // label 숨기고 싶으면 true로 바꿔도 돼
+//         },
+//         tooltip: {
+//             callbacks: {
+//             label: function(context) {
+//                 return `${context.parsed.y}백만원`;
+//             }
+//             }
+//         }
+//         },
+//         scales: {
+//         y: {
+//             beginAtZero: true,
+//             title: {
+//             display: true,
+//             text: '매출 (백만원)'
+//             }
+//         },
+//         x: {
+//             ticks: {
+//             maxRotation: 0,
+//             minRotation: 0
+//             }
+//         }
+//         }
+//     }
+// });
 
 
-// month 차트
-    const mmm = document.getElementById('month_sales').getContext('2d');
-    const monthSales = new Chart(mmm, {
-        type: 'bar',
-        data: {
-            labels: [
-                '2024-01','2024-02', '2024-03', '2024-04', '2024-05', '2024-06',
-                '2024-07','2024-08', '2024-09', '2024-10', '2024-11', '2024-12',
-                '2025-01', '2025-02', '2025-03', '2025-04', '2025-05'
-            ],
-            datasets: [{
-                label: '월별 매출',
-                data: [34, 45, 30, 55, 65, 45, 25, 42, 35, 38, 28, 60, 35, 65, 58, 50, 80],
-                backgroundColor: '#A6BFA4',
-                borderRadius: 4,
-                barThickness: 30
-            }]
-        },
-        options: {
-            responsive: true,
-            animations: false,
-        //     {
-        //     x: {
-        //         duration: 0
-        //     },
-        //     y: {
-        //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
-        //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
-        //         delay: ctx => ctx.index * 100,
-        //         type: 'number',
-        //         easing: 'easeOutQuart'
-        //     }
-        // },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.parsed.y}백만원`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: '매출 (백만원)'
-                    }
-                },
-                x: {
-                    ticks: {
-                        maxRotation: 0,
-                        minRotation: 0
-                    }
-                }
-            }
-        }
-    });
+
+
+// // month 차트
+//     const mmm = document.getElementById('month_sales').getContext('2d');
+//     const monthSales = new Chart(mmm, {
+//         type: 'bar',
+//         data: {
+//             labels: [
+//                 '2024-01','2024-02', '2024-03', '2024-04', '2024-05', '2024-06',
+//                 '2024-07','2024-08', '2024-09', '2024-10', '2024-11', '2024-12',
+//                 '2025-01', '2025-02', '2025-03', '2025-04', '2025-05'
+//             ],
+//             datasets: [{
+//                 label: '월별 매출',
+//                 data: [34, 45, 30, 55, 65, 45, 25, 42, 35, 38, 28, 60, 35, 65, 58, 50, 80],
+//                 backgroundColor: '#A6BFA4',
+//                 borderRadius: 4,
+//                 barThickness: 30
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             animations: false,
+//         //     {
+//         //     x: {
+//         //         duration: 0
+//         //     },
+//         //     y: {
+//         //         from: ctx => ctx.chart.scales.y.getPixelForValue(0),
+//         //         to: ctx => ctx.chart.scales.y.getPixelForValue(ctx.raw),
+//         //         delay: ctx => ctx.index * 100,
+//         //         type: 'number',
+//         //         easing: 'easeOutQuart'
+//         //     }
+//         // },
+//             plugins: {
+//                 legend: {
+//                     display: false
+//                 },
+//                 tooltip: {
+//                     callbacks: {
+//                         label: function(context) {
+//                             return `${context.parsed.y}백만원`;
+//                         }
+//                     }
+//                 }
+//             },
+//             scales: {
+//                 y: {
+//                     beginAtZero: true,
+//                     title: {
+//                         display: true,
+//                         text: '매출 (백만원)'
+//                     }
+//                 },
+//                 x: {
+//                     ticks: {
+//                         maxRotation: 0,
+//                         minRotation: 0
+//                     }
+//                 }
+//             }
+//         }
+//     });
 
 
 

@@ -320,8 +320,7 @@
                     renderPagination(currentPage);
                 };
                 if (i === page) {
-                    btn.style.backgroundColor = '#007bff';
-                    btn.style.color = '#fff';
+                    btn.classList.add("active");
                 }
                 paginationEl.appendChild(btn);
             }

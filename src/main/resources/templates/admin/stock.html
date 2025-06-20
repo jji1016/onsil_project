@@ -14,7 +14,8 @@
 
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<header class="header" th:replace="~{fragments/adminHeader}"></header>
+
 <div id="section">
 
     <div id="stock" class="tab">
@@ -83,7 +84,7 @@
                         </table>
                         <div class="btn">
                             <button class="btn1" type="submit">검색</button>
-                            <button type="button" onclick="resetForm()">초기화</button>
+                            <button class="btn2" type="button" onclick="resetForm()">초기화</button>
                         </div>
                     </form>
                 </div>
@@ -124,6 +125,7 @@
                                 minPrice=${minPrice},
                                 maxPrice=${maxPrice}
                             )}">◀</a>
+                            <a th:if="${page == 1}">◀</a>
                         </button>
                         <button th:each="i : ${#numbers.sequence(1, (totalCount + pageSize - 1) / pageSize)}"
                                 th:classappend="${i == page} ? 'active' : ''">
@@ -150,6 +152,7 @@
                                 minPrice=${minPrice},
                                 maxPrice=${maxPrice}
                             )}">▶</a>
+                            <a th:if="${page == (totalCount + pageSize - 1) / pageSize}">▶</a>
                         </button>
                     </div>
 
