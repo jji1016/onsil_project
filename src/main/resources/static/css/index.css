@@ -141,7 +141,8 @@ body {
     align-items: center;
 }
 .c1_cont .swiper-slide img{
-    width:100%; height:354px;
+    width:100%;
+    aspect-ratio: 0.8 / 1;
     object-fit:cover;
 }
 

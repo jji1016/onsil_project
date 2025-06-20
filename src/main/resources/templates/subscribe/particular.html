@@ -6,7 +6,7 @@
 <head th:replace="fragments/mainPageHead :: commonHead(
   '할인/이벤트',
   ${{'/css/particular.css'}},
-null
+  ${'/js/particular.js'}
 )"></head>
 <body>
 <header class="header" th:replace="~{fragments/mainPageHeader}"></header>
@@ -146,12 +146,7 @@ null
 
     <div class="thrid_se">
         <div class="detailed">
-            <ul class="deta_gnb">
-                <li class="active"><a href="#">상세정보</a></li>
-                <li><a href="#">리뷰1,434</a></li>
-                <li><a href="#">Q&A</a></li>
-                <li><a href="#">반품/교환정보</a></li>
-            </ul>
+
             <div class="arrival_date">
                 <p><span>오늘출발 11:00 마감</span> 모레 5/31(토) 도착확률91%</p>
             </div>
@@ -162,6 +157,12 @@ null
                     <span>배송기간은 주말/공휴일을 제외한 영업일기준</span>
                 </p>
             </div>
+            <ul class="deta_gnb">
+                <li class="active"><a href="#">상세정보</a></li>
+                <li><a href="#">리뷰1,434</a></li>
+                <li><a href="#">Q&A</a></li>
+                <li><a href="#">반품/교환정보</a></li>
+            </ul>
             <div class="detailed_img">
                 <img src="/images/particular/71824725596656797_1856458095.jpg" alt="">
             </div>
