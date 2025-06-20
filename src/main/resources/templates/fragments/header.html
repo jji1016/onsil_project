@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온실 플라워 스튜디오 - 관리자</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"/>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+<div id="header" th:fragment="header">
+    <div class="wrap_hd">
+        <div class="wrap_logo">
+            <h1 class="logo"><a href="#"><img src="/images/admin/logo.png" alt="logo"></a></h1>
+            <span>ADMIN</span>
+        </div>
+        <ul class="gnb">
+            <li>
+                <a href="/admin/dashboard">
+                    <span class="icon_area ico1"></span>
+                    홈화면
+                </a>
+            </li>
+            <li>
+                <a href="/admin/member-list">
+                    <span class="icon_area ico2"></span>
+                    회원관리
+                </a>
+            </li>
+            <li>
+                <a href="/admin/stocklist">
+                    <span class="icon_area ico3"></span>
+                    입출고 및 재고현황
+                </a>
+            </li>
+            <li>
+                <a href="/admin/sales">
+                    <span class="icon_area ico4"></span>
+                    매출관리
+                </a>
+            </li>
+            <li>
+                <a href="/admin/orderlist">
+                    <span class="icon_area"></span>
+                    주문내역관리
+                </a>
+            </li>
+            <li>
+                <a href="/admin/productlist">
+                    <span class="icon_area"></span>
+                    상품관리
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

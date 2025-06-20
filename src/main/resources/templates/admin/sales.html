@@ -1,0 +1,82 @@
+<button onclick="loadSales('day')">일별</button>
+<button onclick="loadSales('month')">월별</button>
+<button onclick="loadSales('year')">년별</button>
+<canvas id="periodSalesChart"></canvas>
+<canvas id="categorySalesChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let periodChart, categoryChart;
+
+    function getMonthStartEnd(year, month) {
+        const date = new Date(year, month - 1, 1);
+        const start = date.toISOString().split('T')[0];
+        const end = new Date(year, month, 0).toISOString().split('T')[0];
+        return { start, end };
+    }
+
+    function loadSales(type) {
+        const today = new Date();
+        let xLabels = [];
+        let fetchUrl = `/admin/sales/dashboard?type=${type}`;
+        // 일별: 1일~31일까지 날짜 생성
+        if (type === 'day') {
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1;
+            const { start, end } = getMonthStartEnd(year, month);
+            fetchUrl += `&startDate=${start}&endDate=${end}`;
+            // x축 라벨(2025-05-01 ~ 2025-05-31)
+            for (let day = 1; day <= 31; day++) {
+                const d = String(day).padStart(2, '0');
+                xLabels.push(`${year}-${String(month).padStart(2, '0')}-${d}`);
+            }
+        }
+        // 월별: 2025-01 ~ 2025-12 라벨 생성
+        else if (type === 'month') {
+            const year = today.getFullYear();
+            for (let month = 1; month <= 12; month++) {
+                const m = String(month).padStart(2, '0');
+                xLabels.push(`${year}-${m}`);
+            }
+        }
+        // 년별: 2018~2025년 라벨 생성
+        else if (type === 'year') {
+            for (let year = 2018; year <= 2025; year++) {
+                xLabels.push(String(year));
+            }
+        }
+        // 데이터 요청 및 차트 그리기
+        fetch(fetchUrl)
+            .then(res => res.json())
+            .then(data => {
+                // 매출 데이터 매칭 (없으면 0)
+                const salesMap = {};
+                data.periodSales.forEach(item => {
+                    salesMap[item.label] = item.amount;
+                });
+                const yData = xLabels.map(label => salesMap[label] || 0);
+                // 기간별 매출 그래프
+                if (periodChart) periodChart.destroy();
+                periodChart = new Chart(document.getElementById('periodSalesChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: xLabels,
+                        datasets: [{ label: '매출(원)', data: yData }]
+                    }
+                });
+                // 카테고리별 매출 그래프
+                const categoryLabels = data.categorySales.map(d => d.label);
+                const categoryData = data.categorySales.map(d => d.amount);
+                if (categoryChart) categoryChart.destroy();
+                categoryChart = new Chart(document.getElementById('categorySalesChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: categoryLabels,
+                        datasets: [{ label: '카테고리별 매출(원)', data: categoryData }]
+                    }
+                });
+            });
+    }
+    window.onload = function() {
+        loadSales('day');
+    }
+</script>

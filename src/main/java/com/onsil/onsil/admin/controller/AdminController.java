@@ -3,6 +3,12 @@ package com.onsil.onsil.admin.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onsil.onsil.admin.dto.*;
+import com.onsil.onsil.admin.dto.*;
+import com.onsil.onsil.admin.service.*;
+import com.onsil.onsil.admin.dto.AdminOutputDto;
+import com.onsil.onsil.admin.dto.MemberDto;
+import com.onsil.onsil.admin.dto.PopularCountDto;
+import com.onsil.onsil.admin.dto.SubscribeDto;
 import com.onsil.onsil.admin.service.AdminOutputService;
 import com.onsil.onsil.admin.service.AdminService;
 import com.onsil.onsil.entity.OrderList;
@@ -85,7 +91,7 @@ public class AdminController {
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
         model.addAttribute("popularSubscribe", popularSubscribe);
         model.addAttribute("recentSubscribes", recentSubscribes.getList());
-        model.addAttribute("todaySubscribe",todaySubscribe.getList());
+        model.addAttribute("todaySubscribe", todaySubscribe.getList());
         model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
         model.addAttribute("memberList", memberList);
         model.addAttribute("inOneWeekReview", inOneWeekReview);
@@ -124,7 +130,7 @@ public class AdminController {
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
         model.addAttribute("popularSubscribe", popularSubscribe);
         model.addAttribute("recentSubscribes", recentSubscribes.getList());
-        model.addAttribute("todaySubscribe",todaySubscribe.getList());
+        model.addAttribute("todaySubscribe", todaySubscribe.getList());
         model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
         model.addAttribute("inOneWeekReview", inOneWeekReview);
         model.addAttribute("statusSummary", statusSummary);
@@ -198,20 +204,155 @@ public class AdminController {
         return adminService.search(keyword, category, start, end);
     }
 
+    private final AdminInputService adminInputService;
+
+//    private final AdminOutputService adminOutputService;
+
+    private final AdminStockService adminStockService;
+
+    private final AdminOrderListService adminOrderListService;
+
+    private final AdminProductService adminProductService;
+
+    private final AdminSalesService adminSalesService;
+
+    //입고 검색 기능
+    @GetMapping("/inputlist")
+    //@ResponseBody
+    public String inputList(@RequestParam(required = false) String category,
+                            @RequestParam(required = false) String keyword,
+                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                            @RequestParam(required = false, defaultValue = "1") int page,
+                            @RequestParam(required = false, defaultValue = "10") int pageSize,
+                            Model model
+    ) {
+        int totalCount = adminInputService.countInputs(category, keyword, startDate, endDate);
+        model.addAttribute("totalCount", totalCount);
+        log.info("category={}, keyword={}, startDate={}, endDate={}", category, keyword, startDate, endDate);
+        List<AdminInputDto> inputList = adminInputService.searchInputs(category, keyword, startDate, endDate, page, pageSize);
+
+        model.addAttribute("inputList", inputList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+
+        return "admin/input01";
+    }
+
+//    @GetMapping("/inputlistjson")
+//    @ResponseBody
+//    //@ResponseBody
+//    public List<AdminInputDto> inputListJson(@RequestParam(required = false) String category,
+//                                             @RequestParam(required = false) String keyword,
+//                                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+//                                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+//                                             @RequestParam(required = false, defaultValue = "1") int page,
+//                                             @RequestParam(required = false, defaultValue = "10") int pageSize,
+//                                             Model model
+//    ) {
+//        log.info("category={}, keyword={}, startDate={}, endDate={}", category, keyword, startDate, endDate);
+//        List<AdminInputDto> inputList = adminInputService.searchInputs(category, keyword, startDate, endDate,page, pageSize);
+//
+//        model.addAttribute("inputList", inputList);
+//        model.addAttribute("category", category);
+//        model.addAttribute("keyword", keyword);
+//        model.addAttribute("startDate", startDate);
+//        model.addAttribute("endDate", endDate);
+//
+//        return inputList;
+//    }
 
 
+    //출고 검색 기능
     @GetMapping("/outputlist")
-    public String list(Model model) {
+    public String outputList(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int pageSize,
+            Model model
+    ) {
+        int totalCount = adminOutputService.countOutputs(category, keyword, startDate, endDate);
+        model.addAttribute("totalCount", totalCount);
+        List<AdminOutputDto> outputList = adminOutputService.searchOutputs(category, keyword, startDate, endDate, page, pageSize);
+        model.addAttribute("outputList", outputList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+        return "admin/output01";
+    }
 
-        List<AdminOutputDto> list = adminOutputService.getOutputs();
-        log.info("list={}", list);
+    //재고 검색 기능
+    @GetMapping("/stocklist")
+    public String stocklist(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Integer minQuantity,
+            @RequestParam(required = false) Integer maxQuantity,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int pageSize,
+            Model model
+    ) {
+        int totalCount = adminStockService.countStocks(category, keyword, minQuantity, maxQuantity, minPrice, maxPrice);
+        model.addAttribute("totalCount", totalCount);
 
-        model.addAttribute("outputList", list);
-        return "admin/output";
+
+        log.info("con category == {}", category);
+        List<AdminStockDto> stockList = adminStockService.searchStocks(
+                category, keyword, minQuantity, maxQuantity, minPrice, maxPrice, page, pageSize
+        );
+        log.info("stockList == {}", stockList);
+        model.addAttribute("stockList", stockList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("minQuantity", minQuantity);
+        model.addAttribute("maxQuantity", maxQuantity);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+
+        return "admin/stock01";
+    }
+
+    //주문내역 검색 기능
+    @GetMapping("/orderlist")
+    public String orderList(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int pageSize,
+            Model model
+    ) {
+        int totalCount = adminOrderListService.countOrderLists(category, keyword, startDate, endDate);
+        model.addAttribute("totalCount", totalCount);
+        List<AdminOrderDto> orderList = adminOrderListService.searchOrderLists(category, keyword, startDate, endDate, page, pageSize);
+
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+        return "admin/order02";
     }
 
     @GetMapping("/product")
-    public String product( Model model) {
+    public String product(Model model) {
 
         return "admin/product";
     }
@@ -233,8 +374,6 @@ public class AdminController {
         if (!saveDir.exists()) {
             saveDir.mkdirs();
         }
-
-
         String originalFilename = imageFile.getOriginalFilename();
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
@@ -264,7 +403,51 @@ public class AdminController {
 
         return "redirect:/admin/product";
     }
+
+    //상품내역 검색 기능
+    @GetMapping("/productlist")
+    public String productList(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int pageSize,
+
+
+            Model model
+    ) {
+        int totalCount = adminProductService.countProducts(category, keyword, minPrice, maxPrice);
+        model.addAttribute("totalCount", totalCount);
+        List<AdminProductDto> productList = adminProductService.searchProducts(category, keyword, minPrice, maxPrice, page, pageSize);
+
+        model.addAttribute("productList", productList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+        return "admin/product02";
+    }
+
+    // 매출관리 페이지 진입
+    @GetMapping("/sales")
+    public String salesPage() {
+        return "admin/sales01";
+    }
+
+    // 통합 응답 (기간별+카테고리별)
+    @GetMapping("/sales/dashboard")
+    @ResponseBody
+    public AdminSalesDashboardDto getSalesDashboard(
+            @RequestParam String type) {
+        return adminSalesService.getSalesDashboard(type);
+    }
+
+
 }
+
 
 
 
