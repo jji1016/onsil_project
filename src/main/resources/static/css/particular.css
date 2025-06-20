@@ -232,6 +232,7 @@ body{
 {
   color: #4b4a45;
   background-color: #fff;
+  cursor: pointer;
 }
 
 #section .frist_se .right_text .sell_txt .se_txt>li .btn_sell4:hover{

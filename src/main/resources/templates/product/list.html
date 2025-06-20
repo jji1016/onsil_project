@@ -185,8 +185,8 @@ null
     <div class="sec5">
         <h3 class="sub_heading">식물</h3>
         <ul class="plant1">
-            <li th:each="flower,iterStat : ${flowers}">
-                <a th:if="${iterStat.index < 4}" th:href="@{'/product/detail/' + ${flower.id}}">
+            <li th:each="flower, iterStat : ${flowers}" th:if="${iterStat.index < 4}">
+                <a th:href="@{'/product/detail/' + ${flower.id}}">
                     <div th:class="'prod_img2' + ${iterStat.index + 1}"
                          th:style="'background-image: url(\'/upload/products/' + ${flower.image} + '\')'">
                     </div>
@@ -198,8 +198,8 @@ null
             </li>
         </ul>
         <ul class="plant2">
-            <li th:each="flower,iterStat : ${flowers}">
-                <a th:if="${iterStat.index >= 4}" th:href="@{'/product/detail/' + ${flower.id}}">
+            <li th:each="flower, iterStat : ${flowers}" th:if="${iterStat.index >= 4 and iterStat.index < 8}">
+                <a th:href="@{'/product/detail/' + ${flower.id}}">
                     <div th:class="'prod_img2' + ${iterStat.index + 1}"
                          th:style="'background-image: url(\'/upload/products/' + ${flower.image} + '\')'">
                     </div>
