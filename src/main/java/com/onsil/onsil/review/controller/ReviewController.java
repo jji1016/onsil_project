@@ -48,6 +48,7 @@ public class ReviewController {
         model.addAttribute("memberNickName",member.getNickName());
         return "review/subscribereview";
     }
+
     @GetMapping("/product/{id}")
     public String writeProductReview(@PathVariable int id, Model model,
                                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {

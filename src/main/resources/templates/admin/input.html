@@ -82,7 +82,7 @@
                             </thead>
                             <tbody id="stock-body">
                             <tr th:each="input : ${inputList}">
-                                <td th:text="${input.regDate}"></td>
+                                <td th:text="${#temporals.format(input.regDate, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${input.inputId}"></td>
                                 <td th:text="${input.productId}"></td>
                                 <td th:text="${input.flowerName}"></td>

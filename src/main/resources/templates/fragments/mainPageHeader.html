@@ -18,7 +18,6 @@
 
         <!-- 로그아웃 / 프로필: 로그인한 사용자에게만 보임 -->
         <li sec:authorize="isAuthenticated()">
-            <span sec:authentication="name">사용자</span> 님
             <form th:action="@{/member/logout}" method="post">
                 <button type="submit" class="login">로그아웃</button>
             </form>
@@ -33,7 +32,7 @@
         <li><a th:href="@{/subscribe/subscribe}">꽃 구독하기</a></li>
         <li><a href="#" th:href="@{/flowers}">꽃 노트</a></li>
             <li><a th:href="@{/product/list}">꽃</a></li>
-        <li><a href="#" th:href="@{/subscribe/subscribe}">클래스</a></li>
+        <li><a href="#" th:href="@{/}">클래스</a></li>
         <li><a href="#" th:href="@{/corporate}">기업제휴</a></li>
         <li><a href="#" th:href="@{/onsilfaq}">고객센터</a></li>
     </ul>

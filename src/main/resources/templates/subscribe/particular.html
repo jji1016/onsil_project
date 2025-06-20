@@ -92,8 +92,9 @@ null
     </div>
 
     <div class="secound_se">
-        <div class="top_re" th:each="review : ${reviews}">
-            <div class="reviwe">
+        <div class="top_re">
+            <div class="reviwe" th:each="review, iterStat : ${reviews}"
+                 th:if="${iterStat.index < 2}">
                 <div class="star_all">
                     <ul class="star">
                         <li></li>
@@ -107,15 +108,36 @@ null
                 <div class="reviwe_txt">
                     <h4><span th:text="${#strings.substring(review.member.userID, 0, 2)} + '****'"></span> ·
                         <span th:text="${#temporals.format(review.regDate, 'yy,MM,dd')}"></span>
-                        배송방법: 정기구독</h4>
+                    </h4>
                     <h5>
                         <p>정기구독</p>
-                        <span th:text="${review.content}">리뷰 내용</span>
+                        <span th:text="${review.content}"></span>
                     </h5>
                 </div>
-                <!-- css수정해야함 -->
-                <div class="review_img">
-                    <img th:if="${review.image != null}" th:src="@{'/upload/reviews/' + ${review.image}}" alt="리뷰 이미지">
+            </div>
+        </div>
+
+        <div class="bottom_re">
+            <div class="reviwe" th:each="review, iterStat : ${reviews}"
+                 th:if="${iterStat.index >= 2 and iterStat.index < 4}">
+                <div class="star_all">
+                    <ul class="star">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <p th:text="${review.rating}">5</p>
+                </div>
+                <div class="reviwe_txt">
+                    <h4><span th:text="${#strings.substring(review.member.userID, 0, 2)} + '****'"></span> ·
+                        <span th:text="${#temporals.format(review.regDate, 'yy,MM,dd')}"></span>
+                    </h4>
+                    <h5>
+                        <p>정기구독</p>
+                        <span th:text="${review.content}"></span>
+                    </h5>
                 </div>
             </div>
         </div>
