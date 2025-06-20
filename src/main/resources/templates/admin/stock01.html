@@ -18,13 +18,13 @@
 <div id="section">
 
     <div id="stock" class="tab">
-        <!--            <div class="stock_btn">-->
-        <!--                <button onclick="changeTab('desc_stock',this)">재고현황</button>-->
-        <!--                <button onclick="changeTab('desc_in',this)">입고현황</button>-->
-        <!--                <button onclick="changeTab('desc_out',this)">출고현황</button>-->
-        <!--            </div>-->
+<!--                    <div class="stock_btn">-->
+<!--                        <button onclick="changeTab('desc_stock',this)">재고현황</button>-->
+<!--                        <button onclick="changeTab('desc_in',this)">입고현황</button>-->
+<!--                        <button onclick="changeTab('desc_out',this)">출고현황</button>-->
+<!--                    </div>-->
         <div class="stock_btn">
-            <a href="../admin/stocklist">재고현황</a>
+            <a href="../admin/stocklist" class="btn_on">재고현황</a>
             <a href="../admin/inputlist">입고현황</a>
             <a href="../admin/outputlist">출고현황</a>
         </div>
@@ -167,6 +167,33 @@
         document.getElementById('searchForm').reset(); // 입력란 초기화
         location.href = '/admin/stocklist'; // 검색조건 없이 전체 리스트로 이동
     }
+
+    //입,출,재고 버튼 클릭시 클래스명 부여
+    document.addEventListener('DOMContentLoaded', function() {
+        // 초기 활성화
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.stock_btn > a').forEach(a => {
+            if (a.getAttribute('href') === currentPath) {
+                a.classList.add('btn_on');
+            }
+        });
+
+        // 클릭 이벤트
+        document.querySelectorAll('.stock_btn > a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 페이지 이동 방지 (테스트용)
+                // e.preventDefault();
+
+                // 모든 a 태그에서 btn_on 클래스 제거
+                document.querySelectorAll('.stock_btn > a').forEach(a => {
+                    a.classList.remove('btn_on');
+                });
+                // 현재 클릭한 a 태그에 btn_on 클래스 추가
+                console.log(this);
+                this.classList.add('btn_on');
+            });
+        });
+    });
 </script>
 </body>
 </html>

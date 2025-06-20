@@ -1,6 +1,7 @@
 package com.onsil.onsil.admin.service;
 
 import com.onsil.onsil.admin.dao.AdminOrderListDao;
+import com.onsil.onsil.admin.dto.AdminOrderDto;
 import com.onsil.onsil.admin.dto.AdminOrderListDto;
 import com.onsil.onsil.admin.dto.AdminOutputDto;
 import com.onsil.onsil.admin.repository.AdminOrderListRepository;
@@ -21,11 +22,11 @@ public class AdminOrderListService {
     //private final AdminOrderListDao adminOrderListDao;
     private final AdminOrderListRepository adminOrderListRepository;
 
-    public List<AdminOrderListDto> searchOrderLists(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate, int page, int pageSize) {
+    public List<AdminOrderDto> searchOrderLists(String category, String keyword, LocalDateTime startDate, LocalDateTime endDate, int page, int pageSize) {
         int startRow = (page - 1) * pageSize;
         int endRow = page * pageSize;
         List<Object[]> results = adminOrderListRepository.searchOrderLists(category, keyword, startDate, endDate, startRow, endRow);
-        return results.stream().map(obj -> AdminOrderListDto.builder()
+        return results.stream().map(obj -> AdminOrderDto.builder()
                 .orderTime(((Timestamp)obj[0]).toLocalDateTime())
                 .orderListId(((Number)obj[1]).intValue())
                 .flowerName((String)obj[2])

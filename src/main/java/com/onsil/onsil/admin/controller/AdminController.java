@@ -91,7 +91,7 @@ public class AdminController {
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
         model.addAttribute("popularSubscribe", popularSubscribe);
         model.addAttribute("recentSubscribes", recentSubscribes.getList());
-        model.addAttribute("todaySubscribe",todaySubscribe.getList());
+        model.addAttribute("todaySubscribe", todaySubscribe.getList());
         model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
         model.addAttribute("memberList", memberList);
         model.addAttribute("inOneWeekReview", inOneWeekReview);
@@ -130,7 +130,7 @@ public class AdminController {
         model.addAttribute("inOneMonthSubscribeMember", inOneMonthSubscribeMember);
         model.addAttribute("popularSubscribe", popularSubscribe);
         model.addAttribute("recentSubscribes", recentSubscribes.getList());
-        model.addAttribute("todaySubscribe",todaySubscribe.getList());
+        model.addAttribute("todaySubscribe", todaySubscribe.getList());
         model.addAttribute("totalPrice", recentSubscribes.getTotalPrice());
         model.addAttribute("inOneWeekReview", inOneWeekReview);
         model.addAttribute("statusSummary", statusSummary);
@@ -206,7 +206,7 @@ public class AdminController {
 
     private final AdminInputService adminInputService;
 
-    private final AdminOutputService adminOutputService;
+//    private final AdminOutputService adminOutputService;
 
     private final AdminStockService adminStockService;
 
@@ -280,7 +280,7 @@ public class AdminController {
     ) {
         int totalCount = adminOutputService.countOutputs(category, keyword, startDate, endDate);
         model.addAttribute("totalCount", totalCount);
-        List<AdminOutputDto> outputList = adminOutputService.searchOutputs(category, keyword, startDate, endDate,  page, pageSize);
+        List<AdminOutputDto> outputList = adminOutputService.searchOutputs(category, keyword, startDate, endDate, page, pageSize);
         model.addAttribute("outputList", outputList);
         model.addAttribute("category", category);
         model.addAttribute("keyword", keyword);
@@ -308,7 +308,7 @@ public class AdminController {
         model.addAttribute("totalCount", totalCount);
 
 
-        log.info("con category == {}",category);
+        log.info("con category == {}", category);
         List<AdminStockDto> stockList = adminStockService.searchStocks(
                 category, keyword, minQuantity, maxQuantity, minPrice, maxPrice, page, pageSize
         );
@@ -339,7 +339,7 @@ public class AdminController {
     ) {
         int totalCount = adminOrderListService.countOrderLists(category, keyword, startDate, endDate);
         model.addAttribute("totalCount", totalCount);
-        List<AdminOrderListDto> orderList = adminOrderListService.searchOrderLists(category, keyword, startDate, endDate, page, pageSize);
+        List<AdminOrderDto> orderList = adminOrderListService.searchOrderLists(category, keyword, startDate, endDate, page, pageSize);
 
         model.addAttribute("orderList", orderList);
         model.addAttribute("category", category);
@@ -352,7 +352,7 @@ public class AdminController {
     }
 
     @GetMapping("/product")
-    public String product( Model model) {
+    public String product(Model model) {
 
         return "admin/product";
     }
@@ -374,6 +374,35 @@ public class AdminController {
         if (!saveDir.exists()) {
             saveDir.mkdirs();
         }
+        String originalFilename = imageFile.getOriginalFilename();
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String storedFileName = baseName + "_" + timestamp + extension; // abc_20250605123045.jpg
+
+
+        String savePath = productsPath + storedFileName;
+
+
+        imageFile.transferTo(new File(savePath));
+
+
+        Product product = new Product();
+        product.setFMonth(fMonth);
+        product.setFlowerName(flowerName);
+        product.setImage(storedFileName);
+        product.setFlowLang(flowLang);
+        product.setFUse(fUse);
+        product.setFGrow(fGrow);
+        product.setFType(fType);
+        product.setFlowerInfo(flowerInfo);
+        product.setPrice(price);
+
+        productRepository.save(product);
+
+
+        return "redirect:/admin/product";
+    }
 
     //상품내역 검색 기능
     @GetMapping("/productlist")
@@ -416,40 +445,9 @@ public class AdminController {
         return adminSalesService.getSalesDashboard(type);
     }
 
+
 }
 
-
-
-        String originalFilename = imageFile.getOriginalFilename();
-        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String storedFileName = baseName + "_" + timestamp + extension; // abc_20250605123045.jpg
-
-
-        String savePath = productsPath + storedFileName;
-
-
-        imageFile.transferTo(new File(savePath));
-
-
-        Product product = new Product();
-        product.setFMonth(fMonth);
-        product.setFlowerName(flowerName);
-        product.setImage(storedFileName);
-        product.setFlowLang(flowLang);
-        product.setFUse(fUse);
-        product.setFGrow(fGrow);
-        product.setFType(fType);
-        product.setFlowerInfo(flowerInfo);
-        product.setPrice(price);
-
-        productRepository.save(product);
-
-
-        return "redirect:/admin/product";
-    }
-}
 
 
 
