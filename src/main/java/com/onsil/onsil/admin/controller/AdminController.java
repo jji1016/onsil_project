@@ -170,6 +170,8 @@ public class AdminController {
     @PostMapping("/member-modify/{userID}")
     public String modifyMember(@PathVariable String userID, @ModelAttribute MemberDto dto) {
         adminService.modifyMember(userID, dto);
+
+//        log.info("userID == {}", userID);
         return "redirect:/admin/member";
     }
 

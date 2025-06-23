@@ -356,6 +356,7 @@
         };
     }
 
+    /*
     // 모달에 정보넣기
     document.querySelectorAll(".admin_btn").forEach(btn => {
         btn.addEventListener("click", function () {
@@ -368,11 +369,9 @@
             // ✅ 데이터 갱신
             orderPaginator.dataList = userOrders;
             subscribePaginator.dataList = userSubscribes;
-
-            // ❌ renderPage(1) 따로 안 해도 돼 (dataList 세터가 내부적으로 해줌)
         });
     });
-
+     */
     // 구독내역 페이지네이션
     const subscribePaginator = paginate(
         [], // 초기엔 빈 배열
@@ -430,7 +429,7 @@
         (member, index) => {
             const tr = document.createElement("tr");
             tr.classList.add("member-row");
-            tr.dataset.userId = member.userID;
+            tr.dataset.userID = member.userID;
             tr.dataset.nickname = member.nickName || '';
             tr.dataset.email = member.userEmail || '';
             tr.dataset.zipcode = member.zipcode || '';
@@ -455,7 +454,6 @@
         <td><button class="admin_btn">수정</button></td>
     `;
     }
-
 
     function renderOrderList(userID) {
         const userOrders = orderLists.filter(order => order.userID === userID);
@@ -496,10 +494,9 @@
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("admin_btn")) {
             const row = e.target.closest(".member-row");
-            // console.log("userID === " + row.dataset.userId)
-
             if (!row) return;
-            const userID = row.dataset.userId;
+
+            const userID = row.dataset.userID;
             const nickname = row.dataset.nickname;
             const email = row.dataset.email;
             const zipcode = row.dataset.zipcode;
@@ -512,28 +509,26 @@
             // 사용자 정보 세팅
             document.querySelector("#view-user-id").innerText = userID;
             document.querySelector("#input-user-id").value = userID;
-
-            // placeholder 설정
             document.querySelector("#input-nickname").placeholder = nickname || '';
             document.querySelector("#input-email").placeholder = email || '';
             document.querySelector("#input-zipcode").placeholder = zipcode || '';
             document.querySelector("#input-address01").placeholder = address01 || '';
             document.querySelector("#input-address02").placeholder = address02 || '';
-
-            // 이전 값 비우기
             document.querySelector("#input-nickname").value = '';
             document.querySelector("#input-email").value = '';
             document.querySelector("#input-zipcode").value = '';
             document.querySelector("#input-address01").value = '';
             document.querySelector("#input-address02").value = '';
 
+            // 주문/구독 렌더링
             renderOrderList(userID);
             renderSubscribeList(userID);
 
-            // action 설정
+            // form action 세팅
             document.querySelector("#member-update-form").action = `/admin/member-modify/${userID}`;
         }
     });
+
 
     // 회원 검색
     document.addEventListener('DOMContentLoaded', function () {
@@ -562,9 +557,9 @@
             if (startDate) params.append('startDate', startDate);
             if (endDate) params.append('endDate', endDate);
 
-            if (keyword === null || keyword === ""){
+            if (keyword === null || keyword === "") {
                 alert("검색어를 입력해주세요")
-            }else{
+            } else {
                 fetch(`/admin/member-search?${params.toString()}`)
                     .then(response => {
                         if (!response.ok) throw new Error("서버 응답 오류");
@@ -581,7 +576,9 @@
                         data.forEach((member, index) => {
                             const row = document.createElement('tr');
                             row.classList.add('member-row');
-                            row.dataset.userId = member.userId;
+
+                            // 여기 중요: dataset 직접 지정
+                            row.dataset.userID = member.userID;
                             row.dataset.nickname = member.nickName || '';
                             row.dataset.email = member.userEmail || '';
                             row.dataset.zipcode = member.zipcode || '';
@@ -589,20 +586,19 @@
                             row.dataset.address02 = member.address02 || '';
 
                             row.innerHTML = `
-                        <td>${index + 1}</td>
-                        <td>${member.userId}</td>
-                        <td>${member.nickName}</td>
-                        <td>${member.userName}</td>
-                        <td>${member.userEmail}</td>
-                        <td>${member.regDate}</td>
-                        <td>${member.address01}</td>
-                        <td>${member.address02 ?? ''}</td>
-                        <td>${member.tel}</td>
-                        <td><button class="admin_btn">수정</button></td>
-                       `;
-                            tableBody.appendChild(row);
+                            <td>${index + 1}</td>
+                            <td>${member.userID}</td>
+                            <td>${member.nickName}</td>
+                            <td>${member.userName}</td>
+                            <td>${member.userEmail}</td>
+                            <td>${member.regDate}</td>
+                            <td>${member.address01}</td>
+                            <td>${member.address02 ?? ''}</td>
+                            <td>${member.tel}</td>
+                            <td><button class="admin_btn">수정</button></td>
+                        `;
+                        tableBody.appendChild(row);
                         });
-
                     })
                     .catch(error => {
                         alert("검색 중 오류 발생: " + error.message);
@@ -626,7 +622,7 @@
                     return; // 취소 누르면 아무 일도 안 함
                 }
 
-                const userID = btn.dataset.userId;
+                const userID = btn.dataset.userID;
                 fetch(`/admin/member-list/delete/${userID}`, {
                     method: "post"
                 })
@@ -638,10 +634,11 @@
             })
         })
 
-    function openPage(tabName, btn){
+    // 모달 탭
+    function openPage(tabName, btn) {
 
         let tabs = document.getElementsByClassName('tab-cont');
-        for(let i = 0; i < tabs.length; i++){
+        for (let i = 0; i < tabs.length; i++) {
             tabs[i].style.display = "none";
         }
 
@@ -652,11 +649,12 @@
         buttons.forEach(b => b.classList.remove("activeM"));
 
         document.getElementById(tabName).style.display = "block";
-        if(btn){
+        if (btn) {
             btn.classList.add("activeM");
         }
 
     }
+
     document.addEventListener("DOMContentLoaded", function () {
         let firstBtn = document.querySelector(".wrap-cont li");
         openPage("mem-info", firstBtn);
@@ -668,6 +666,5 @@
     });
 
 </script>
-<script src="/js/adminMember.js"></script>
 </body>
 </html>
