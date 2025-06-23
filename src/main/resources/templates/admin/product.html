@@ -109,7 +109,7 @@
                             </button>
                             <button th:classappend="${page == (totalCount + pageSize - 1) / pageSize ? 'disabled' : ''}">
                                 <a th:if="${page != (totalCount + pageSize - 1) / pageSize}"
-                                   th:href="@{/admin/inputlist(
+                                   th:href="@{/admin/productlist(
                                 page=${page + 1},
                                 pageSize=${pageSize},
                                 category=${category},
