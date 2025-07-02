@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온실 플라워 스튜디오 - 장바구니</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-…"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/cart.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+  <div id="header">
+        <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
+        <ul class="gnb">
+            <li>
+                <button type="button" class="login">
+                    <a href="login.html">로그인</a>
+                </button>
+            </li>
+            <li>
+                <a href="cart.html">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+            </li>
+            <li>
+                <a href="mypage.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav">
+            <li><a href="subsc.html">꽃 정기구독</a></li>
+            <li><a href="flowernote.html">꽃 노트</a></li>
+            <li><a href="products.html">꽃 · 식물</a></li>
+            <li><a href="#">클래스</a></li>
+            <li><a href="corporate.html">기업제휴</a></li>
+            <li><a href="onsilfaq.html">고객센터</a></li>
+        </ul>
+    </div>
+
+<div id="section">
+  <div class="back_btn">
+    <ul class="btn_ti">
+      <li><a href="#"><img src="images/particular/Group 71.png" alt=""></a></li>
+      <li><h2>장바구니</h2></li>
+    </ul>
+  </div>
+
+  <div class="selall_btn">
+    <input type="checkbox" name="items_all" id="all"><span>전체선택</span>
+    <button type="submit" value="전체삭제" id="all_del">전체삭제</button>
+  </div>
+
+  <div class="sel_check">
+    <ul class="check_ti">
+      <li>선택상태</li>
+      <li>제품이미지</li>
+      <li>제품이름/가격</li>
+      <li>제품수량</li>
+      <li>　</li>
+    </ul>
+  </div>
+
+  <div class="sel_item">
+    <ul class="item_sel">
+      <li><input type="checkbox" name="item" class="sell_it"></li>
+      <li><img src="images/particular/lineup01.png" alt=""></li>
+      <li>
+        <h3>유로피언 꽃 구독 M사이즈 / <span>36,900원</span></h3>
+      </li>
+      <li>
+        <div class="btn_all">
+        <input class="sel_mp" type="button" value="-">
+        <span>1</span>
+        <input class="sel_mp" type="button" value="+">
+        </div>
+      </li>
+      <li><button id="de_btn" type="submit" value="삭제">삭제</button></li>
+    </ul>
+  </div>
+
+  <div class="price">
+    <div class="price_txt"><h1><span>총 수량 0개</span> 36,900원</h1></div>
+      <div class="buy_btn">
+    <button class="btn_buy" type="submit" value="상품구매">상품구매</button>
+  </div>
+  </div>
+
+
+
+  <div class="notandum">
+    <ul class="notandum_txt">
+      <li>
+        가격, 옵션 등 정보가 변경된 경우 주문이 불가할 수 있습니다.
+      </li>
+      <li>
+        오늘출발 정보는 판매자가 설정한 정보에 의해 제공되며, 물류위탁 상품인 경우 물류사의 사정에 따라 실제와 다를 수 있습니다.
+      </li>
+      <li>
+        일부 상품의 경우 카드 할부기간이 카드사 제공 기간보다 적게 제공될 수 있습니다.
+      </li>
+      <li>
+        장바구니에 보여지는 배송비는 최종적으로 발생하는 배송비가 아니며, 주문 주소지에 따라 도서산간 비용 등이 추가 발생할 수 있습니다.
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<div id="footer">
+        <div class="f_cont">
+            <h1 class="f_logo">
+                <a href="index.html">
+                    <img src="images/footer/logo_white.png" alt="logo">
+                </a>
+            </h1>
+            <ul class="f_info">
+                <li>온실 플라워스튜디오</li>
+                <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+                <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
+                <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+            </ul>
+        </div>
+    </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const allCheckbox = document.getElementById("all");            // 전체선택 체크박스
+    const itemCheckboxes = document.querySelectorAll(".sell_it");  // 개별 상품 체크박스들
+
+    // 전체선택 체크박스 클릭 시 개별 체크박스 모두 체크/해제
+    allCheckbox.addEventListener("change", function () {
+      const isChecked = allCheckbox.checked;
+
+      itemCheckboxes.forEach(function (checkbox) {
+        checkbox.checked = isChecked;
+      });
+    });
+  });
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".sel_mp");
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const parent = btn.closest(".btn_all");      // 버튼들의 부모 영역
+        const countSpan = parent.querySelector("span"); // 숫자가 들어 있는 <span>
+        let count = parseInt(countSpan.textContent); // 현재 숫자
+
+        if (btn.value === "+") {
+          count += 1;
+        } else if (btn.value === "-" && count > 1) {
+          count -= 1;
+        }
+
+        countSpan.textContent = count; // 숫자 업데이트
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

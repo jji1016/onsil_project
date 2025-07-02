@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온실 플라워 스튜디오 - FAQ</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-…"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/onsilfap.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+<script>
+  $(document).ready(function () {
+    $('.qna_ti').on('click', function () {
+      const $currentRow = $(this).closest('tr');
+      const $currentAnswer = $currentRow.find('.qna_txt');
+
+      if ($currentRow.hasClass('active')) {
+        // 닫기
+        $currentAnswer
+          .slideUp(300, function () {
+            $(this).css('display', 'none');
+          });
+        $currentRow.removeClass('active');
+      } else {
+        // 모든 항목 닫기
+        $('.qna_box tr').removeClass('active');
+        $('.qna_txt')
+          .slideUp(300, function () {
+            $(this).css('display', 'none');
+          });
+
+        // 클릭한 항목 열기
+        $currentRow.addClass('active');
+        $currentAnswer
+          .css('display', 'block')
+          .hide()
+          .slideDown(300);
+      }
+    });
+  });
+</script>
+</head>
+<body>
+<div id="header">
+        <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
+        <ul class="gnb">
+            <li>
+                <button type="button" class="login">
+                    <a href="login.html">로그인</a>
+                </button>
+            </li>
+            <li>
+                <a href="cart.html">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+            </li>
+            <li>
+                <a href="mypage.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav">
+            <li><a href="subsc.html">꽃 정기구독</a></li>
+            <li><a href="flowernote.html">꽃 노트</a></li>
+            <li><a href="products.html">꽃 · 식물</a></li>
+            <li><a href="#">클래스</a></li>
+            <li><a href="corporate.html">기업제휴</a></li>
+            <li><a href="onsilfaq.html">고객센터</a></li>
+        </ul>
+    </div>
+
+  <div id="section">
+    <div class="frist_se">
+    <div class="banner">
+      <h3>ONSIL FAQ</h3>
+      <h1>작은 궁금함도 놓치지 않도록</h1>
+      <h3>꽃을 고르고, 선물하고, 오래 바라보는 모든 과정이 더 쉬울 수 있도록 안내해 드려요</h3>
+    </div>
+
+    <div class="question">
+      <h4>온실에 많이 문의 주시는 질문들</h4>
+      <div class="search_box">
+        <form action="." method="post">
+          <input class="search_txt" type="text" placeholder="'정기구독', '배송' 등으로 검색해 보세요">
+          <button class="search_btn" type="submit"><i class="fa-solid fa-magnifying-glass fa-2xl" style="color: #ababab;"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<div class="second_se">
+      <table class="qna_box">
+
+        <tr class="accordion-item">
+          <td>
+            <div class="qna_ti">
+              <div class="left_ti">
+                <h1>Q</h1>
+                <h3>정기구독 날짜를 변경할 수 있나요?</h3>
+              </div>
+              <div class="right_ti">
+                <img src="images/particular/ep_arrow-down.png" alt="">
+              </div>
+            </div>
+            
+            <div class="qna_txt clearFix">
+              <h1><span>A</span></h1>
+              <p>
+                [MY PAGE] > [정기 구독] > 해당 정기 구독의 상세보기에서 직접 변경할 수 있어요. <br>
+                단, ‘발송 준비중’ 상태가 되면 조정이 어렵습니다.<br>
+                2주 간격으로 배송일이 설정되지 않으면,<br> 같은 디자인의 꽃을 받아보실 수도 있으니 고객센터 (1661-1031)로 상담 부탁드려요.
+              </p>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="accordion-item">
+          <td>
+            <div class="qna_ti">
+              <div class="left_ti">
+                <h1>Q</h1>
+                <h3>배송시간을 변경하고 싶어요</h3>
+              </div>
+              <div class="right_ti">
+                <img src="images/particular/ep_arrow-down.png" alt="">
+              </div>
+            </div>
+            <div class="qna_txt clearFix">
+              <h1><span>A</span></h1>
+              <p>배송 시간은 지정이 어렵지만, 요청사항에 남겨주시면 최대한 참고하여 발송해 드릴게요.</p>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="accordion-item">
+          <td>
+            <div class="qna_ti" id="active">
+              <div class="left_ti">
+                <h1>Q</h1>
+                <h3>주문을 취소하고 싶어요</h3>
+              </div>
+              <div class="right_ti">
+                <img src="images/particular/ep_arrow-down.png" alt="">
+              </div>
+            </div>
+            <div class="qna_txt clearFix">
+              <h1><span>A</span></h1>
+              <p>주문 상태가 '상품 준비 중' 이전이라면 MY PAGE에서 직접 취소하실 수 있습니다.</p>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="accordion-item">
+          <td>
+            <div class="qna_ti">
+              <div class="left_ti">
+                <h1>Q</h1>
+                <h3>꽃 상태가 좋지 않아요</h3>
+              </div>
+              <div class="right_ti">
+                <img src="images/particular/ep_arrow-down.png" alt="">
+              </div>
+            </div>
+            <div class="qna_txt clearFix">
+              <h1><span>A</span></h1>
+              <p>꽃 상태에 문제가 있다면 수령 직후 사진과 함께 고객센터로 연락 주시면 빠르게 도와드릴게요.</p>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="accordion-item">
+          <td>
+            <div class="qna_ti">
+              <div class="left_ti">
+                <h1>Q</h1>
+                <h3>플라워 클래스 날짜를 변경하고 싶어요</h3>
+              </div>
+              <div class="right_ti">
+                <img src="images/particular/ep_arrow-down.png" alt="">
+              </div>
+            </div>
+            <div class="qna_txt clearFix">
+              <h1><span>A</span></h1>
+              <p>클래스 시작 3일 전까지는 MY PAGE에서 날짜 변경이 가능합니다. 이후에는 고객센터로 문의 주세요.</p>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="accordion-item">
+          <td>
+            <div class="qna_ti">
+              <div class="left_ti">
+                <h1>Q</h1>
+                <h3>꽃다발 상품을 꽃바구니로 변경할 수 있나요?</h3>
+              </div>
+              <div class="right_ti">
+                <img src="images/particular/ep_arrow-down.png" alt="">
+              </div>
+            </div>
+            <div class="qna_txt clearFix">
+              <h1><span>A</span></h1>
+              <p>상품 변경은 주문 직후 1시간 이내에 고객센터를 통해 요청해주셔야 가능해요.</p>
+          </div>
+          </td>
+        </tr>
+      </table>  
+    </div>
+
+  </div>
+
+  <div id="footer">
+      <div class="f_cont">
+          <h1 class="f_logo">
+              <a href="index.html">
+                  <img src="images/footer/logo_white.png" alt="logo">
+              </a>
+          </h1>
+          <ul class="f_info">
+              <li>온실 플라워스튜디오</li>
+              <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+              <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
+              <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+          </ul>
+      </div>
+  </div>
+
+
+</body>
+</html>

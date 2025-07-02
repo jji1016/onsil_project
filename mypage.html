@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온실 플라워 스튜디오 - 마이페이지</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-…"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/mypage.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  <script>
+    $(document).ready(function(){
+      $(".list1>li").removeClass("l_on");
+      $(".list2>li").removeClass("l_on");
+      $(".list1>li").eq(0).addClass("l_on");
+
+      $(".list1>li, .list2>li").click(function(){
+        $(".list1>li, .list2>li").removeClass("l_on");
+        $(this).addClass("l_on");
+    });
+
+    $(".list1>li").click(function(){
+      let index = $(this).index();
+      $(".content").hide();
+      $(".content").eq(index).show();
+    });
+    
+    $(".list2>li").click(function(){
+      let index = $(this).index();
+      $(".content").hide();
+      $(".content").eq(index + 3).show();
+    });
+  });
+  </script>
+</head>
+<body>
+  <div id="header">
+        <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
+        <ul class="gnb">
+            <li>
+                <button type="button" class="login">
+                    <a href="login.html">로그인</a>
+                </button>
+            </li>
+            <li>
+                <a href="cart.html">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+            </li>
+            <li>
+                <a href="mypage.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav">
+            <li><a href="subsc.html">꽃 정기구독</a></li>
+            <li><a href="flowernote.html">꽃 노트</a></li>
+            <li><a href="products.html">꽃 · 식물</a></li>
+            <li><a href="#">클래스</a></li>
+            <li><a href="corporate.html">기업제휴</a></li>
+            <li><a href="onsilfaq.html">고객센터</a></li>
+        </ul>
+    </div>
+
+
+
+  <div id="section">
+    <div class="my_top">
+      <div class="top_left">
+        <p>안녕하세요. <span id="username">김현숙</span>님</p>
+        <div class="left_txt">
+          <p>기념일을 저장하시면<br>5% 할인 쿠폰과 알림을 받으실 수 있습니다.</p>
+          <a href="#">기념일 등록 &gt;</a>
+        </div>
+      </div>
+      <div class="top_right">
+        <div class="grade">
+          <p class="label">회원등급</p>
+          <p class="value"><span id="user_grade">Beginner </span><a href="#">혜택보기 &gt;</a></p>
+        </div>
+        <div class="point">
+          <p class="label">포인트</p>
+          <p class="value"><span id="point">2,000</span>P</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="my_list">
+      <h1>마이페이지</h1>
+        <ul class="list1">
+          <li class="l_on">주문내역 / 배송조회<span>&gt;</span></li>
+          <li>내 정보 관리<span>&gt;</span></li>
+          <li>나의 정기구독 관리<span>&gt;</span></li>
+        </ul>
+        <ul class="list2">
+          <li>취소 / 교환 / 환불 내역<span>&gt;</span></li>
+          <li>기념일 관리<span>&gt;</span></li>
+          <li>회원등급 안내<span>&gt;</span></li>
+          <li>쿠폰 / 포인트<span>&gt;</span></li>
+          <li>1:1 문의내역<span>&gt;</span></li>
+        </ul>
+      <div class="content_wrap">
+        <div class="content">
+          <h2>주문 / 배송 조회<span>(최근 1개월 기준)</span></h2>
+          <ul class="delivery_status">
+            <li>입금전<br><span id="st_number">0</span></li>
+            <li>배송준비중<br><span id="st_number">0</span></li>
+            <li>배송중<br><span id="st_number">1</span></li>
+            <li>배송완료<br><span id="st_number">0</span></li>
+          </ul>
+          <div class="order">
+            <h2>나의 주문내역 (지난 6개월)</h2>
+            
+            <form action="" method="post">
+              <div class="subscript">
+                <div class="search_box">
+                  <input class="search_txt" type="text">
+                  <button class="search_btn" type="submit"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #b5b5b5;"></i></button>              
+                </div>  
+                <div class="list_box">
+                  <select name="" id="" class="year_select">
+                    <option value="">전체</option>
+                    <option value="">2025</option>
+                    <option value="">2024</option>
+                    <option value="">2023</option>
+                    <option value="">2022</option>
+                    <option value="">2021</option>
+                    <option value="">2020</option>
+                  </select>
+                </div>
+                <button type="button" class="btn_search" >조회</button>
+              </div>
+            </form>
+          </div>
+
+
+
+          <form action="">
+            <table class="order_table">
+              <thead>
+                <tr>
+                  <th>주문일자</th>
+                  <th>이미지</th>
+                  <th>상품정보</th>
+                  <th>수량</th>
+                  <th>상품금액</th>
+                  <th>주문상태</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2025-05-23<br>14:05</td>
+                  <td><img src="images/mypage/ot1.png" alt="01"></td>
+                  <td>[Red 독일 M 사이즈] 유럽 꽃 정기구독</td>
+                  <td>1</td>
+                  <td>38,900원</td>
+                  <td>배송중 [2회차]</td>
+                  <td>
+                    <button type="button" class="review-btn">
+                    <a href="review.html">리뷰작성</a>
+                  </button>
+                </td>
+                </tr>
+                <tr>
+                  <td>2025-02-23<br>10:42</td>
+                  <td><img src="images/mypage/ot2.png" alt="02"></td>
+                  <td>[작약 스페셜] 작약 5대 (1세트)</td>
+                  <td>1</td>
+                  <td>12,900원</td>
+                  <td>배송완료</td>
+                  <td>
+                    <button type="button" class="review-btn">
+                      <a href="review.html">리뷰작성</a>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <!-- <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr> -->
+                <!-- <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr> -->
+                <!-- <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr> -->
+              </tbody>
+            </table>
+
+            <table class="page_btn">
+              <tbody>
+                <tr>
+                  <td><a href="#">&lt;</a></td>
+                  <td><a href="#">1</a></td>
+                  <td><a href="#">2</a></td>
+                  <td><a href="#">3</a></td>
+                  <td><a href="#">4</a></td>
+                  <td><a href="#">&gt;</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="content">
+          <h2>개인정보 수정</h2>
+          <form action="">
+            <table class="personal_info">
+              <tr>
+                <td>이름</td>
+                <td><span id="username">김현숙</span></td>
+              </tr>
+              <tr>
+                <td>아이디</td>
+                <td><span id="userid">goyang12</span></td>
+              </tr>
+              <tr>
+                <td>닉네임</td>
+                <td><span id="usernickname">고양이</span></td>
+              </tr>
+              <tr>
+                <td>현재 비밀번호</td>
+                <td><input type="password"></td>
+              </tr>
+              <tr>
+                <td>새 비밀번호</td>
+                <td><input type="password"></td>
+              </tr>
+              <tr>
+                <td>비밀번호 확인</td>
+                <td><input type="password"></td>
+              </tr>
+              <tr>
+                <td>이메일</td>
+                <td>
+                  <input type="text" placeholder="goyang12@naver.com">
+                  <button type="button" class="email_btn">인증하기</button>
+                </td>
+              </tr>
+              <tr>
+                <td>배송지</td>
+                <td>
+                  <input type="text" class="ad_num" placeholder="10554">
+                  <button type="button" class="ad_search">주소변경</button><br>
+                  <input type="text" class="address" placeholder="서울시 강북구 00동"><br>
+                  <input type="text" class="address" placeholder="17-2 00빌라 201호">
+                </td>
+              </tr>
+              <tr>
+                <td>휴대전화</td>
+                <td>
+                  <select name="" id="" class="p_num_s">
+                    <option value="">010</option>
+                    <option value="">011</option>
+                  </select>
+                  -
+                  <input type="text" maxlength="4" class="p_num" placeholder="1234">
+                  -
+                  <input type="text" maxlength="4" class="p_num" placeholder="5678">
+                </td>
+              </tr>
+            </table>
+            <span class="cus_edit2">회원탈퇴하기 &gt;</span>
+            <div class="cus_btn">
+              <button type="submit" class="cus_edit">수정하기</button>
+            </div>
+          </form>
+          
+        </div>
+        <div class="content">
+          <h2>나의 정기구독 관리</h2>
+          <ul class="request_detail">
+            <li class="detail_on">신청내역(<span id="number">1</span>)</li>
+          </ul>
+          <form action="">
+            <table class="order_table">
+              <thead>
+                <tr>
+                  <th>주문일자</th>
+                  <th>이미지</th>
+                  <th>상품정보</th>
+                  <th>상품금액</th>
+                  <th>배송시작일</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2025-05-23<br>14:05</td>
+                  <td><img src="images/mypage/ot1.png" alt="01"></td>
+                  <td>[Red 독일 M 사이즈] 유럽 꽃 정기구독</td>
+                  <td>38,900원</td>
+                  <td>2025-05-26<br>[2회차]</td>
+                  <td><button type="button" class="cancel_btn">구독취소</button></td>
+                  <td>
+                    <button type="button" class="review-btn">
+                      <a href="review.html">리뷰작성</a>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><br></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+                        <table class="page_btn">
+              <tbody>
+                <tr>
+                  <td><a href="#">&lt;</a></td>
+                  <td><a href="#">1</a></td>
+                  <td><a href="#">2</a></td>
+                  <td><a href="#">3</a></td>
+                  <td><a href="#">4</a></td>
+                  <td><a href="#">&gt;</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="content">
+          
+        </div>
+        <div class="content">
+          <h2>기념일 관리</h2>
+          <p>기념일을 등록하시면 5일전에 문자로 알려드립니다.</p>
+          <div class="specialday">
+            <ul class="s_day">
+              <li class="s_title">나의 기념일　<span>기념일을 저장하시면 5% 할인 쿠폰과 알림을 받으실 수 있습니다.</span></li>
+              <li>기념일을 등록해주세요<img src="images/mypage/plus_icon.png" alt="icon"></li>
+            </ul>
+            <div class="sday_subtxt">
+              <p>- 기념일 쿠폰은 3만원 이상 구매 시 사용가능합니다.</p>
+              <p>- 마케팅 수신을 동의하지 않으면 알림 및 쿠폰 지급이 불가합니다.</p>
+              <p>- 기념일로부터 최소 5일 전 등록이 된 기념일에 한해 쿠폰과 알림을 받으실 수 있습니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="content"></div>
+        <div class="content">
+          <h2>쿠폰 / 포인트</h2>
+          <div class="userpoint">
+            <div class="userpoint_cont">
+              <p><span id="username">아무개</span>님이 보유한 포인트</p>
+              <h3><span id="point">2,000</span>P</h3>
+            </div>
+          </div>
+          <p class="upoint_cont">1년이 경과된 포인트 잔액은 매년 5월 30일 모두 소멸됩니다.</p>
+          <h2>포인트 적립 쿠폰 등록</h2>
+          <div class="po_coupon">
+            <input type="text" class="coupon_code">
+            <button type="button" class="coupon_btn">등록</button>
+          </div>
+          <ul class="coupon_txt">
+            <li class="coupon_ttxt"><img src="images/mypage/error_icon.png" alt="">포인트 적립 쿠폰 등록 안내</li>
+            <li>한 번 등록된 쿠폰 코드는 재사용이 불가능 합니다.</li>
+            <li>쿠폰 등록이 완료되면 포인트가 적립되며 적립된 포인트는 즉시 사용이 가능합니다.</li>
+            <li>포인트 사용은 상품 주문/결제 페이지에서 사용 가능합니다.</li>
+          </ul>
+        </div>
+        <div class="content">
+          <h2>1:1 문의내역</h2>
+          <div class="c_service">
+            <h2>고객센터 1661-0543</h2>
+            <p>운영시간(주말, 공휴일 휴무) 10:00 ~ 18:00 점심시간 12:30 ~ 13:30</p>
+            <ul class="c_service_txt">
+              <li>- 운영 시간 내에는 2시간 이내에 답변을 드리나, 문의가 많을 때에는 다소 지연될 수 있습니다.</li>
+              <li>- 실시간 채팅상담을 통한 문의 내역은 기록되지 않습니다.</li>
+              <li>- 확인이 필요한 경우 1:1 문의하기 또는 고객센터 전화로 문의 부탁드립니다.</li>
+            </ul>
+            <button type="button" class="c_service_btn">1:1 문의하기</button>
+          </div>
+          <div class="c_service_cont">
+            <p>문의 내역이 존재하지 않습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="l_btn">
+        <button type="button" class="l_btnn"><a href="#">1:1 문의하기</a></button>
+        <button type="button" class="l_btnn"><a href="#">로그아웃</a></button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="footer">
+        <div class="f_cont">
+            <h1 class="f_logo">
+                <a href="index.html">
+                    <img src="images/footer/logo_white.png" alt="logo">
+                </a>
+            </h1>
+            <ul class="f_info">
+                <li>온실 플라워스튜디오</li>
+                <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+                <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
+                <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

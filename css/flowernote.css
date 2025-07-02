@@ -1,0 +1,411 @@
+@charset "UTF-8";
+
+*{margin: 0; padding: 0;}
+ul{list-style: none;}
+a{text-decoration: none; color: black;}
+img{border: none; vertical-align: top;}
+input:focus {outline: none;}
+
+body{
+  background-color: #E5E0D8;
+  font-family: 'Pretendard Variable', sans-serif;   
+  color: #191919;
+}
+#section{
+  position: relative;
+}
+
+
+/* section- 상단타이틀배너영역 */
+#section .top-banner{
+  width: 100%;
+  height: 610px;
+  background-image: url(../images/flowernote/note_top_bg.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
+}
+
+#section .top-banner .t-ban-txt{
+  color: rgb(252, 252, 252);
+  padding-top: 220px;
+}
+
+#section .top-banner .t-ban-txt h3{
+  font-size: 20px;
+  font-weight: 200;
+}
+#section .top-banner .t-ban-txt h2{
+  font-size: 38px;
+  font-weight: 500;
+  margin: 20px 0;
+}
+#section .top-banner .t-ban-txt p{
+  font-size: 20px;
+  font-weight: 200;
+}
+
+
+/* 꽃 검색 영역 */
+#section .wrap-note-search{
+  background-image: url(../images/flowernote/search_bg.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 896px;
+  background-attachment: fixed;
+}
+
+#section .wrap-note-search .note-cont{
+  width: 70%;
+  height: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto ;
+  padding-top: 80px;
+  box-sizing: border-box;
+  /* border: 1px solid red; */
+}
+#section .wrap-note-search .note-cont .search-area{
+  width: 50%;
+  text-align: center;
+  padding-top: 290px;
+}
+#section .wrap-note-search .note-cont .search-area li>p{
+  font-size: 30px;
+  color: #8b9773;
+  font-weight: 600;
+}
+#section .wrap-note-search .note-cont .search-area li>input{
+  width: 60%;
+  height: 40px;
+  border: 1px solid #d2d2d2;
+  color:#A4A4A4;
+  font-size: 16px;
+  text-align: center;
+  padding: 0 10px;
+}
+#section .wrap-note-search .note-cont .search-area li.search-f{
+  position: relative;
+  margin: 30px 0 20px;
+}
+#section .wrap-note-search .note-cont .search-area li.search-f> a{
+  position: absolute;
+  top: 8px; right: 150px;
+  display: block;
+  color: #A4A4A4;
+}
+#section .wrap-note-search .note-cont .search-area li.tag span{
+  font-size: 14px;
+  color: #4B4A45;
+  margin: 0 5px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+#section .wrap-note-search .note-cont .search-area li.tag span.tag-title{
+  background-color: #e6e6e6;
+  padding: 5px;
+  border-radius: 20px;
+  margin-right: 10px;
+  display: inline-block;
+  cursor: default;
+}
+#section .wrap-note-search .note-cont .search-area li.tag span+span:hover{
+  text-decoration: underline;
+}
+
+
+
+/* 검색결과 표출영역 */
+#section .wrap-note-search .note-cont .search-result{
+  width: 450px;
+  height: 600px;
+  margin-top: 100px;
+  cursor: pointer;
+  /* display: none; */
+}
+#section .wrap-note-search .note-cont .search-result .img-area{
+  width: 100%;
+  height: 88%;
+  background-color: rgb(255, 254, 251);
+}
+#section .wrap-note-search .note-cont .search-result .flower-name{
+  width: 100%;
+  height: 10%;
+  background-color: #F2EFEB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#section .wrap-note-search .note-cont .search-result .flower-name .name-txt{
+  font-size: 18px;
+  font-weight: 600;
+  color: #8b9773;
+}
+
+/* 모달창 ------------------ */
+#section .modal{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(252, 252, 252, 0.521);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: none;
+}
+
+#section .modal .wrap-modal-cont{
+  width: 700px;
+  height: 700px;
+  margin: 0 auto;
+  background-color: #E5E0D8;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 상단 바 */
+#section .modal .wrap-modal-cont .top-bar{
+  width: 100%;
+  height: 30px;
+  background-color: #8b9773;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 30px;
+}
+#section .modal .wrap-modal-cont .top-bar p{
+  color: white;
+  margin-left: 10px;
+}
+#section .modal .wrap-modal-cont .top-bar .close{
+  color: white;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+/* 컨텐츠 영역---------------------- */
+#section .modal .wrap-modal-cont .modal-cont{
+  width: 100%;
+  height: 95.3%;
+  overflow-y: auto;
+  padding: 30px 50px;
+  box-sizing: border-box;
+}
+
+/* 타이틀영역 */
+#section .modal .wrap-modal-cont .modal-cont .title{
+  color: #8b9773;
+  text-align: center;
+}
+#section .modal .wrap-modal-cont .modal-cont .title h2{
+  font-size: 22px;
+  font-weight: 600;
+}
+#section .modal .wrap-modal-cont .modal-cont .title p{
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1;
+  margin-top: 10px;
+  font-family: "League Script", cursive;
+}
+
+/* 이미지 영역 */
+#section .modal .wrap-modal-cont .modal-cont .contents .img-area{
+  background-color: rgb(196, 199, 201);
+  width: 300px;
+  height: 300px;
+  margin: 30px auto;
+}
+
+
+/* 꽃이름, 꽃말  */
+#section .modal .wrap-modal-cont .modal-cont .contents .name-language{
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ffffff;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .name-language h2{
+  color: #8b9773;
+  font-size: 30px;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .name-language p{
+  color: #4B4A45;
+  font-size: 20px;
+  margin-top: 15px;
+  font-weight: 300;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .season-price div .tit-txt{
+  width: 23%;
+}
+  
+
+/* 나머지 꽃 정보영역 */
+
+#section .modal .wrap-modal-cont .modal-cont .contents .season-price{
+  display: flex;
+  margin-top: 25px;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .season-price div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .tit-txt{
+  width: 10%;
+  color: #8b9773;
+  font-weight: 600;
+  font-size: 18px;
+}
+#section .modal .wrap-modal-cont .modal-cont .contents .sub-txt{
+  width: 90%;
+  color: #3d3d3d;
+  font-weight: 400;
+}
+
+
+
+
+
+
+
+/* 이달의 꽃 영역 ------*/
+#section .wrap-month-flower{
+  width: 100%;
+}
+
+
+/* 이달의 꽃 탭메뉴 */
+#section .wrap-month-flower .month-tab{
+  width: 100%;
+  margin: 0 auto;
+  padding: 50px 200px 20px;
+  background-color: #EFEBE2;
+  border-top: 1px solid #D0CAC2;
+  border-bottom: 1px solid #D0CAC2;
+  box-sizing: border-box;
+  text-align: center;
+  /* border: 1px solid blue; */
+}
+#section .wrap-month-flower .month-tab h2{
+  color: #4B4A45;
+  margin: 20px 0 50px;
+}
+#section .wrap-month-flower .month-tab .years{
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin: 30px auto;
+  /* border: 1px solid red; */
+}
+#section .wrap-month-flower .month-tab .years li{
+  width: 150px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: #E5E0D8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+#section .wrap-month-flower .month-tab .years li p{
+  font-size: 16px;
+  color: #4d4d4d;
+  transition: all 0.3s;
+}
+#section .wrap-month-flower .month-tab .years li span{
+  font-size: 12px;
+  color: #868686;
+  font-weight: 300;
+  transition: all 0.3s;
+}
+
+/* 탭버튼 클릭시 */
+#section .wrap-month-flower .month-tab .years li.active{
+  background-color: #8b9773;
+}
+#section .wrap-month-flower .month-tab .years li.active p{
+  color: #fff;
+}
+#section .wrap-month-flower .month-tab .years li.active span{
+  color: #fff;
+}
+/* #section .wrap-month-flower .month-tab .years .test{
+  background-color: red;
+} */
+
+
+
+
+
+
+
+
+
+/* 이달의 꽃 컨텐츠 영역 */
+#section .wrap-month-flower .month-cont{
+  width: 70%;
+  margin: 0 auto;
+  height: 1300px;
+}
+
+#section .wrap-month-flower .month-cont .m-flower-list{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* display: none; */
+}
+#section .wrap-month-flower .month-cont .m-flower-list li{
+  width: 400px;
+  height: 500px;
+  margin-top: 90px;
+  cursor: pointer;
+}
+#section .wrap-month-flower .month-cont .m-flower-list li .flower-image{
+  width: 100%;
+  height: 90%;
+  background-color: rgb(255, 254, 251);
+}
+#section .wrap-month-flower .month-cont .m-flower-list .flower-name{
+  width: 100%;
+  height: 10%;
+  background-color: #F2EFEB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#section .wrap-month-flower .month-cont .m-flower-list .flower-name .name-txt{
+  font-size: 18px;
+  font-weight: 600;
+  color: #8b9773;
+}
+
+#section .wrap-month-flower .month-cont #june li .flower-image{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#section .wrap-month-flower .month-cont #june li.list1 .flower-image{
+  background-image: url(../images/flowernote/month_list1.png);
+}
+#section .wrap-month-flower .month-cont #june li.list2 .flower-image{
+  background-image: url(../images/flowernote/month_list2.png);
+}
+#section .wrap-month-flower .month-cont #june li.list3 .flower-image{
+  background-image: url(../images/flowernote/month_list3.png);
+}
+#section .wrap-month-flower .month-cont #june li.list4 .flower-image{
+  background-image: url(../images/flowernote/month_list4.png);
+}
+#section .wrap-month-flower .month-cont #june li.list5 .flower-image{
+  background-image: url(../images/flowernote/month_list5.png);
+}
+#section .wrap-month-flower .month-cont #june li.list6 .flower-image{
+  background-image: url(../images/flowernote/month_list6.png);
+}

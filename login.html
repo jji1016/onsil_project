@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온실 플라워 스튜디오 - 로그인</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-…"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/login.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  <style>
+    *{margin: 0; padding:0;}
+    ul{list-style: none;}
+    a{color:#000; text-decoration: none;}
+    img{border:0; vertical-align: top;}
+    body{font-family: 'Pretendard';}
+
+    #section{
+      width: 500px; margin: 0 auto;
+      text-align: center;
+      padding-top: 100px;
+      color: rgb(139, 139, 139)
+    }
+    #section h1{
+      margin-bottom: 50px;
+      color: #191919;
+    }
+    #section #user-id,
+    #section #user-pw{
+      width: 500px; height: 50px;
+      border: none;
+      border-bottom: 1px solid rgb(177, 177, 177);
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      padding: 15px;
+    }
+    #section #autoLogin{
+      margin: 10px 0;
+      margin-left: -400px;
+    }
+    #section .login{
+      width: 500px; margin: 20px auto;  
+      height: 50px;
+      border: none;
+      background-color: #8B9773;
+      color: white;
+      font-size: 17px;
+      transition: all 0.3s;
+    }
+    #section .login:hover{
+      background-color: #000;
+    }
+    #section .find_mine{
+      width: 350px; margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    #section .find_mine>li a span:hover{
+      color: #191919;
+    }
+    #section .find_mine>li a{
+      color: rgb(139, 139, 139);
+    }
+    #section .join_wrap{
+      width: 500px; margin: 0 auto; 
+      height: 300px;
+      border: 1px solid #8B9773;
+      box-sizing: border-box;
+      margin-top: 50px;
+    }
+    #section .join_wrap p{
+      padding-top: 50px;
+      font-size: 15px;
+      color: rgb(139, 139, 139);
+    }
+    #section .join_wrap p span{
+      font-size: 18px;
+      color: #191919;
+    }
+    #section .join_wrap .joinin{
+      width: 200px;height: 50px;
+      background-color: white;
+      border: 1px solid #8B9773;
+      color: #8B9773;
+      margin: 50px;
+      transition: all 0.3s;
+    }
+    #section .join_wrap .joinin:hover{
+      background-color: #8B9773;
+      color: white;
+    }
+    #section .sns_txt{
+      display: flex;
+      justify-content: space-between;
+      margin:30px 0px;
+      font-weight: 500;
+    }
+    #section .sns_txt li:nth-child(1),
+    #section .sns_txt li:nth-child(3){
+      width: 150px; height: 8px;
+      border-bottom: 1px solid rgb(177, 177, 177);
+    }
+    #section .sns_login{
+      width: 250px; margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 150px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header">
+        <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
+        <ul class="gnb">
+            <li>
+                <button type="button" class="login">
+                    <a href="login.html">로그인</a>
+                </button>
+            </li>
+            <li>
+                <a href="cart.html">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+            </li>
+            <li>
+                <a href="mypage.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav">
+            <li><a href="subsc.html">꽃 정기구독</a></li>
+            <li><a href="flowernote.html">꽃 노트</a></li>
+            <li><a href="products.html">꽃 · 식물</a></li>
+            <li><a href="#">클래스</a></li>
+            <li><a href="corporate.html">기업제휴</a></li>
+            <li><a href="onsilfaq.html">고객센터</a></li>
+        </ul>
+    </div>
+<!-- ------------------------------section------------------------------------- -->
+  <div id="section">
+    <h1 >로그인</h1>
+    <input type="text" placeholder="아이디" id="user-id" name="userId"><br>
+    <input type="password" placeholder="비밀번호" id="user-pw" name="password"><br>
+    <input type="checkbox" name="autoLogin" id="autoLogin"> 자동 로그인<br>
+    <input type="button" value="로그인" id="login" class="login" onclick="location.href='index.html'">
+    <ul class="find_mine">
+      <li><a href="#"><span> 비회원 주문조회</span>　　|</a></li>
+      <li><a href="#"><span>아이디 찾기</span>　　|</a></li>
+      <li><a href="#"><span>비밀번호 찾기</span></a></li>
+    </ul>
+
+    <div class="join_wrap">
+      <p><span>아직 회원이 아니신가요?</span><br><br><br>
+        지금 회원가입 하시면 다양하고 특별한 혜택이 <br>
+        준비되어 있습니다.</p>
+      <button type="button" class="joinin" onclick="location.href='join.html'">회원가입</button>
+    </div>
+    <div class="sns">
+      <ul class="sns_txt">
+        <li></li>
+        <li>SNS 간편 로그인</li>
+        <li></li>
+      </ul>
+      <ul class="sns_login">
+        <li><a href="#"><img src="images/login/naver_log.png" alt=""></a></li>
+        <li><a href="#"><img src="images/login/kakao_log.png" alt=""></a></li>
+        <li><a href="#"><img src="images/login/face_log.png" alt=""></a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div id="footer">
+    <div class="f_cont">
+      <h1 class="f_logo">
+        <a href="index.html">
+          <img src="images/footer/logo_white.png" alt="logo">
+        </a>
+      </h1>
+      <ul class="f_info">
+        <li>온실 플라워스튜디오</li>
+        <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+        <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
+        <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온실 플라워 스튜디오 - 리뷰</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-…"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/review.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+  <body>
+  <div id="header">
+        <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
+        <ul class="gnb">
+            <li>
+                <button type="button" class="login">
+                    <a href="login.html">로그인</a>
+                </button>
+            </li>
+            <li>
+                <a href="cart.html">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+            </li>
+            <li>
+                <a href="mypage.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav">
+            <li><a href="subsc.html">꽃 정기구독</a></li>
+            <li><a href="flowernote.html">꽃 노트</a></li>
+            <li><a href="products.html">꽃 · 식물</a></li>
+            <li><a href="#">클래스</a></li>
+            <li><a href="corporate.html">기업제휴</a></li>
+            <li><a href="onsilfaq.html">고객센터</a></li>
+        </ul>
+    </div>
+
+
+
+  <!-- 섹션영역 -->
+
+  <div id="section">
+    <div class="top-title">
+      <div class="txt">
+        <p>REVIEW</p>
+        <h2>소중한 후기를 들려주세요</h2>
+        <p>꽃을 받아보신 순간, 어떠셨나요? 당신의 이야기가 또 다른 따뜻한 선물이 됩니다</p>
+      </div>
+    </div>
+
+    <div class="wrap-review-all">
+
+      <!-- 주문정보 -->
+      <div class="wrap-cont">
+        <div class="order-info">
+          <h2>주문정보</h2>
+          <table>
+            <tr>
+              <td>주문상품명</td>
+              <td id="item-name">[Red 독일 M 사이즈] 유럽 꽃 정기구독</td>
+            </tr>
+            <tr>
+              <td>닉네임</td>
+              <td id="user-name">꽃그림</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="review-write">
+          <h2>리뷰작성</h2>
+          <form action="">
+            <ul>
+              <li class="asterion">
+                <h3>상품만족도</h3>
+                <div class="vote">
+                  <div class="star"></div>
+                  <div class="star"></div>
+                  <div class="star"></div>
+                  <div class="star"></div>
+                  <div class="star"></div>
+                </div>
+              </li>
+              <li class="review-txt">
+                <h3>어떤점이 좋으셨어요?</h3>
+                <textarea name="" class="review-box" placeholder="최소 10자 이상 입력해주세요."></textarea>
+              </li>
+            </ul>
+            <div class="photo">
+              <label for="photo-upload" class="btn-upload">📷<br>사진 올리기</label>
+              <input type="file" id="photo-upload" accept="image/*" multiple style="display:none;">
+            </div>
+            <div class="btn">
+              <button type="submit">등록</button>
+              <button type="button"><a href="mypage.html">취소</a></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div id="footer">
+      <div class="f_cont">
+          <h1 class="f_logo">
+              <a href="index.html">
+                  <img src="images/footer/logo_white.png" alt="logo">
+              </a>
+          </h1>
+          <ul class="f_info">
+              <li>온실 플라워스튜디오</li>
+              <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+              <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
+              <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+          </ul>
+      </div>
+  </div>
+
+
+
+  <script>
+      document.querySelectorAll('.star').forEach(($star) => {
+        $star.addEventListener('click', ({ target }) => {
+          // 모든 .star에서 .active 삭제
+          document.querySelectorAll('.star').forEach(($star) => {
+            $star.classList.remove('active');
+          });
+
+          // 클릭한 .star에 .active 추가
+          target.classList.add('active');
+        });
+      });
+  </script>
+</body>
+</html>

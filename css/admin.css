@@ -4,6 +4,30 @@
 ul{list-style: none;}
 a{color: black; text-decoration: none;}
 img{vertical-align: top; border: none;}
+input:focus {
+    outline: none;
+}
+select,
+input[type="text"]{
+    border: 1px solid #D2D2D2;
+    height: 25px;
+    padding: 0 10px;
+}
+button{
+    border: 1px solid #D2D2D2;
+    padding: 3px;
+}
+.wrap_list td>button{
+    margin-top: 7px;
+}
+input[type="date"]{
+    border: 1px solid #D2D2D2;
+    color: #4B4A45;
+    font-size: 14px;
+    font-family: 'Pretendard Variable', sans-serif;
+    padding: 2px;
+}
+
 
 body{
     background-color: #E5E0D8;
@@ -85,6 +109,9 @@ body{
 #header .wrap_hd .gnb li:nth-child(5) a .icon_area{
     background-image: url(../images/admin/icon_order.png);
 }
+#header .wrap_hd .gnb li:nth-child(6) a .icon_area{
+    background-image: url(../images/admin/icon_items.png);
+}
 
 /* 클릭시 아이콘 변경 */
 #header .wrap_hd .gnb li:nth-child(1).active a .icon_area{
@@ -101,6 +128,9 @@ body{
 }
 #header .wrap_hd .gnb li:nth-child(5).active a .icon_area{
     background-image: url(../images/admin/icon_order_c.png);
+}
+#header .wrap_hd .gnb li:nth-child(6).active a .icon_area{
+    background-image: url(../images/admin/icon_items_c.png);
 }
 
 
@@ -312,7 +342,6 @@ body{
 
 
 
-
 /* 회원관리--------------------------------------------------------------- */
 
 #section #member{
@@ -343,8 +372,11 @@ body{
     padding: 0 20px;
     height: 45px;
 }
+#section .search table tr select{
+    width: 18%;
+}
 #section .search table tr input[type="text"]{
-    width: 20%;
+    width: 18%;
 }
 #section .search table tr:first-child td{
     border-top: 1px solid #D2D2D2;
@@ -398,7 +430,7 @@ body{
 
 /* 회원리스트 */
 #section #member .wrap_list{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 #section #member .wrap_list .btn_count{
     display: flex;
@@ -433,7 +465,7 @@ body{
     overflow: hidden;
 }
 #section #member .wrap_list .mem_list thead th{
-    line-height: 60px;
+    line-height: 40px;
     border-bottom: 1px solid #D2D2D2;
 }
 #section #member .wrap_list .mem_list td{
@@ -459,6 +491,274 @@ body{
 #section #member .wrap_list .mem_list tr:nth-child(even){
     background-color: #F5F5ED;
 }
+
+
+/*  테이블 페이지네이션 ----------- */
+.pagination {
+    text-align: center;
+    margin: 10px 0;
+    /* border: 1px solid red; */
+    }
+
+    .pagination button {
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 0px 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    }
+
+    .pagination button:disabled {
+    cursor: not-allowed;
+    color: #aaa;
+    border-color: #eee;
+    }
+
+    .pagination button.active {
+    background-color: #8B9773;
+    color: white;
+    border-color: #8B9773;
+    font-weight: bold;
+    }
+
+
+
+
+/* 회원정보 모달창--- */
+#section #member #mem-modal{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    border-radius: 20px;
+}
+#section #member #mem-modal .wrap-all{
+    width: 700px;
+    height: 620px;
+    background-color: #fff;
+    border-radius: 15px;
+    border: 1px solid gray;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+#section  #member #mem-modal .wrap-all .de_title{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: #4B4A45;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#section  #member #mem-modal .wrap-all .de_title h1{
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 0.2;
+}
+
+
+
+
+/* 탭버튼 */
+#section #member #mem-modal .wrap-all .tab-btn{
+    display: flex;
+    border-bottom: 1px solid #D2D2D2;
+    margin: 20px 20px 0 20px;
+}
+#section #member #mem-modal .wrap-all .tab-btn>li{
+    width: 100px; height: 35px;
+    background-color: #F1F1F1;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 10px 10px 0 0;
+    color: #4B4A45;
+    font-weight: 600;
+    cursor: pointer;
+}
+#section #member #mem-modal .wrap-all .tab-btn>li.activeM{
+    background-color: #8B9773;
+    color: white;
+    
+}
+#section #member #mem-modal .wrap-all .tab-btn>li:nth-child(2){
+    margin-left: 10px;
+}
+
+
+
+
+
+
+/* 테이블영역 ----*/
+
+#section #member #mem-modal .wrap-all .wrap-cont .tab-cont{
+    display: none;
+}
+#section #member #mem-modal .wrap-all .wrap-cont .tab-cont.activeM{
+    display: block;
+}
+
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table{
+    border: 1px solid  #D2D2D2;
+    margin: 20px;
+    border-collapse: collapse;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table td{
+    border-bottom: 1px solid  #D2D2D2;
+    padding: 10px 20px;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr td:first-child{
+    width: 20%;
+    background-color: #F4F4F4;
+    font-weight: 600;
+}
+
+/* 아이디------------- */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(1) td:last-child{
+    display: flex;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(1) td:last-child p{
+    line-height: 25px;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(1) td:last-child input{
+    margin-left: 10px;
+    border: 1px solid #D2D2D2;
+    padding: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 이메일----------------------- */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(3) td input[type="text"]{
+    width: 30%;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(3) td select{
+    width: 30%;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(3) td input[type="checkbox"]{
+    margin-top: 10px;
+}
+
+
+
+/* 주소 */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(4) td input[type="text"]:first-child{
+    width: 18%;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(4) td input[type="button"]{
+    margin-left: 10px;
+    border: 1px solid #D2D2D2;
+    padding: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(4) td input[type="text"]:last-child{
+    width: 95%;
+    margin-top: 10px;
+}
+
+
+/* 휴대전화, 일반전화 */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(5) td input,
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:nth-child(6) td input{
+    width: 20%;
+}
+
+
+
+
+
+/* 생년월일---------------------- */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:last-child td{
+    border: none;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:last-child td input{
+    width: 5%;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-info table tr:last-child td input:nth-child(1){
+    width: 12%;
+}
+
+
+
+/* 저장, 닫기버튼 -- */
+#section #member #mem-modal .wrap-all .wrap-cont .mem-btn{
+    width: 30%;
+    display: flex;
+    margin: 0 auto;
+}
+#section #member #mem-modal .wrap-all button{
+    border: none;
+    width: 100px;
+    height: 40px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #8B9773;
+    margin: 35px auto 0;
+    display: block;
+}
+#section #member #mem-modal .wrap-all .close{
+    background-color: #888888;
+}
+
+
+
+
+/* 주문내역 모달창 테이블 */
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order table{
+    border: 1px solid  #D2D2D2;
+    margin: 20px;
+    border-collapse: collapse;
+    text-align: center;
+    width: 94%;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order table td{
+    padding: 10px;
+    height: 60px;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order table tr:nth-child(even){
+    background-color: #F5F5ED;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order table th{
+    border-bottom: 1px solid  #D2D2D2;
+    height: 40px;
+    padding: 10px;
+}
+
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order .user-id{
+    border-left: none;
+    border-right: none;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order .user-id tr td{
+    height: 25px;
+}
+#section #member #mem-modal .wrap-all .wrap-cont #mem-order .user-id tr td:first-child{
+    background-color: #F8F8F8;
+    width: 20%;
+    color: #4B4A45;
+    font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -514,7 +814,7 @@ body{
 
 /* 테이블 디자인 */
 #section #stock .wrap_list{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 #section #stock .wrap_list .stock_list{
     width: 100%;
@@ -526,7 +826,7 @@ body{
     overflow: hidden;
 }
 #section #stock .wrap_list .stock_list thead th{
-    line-height: 60px;
+    line-height: 40px;
     border-bottom: 1px solid #D2D2D2;
 }
 #section #stock .wrap_list .stock_list td{
@@ -668,3 +968,350 @@ body{
 
 
 
+
+
+/* 주문내역관리---------------------- */
+#section #order{
+    width: 98%;
+    height: 94%;
+    position: absolute;
+    top: 3%;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 25px 35px;
+    box-sizing: border-box;
+}
+
+
+/* 주문리스트 */
+#section #order .wrap_list{
+    margin-top: 50px;
+}
+#section #order .wrap_list .btn_count > li > button{
+    width: 80px;
+    height: 30px;
+    background-color: #F1F1F1;
+    font-size: 14px;
+    color: #4B4A45;
+    border: none;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#section #order .wrap_list .order_list{
+    width: 100%;
+    border: 1px solid #D2D2D2;
+    border-radius: 15px;
+    margin-top: 10px;
+    text-align: center;
+    border-spacing: 0;
+    overflow: hidden;
+}
+#section #order .wrap_list .order_list thead th{
+    line-height: 60px;
+    border-bottom: 1px solid #D2D2D2;
+}
+#section #order .wrap_list .order_list td{
+    line-height: 40px;
+}
+#section #order .wrap_list .order_list td > button{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#section #order .wrap_list .order_list tr:nth-child(even){
+    background-color: #F5F5ED;
+}
+#section #order .wrap_list .order_list #order-body .order_btn{
+    cursor: pointer;
+}
+#section #order .wrap_list .order_list #order-body .order_btn:hover{
+    text-decoration: underline;
+}
+
+
+/* 주문상세 모달창--- */
+#section #order #order_modal{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    border-radius: 20px;
+}
+#section #order #order_modal .modal_con{
+    width: 700px;
+    height: 680px;
+    background-color: #fff;
+    border-radius: 15px;
+    border: 1px solid gray;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+#section #order #order_modal .modal_con .de_title{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: #4B4A45;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#section #order #order_modal .modal_con .de_title h1{
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 0.2;
+}
+
+#section #order #order_modal .modal_con .tit_txt{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 25px 10px 0;
+    margin-top: 20px;
+}
+#section #order #order_modal .modal_con h2{
+    margin-left: 25px;
+    line-height: 30px;
+
+}
+#section #order #order_modal .modal_con .tit_txt .bt button{
+    width: 80px;
+    height: 30px;
+    background-color: #F1F1F1;
+    font-size: 14px;
+    color: #4B4A45;
+    border: none;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#section #order #order_modal .modal_con .modal_cont table{
+    width: 93%;
+    margin: 0 auto;
+    border: 1px solid #D2D2D2;
+    border-radius: 10px;
+    border-collapse: collapse;
+}
+#section #order #order_modal .modal_con .modal_cont table td{
+    border-bottom: 1px solid #D2D2D2;
+    padding: 0 20px;
+    height: 45px;
+}
+#section #order #order_modal .modal_con .modal_cont table.order_info{
+    margin-bottom: 40px;
+}
+#section #order #order_modal .modal_con .modal_cont table.deli_info{
+    margin-top: 10px;
+}
+#section #order #order_modal .modal_con .modal_cont table td:nth-child(odd){
+    background-color: #F4F4F4;
+    font-weight: 600;
+    width: 17%;
+}
+#section #order #order_modal .modal_con .modal_cont table td:nth-child(even){
+    width: 33%;
+}
+
+#section #order #order_modal .modal_con .modal_cont .close{
+    border: none;
+    width: 100px;
+    height: 40px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #8B9773;
+    margin: 35px auto 0;
+    display: block;
+    transition: all 0.3s;
+}
+
+
+
+
+
+
+
+/* 상품관리---------------------------------------------------------------- */
+
+#section #items{
+    width: 98%;
+    height: 94%;
+    position: absolute;
+    top: 3%;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 25px 35px;
+    box-sizing: border-box;
+}
+
+
+/* 테이블 디자인 */
+#section #items .wrap_list{
+    margin-top: 50px;
+}
+#section #items .wrap_list .item_sub{
+    display: flex;
+    justify-content: space-between;
+}
+#section #items .wrap_list .item_sub > p{
+    margin-top: 15px;
+}
+#section #items .wrap_list .item_sub >  p span{
+    color: #51753D;
+    font-weight: 600;
+}
+#section #items .wrap_list .items_list{
+    width: 100%;
+    border: 1px solid #D2D2D2;
+    border-radius: 15px;
+    margin-top: 10px;
+    text-align: center;
+    border-spacing: 0;
+    overflow: hidden;
+}
+#section #items .wrap_list .items_list thead th{
+    line-height: 60px;
+    border-bottom: 1px solid #D2D2D2;
+}
+#section #items .wrap_list .items_list td{
+    line-height: 40px;
+}
+#section #items .wrap_list .items_list td > button{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+#section #items .wrap_list .items_list td > .modi_btn{
+    background-color: #8B9773;
+    color: white;
+}
+#section #items .wrap_list .items_list td > .del_btn{
+    background-color: #E8E8E8;
+    color: #4B4A45;
+}
+#section #items .wrap_list .items_list tr:nth-child(even){
+    background-color: #F5F5ED;
+}
+
+
+
+/* 상품등록 모달창--- */
+#section #items #items_modal{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    border-radius: 20px;
+}
+#section #items #items_modal .modal_con{
+    width: 700px;
+    height: 620px;
+    background-color: #fff;
+    border-radius: 15px;
+    border: 1px solid gray;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+#section #items #items_modal .modal_con .de_title{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: #4B4A45;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#section #items #items_modal .modal_con .de_title h1{
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 0.2;
+}
+
+#section #items #items_modal .modal_con h2{
+    margin-left: 25px;
+    line-height: 30px;
+    margin-top: 20px;
+}
+
+#section #items #items_modal .modal_con .modal_cont table{
+    width: 93%;
+    margin: 10px auto 0;
+    border: 1px solid #D2D2D2;
+    border-radius: 10px;
+    border-collapse: collapse;
+}
+#section #items #items_modal .modal_con .modal_cont table td{
+    border-bottom: 1px solid #D2D2D2;
+    padding: 0 20px;
+    height: 45px;
+}
+#section #items #items_modal .modal_con .modal_cont table td span{
+    color: #0F3BFF;
+}
+#section #items #items_modal .modal_con .modal_cont table td p{
+    font-size: 14px;
+    color: gray;
+}
+#section #items #items_modal .modal_con .modal_cont table tr td select{
+    width: 70%;
+}
+#section #items #items_modal .modal_con .modal_cont table tr td input[type="text"]{
+    width: 70%;
+    height: 20px;
+}
+
+#section #items #items_modal .modal_con .modal_cont table tr:nth-child(5) td input[type="text"],
+#section #items #items_modal .modal_con .modal_cont table tr:nth-child(6) td input[type="text"]{
+    width: 30%;
+}
+
+#section #items #items_modal .modal_con .modal_cont table td:nth-child(1){
+    background-color: #F4F4F4;
+    font-weight: 600;
+    width: 10%;
+}
+#section #items #items_modal .modal_con .modal_cont table td:nth-child(2){
+    width: 33%;
+}
+
+#section #items #items_modal .modal_con .modal_cont .item_btn{
+    width: 30%;
+    display: flex;
+    margin: 0 auto;
+}
+#section #items #items_modal .modal_con .modal_cont button{
+    border: none;
+    width: 100px;
+    height: 40px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #8B9773;
+    margin: 35px auto 0;
+    display: block;
+}
+#section #items #items_modal .modal_con .modal_cont .close{
+    background-color: #888888;
+}

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온실 플라워 스튜디오 - 꽃노트</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-…"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=League+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/flowernote.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+        //검색창 모달
+        $(".search-result").click(function(){
+            $(".modal").stop().fadeIn(300);
+        });
+        $(".close").click(function(){
+            $(".modal").stop().fadeOut(300);
+        });
+
+
+        //이달의 꽃 모달
+        $(".m-flower-list").click(function(){
+            $(".modal").stop().fadeIn(300);
+        });
+        $(".close").click(function(){
+            $(".modal").stop().fadeOut(300);
+        });
+  });
+  </script>
+</head>
+<body>
+
+  <!-- header영역--------------------------------------------------------------- -->
+  <div id="header">
+        <h1 class="h_logo"><a href="index.html"><img src="images/header/onsil_logo.png" alt="logo"></a></h1>
+        <ul class="gnb">
+            <li>
+                <button type="button" class="login">
+                    <a href="login.html">로그인</a>
+                </button>
+            </li>
+            <li>
+                <a href="cart.html">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+            </li>
+            <li>
+                <a href="mypage.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav">
+            <li><a href="subsc.html">꽃 정기구독</a></li>
+            <li><a href="flowernote.html">꽃 노트</a></li>
+            <li><a href="products.html">꽃 · 식물</a></li>
+            <li><a href="#">클래스</a></li>
+            <li><a href="corporate.html">기업제휴</a></li>
+            <li><a href="onsilfaq.html">고객센터</a></li>
+        </ul>
+    </div>
+
+
+
+
+  <!--section----------------------------------------------------------------------- -->
+  <div id="section">
+
+    <!-- 상단타이틀 배너영역 -->
+    <div class="top-banner">
+      <div class="t-ban-txt">
+        <h3>ONSIL FLOWER NOTE</h3>
+        <h2>매일 새롭게 피어나는 당신의 이야기</h2>
+        <p>꽃말부터 손길까지, 꽃을 더 잘 알고 싶은 당신을 위한 노트</p>
+      </div>
+    </div>
+
+    <!-- 꽃검색 영역 -->
+    <div class="wrap-note-search">
+      <div class="note-cont">
+        <ul class="search-area">
+          <li>
+            <p>꽃이 먼저 피우는 계절의 감정, 월별로 안내해드립니다.</p>
+          </li>
+          <li class="search-f">
+            <input type="text" placeholder="'꽃이름' 또는 '꽃말'을 입력해보세요">
+            <a href="">
+              <span class="material-symbols-outlined">search</span>
+            </a>
+          </li>
+          <li class="tag">
+            <span class="tag-title">인기검색어</span>
+            <span>작약</span>
+            <span>감사</span>
+            <span>진심</span>
+            <span>수국</span>
+            <span>변치않는 사랑</span>
+          </li>
+          
+        </ul>
+        <!-- 검색결과 영역 -->
+        <div class="search-result">
+          <div class="img-area"></div>
+          <div class="flower-name">
+            <p class="name-txt">작약</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+      <div class="wrap-modal-cont">
+        <h3 class="top-bar"><p>상세 설명</p><span class="close">닫기</span></h3>
+        <div class="modal-cont">
+          <div class="title">
+            <h2>
+              이 꽃은 어떤 마음일까요?<br>
+              이름부터 관리까지, 천천히 들여다보세요
+            </h2>
+            <p>
+              What feeling does this flower hold?<br>
+              Take a moment to explore its name, meaning, and care
+            </p>
+          </div>
+          <ul class="contents">
+            <li class="img-area">
+              <img src="" alt="">
+            </li>
+            <li class="name-language">
+              <h2 class="named">섬말나리</h2>
+              <p class="language">'더 이상 고귀할 수 없다'</p>
+            </li>
+            <li class="season-price">
+              <div>
+                <h4 class="tit-txt">계절</h4>
+                <p class="sub-txt">6월의 꽃</p>
+              </div>
+              <div>
+                <h4 class="tit-txt">가격</h4>
+                <p class="sub-txt">13,500</p>
+              </div>
+            </li>
+            <li class="season-price">
+              <h4 class="tit-txt">꽃정보</h4>
+              <p class="sub-txt">울릉도에 가면 '나리분지'가 있는데 오래전에 그곳 사람들이 섬말나리의 비늘 줄기를 구황식물로 이용했기 때문에 붙여진 이름인 것 같다. 섬말나리는 일반 나리와는 다른 독특한 꽃색을 지니고 있어 유난히 아름다우며, 신품종을 만드는 유전자원으로 중요한 소재다.
+              </p>
+            </li>
+            <li class="season-price">
+              <h4 class="tit-txt">용도</h4>
+              <p class="sub-txt">다른 나리보다 개화기간이 길어 관상가치가 더하다. 네덜란드에서는 우리의 자생나리를 이용한 다양한 연구가 진행되고 있다. 특히 섬말나리의 진노랑화색은 그들에게 없는 색감이라 더 주목받고 있다. 우리가 주체가 되어 우리 것을 보전 개발해야 함이 절실하다.
+              </p>
+            </li>
+            <li class="season-price">
+              <h4 class="tit-txt">재배법</h4>
+              <p class="sub-txt">종자번식이 잘되지만 씨악을 뿌리면 참나리처럼 3년은 지나야 꽃이 핀다. 인편삽으로 번식해 가는 것이 보통이다. 음지에서 견디는 힘이 강하기 때문에 정원에 심을 때는 그늘을 만들 수 있는 나무 밑에 심어 해가림을 해줘야 한다.
+              </p>
+            </li>
+            <li class="season-price">
+              <h4 class="tit-txt">꽃종류</h4>
+              <p class="sub-txt">울릉도에서 자생하는 백합과의 여러해살이풀이다. 유사종인 말나리는 줄기 아래쪽에 돌려난 잎이 한 층이지만 섬말나리는 2층 이상이며 무엇보다 꽃색이 확연히 틀리다. 우리나라 울릉도에만 나는 한국 특산식물이며 산림청의 희귀 및 멸종위기식물로 정해져 있다.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 이달의 꽃 영역 -->
+    <div class="wrap-month-flower">
+      <div class="month-tab">
+        <h2>이달의 꽃 추천</h2>
+        <ul class="first-half-year years">
+          <li onclick="openTab('january',this)">
+            <p>1월</p>
+            <span>January</span>
+          </li>
+          <li onclick="openTab('february',this)">
+            <p>2월</p>
+            <span>February</span>
+          </li>
+          <li onclick="openTab('march',this)">
+            <p>3월</p>
+            <span>March</span>
+          </li>
+          <li onclick="openTab('april',this)">
+            <p>4월</p>
+            <span>April</span>
+          </li>
+          <li onclick="openTab('may',this)">
+            <p>5월</p>
+            <span>May</span>
+          </li>
+          <li onclick="openTab('june',this)">
+            <p>6월</p>
+            <span>June</span>
+          </li>
+        </ul>
+        <ul class="second-half-year years">
+          <li onclick="openTab('july',this)">
+            <p>7월</p>
+            <span>July</span>
+          </li>
+          <li onclick="openTab('august',this)">
+            <p>8월</p>
+            <span>August</span>
+          </li>
+          <li onclick="openTab('september',this)">
+            <p>9월</p>
+            <span>September</span>
+          </li>
+          <li onclick="openTab('october',this)">
+            <p>10월</p>
+            <span>October</span>
+          </li>
+          <li onclick="openTab('november',this)">
+            <p>11월</p>
+            <span>November</span>
+          </li>
+          <li onclick="openTab('december',this)">
+            <p>12월</p>
+            <span>December</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="month-cont">
+        <ul id="january" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">장미</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="february" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">프리지아</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="march" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">ㅇㅇ</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="april" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">홍매화</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="may" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">델피니움</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="june" class="m-flower-list">
+          <li class="list1">
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">꽃창포</p>
+            </div>
+          </li>
+          <li class="list2">
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">꼬리조팝나무</p>
+            </div>
+          </li>
+          <li class="list3">
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">섬말나리</p>
+            </div>
+          </li>
+          <li class="list4">
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">도깨비부채</p>
+            </div>
+          </li>
+          <li class="list5">
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">이팝나무</p>
+            </div>
+          </li>
+          <li class="list6">
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">글라디올러스</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="july" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">수국</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="august" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">데이지</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="september" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">꽃이름</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="october" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">노란장미</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="november" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">뭐지</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+        <ul id="december" class="m-flower-list">
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">감나무</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+          <li>
+            <div class="flower-image"></div>
+            <div class="flower-name">
+              <p class="name-txt">작약</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <!-- footer 영역----------------------------------------------------------------- -->
+  <div id="footer">
+        <div class="f_cont">
+            <h1 class="f_logo">
+                <a href="index.html">
+                    <img src="images/footer/logo_white.png" alt="logo">
+                </a>
+            </h1>
+            <ul class="f_info">
+                <li>온실 플라워스튜디오</li>
+                <li>대표: 김서진　|　주소: 서울특별시 강서구 내발산동 719번지 6호</li>
+                <li>이메일: contact@flowerstudio.com　|　사업자 등록번호: 101-54-64295</li>
+                <li>ⓒ2025 Copyright Onsil Corp. All Right Reserved.</li>
+            </ul>
+        </div>
+    </div>
+
+  <script src="js/flowernote.js"></script>
+</body>
+</html>
