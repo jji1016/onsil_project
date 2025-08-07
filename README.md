@@ -1,4 +1,0 @@
-I WANT TO GO HOME
-REALLY REALLY WANT TO GO HOME
-
-종인씨 우리 집 좀 보내줘요
